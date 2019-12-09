@@ -8,7 +8,7 @@
 		<version>2.2.2.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.manytoone</groupId>
+	<groupId>com.wemakeitwork</groupId>
 	<artifactId>allenvooreen</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>allenvooreen</name>
