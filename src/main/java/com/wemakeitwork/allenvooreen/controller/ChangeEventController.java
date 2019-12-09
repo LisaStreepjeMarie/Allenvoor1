@@ -6,10 +6,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class ChangeEventController {
-
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String findAll(Model model) {
+    public String index(Model model) {
         return "index";
     }
-
 }
