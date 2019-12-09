@@ -5,9 +5,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Activity {
+public class Team {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer ActivityId;
+    private Integer teamId;
 }
