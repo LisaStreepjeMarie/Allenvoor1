@@ -1,4 +1,4 @@
-package com.manytoone.allenvooreen;
+package com.wemakeitwork.allenvooreen;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
