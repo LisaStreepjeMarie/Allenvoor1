@@ -2,7 +2,7 @@ package com.wemakeitwork.allenvooreen.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name="members")
+@Table(name = "members")
 public class Member {
 
     @Id
