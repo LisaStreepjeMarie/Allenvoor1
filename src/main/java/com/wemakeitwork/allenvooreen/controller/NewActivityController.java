@@ -7,13 +7,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class NewActivityController {
+    private Activity testActivity;
 
     @Autowired
     ActivityRepository activityRepository;
 
     @GetMapping("/newActivity")
     String doorsturen(Activity activity){
-        activityRepository.save(activity);
+        activityRepository.save(testActivity);
 
         //TODO direct back to the event page it came from
         return "redirect:/...";
