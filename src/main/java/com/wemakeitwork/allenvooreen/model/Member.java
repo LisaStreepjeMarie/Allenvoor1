@@ -9,10 +9,10 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer memberId;
 
-    @Column(name = "membername")
+    @Column(name = "membername", unique = true, nullable = false)
     private String membername;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
 
     public Integer getMemberId() {
@@ -28,7 +28,11 @@ public class Member {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        if (password != null && password.isEmpty()) {
+            this.password = null;
+        } else {
+            this.password = password;
+        }
     }
 
     public String getMembername() {
@@ -36,7 +40,11 @@ public class Member {
     }
 
     public void setMembername(String membername) {
-        this.membername = membername;
+        if (membername != null && membername.isEmpty()) {
+            this.membername = null;
+        } else {
+            this.membername = membername;
+        }
     }
 }
 
