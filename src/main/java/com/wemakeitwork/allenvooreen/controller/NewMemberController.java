@@ -2,6 +2,8 @@ package com.wemakeitwork.allenvooreen.controller;
 import com.wemakeitwork.allenvooreen.model.Member;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,7 +16,11 @@ public class NewMemberController {
     @Autowired
     MemberRepository memberRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @GetMapping("/member/new")
+    //@Secured("ROLE_ADMIN")
     protected String showSignUpForm(Model model) {
         model.addAttribute("member", new Member());
         return "signUpForm";
@@ -26,7 +32,9 @@ public class NewMemberController {
             return "signUpForm";
         }
         else {
-            member.setPassword(member.getPassword());
+            //TODO: check of aan te maken loginnaam al bestaat (gooit nu whitelabel 500 met SQL constraint error)
+            member.setPassword(passwordEncoder.encode(member.getPassword()));
+            member.setRol("gebruiker");
             memberRepository.save(member);
             return "redirect:/member/new";
         }

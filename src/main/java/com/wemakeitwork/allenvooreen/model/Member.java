@@ -1,19 +1,69 @@
 package com.wemakeitwork.allenvooreen.model;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "members")
-public class Member {
+public class Member implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer memberId;
 
-    @Column(name = "membername")
+    @Column(name = "membername", unique = true)
     private String membername;
 
     @Column(name = "password")
     private String password;
+
+    @Column(name = "rol")
+    private String rol;
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
+
+    @Override
+    public Collection<GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        return authorities;
+    }
+
+    @Override
+    public String getUsername() {
+        return membername;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 
     public Integer getMemberId() {
         return memberId;
@@ -31,6 +81,7 @@ public class Member {
         this.password = password;
     }
 
+    //TODO: in feite dubbelop omdat we de @Override methode getUsername hebben (benodigd voor spring security)
     public String getMembername() {
         return membername;
     }
@@ -38,5 +89,6 @@ public class Member {
     public void setMembername(String membername) {
         this.membername = membername;
     }
+
 }
 
