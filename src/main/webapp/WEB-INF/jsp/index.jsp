@@ -21,5 +21,9 @@
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
     <input type="submit" value="Logout" />
 </form>
+<form action="/calendar">
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+    <input type="submit" value="Kalender" />
+</form>
 </body>
 </html>

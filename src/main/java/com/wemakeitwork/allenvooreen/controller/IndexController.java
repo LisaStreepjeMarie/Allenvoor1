@@ -13,8 +13,11 @@ public class IndexController {
 
     @GetMapping("/login")
     public String login() {
-        return "login";
+        return "/login";
     }
 
-
+    @GetMapping("/calendar")
+    public String calendar() {
+        return "calendar";
+    }
 }

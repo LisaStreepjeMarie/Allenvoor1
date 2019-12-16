@@ -10,5 +10,4 @@ public class AllenVoorEenApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(AllenVoorEenApplication.class, args);
 	}
-
 }
