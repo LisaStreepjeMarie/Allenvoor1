@@ -7,7 +7,7 @@
     </head>
     <body>
         <p><a href="/logout">Log uit</a></p>
-        <h1>Voef toe of wijzig gegevens team</h1>
+        <h1>Voeg toe of wijzig gegevens team</h1>
 
         <form:form action="/teams/add" modelAttribute="team">
             <form:input path="teamId" type="hidden" />
