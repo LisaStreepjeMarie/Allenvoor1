@@ -11,8 +11,8 @@ public class Team {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer teamId;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "teamId", referencedColumnName = "teamId", nullable = false)
+    // @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    // @JoinColumn(name = "teamId", referencedColumnName = "teamId", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private String teamName;
 
