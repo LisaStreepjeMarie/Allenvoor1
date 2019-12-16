@@ -31,7 +31,6 @@ public class NewActivityController {
             return "newActivity";
         }
         else {
-            System.out.println("het werkt!");
             activity.setActivityId(activity.getActivityId());
             activityRepository.save(activity);
             return "redirect:/activity/new";

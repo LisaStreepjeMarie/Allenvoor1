@@ -65,7 +65,7 @@ public class UrlAuthenticationSuccessHandler
         if (isUser) {
             return "/";
         } else if (isAdmin) {
-            return "/console.html";
+            return "/";
         } else {
             throw new IllegalStateException();
         }
