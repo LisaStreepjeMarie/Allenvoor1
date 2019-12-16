@@ -15,12 +15,8 @@ import javax.persistence.Id;
 
 public class ActivityTest {
 
-    public Activity testActivity = new Activity();
-    public Activity testActivityB = new Activity();
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer activityId;
+    private Activity testActivity = new Activity();
+    private Activity testActivityB = new Activity();
 
     @Test
     void testGetActivityId() {
@@ -30,7 +26,7 @@ public class ActivityTest {
 
         //activate + assert
         assertEquals(testActivity.getActivityId(), 1);
-        assertEquals(testActivityB.getActivityId(), 1);
+        assertEquals(testActivityB.getActivityId(), 2);
     }
 
 
@@ -46,7 +42,7 @@ public class ActivityTest {
 
         //activate + assert
         assertEquals(testActivity.getActivityName(), "schoonmaken");
-        assertEquals(testActivityB.getActivityName(), "hond uitlaten");
+        assertEquals(testActivityB.getActivityName(), "wandelen");
     }
 
     @Test
