@@ -1,16 +1,25 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Activity</title>
 </head>
 <body>
-<h1>Voer de activity in!</h1>
+<h1>Voer de activiteit in!</h1>
 <br>
-<form action="/form">
-    <input type="text" name="activityName"><br><br>
-    <input type="text" name="activityCategory"><br><br>
+
+<form action="/activity/new" modelAttribute="activity" method="Post">
+    <input type="text" name="activityName" value="${updateActivityName}"><br><br>
+        <select name="activityCategory">
+            <option value="Huishouden" name="activityCategory">Huishouden</option>
+            <option value="Medisch">Medisch</option>
+            <option value="Vrije tijd" >Vrije tijd</option>
+        </select>
     <input type="submit" value="Bewaar activiteit!">
-</form>/
+</form>
+
 </body>
 </html>
