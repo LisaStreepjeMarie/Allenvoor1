@@ -28,28 +28,35 @@ public class Member implements UserDetails {
     public void setRol(String rol) {
         this.rol = rol;
     }
+
     @Override
     public Collection<GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        System.out.println(authorities);
         return authorities;
     }
+
     @Override
     public String getUsername() {
-        return membername;
+        return this.getMembername();
     }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
+
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
+
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
+
     @Override
     public boolean isEnabled() {
         return true;
@@ -66,10 +73,11 @@ public class Member implements UserDetails {
     public void setPassword(String password) {
         this.password = password;
     }
-    //TODO: in feite dubbelop omdat we de @Override methode getUsername hebben (benodigd voor spring security)
+
     public String getMembername() {
         return membername;
     }
+
     public void setMembername(String membername) {
         this.membername = membername;
     }

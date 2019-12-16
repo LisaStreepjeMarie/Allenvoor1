@@ -17,6 +17,14 @@
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
     <input type="submit" value="Nieuwe gebruiker" />
 </form>
+<form action="/activity/new">
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+    <input type="submit" value="Nieuwe Activiteit" />
+</form>
+<form action="/event/new">
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+    <input type="submit" value="Nieuwe Event" />
+</form>
 <form action="/logout" method="post">
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
     <input type="submit" value="Logout" />
