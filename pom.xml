@@ -72,8 +72,6 @@
 			<artifactId>jstl</artifactId>
 		</dependency>
 
-
-
 		<!-- To compile JSP files -->
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
