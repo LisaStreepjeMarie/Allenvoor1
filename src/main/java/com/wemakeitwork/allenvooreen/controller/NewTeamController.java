@@ -7,7 +7,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.Optional;
 
 @Controller
 public class NewTeamController {
@@ -25,6 +28,21 @@ public class NewTeamController {
     protected String showTeamForm(Model model){
         model.addAttribute("team", new Team());
         model.addAttribute("teamList", teamRepository.findAll());
+        return "teamForm";
+    }
+
+    @GetMapping("/teams/select/{teamId}")
+    protected String showTeamData(@PathVariable("teamId") final Integer teamId, Model model) {
+        // extra regel om te testen:
+        model.addAttribute("team", new Team());
+        Optional<Team> teamOpt = teamRepository.findById(teamId);
+        Team team;
+        if (teamOpt.isPresent()) {
+            team = teamOpt.get();
+        } else {
+            team = new Team();
+        }
+        model.addAttribute("book", team);
         return "teamForm";
     }
 

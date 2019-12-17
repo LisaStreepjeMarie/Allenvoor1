@@ -3,11 +3,11 @@
 
 <html>
     <head>
-        <title>VOeg toe of wijzig de gegevens van het team</title>
+        <title>Voeg toe of wijzig de gegevens van een groep</title>
     </head>
     <body>
         <p><a href="/logout">Log uit</a></p>
-        <h1>Voeg toe of wijzig gegevens team</h1>
+        <h1>Voeg toe of wijzig gegevens groep</h1>
 
         <form:form action="/teams/add" modelAttribute="team">
             <form:input path="teamId" type="hidden" />
@@ -20,7 +20,7 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <input type="submit" value="Sla (gewijzigd) team  op" />
+                        <input type="submit" value="Sla (gewijzigde) groep  op" />
                     </td>
                 </tr>
             </table>
