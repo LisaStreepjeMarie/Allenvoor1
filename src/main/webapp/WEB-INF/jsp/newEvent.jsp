@@ -25,7 +25,7 @@
             <p class="font-weight-normal">Eventnaam: </p>
         </div>
         <div class="col-xs-2">
-            <input type="text" id="eventName" name="eventName" value="${updateEventName}">
+            <input type="text" id="eventName" name="eventName" value="${updateEventName}" required>
         </div>
     </div>
     <div class="row">
@@ -33,7 +33,7 @@
             <p class="font-weight-normal">Beschrijving: </p>
         </div>
         <div class="col-xs-2">
-            <input type="text" id="eventComment" name="eventComment" value="${updateEventComment}">
+            <input type="text" id="eventComment" name="eventComment" value="${updateEventComment}" required>
         </div>
     </div>
     <div class="row">
@@ -41,7 +41,8 @@
             <p class="font-weight-normal">Categorie: </p>
         </div>
         <div class="col-xs-2">
-            <select id="activityCategory" name="activityCategory">
+            <select id="activityCategory" name="activityCategory" required>
+                <option disabled selected="selected">Selecteer categorie</option>
                 <option value="Huishouden">Huishouden</option>
                 <option value="Medisch">Medisch</option>
                 <option value="Vrije tijd" >Vrije tijd</option>
@@ -56,7 +57,7 @@
             <div class='col-sm'>
                 <div class="form-group">
                     <div class='input-group date' id='datetimepicker1'>
-                        <input type='datetime-local' class="form-control" name="eventDate" />
+                        <input type='datetime-local' class="form-control" name="eventDate" required>
                         <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                         </span>
