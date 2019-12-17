@@ -25,8 +25,8 @@
 <form:form action="/logout" method="post">
     <input type="submit" value="Logout" />
 </form:form>
-<form:form action="/calendar">
+<form action="/calendar">
     <input type="submit" value="Kalender" />
-</form:form>
+</form>
 </body>
 </html>
