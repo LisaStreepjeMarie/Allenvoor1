@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<html>
+<html xmlns:form="http://www.w3.org/1999/xhtml">
 <head>
     <title>Allen voor 1</title>
     <link href="css/style.css" rel="stylesheet" type="text/css"/>
@@ -13,25 +13,20 @@
 </head>
 <body>
 <h1>Welkom bij de 'Allen voor 1' webinterface</h1>
-<form action="/member/new">
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+<form:form action="/member/new">
     <input type="submit" value="Nieuwe gebruiker" />
-</form>
-<form action="/activity/new">
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+</form:form>
+<form:form action="/activity/new">
     <input type="submit" value="Nieuwe Activiteit" />
-</form>
-<form action="/event/new">
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+</form:form>
+<form:form action="/event/new">
     <input type="submit" value="Nieuwe Event" />
-</form>
-<form action="/logout" method="post">
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+</form:form>
+<form:form action="/logout" method="post">
     <input type="submit" value="Logout" />
-</form>
-<form action="/calendar">
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+</form:form>
+<form:form action="/calendar">
     <input type="submit" value="Kalender" />
-</form>
+</form:form>
 </body>
 </html>
