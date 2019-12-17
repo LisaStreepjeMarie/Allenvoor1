@@ -20,7 +20,7 @@
             <option value="Medisch">Medisch</option>
             <option value="Vrije tijd" >Vrije tijd</option>
         </select>
-    <input type="submit" value="Bewaar activiteit!">
+    <input type="submit" value="Maak activiteit!">
 </form:form>
 
 </body>

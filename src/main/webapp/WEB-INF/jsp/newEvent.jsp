@@ -11,34 +11,77 @@
     <title>Event</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
 </head>
 <body>
-<h1>Voer de event in!</h1>
-<br>
-
-<form:form action="/event/new" modelAttribute="event" method="post">
-    <label for="eventName" class="sr-only">Eventnaam:</label>
-    <input type="text" id="eventName" name="eventName" value="${updateEventName}"><br><br>
-    <label for="activityCategory" class="sr-only">Activiteitnaam:</label>
-    <select id="activityCategory" name="activityCategory">
-        <option value="Huishouden">Huishouden</option>
-        <option value="Medisch">Medisch</option>
-        <option value="Vrije tijd" >Vrije tijd</option>
-    </select><br>
-    <label for="eventComment" class="sr-only">Beschrijving:</label>
-    <input type="text" id="eventComment" name="eventComment" value="${updateEventComment}"><br>
-    <label for="eventDate" class="sr-only">Datum:</label>
-    <div id="eventDate" class="container">
-
+<h1>Maak nieuwe afspraak aan:</h1>
+<div class="container-fluid">
+    <form:form action="/event/new" modelAttribute="event" method="post">
+    <div class="row">
+        <div class="col-xs-1">
+            <p class="font-weight-normal">Eventnaam: </p>
+        </div>
+        <div class="col-xs-2">
+            <input type="text" id="eventName" name="eventName" value="${updateEventName}">
+        </div>
     </div>
-    <br>
-    <input type="submit" value="Bewaar Event!" />
-</form:form>
+    <div class="row">
+        <div class="col-xs-1">
+            <p class="font-weight-normal">Beschrijving: </p>
+        </div>
+        <div class="col-xs-2">
+            <input type="text" id="eventComment" name="eventComment" value="${updateEventComment}">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-1">
+            <p class="font-weight-normal">Categorie: </p>
+        </div>
+        <div class="col-xs-2">
+            <select id="activityCategory" name="activityCategory">
+                <option value="Huishouden">Huishouden</option>
+                <option value="Medisch">Medisch</option>
+                <option value="Vrije tijd" >Vrije tijd</option>
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-1">
+            <p class="font-weight-normal">Datum: </p>
+        </div>
+        <div class="col-xs-2">
+            <div class='col-sm'>
+                <div class="form-group">
+                    <div class='input-group date' id='datetimepicker1'>
+                        <input type='datetime-local' class="form-control" name="eventDate" />
+                        <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="row">
+            <div class="col-xs-1">
+            </div>
+            <div class="col-xs-2">
+                <input type="submit" value="Maak afspraak!" />
+            </div>
+        </div>
+    </form:form>
+</div>
+
 
 </body>
+<script>
+$(function() {
+  $('#datetimepicker1').datetimepicker({
+     format: 'DD/MM/YYYY HH:mm',
+   });
+});
+</script>
 </html>

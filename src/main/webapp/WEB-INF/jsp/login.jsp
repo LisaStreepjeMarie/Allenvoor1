@@ -37,11 +37,11 @@
         <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
     </form:form>
 
-    <form:form class="form-signin" action="/member/new">
-        <h1 class="h3 mb-3 font-weight-normal">Of registreer:</h1>
+    <form class="form-signin" action="/member/new">
+        <h2 class="h3 mb-3 font-weight-normal">Of registreer:</h2>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Registreer</button>
         <p class="mt-5 mb-3 text-muted">&copy; 2019 Allenvooreen</p>
-    </form:form>
+    </form>
 </div >
 
 </body>

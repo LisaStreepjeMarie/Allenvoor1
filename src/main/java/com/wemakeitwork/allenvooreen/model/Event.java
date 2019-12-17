@@ -1,14 +1,10 @@
 package com.wemakeitwork.allenvooreen.model;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 
 @Entity
 public class Event {
@@ -32,7 +28,9 @@ public class Event {
         this.eventName = eventName;
     }
 
-    private Timestamp eventDate;
+    @Basic
+    @Temporal(TemporalType.TIMESTAMP)
+    private java.util.Date eventDate;
     private String eventComment;
 
     public Integer getEventId() {
@@ -51,11 +49,11 @@ public class Event {
         this.activity = activity;
     }
 
-    public Timestamp getEventDate() {
+    public Date getEventDate() {
         return eventDate;
     }
 
-    public void setEventDate(Timestamp eventDate) {
+    public void setEventDate(Date eventDate) {
         this.eventDate = eventDate;
     }
 
