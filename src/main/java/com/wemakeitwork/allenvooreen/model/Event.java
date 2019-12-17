@@ -1,4 +1,6 @@
 package com.wemakeitwork.allenvooreen.model;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -15,12 +17,23 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer eventId;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    private String eventName;
+
+    //TODO: cascade needs to not be ALL when event and activity planning are split up (in the future).
+    @OneToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "activityId", referencedColumnName = "activityId", nullable = false)
     private Activity activity;
 
-    private Timestamp timestamp;
-    private String comment;
+    public String getEventName() {
+        return eventName;
+    }
+
+    public void setEventName(String eventName) {
+        this.eventName = eventName;
+    }
+
+    private Timestamp eventDate;
+    private String eventComment;
 
     public Integer getEventId() {
         return eventId;
@@ -38,19 +51,19 @@ public class Event {
         this.activity = activity;
     }
 
-    public Timestamp getTimestamp() {
-        return timestamp;
+    public Timestamp getEventDate() {
+        return eventDate;
     }
 
-    public void setTimestamp(Timestamp timestamp) {
-        this.timestamp = timestamp;
+    public void setEventDate(Timestamp eventDate) {
+        this.eventDate = eventDate;
     }
 
-    public String getComment() {
-        return comment;
+    public String getEventComment() {
+        return eventComment;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setEventComment(String eventComment) {
+        this.eventComment = eventComment;
     }
 }

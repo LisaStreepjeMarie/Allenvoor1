@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 @Controller
@@ -25,11 +24,6 @@ public class NewEventController {
 
     @GetMapping("/event/new")
     protected String showEventForm(Model model) {
-        List<Activity> activityList = activityRepository.findAll();
-        for (Activity activity : activityList) {
-            System.out.println(activity.getActivityId());
-        }
-        model.addAttribute(activityList);
         model.addAttribute("event", new Event());
         return "newEvent";
     }
@@ -40,10 +34,14 @@ public class NewEventController {
             return "newEvent";
         }
         else {
-            event.setEventId(event.getEventId());
+            //N.B.: activityname == eventname for now
+            activity.setActivityName(event.getEventName());
+            activity.setActivityCategory(activity.getActivityCategory());
             event.setActivity(activity);
-            event.setTimestamp(new Timestamp(System.currentTimeMillis()));
-            event.setComment("test123");
+            event.setEventName(event.getEventName());
+            event.setEventId(event.getEventId());
+            event.setEventDate(event.getEventDate());
+            event.setEventComment(event.getEventComment());
             eventRepository.save(event);
             return "redirect:/event/new";
         }
