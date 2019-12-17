@@ -34,12 +34,11 @@
                     </td>
                 </tr>
             </table>
+            <tr>
+             <td colspan="2">
+             <input type="submit" value="Logout"  />
+                <form action="/logout" method="post" />
         </form:form>
-        <form action="/logout" method="post">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-            <input type="submit" value="Logout" />
-        </form>
-    </body>
 </html>
 
 
