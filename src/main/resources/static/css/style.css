@@ -1,13 +1,16 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 body {
-  background: #ffffff; /* fallback for old browsers */
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    background: #ffffff; /* fallback for old browsers */
   /* background: -webkit-linear-gradient(right, #76b852, #8DC26F);
   background: -moz-linear-gradient(right, #76b852, #8DC26F);
   background: -o-linear-gradient(right, #76b852, #8DC26F);
   background: linear-gradient(to left, #76b852, #8DC26F); */
-  font-family: "Roboto", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    /* font-family: "Roboto", sans-serif; */
+    font-family: "Trebuchet MS", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 .login-page {
   width: 360px;
@@ -99,6 +102,27 @@ body {
 }
 
 /* new design */
+
+.webpage {
+	margin: 30px 0px 0px 30px;
+	padding: 0px 0px 0px 0px;
+	background-position: center top;
+	background-position: 0px 0px 0px 0px;
+	background-repeat: no-repeat;
+	background-color: #ffffff;
+	text-align: left;
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size: 11pt;
+	font-weight: normal;
+	color: #000000;
+	line-height:135%;
+}
+
+
+#content {
+
+}
+
 .button {
 	background-color: #777777;
 	vertical-align: middle;

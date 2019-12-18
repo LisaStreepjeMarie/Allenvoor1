@@ -3,13 +3,13 @@
 
 <html>
     <head>
-        <link href="css/style.css" rel="stylesheet" type="text/css"/>
+        <link href="../css/style.css" rel="stylesheet" type="text/css"/>
         <title>Wijzig de gegevens van een groep</title>
     </head>
     <body>
         <p><a href="/logout">Log uit</a></p>
         <h1>Wijzig gegevens groep</h1>
-        <form:form action="/teams/add" modelAttribute="team">
+        <form:form action="/team/new" modelAttribute="team">
             <form:input path="teamId" type="hidden" />
             <table>
                 <tr>

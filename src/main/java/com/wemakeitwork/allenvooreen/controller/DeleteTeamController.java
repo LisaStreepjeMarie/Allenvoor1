@@ -11,9 +11,9 @@ public class DeleteTeamController {
     @Autowired
     TeamRepository teamRepository;
 
-    @GetMapping("/delete/team/{teamId}")
+    @GetMapping("/team/delete/{teamId}")
     public String deleteTeam(@PathVariable("teamId") final Integer teamId) {
         teamRepository.deleteById(teamId);
-        return "redirect:/teams";
+        return "redirect:/team/all";
     }
 }
