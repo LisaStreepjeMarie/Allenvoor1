@@ -26,7 +26,6 @@
     </select>
     <div id="hidden" style="display:none;">
     <form:form id="hiddenform" action="/event/change" modelAttribute="event" method="post">
-
         <div class="row">
             <div class="col-xs-1">
                 <p class="font-weight-normal">Eventnaam: </p>
@@ -77,6 +76,7 @@
             <div class="col-xs-1">
             </div>
             <div class="col-xs-2">
+                <form:input path="eventId" type="hidden" />
                 <input type="submit" value="Wijzig afspraak!" />
             </div>
         </div>
@@ -94,9 +94,7 @@
 </script>
 <script>
     function display(){
-
         document.getElementById("hidden").style.display = "block";
-
 }
 </script>
 </html>

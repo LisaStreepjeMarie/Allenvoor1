@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:form="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -11,11 +11,10 @@
 </head>
 <body>
 <div class="container">
-    <form class="form-signin" method="post" action="/logout">
+    <form:form class="form-signin" method="post" action="/logout">
         <h2 class="form-signin-heading">Are you sure you want to log out?</h2>
-        <input name="_csrf" type="hidden" value="${_csrf.token}" />
         <button class="btn btn-lg btn-primary btn-block" type="submit">Log Out</button>
-    </form>
+    </form:form>
 </div>
 </body>
 </html>
