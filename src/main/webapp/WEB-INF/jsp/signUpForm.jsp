@@ -11,15 +11,14 @@
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     </head>
-    <body>
+    <body class= "text-center">
         <h4>Registeren</h4>
 
         <form:form action="/member/new" modelAttribute="member">
-            <table>
                 <tr>
                     <td>Naam:</td>
                     <td>
-                        <div class="alert alert-success" role="alert">
+                        <div class="form-group text-center" role="alert">
                         <form:input path="membername" />
                         </div>
                     </td>
@@ -27,7 +26,7 @@
                 <tr>
                     <td>Wachtwoord:</td>
                     <td>
-                        <div class="alert alert-success" role="alert">
+                        <div class="form-group" role="alert">
                         <form:input path="password" />
                         </div>
                     </td>
@@ -42,7 +41,7 @@
             <tr>
              <td colspan="2">
              <input type="submit" value="Logout"  />
-                <form action="/logout" method="post" />
+                <action="/logout" method="post" />
         </form:form>
 </html>
 
