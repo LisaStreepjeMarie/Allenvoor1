@@ -18,7 +18,7 @@
                 <table>
                     <c:forEach items="${allTeams}" var="team">
                         <tr>
-                            <td><c:out value="${team.teamName}" /></td>
+                            <td><a href="/team/select/<c:out value="${team.teamId}" />"><c:out value="${team.teamName}" /></a></td>
                             <td><a href="/team/delete/${team.teamId}">Verwijder groep hier</a></td>
                         </tr>
                     </c:forEach>

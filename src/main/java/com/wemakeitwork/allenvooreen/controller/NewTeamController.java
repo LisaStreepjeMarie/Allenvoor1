@@ -22,9 +22,6 @@ public class NewTeamController {
     @GetMapping("/team/all")
     protected String showTeams(Model model){
         model.addAttribute("allTeams", teamRepository.findAll());
-        /* List<Team> teamList = teamRepository.findAll();
-        model.addAttribute("team", new Team());
-        model.addAttribute("teamList", teamList); */
         return "teamOverview";
     }
 
@@ -47,7 +44,7 @@ public class NewTeamController {
             team = new Team();
         }
         model.addAttribute("team", team);
-        return "teamForm";
+        return "teamData";
     }
 
     @PostMapping("/team/new")
@@ -59,5 +56,4 @@ public class NewTeamController {
             return "redirect:/team/all";
         }
     }
-
 }

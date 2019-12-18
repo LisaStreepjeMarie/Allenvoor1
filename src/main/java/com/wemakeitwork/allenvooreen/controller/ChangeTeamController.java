@@ -13,13 +13,13 @@ public class ChangeTeamController {
     @Autowired
     TeamRepository teamRepository;
 
-    @PostMapping("/teams/change")
+    @PostMapping("/team/change")
     protected String saveOrUpdateTeam(@ModelAttribute("team") Team team, BindingResult result){
         if (result.hasErrors()) {
             return "teamData";
         } else {
             teamRepository.save(team);
-            return "redirect:/teams";
+            return "redirect:/team/all";
         }
     }
 }
