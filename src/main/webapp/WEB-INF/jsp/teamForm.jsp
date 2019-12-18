@@ -8,7 +8,7 @@
         <title>Voeg een groep toe</title>
     </head>
     <body class="webpage">
-        <div id="content">
+        <div id="container">
             <p>
                 <form:form action="/logout" method="post">
                    <input type="submit" value="Logout" />

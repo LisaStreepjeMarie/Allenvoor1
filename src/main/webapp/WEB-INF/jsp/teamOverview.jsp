@@ -8,7 +8,7 @@
         <title>Overzicht groepen</title>
     </head>
     <body class="webpage">
-            <div id="content">
+            <div id="container">
                 <p>
                     <form:form action="/logout" method="post">
                        <input type="submit" value="Logout" />
@@ -19,7 +19,7 @@
                     <c:forEach items="${allTeams}" var="team">
                         <tr>
                             <td><a href="/team/select/<c:out value="${team.teamId}" />"><c:out value="${team.teamName}" /></a></td>
-                            <td><a href="/team/delete/${team.teamId}">Verwijder groep hier</a></td>
+                            <td><a href="/team/delete/${team.teamId}">Verwijder groep</a></td>
                         </tr>
                     </c:forEach>
                 </table>
