@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -21,6 +22,9 @@ public class NewTeamController {
     @GetMapping("/team/all")
     protected String showTeams(Model model){
         model.addAttribute("allTeams", teamRepository.findAll());
+        /* List<Team> teamList = teamRepository.findAll();
+        model.addAttribute("team", new Team());
+        model.addAttribute("teamList", teamList); */
         return "teamOverview";
     }
 

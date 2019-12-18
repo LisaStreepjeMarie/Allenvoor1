@@ -1,3 +1,7 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <html>
     <head>
         <link href="../css/style.css" rel="stylesheet" type="text/css"/>
@@ -15,7 +19,6 @@
                     <c:forEach items="${allTeams}" var="team">
                         <tr>
                             <td><c:out value="${team.teamName}" /></td>
-                            <td><c:out value="${team.teamId}" /></td>
                             <td><a href="/team/delete/${team.teamId}">Verwijder groep hier</a></td>
                         </tr>
                     </c:forEach>

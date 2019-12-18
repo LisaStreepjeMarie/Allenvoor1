@@ -10,9 +10,9 @@ public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer teamId;
-
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private String teamName;
+
+    /* @OnDelete(action = OnDeleteAction.CASCADE) */
 
     public Integer getTeamId() {
         return teamId;
