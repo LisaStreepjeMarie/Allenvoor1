@@ -26,13 +26,13 @@ public class NewMemberController{
     //@Secured("ROLE_ADMIN")
     protected String showSignUpForm(Model model) {
         model.addAttribute("member", new Member());
-        return "signUpForm";
+        return "newMember";
     }
 
     @PostMapping("/member/new")
     protected String saveOrUpdateMember(@ModelAttribute("member") @Valid Member member, BindingResult result) {
         if (result.hasErrors()) {
-            return "signUpForm";
+            return "newMember";
         }
         else {
             //TODO: check of aan te maken loginnaam al bestaat (gooit nu whitelabel 500 met SQL constraint error)

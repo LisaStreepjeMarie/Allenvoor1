@@ -22,7 +22,6 @@ public class MemberSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("admin").password(passwordEncoder().encode("admin")).roles("USER","ADMIN");
         auth.authenticationProvider(authProvider());
     }
 
@@ -44,6 +43,7 @@ public class MemberSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
+                .antMatchers("/member/new/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
