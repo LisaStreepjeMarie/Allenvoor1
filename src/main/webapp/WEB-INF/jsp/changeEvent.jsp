@@ -19,13 +19,21 @@
 <body>
 <h1>Wijzig afspraak:</h1>
 <div class="container-fluid">
-    <select id="eventCategory" name="activityCategory" onchange="display()">
-        <c:forEach items="${activityList}" var="activity">
-            <option><c:out value="${activity.activityName}" /></option>
-        </c:forEach>
-    </select>
-    <div id="hidden" style="display:none;">
     <form:form id="hiddenform" action="/event/change" modelAttribute="event" method="post">
+        <div class="row">
+            <div class="col-xs-1">
+                <p class="font-weight-normal">Kies afspraak: </p>
+            </div>
+            <div class="col-xs-2">
+                <select id="eventCategory" name="activityCategory" onchange="display()">
+                    <option disabled selected="selected">Maak keuze</option>
+                    <c:forEach items="${activityList}" var="activity">
+                        <option><c:out value="${activity.activityName}" /></option>
+                    </c:forEach>
+                </select>
+            </div>
+        </div>
+        <div id="hidden" style="display:none;">
         <div class="row">
             <div class="col-xs-1">
                 <p class="font-weight-normal">Eventnaam: </p>

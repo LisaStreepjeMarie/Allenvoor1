@@ -33,9 +33,9 @@ public class NewEventController {
         }
         else {
             //N.B.: activityname == eventname for now
-            //activity.setActivityName(event.getEventName());
-            //event.setActivity(activity);
-            //eventRepository.save(event);
+            activity.setActivityName(event.getEventName());
+            event.setActivity(activity);
+            eventRepository.save(event);
             return "redirect:/event/new";
         }
     }
