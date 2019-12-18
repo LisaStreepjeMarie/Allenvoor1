@@ -102,10 +102,12 @@ body {
 .button {
 	background-color: #777777;
 	vertical-align: middle;
+	font-family: "Open Sans", sans-serif;
 	font-weight: normal;
 	color: #0e4171;
 }
 
 h1 {
+    font-family: "Trebuchet MS", sans-serif;
     color: #0e4171;
 }

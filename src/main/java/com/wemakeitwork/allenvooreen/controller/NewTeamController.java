@@ -18,20 +18,20 @@ public class NewTeamController {
     @Autowired
     TeamRepository teamRepository;
 
-    @GetMapping("/teams")
+    @GetMapping("/team/all")
     protected String showTeams(Model model){
         model.addAttribute("allTeams", teamRepository.findAll());
         return "teamOverview";
     }
 
-    @GetMapping("/teams/add")
+    @GetMapping("/team/new")
     protected String showTeamForm(Model model){
         model.addAttribute("team", new Team());
         model.addAttribute("teamList", teamRepository.findAll());
         return "teamForm";
     }
 
-    @GetMapping("/teams/select/{teamId}")
+    @GetMapping("/team/select/{teamId}")
     protected String showTeamData(@PathVariable("teamId") final Integer teamId, Model model) {
         // extra regel om te testen:
         model.addAttribute("team", new Team());
@@ -42,17 +42,17 @@ public class NewTeamController {
         } else {
             team = new Team();
         }
-        model.addAttribute("book", team);
+        model.addAttribute("team", team);
         return "teamForm";
     }
 
-    @PostMapping("/teams/add")
+    @PostMapping("/team/new")
     protected String saveOrUpdateTeam(@ModelAttribute("team") Team team, BindingResult result){
         if (result.hasErrors()) {
             return "teamForm";
         } else {
             teamRepository.save(team);
-            return "redirect:/teams";
+            return "redirect:/team/all";
         }
     }
 
