@@ -57,7 +57,7 @@
             <div class='col-sm'>
                 <div class="form-group">
                     <div class='input-group date' id='datetimepicker1'>
-                        <input type='datetime-local' class="form-control" name="eventDate" required>
+                        <input type='text' class="form-control" name="eventDate" required>
                         <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                         </span>
