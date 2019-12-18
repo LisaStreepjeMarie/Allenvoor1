@@ -1,9 +1,5 @@
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
 <!doctype html>
-<html lang="en" xmlns:form="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -23,8 +19,9 @@
 <body class="text-center">
 
 <div class="container">
-    <form:form class="form-signin" method="post" action="/login">
-        <img class="mb-4" src="https://upload.wikimedia.org/wikipedia/commons/a/a4/All_for_One_Midmarket_logo.svg" alt="" width="300" height="50">        <h1 class="h3 mb-3 font-weight-normal">Log in:</h1>
+    <form class="form-signin" method="post" action="/login">
+        <img class="mb-4" src="https://upload.wikimedia.org/wikipedia/commons/0/06/Skull_and_Crossbones.svg" alt="" width="72" height="72">
+        <h1 class="h3 mb-3 font-weight-normal">Log in:</h1>
         <label for="username" class="sr-only">Gebruikersnaam</label>
         <input type="text" id="username" name="username" class="form-control" placeholder="Gebruikersnaam" required autofocus>
         <label for="password" class="sr-only">Wachtwoord</label>
@@ -34,11 +31,13 @@
                 <input type="checkbox" value="remember-me">Onthoud mij
             </label>
         </div>
+        <input name="_csrf" type="hidden" value="${_csrf.token}" />
         <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
-    </form:form>
+    </form>
 
     <form class="form-signin" action="/member/new">
-        <h2 class="h3 mb-3 font-weight-normal">Of registreer:</h2>
+        <h1 class="h3 mb-3 font-weight-normal">Of registreer:</h1>
+        <input name="_csrf" type="hidden" value="${_csrf.token}" />
         <button class="btn btn-lg btn-primary btn-block" type="submit">Registreer</button>
         <p class="mt-5 mb-3 text-muted">&copy; 2019 Allenvooreen</p>
     </form>
