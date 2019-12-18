@@ -27,14 +27,6 @@ class MemberTest {
         Assertions.assertThat(testMember.getRol()).isEqualTo("testRol");
     }
 
-
-    @Test
-    void getAuthorities() {
-        //assert
-        Assertions.assertThat(testMember.getAuthorities()).isEqualTo(true);
-    }
-
-
     @Test
     void getUsername() {
         //arrange
