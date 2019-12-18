@@ -5,7 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.security.Principal;
 
 @Controller
 public class ChangeMemberController {
@@ -16,7 +19,13 @@ public class ChangeMemberController {
  @Autowired
  private PasswordEncoder passwordEncoder;
 
- // wijzig gebruiker (ingelogde gebruiker kan gebruikersnaam & wachtwoord wijzigen)
+ @RequestMapping("/member/change")
+ @ResponseBody
+ public String currentMembername(Principal principal){
+  return principal.getName();
+ }
+
+ // change member (logged in member can change own membername/password)
  @RequestMapping("/member/update")
  @ResponseBody
  public String changeMember(int memberId, String membername, String password) {
@@ -30,7 +39,6 @@ public class ChangeMemberController {
   }
   return "Gebruiker gewijzigd";
  }
-
 }
 
 
