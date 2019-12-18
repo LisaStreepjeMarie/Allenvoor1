@@ -8,7 +8,6 @@ import com.wemakeitwork.allenvooreen.repository.ActivityRepository;
 
 import com.wemakeitwork.allenvooreen.service.MemberDetailsService;
 
-import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,15 +22,12 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 
-import static org.hamcrest.Matchers.hasProperty;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.core.IsNull.nullValue;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
+
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = NewActivityController.class)
@@ -54,7 +50,6 @@ class newActivityControllerTest {
     @WithMockUser(roles = "admin")
     public void shouldReturnNewActivity() throws Exception {
         mockMvc.perform(get("/activity/new"))
-                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(forwardedUrl("/WEB-INF/jsp/newActivity.jsp"));
     }
@@ -72,7 +67,7 @@ class newActivityControllerTest {
 
         mockMvc.perform(post("/activity/new")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .sessionAttr("activity", testActivity)
+                .flashAttr("activity", testActivity)
                 .with(csrf())
         )
                 .andExpect(redirectedUrl("/activity/new"));

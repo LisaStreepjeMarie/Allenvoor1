@@ -10,13 +10,13 @@ import java.util.Optional;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-class EventRepositoryIntegrationTest {
+public class EventRepositoryIntegrationTest {
 
     @Autowired
     private EventRepository eventRepository;
 
     @Test
-    public void whenFindByActivityName_thenReturnActivity() {
+    public void whenFindByEventName_thenReturnEvent() {
         // given
         Event testEvent = new Event();
         testEvent.setEventId(2);

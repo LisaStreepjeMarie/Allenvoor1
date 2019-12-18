@@ -14,12 +14,11 @@ import java.util.Optional;
 @DataJpaTest
 public class MemberRepositoryIntegrationTest {
 
-
     @Autowired
     private MemberRepository memberRepository;
 
     @Test
-    public void whenFindByActivityName_thenReturnActivity() {
+    public void whenFindByMemberName_thenReturnMember() {
         // given
         Member testMember = new Member();
         testMember.setMembername("testMember");
