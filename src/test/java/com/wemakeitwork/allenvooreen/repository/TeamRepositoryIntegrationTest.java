@@ -3,6 +3,7 @@ package com.wemakeitwork.allenvooreen.repository;
 import com.wemakeitwork.allenvooreen.model.Member;
 import com.wemakeitwork.allenvooreen.model.Team;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +23,15 @@ class TeamRepositoryIntegrationTest {
     @Autowired
     private TeamRepository teamRepository;
 
+    @BeforeEach
+    void createTeam(){
+        testTeam.setTeamName("testMember");
+        testTeam.setTeamId(2);
+    }
+
     @Test
     public void whenFindByActivityName_thenReturnActivity() {
         // given
-        Team testTeam = new Team();
-        testTeam.setTeamName("testMember");
-        testTeam.setTeamId(2);
         teamRepository.save(testTeam);
 
         // when
@@ -36,6 +40,19 @@ class TeamRepositoryIntegrationTest {
         // then
         result.ifPresent(team -> assertThat(team.getTeamName())
                 .isEqualTo(testTeam.getTeamName()));
+    }
+
+    @org.junit.Test
+    public void deleteTeamTest(){
+        // given
+        teamRepository.save(testTeam);
+
+        // when
+        teamRepository.delete(testTeam);
+
+        // then
+        Assertions.assertThat(teamRepository.findById(2))
+                .isEqualTo(Optional.empty());
     }
 
 }
