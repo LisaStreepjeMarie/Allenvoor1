@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "members")
@@ -21,6 +22,18 @@ public class Member implements UserDetails {
     private String password;
     @Column(name = "rol")
     private String rol;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "team_member", joinColumns = @JoinColumn(name = "teamMemberId"), inverseJoinColumns = @JoinColumn(name = "teamId"))
+    private Set<Team> teamName;
+
+    public Set<Team> getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(Set<Team> teamName) {
+        this.teamName = teamName;
+    }
 
     public String getRol() {
         return rol;

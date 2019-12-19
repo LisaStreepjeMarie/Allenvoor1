@@ -33,6 +33,7 @@ public class NewTeamController {
     @GetMapping("/team/new")
     protected String showTeamForm(Model model){
         model.addAttribute("team", new Team());
+        model.addAttribute("member", new Member());
         model.addAttribute("teamList", teamRepository.findAll());
         return "teamForm";
     }
@@ -53,10 +54,12 @@ public class NewTeamController {
     }
 
     @PostMapping("/team/new")
-    protected String saveOrUpdateTeam(@ModelAttribute("team") Team team, BindingResult result){
+    protected String saveOrUpdateTeam(@ModelAttribute("team") Team team, @ModelAttribute("member") Member member,
+                                      BindingResult result) {
         if (result.hasErrors()) {
             return "teamForm";
         } else {
+            team.getMembername().add(member);
             teamRepository.save(team);
             return "redirect:/team/all";
         }

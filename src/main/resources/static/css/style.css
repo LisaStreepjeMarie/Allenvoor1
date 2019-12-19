@@ -157,5 +157,7 @@ a:hover {
 
 h1 {
     font-family: "Trebuchet MS", sans-serif;
+	font-weight: normal;
+	font-size: 16pt;
     color: #0e4171;
 }
