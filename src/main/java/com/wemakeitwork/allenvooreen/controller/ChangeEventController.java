@@ -49,7 +49,7 @@ public class ChangeEventController {
             activity.setActivityName(event.getEventName());
             event.setActivity(activity);
             eventRepository.save(event);
-            return "redirect:/event/change";
+            return "redirect:/event/all";
         }
     }
 
@@ -57,20 +57,11 @@ public class ChangeEventController {
     protected String showEvent(@PathVariable("eventId") final Integer eventId, Model model) {
         Optional<Event> eventOptional = eventRepository.findById(eventId);
         Event event;
-        if (eventOptional.isPresent()) {
-            event = eventOptional.get();
-        } else {
-            event = new Event();
-        }
+        event = eventOptional.orElseGet(Event::new);
 
         Optional<Activity> activityOptional = activityRepository.findById(event.getActivity().getActivityId());
         Activity activity;
-        if (activityOptional.isPresent()) {
-            activity = activityOptional.get();
-        } else {
-            activity = new Activity();
-        }
-        System.out.println("DIS IS ZE AKTIVITI ID: " + activity.getActivityId());
+        activity = activityOptional.orElseGet(Activity::new);
 
         model.addAttribute("activityId", activity.getActivityId());
         model.addAttribute("event", event);
