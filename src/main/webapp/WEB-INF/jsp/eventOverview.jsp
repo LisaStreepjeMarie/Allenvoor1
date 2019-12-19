@@ -24,7 +24,7 @@
         </c:forEach>
     </table>
     <p>
-        <input class="btn btn-primary" type="submit" value="Voeg groep toe" onclick="window.location='/team/new';" />
+        <input class="btn btn-primary" type="submit" value="Maak nieuwe afspraak" onclick="window.location='/event/new';" />
     </p>
 </div>
 <body>

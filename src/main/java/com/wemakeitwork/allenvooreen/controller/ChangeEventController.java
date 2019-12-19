@@ -28,7 +28,7 @@ public class ChangeEventController {
     @GetMapping("/event/all")
     protected String showTeams(Model model){
         model.addAttribute("allEvents", eventRepository.findAll());
-        return "showEvents";
+        return "eventOverview";
     }
 
     @GetMapping("/event/change")
