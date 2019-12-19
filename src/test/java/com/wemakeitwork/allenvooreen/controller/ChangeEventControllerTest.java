@@ -1,5 +1,6 @@
 package com.wemakeitwork.allenvooreen.controller;
 import com.wemakeitwork.allenvooreen.model.Event;
+import com.wemakeitwork.allenvooreen.repository.ActivityRepository;
 import com.wemakeitwork.allenvooreen.repository.EventRepository;
 import com.wemakeitwork.allenvooreen.service.MemberDetailsService;
 import org.assertj.core.api.Assertions;
@@ -25,8 +26,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(controllers = NewEventController.class)
-class NewEventControllerTest {
+@WebMvcTest(controllers = ChangeEventController.class)
+class ChangeEventControllerTest {
 
     @MockBean
     EventRepository eventRepository;
@@ -35,25 +36,35 @@ class NewEventControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    MemberDetailsService memberDetailsService;
+    ActivityRepository activityRepository;
 
+    @MockBean
+    MemberDetailsService memberDetailsService;
 
     @Test
     @WithMockUser(roles = "admin")
-    void showEventForm() throws Exception {
-        mockMvc.perform(get("/event/new"))
+    void showTeams() throws Exception {
+        mockMvc.perform(get("/event/all"))
                 .andExpect(status().isOk())
-                .andExpect(forwardedUrl("/WEB-INF/jsp/newEvent.jsp"));
+                .andExpect(forwardedUrl("/WEB-INF/jsp/eventOverview.jsp"));
     }
 
     @Test
     @WithMockUser(roles = "admin")
-    void saveOrUpdateEvent() throws Exception {
+    void showChangeEventForm() throws Exception {
+        mockMvc.perform(get("/event/change"))
+                .andExpect(status().isOk())
+                .andExpect(forwardedUrl("/WEB-INF/jsp/changeEvent.jsp"));
+    }
+
+    @Test
+    @WithMockUser(roles = "admin")
+    void changeEvent() throws Exception {
         String eventName = "test2";
         String activitycategory = "test4";
         String eventComment = "testComment";
 
-        mockMvc.perform(post("/event/new")
+        mockMvc.perform(post("/event/change")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("eventName", eventName)
                 .param("activityCategory", activitycategory)
@@ -75,4 +86,7 @@ class NewEventControllerTest {
         Assertions.assertThat(formObject.getEventComment()).isEqualTo(eventComment);
     }
 
+    @Test
+    void showEvent() {
+    }
 }
