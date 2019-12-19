@@ -72,8 +72,8 @@ class newActivityControllerTest {
                 .with(csrf())
         )
                 .andExpect(status().isMovedTemporarily())
-                .andExpect(view().name("redirect:/activity/new"))
-                .andExpect(redirectedUrl("/activity/new"));
+                .andExpect(view().name("redirect:/activity/all"))
+                .andExpect(redirectedUrl("/activity/all"));
 
         ArgumentCaptor<Activity> formObjectArgument = forClass(Activity.class);
         verify(activityRepository, times(1)).save(formObjectArgument.capture());
