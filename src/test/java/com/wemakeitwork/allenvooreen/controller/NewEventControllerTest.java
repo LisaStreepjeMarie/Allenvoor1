@@ -1,9 +1,7 @@
 package com.wemakeitwork.allenvooreen.controller;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import com.wemakeitwork.allenvooreen.model.Activity;
+import com.wemakeitwork.allenvooreen.model.Event;
 import com.wemakeitwork.allenvooreen.repository.ActivityRepository;
+import com.wemakeitwork.allenvooreen.repository.EventRepository;
 import com.wemakeitwork.allenvooreen.service.MemberDetailsService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -18,8 +16,10 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
+import javax.xml.crypto.Data;
+
+import java.util.Date;
+
 import static org.mockito.ArgumentCaptor.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -28,8 +28,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(controllers = NewActivityController.class)
-class newActivityControllerTest {
+@WebMvcTest(controllers = NewEventController.class)
+class NewEventControllerTest {
+
+    @MockBean
+    EventRepository eventRepository;
 
     @MockBean
     ActivityRepository activityRepository;
@@ -40,40 +43,43 @@ class newActivityControllerTest {
     @MockBean
     MemberDetailsService memberDetailsService;
 
+
     @Test
     @WithMockUser(roles = "admin")
-    public void shouldReturnNewActivity() throws Exception {
-        mockMvc.perform(get("/activity/new"))
+    void showEventForm() throws Exception {
+        mockMvc.perform(get("/event/new"))
                 .andExpect(status().isOk())
-                .andExpect(forwardedUrl("/WEB-INF/jsp/newActivity.jsp"));
+                .andExpect(forwardedUrl("/WEB-INF/jsp/newEvent.jsp"));
     }
 
     @Test
     @WithMockUser(roles = "admin")
-    public void shouldReturnNewActivityPost() throws Exception {
-        String activityname = "test2";
+    void saveOrUpdateEvent() throws Exception {
+        String eventName = "test2";
         String activitycategory = "test4";
+        Date date = new Date(2323223232L);
+        String eventComment = "testComment";
 
-        mockMvc.perform(post("/activity/new")
+        mockMvc.perform(post("/event/new")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .param("activityName", activityname)
-                .param("activityCategory",activitycategory)
-                .flashAttr("activity", new Activity())
+                .param("eventName", eventName)
+                .param("activityCategory", activitycategory)
+                .param("eventComment", eventComment)
+                .flashAttr("event", new Event())
                 .with(csrf())
         )
                 .andExpect(status().isMovedTemporarily())
-                .andExpect(view().name("redirect:/activity/all"))
-                .andExpect(redirectedUrl("/activity/all"));
+                .andExpect(view().name("redirect:/event/all"))
+                .andExpect(redirectedUrl("/event/all"));
 
-        ArgumentCaptor<Activity> formObjectArgument = forClass(Activity.class);
-        verify(activityRepository, times(1)).save(formObjectArgument.capture());
-        Mockito.verifyNoMoreInteractions(activityRepository);
+        ArgumentCaptor<Event> formObjectArgument = forClass(Event.class);
+        verify(eventRepository, times(1)).save(formObjectArgument.capture());
+        Mockito.verifyNoMoreInteractions(eventRepository);
 
-        Activity formObject = formObjectArgument.getValue();
+        Event formObject = formObjectArgument.getValue();
 
-        Assertions.assertThat(formObject.getActivityName()).isEqualTo(activityname);
-        Assertions.assertThat(formObject.getActivityCategory()).isEqualTo(activitycategory);
-
+        Assertions.assertThat(formObject.getEventName()).isEqualTo(eventName);
+        Assertions.assertThat(formObject.getEventComment()).isEqualTo(eventComment);
     }
 
 }
