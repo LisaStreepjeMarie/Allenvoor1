@@ -22,7 +22,6 @@ public class MemberSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("admin").password(passwordEncoder().encode("admin")).roles("USER","ADMIN");
         auth.authenticationProvider(authProvider());
     }
 
