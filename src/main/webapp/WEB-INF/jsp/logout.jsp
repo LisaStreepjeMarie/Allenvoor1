@@ -11,10 +11,11 @@
 </head>
 <body>
 <div class="container">
-    <form:form class="form-signin" method="post" action="/logout">
+    <form class="form-signin" method="post" action="/logout">
+        <input name="_csrf" type="hidden" value="${_csrf.token}" />
         <h2 class="form-signin-heading">Are you sure you want to log out?</h2>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Log Out</button>
-    </form:form>
+    </form>
 </div>
 </body>
 </html>

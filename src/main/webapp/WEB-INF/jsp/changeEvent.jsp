@@ -19,27 +19,17 @@
 <body>
 <h1>Wijzig afspraak:</h1>
 <div class="container-fluid">
-    <form:form id="hiddenform" action="/event/change" modelAttribute="event" method="post">
-        <div class="row">
-            <div class="col-xs-1">
-                <p class="font-weight-normal">Kies afspraak: </p>
-            </div>
-            <div class="col-xs-2">
-                <select id="eventCategory" name="activityCategory" onchange="display()">
-                    <option disabled selected="selected">Maak keuze</option>
-                    <c:forEach items="${activityList}" var="activity">
-                        <option><c:out value="${activity.activityName}" /></option>
-                    </c:forEach>
-                </select>
-            </div>
-        </div>
-        <div id="hidden" style="display:none;">
+    <form:form action="/event/change" modelAttribute="event" method="post">
+        <form:input path="eventId" type="hidden" />
+        <input name="activityId" type="hidden" value="${activityId}">
+
+        <div id="hidden">
         <div class="row">
             <div class="col-xs-1">
                 <p class="font-weight-normal">Eventnaam: </p>
             </div>
             <div class="col-xs-2">
-                <input type="text" id="eventName" name="eventName" value="${updateEventName}" required>
+                <input type="text" id="eventName" name="eventName" value="${event.eventName}" required>
             </div>
         </div>
         <div class="row">
@@ -47,7 +37,7 @@
                 <p class="font-weight-normal">Beschrijving: </p>
             </div>
             <div class="col-xs-2">
-                <input type="text" id="eventComment" name="eventComment" value="${updateEventComment}" required>
+                <input type="text" id="eventComment" name="eventComment"  value="${event.eventComment}" required>
             </div>
         </div>
         <div class="row">
@@ -73,8 +63,8 @@
                         <div class='input-group date' id='datetimepicker1'>
                             <input type='text' class="form-control" name="eventDate" required>
                             <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
+                            <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -99,10 +89,5 @@
             format: 'DD/MM/YYYY HH:mm',
         });
     });
-</script>
-<script>
-    function display(){
-        document.getElementById("hidden").style.display = "block";
-}
 </script>
 </html>

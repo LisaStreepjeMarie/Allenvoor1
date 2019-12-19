@@ -25,19 +25,10 @@ public class ChangeEventController {
     ActivityRepository activityRepository;
 
 
-    @GetMapping("/event/select/{eventId}")
-    protected String showTeamData(@PathVariable("teamId") final Integer eventId, Model model) {
-        // extra regel om te testen:
-        model.addAttribute("event", new Event());
-        Optional<Event> eventOptional = eventRepository.findById(eventId);
-        Event event;
-        if (eventOptional.isPresent()) {
-            event = eventOptional.get();
-        } else {
-            event = new Event();
-        }
-        model.addAttribute("event", event);
-        return "changeEvent";
+    @GetMapping("/event/all")
+    protected String showTeams(Model model){
+        model.addAttribute("allEvents", eventRepository.findAll());
+        return "showEvents";
     }
 
     @GetMapping("/event/change")
@@ -55,11 +46,35 @@ public class ChangeEventController {
         }
         else {
             //N.B.: activityname == eventname for now
-            //activity.setActivityName(event.getEventName());
-            //event.setActivity(activity);
-            //eventRepository.save(event);
-            System.out.println("DIT IS DE HUIDIGE EVENT_ID: " + event.getEventId());
+            activity.setActivityName(event.getEventName());
+            event.setActivity(activity);
+            eventRepository.save(event);
             return "redirect:/event/change";
         }
     }
+
+    @GetMapping("/event/select/{eventId}")
+    protected String showEvent(@PathVariable("eventId") final Integer eventId, Model model) {
+        Optional<Event> eventOptional = eventRepository.findById(eventId);
+        Event event;
+        if (eventOptional.isPresent()) {
+            event = eventOptional.get();
+        } else {
+            event = new Event();
+        }
+
+        Optional<Activity> activityOptional = activityRepository.findById(event.getActivity().getActivityId());
+        Activity activity;
+        if (activityOptional.isPresent()) {
+            activity = activityOptional.get();
+        } else {
+            activity = new Activity();
+        }
+        System.out.println("DIS IS ZE AKTIVITI ID: " + activity.getActivityId());
+
+        model.addAttribute("activityId", activity.getActivityId());
+        model.addAttribute("event", event);
+        return "changeEvent";
+    }
+
 }
