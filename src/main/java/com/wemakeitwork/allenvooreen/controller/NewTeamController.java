@@ -1,5 +1,7 @@
 package com.wemakeitwork.allenvooreen.controller;
+import com.wemakeitwork.allenvooreen.model.Member;
 import com.wemakeitwork.allenvooreen.model.Team;
+import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,9 @@ public class NewTeamController {
 
     @Autowired
     TeamRepository teamRepository;
+
+    @Autowired
+    MemberRepository memberRepository;
 
     @GetMapping("/team/all")
     protected String showTeams(Model model){
