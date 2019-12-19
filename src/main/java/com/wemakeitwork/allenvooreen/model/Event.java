@@ -1,5 +1,7 @@
 package com.wemakeitwork.allenvooreen.model;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.Date;
 

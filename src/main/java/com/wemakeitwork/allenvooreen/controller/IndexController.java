@@ -25,4 +25,5 @@ public class IndexController {
     public String calendar() {
         return "calendar";
     }
+
 }
