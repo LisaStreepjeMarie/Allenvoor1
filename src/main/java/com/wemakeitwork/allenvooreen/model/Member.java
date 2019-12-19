@@ -95,4 +95,15 @@ public class Member implements UserDetails {
     public void setMembername(String membername) {
         this.membername = membername;
     }
+
+    @Override
+    public String toString() {
+        return "Member{" +
+                "memberId=" + memberId +
+                ", membername='" + membername + '\'' +
+                ", password='" + password + '\'' +
+                ", rol='" + rol + '\'' +
+                ", teamName=" + teamName +
+                '}';
+    }
 }

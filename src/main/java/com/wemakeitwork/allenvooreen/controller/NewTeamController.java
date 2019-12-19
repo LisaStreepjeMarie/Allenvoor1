@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,6 +57,8 @@ public class NewTeamController {
     @PostMapping("/team/new")
     protected String saveOrUpdateTeam(@ModelAttribute("team") Team team, @ModelAttribute("member") Member member,
                                       BindingResult result) {
+        System.out.println(team);
+        System.out.println(member);
         if (result.hasErrors()) {
             return "teamForm";
         } else {
