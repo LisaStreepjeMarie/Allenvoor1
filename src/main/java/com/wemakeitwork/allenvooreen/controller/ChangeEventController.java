@@ -9,9 +9,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class ChangeEventController {
@@ -23,12 +25,15 @@ public class ChangeEventController {
     ActivityRepository activityRepository;
 
 
+    @GetMapping("/event/all")
+    protected String showTeams(Model model){
+        model.addAttribute("allEvents", eventRepository.findAll());
+        return "eventOverview";
+    }
+
     @GetMapping("/event/change")
     protected String showChangeEventForm(Model model) {
         List<Activity> activityList = activityRepository.findAll();
-        for (Activity activity : activityList) {
-            System.out.println(activity.getActivityId());
-        }
         model.addAttribute(activityList);
         model.addAttribute("event", new Event());
         return "changeEvent";
@@ -42,14 +47,26 @@ public class ChangeEventController {
         else {
             //N.B.: activityname == eventname for now
             activity.setActivityName(event.getEventName());
-            activity.setActivityCategory(activity.getActivityCategory());
             event.setActivity(activity);
-            event.setEventName(event.getEventName());
-            event.setEventId(event.getEventId());
-            event.setEventDate(event.getEventDate());
-            event.setEventComment(event.getEventComment());
             eventRepository.save(event);
-            return "redirect:/event/change";
+            return "redirect:/event/all";
         }
     }
+
+    @GetMapping("/event/select/{eventId}")
+    protected String showEvent(@PathVariable("eventId") final Integer eventId, Model model) {
+        Optional<Event> eventOptional = eventRepository.findById(eventId);
+        Event event;
+        event = eventOptional.orElseGet(Event::new);
+
+        Optional<Activity> activityOptional = activityRepository.findById(event.getActivity().getActivityId());
+        Activity activity;
+        activity = activityOptional.orElseGet(Activity::new);
+
+        model.addAttribute("activityId", activity.getActivityId());
+        model.addAttribute("event", event);
+        return "changeEvent";
+    }
+
 }
+

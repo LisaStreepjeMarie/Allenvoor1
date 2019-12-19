@@ -112,7 +112,7 @@ body {
 	background-color: #ffffff;
 	text-align: left;
 	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-	font-size: 11pt;
+	font-size: 12pt;
 	font-weight: normal;
 	color: #333333;
 	line-height:135%;
@@ -121,6 +121,17 @@ body {
 
 #container {
 
+}
+
+table tr td, table tr th {
+	padding: 4px 10px 4px 0px;
+}
+
+table td {
+	font-size: 12pt;
+	vertical-align: middle;
+	text-align: left;
+	line-height:135%;
 }
 
 a {
