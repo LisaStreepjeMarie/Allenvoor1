@@ -72,7 +72,6 @@ class ChangeEventControllerTest {
                 .flashAttr("event", new Event())
                 .with(csrf())
         )
-                .andExpect(status().isMovedTemporarily())
                 .andExpect(view().name("redirect:/event/all"))
                 .andExpect(redirectedUrl("/event/all"));
 
