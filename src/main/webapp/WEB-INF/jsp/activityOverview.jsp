@@ -19,8 +19,8 @@
             <table>
                 <c:forEach items="${allActivities}" var="activity">
                     <tr>
-                        <td><a href="/team/select/<c:out value="${activity.activityId}" />"><c:out value="${activity.activityName}" /></a></td>
-                        <td><input class="btn btn-primary" type="submit" value="Verwijder activity" onclick="window.location='/team/delete/${activity.activityId}';" /></td>
+                        <td><a href="/activity/select/<c:out value="${activity.activityId}" />"><c:out value="${activity.activityName}" /></a></td>
+                        <td><input class="btn btn-primary" type="submit" value="Verwijder activity" onclick="window.location='/activity/delete/${activity.activityId}';" /></td>
                     </tr>
                 </c:forEach>
             </table>
