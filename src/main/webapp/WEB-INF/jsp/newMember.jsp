@@ -37,7 +37,7 @@
         </form:form>
         <form action="/logout" method="post">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-            <input type="submit" value="Logout" />
+            <input type="submit" value="Terug naar inlogscherm" />
         </form>
     </body>
 </html>
