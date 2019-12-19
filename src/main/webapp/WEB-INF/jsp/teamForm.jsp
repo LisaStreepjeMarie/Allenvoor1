@@ -26,7 +26,6 @@
                     <tr>
                         <td>Groepslid:</td>
                         <td>
-                             <form:input path="teamName" value="" /></form>
                         </td>
                     </tr>
                     <tr><td colspan="2"><input class="btn btn-primary" type="submit" value="Bewaar" /></td></tr>
