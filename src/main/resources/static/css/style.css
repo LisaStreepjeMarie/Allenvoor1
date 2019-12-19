@@ -1,5 +1,17 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
-
+body {
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    background: #ffffff; /* fallback for old browsers */
+  /* background: -webkit-linear-gradient(right, #76b852, #8DC26F);
+  background: -moz-linear-gradient(right, #76b852, #8DC26F);
+  background: -o-linear-gradient(right, #76b852, #8DC26F);
+  background: linear-gradient(to left, #76b852, #8DC26F); */
+    /* font-family: "Roboto", sans-serif; */
+    font-family: "Trebuchet MS", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
 .login-page {
   width: 360px;
   padding: 8% 0 0;
@@ -88,13 +100,62 @@
 .container .info span .fa {
   color: #EF3B3A;
 }
-body {
-  background: #76b852; /* fallback for old browsers */
-  background: -webkit-linear-gradient(right, #76b852, #8DC26F);
-  background: -moz-linear-gradient(right, #76b852, #8DC26F);
-  background: -o-linear-gradient(right, #76b852, #8DC26F);
-  background: linear-gradient(to left, #76b852, #8DC26F);
-  font-family: "Roboto", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+
+/* new design */
+
+.webpage {
+	margin: 30px 0px 0px 30px;
+	padding: 0px 0px 0px 0px;
+	background-position: center top;
+	background-position: 0px 0px 0px 0px;
+	background-repeat: no-repeat;
+	background-color: #ffffff;
+	text-align: left;
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-size: 12pt;
+	font-weight: normal;
+	color: #333333;
+	line-height:135%;
+}
+
+
+#container {
+
+}
+
+table tr td, table tr th {
+	padding: 4px 10px 4px 0px;
+}
+
+table td {
+	font-size: 12pt;
+	vertical-align: middle;
+	text-align: left;
+	line-height:135%;
+}
+
+a {
+    color: #555555;
+	text-decoration: none
+}
+a:visited {
+	color: #0e4171;
+	text-decoration: none
+}
+a:hover {
+	color: #295385;
+	text-decoration: none
+}
+
+.button {
+	background-color: #777777;
+	vertical-align: middle;
+	font-family: "Open Sans", sans-serif;
+	font-weight: normal;
+	color: #0e4171;
+}
+
+h1 {
+    font-family: "Trebuchet MS", sans-serif;
+    color: #0e4171;
 }

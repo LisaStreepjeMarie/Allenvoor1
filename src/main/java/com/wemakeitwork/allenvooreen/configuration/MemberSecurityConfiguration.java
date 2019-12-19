@@ -39,7 +39,7 @@ public class MemberSecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    //Override standaard login pagina
+    //Override default login page
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -49,12 +49,13 @@ public class MemberSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .successHandler(myAuthenticationSuccessHandler())
+                .successHandler(authenticationSuccessHandler())
+                .failureUrl("/login?error=true")
                 .permitAll();
     }
 
     @Bean
-    public AuthenticationSuccessHandler myAuthenticationSuccessHandler(){
+    public AuthenticationSuccessHandler authenticationSuccessHandler() {
         return new UrlAuthenticationSuccessHandler();
     }
 }

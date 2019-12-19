@@ -20,9 +20,6 @@ public class NewEventController {
     @Autowired
     EventRepository eventRepository;
 
-    @Autowired
-    ActivityRepository activityRepository;
-
     @GetMapping("/event/new")
     protected String showEventForm(Model model) {
         model.addAttribute("event", new Event());
@@ -37,14 +34,9 @@ public class NewEventController {
         else {
             //N.B.: activityname == eventname for now
             activity.setActivityName(event.getEventName());
-            activity.setActivityCategory(activity.getActivityCategory());
             event.setActivity(activity);
-            event.setEventName(event.getEventName());
-            event.setEventId(event.getEventId());
-            event.setEventDate(event.getEventDate());
-            event.setEventComment(event.getEventComment());
             eventRepository.save(event);
-            return "redirect:/event/new";
+            return "redirect:/event/all";
         }
     }
 }
