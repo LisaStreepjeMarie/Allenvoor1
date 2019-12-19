@@ -23,7 +23,7 @@
 <body class="text-center">
 <div class="container">
     <form class="form-signin" method="post" action="/login">
-        <img class="mb-4" src="https://upload.wikimedia.org/wikipedia/commons/0/06/Skull_and_Crossbones.svg" alt="" width="72" height="72">
+        <img class="mb-4" src="https://upload.wikimedia.org/wikipedia/commons/a/a4/All_for_One_Midmarket_logo.svg" alt="" width="300" height="50">
         <h1 class="h3 mb-3 font-weight-normal">Log in:</h1>
 
         <c:if test="${param.error}">
