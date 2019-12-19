@@ -43,7 +43,11 @@ class NewTeamControllerTest {
     }
 
     @Test
-    void showTeamForm() {
+    @WithMockUser(roles = "admin")
+    void showTeamForm() throws Exception {
+        mockMvc.perform(get("/team/new"))
+                .andExpect(status().isOk())
+                .andExpect(forwardedUrl("/WEB-INF/jsp/teamForm.jsp"));
     }
 
     @Test
