@@ -14,7 +14,7 @@
                    <input type="submit" value="Logout" />
                </form:form>
             </p>
-            <h1>Wijzig je gegevens</h1>
+            <h1>Wijzig je gegevens:</h1>
             <form:form action="/member/change" modelAttribute="member">
             <form:input path="memberId" type="hidden" />
                 <table>
