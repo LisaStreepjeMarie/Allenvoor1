@@ -1,5 +1,9 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:c="http://www.w3.org/1999/XSL/Transform" xmlns:fmt="" xmlns:spring="" xmlns:beans="">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -17,11 +21,17 @@
 </head>
 
 <body class="text-center">
-
 <div class="container">
     <form class="form-signin" method="post" action="/login">
         <img class="mb-4" src="https://upload.wikimedia.org/wikipedia/commons/0/06/Skull_and_Crossbones.svg" alt="" width="72" height="72">
         <h1 class="h3 mb-3 font-weight-normal">Log in:</h1>
+
+        <c:if test="${param.error}">
+        <div class="alert alert-danger" role="alert">
+            Foute inloggegevens
+        </div>
+        </c:if>
+
         <label for="username" class="sr-only">Gebruikersnaam</label>
         <input type="text" id="username" name="username" class="form-control" placeholder="Gebruikersnaam" required autofocus>
         <label for="password" class="sr-only">Wachtwoord</label>
