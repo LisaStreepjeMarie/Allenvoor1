@@ -15,15 +15,17 @@
                    </form:form>
                 </p>
                 <h1>Overzicht gebruiker</h1>
+                <form:form action="/member/current" modelAttribute="currentmember">
+                <form:input path="memberId" type="hidden" />
                 <table>
-                    <c:forEach items="${currentMember}" var="member">
-                        <tr>
-                            <td><a href="/member/select/<c:out value="${member.memberId}" />"><c:out value="${principal.username}" /></a></td>
-                            <td><a href="/member/delete/${member.memberId}">Verwijder gebruiker</a></td>
+                      <tr>
+                        <td>
+                           <form:input path="membername" value= "${members.membername}" /></form>
+                            </td>
+                           <td><a href="/member/delete/${member_memberId}">Verwijder gebruiker</a></td>
                         </tr>
-                    </c:forEach>
                 </table>
-            </div>
+               </form:form>
+             </div>
         </body>
-    <body>
 </html>

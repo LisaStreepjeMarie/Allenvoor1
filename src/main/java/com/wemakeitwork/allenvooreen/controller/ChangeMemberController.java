@@ -16,11 +16,17 @@ public class ChangeMemberController {
     @Autowired
     private MemberRepository memberRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @PostMapping("/member/change")
-    protected String saveOrUpdateMember(@ModelAttribute("member") Member member, BindingResult result) {
+    protected String saveOrUpdateMember(@ModelAttribute("member") int memberId, String membername, String password, BindingResult result) {
         if (result.hasErrors()) {
             return "changeMember";
         } else {
+            Member member = memberRepository.getOne(memberId);
+            member.setMembername(membername);
+            member.setPassword(passwordEncoder.encode(member.getPassword()));
             memberRepository.save(member);
             return "redirect:/member/all";
         }
