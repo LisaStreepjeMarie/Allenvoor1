@@ -15,17 +15,18 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
+    <link href="../css/style.css" rel="stylesheet" type="text/css"/>
 </head>
-<body class="container">
+ <body class="webpage">
+    <div id="container">
 <h1>Maak nieuwe afspraak aan:</h1>
-<div class="container-fluid">
     <form:form action="/event/new" modelAttribute="event" method="post">
     <div class="row">
         <div class="col-xs-1">
             <p class="font-weight-normal">Eventnaam: </p>
         </div>
         <div class="col-xs-2">
-            <input type="text" id="eventName" name="eventName" value="${updateEventName}" required>
+            <input type="text" id="eventName" class="form-control" name="eventName" value="${updateEventName}" required>
         </div>
     </div>
     <div class="row">
@@ -33,7 +34,7 @@
             <p class="font-weight-normal">Beschrijving: </p>
         </div>
         <div class="col-xs-2">
-            <input type="text" id="eventComment" name="eventComment" value="${updateEventComment}" required>
+            <input type="text" id="eventComment" class="form-control"name="eventComment" value="${updateEventComment}" required>
         </div>
     </div>
     <div class="row">
@@ -41,7 +42,7 @@
             <p class="font-weight-normal">Categorie: </p>
         </div>
         <div class="col-xs-2">
-            <select id="activityCategory" name="activityCategory" required>
+            <select id="activityCategory" class="form-control"name="activityCategory" required>
                 <option disabled selected="selected">Selecteer categorie</option>
                 <option value="Huishouden">Huishouden</option>
                 <option value="Medisch">Medisch</option>
@@ -70,7 +71,7 @@
             <div class="col-xs-1">
             </div>
             <div class="col-xs-2">
-                <input type="submit" value="Maak afspraak!" />
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Maak afspraak!</button>
             </div>
         </div>
     </form:form>
