@@ -1,4 +1,8 @@
-<html>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
+<html xmlns:form="http://www.w3.org/1999/xhtml">
 <head>
     <title>Allen voor 1</title>
     <link href="css/style.css" rel="stylesheet" type="text/css"/>
@@ -9,5 +13,28 @@
 </head>
 <body>
 <h1>Welkom bij de 'Allen voor 1' webinterface</h1>
+
+<div>
+<input type="submit" value="Nieuwe gebruiker" onclick="window.location='/member/new';" />
+</div>
+<div>
+    <input type="submit" value="Wijzig gebruiker" onclick="window.location='/member/change';" />
+</div>
+<div>
+    <input type="submit" value="Profiel" onclick="window.location='/member/current';" />
+</div>
+<div>
+<input type="submit" value="Toon groepen" onclick="window.location='/team/all';" />
+</div>
+<div>
+<input type="submit" value="Toon afspraken" onclick="window.location='/event/all';" />
+</div>
+<div>
+<input type="submit" value="Kalender" onclick="window.location='/calendar';" />
+</div>
+<div>
+<input type="submit" value="Uitloggen" onclick="window.location='/logout';" />
+</div>
+
 </body>
 </html>
