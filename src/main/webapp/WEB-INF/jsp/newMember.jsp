@@ -6,6 +6,8 @@
     <head>
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
                         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+            <link href="https://getbootstrap.com/docs/4.0/examples/sign-in/signin.css" rel="stylesheet">
             <link href="../css/style.css" rel="stylesheet" type="text/css"/>
              <title>Maak een nieuwe gebruiker</title>
     </head>
@@ -26,17 +28,18 @@
                         <form:input path="password" />
                     </td>
                 </tr>
+                </br>
 
                 <tr>
                     <td colspan="2">
-                        <input type="submit" value="Registreer" />
+                        <button class="btn btn-lg btn-primary btn-block" type="submit" >Registeer</button>
                     </td>
                 </tr>
             </table>
         </form:form>
         <form action="/logout" method="post">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-            <input type="submit" value="Logout" />
+             <button class="btn btn-lg btn-primary btn-block" type="submit" >Terug naar inlogscherm</button>
         </form>
        </div>
     <body>
