@@ -24,7 +24,17 @@
                         <td>
                             <form:input path="teamName" value="${team.teamName}" />
                             </form>
-                                <input class="btn btn-primary" type="submit" value="Bewaar" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Groepslid:</td>
+                        <td>
+                            <form:input path="membername" value="${members.membername}" /></form>
+                        </td>
+                    </tr>
+                    <tr colspan="2">
+                        <td>
+                            <input class="btn btn-primary" type="submit" value="Bewaar" />
                         </td>
                     </tr>
                 </table>

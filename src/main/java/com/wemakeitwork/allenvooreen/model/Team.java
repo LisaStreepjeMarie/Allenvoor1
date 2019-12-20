@@ -19,7 +19,7 @@ public class Team {
     @ManyToMany
     // @ManyToMany(cascade = CascadeType.ALL)
     // @JoinTable(name = "team_member", joinColumns = @JoinColumn(name = "memberId"), inverseJoinColumns = @JoinColumn(name = "teamMemberId"))
-    private Set<Member> membername = new HashSet<>();
+    public Set<Member> membername = new HashSet<>();
 
     public Set<Member> getMembername() {
         return membername;
