@@ -4,6 +4,7 @@ import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,12 @@ public class ChangeMemberController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @GetMapping("member/current")
+    protected String showMember(Model model, Principal principal){
+        model.addAttribute("currentmember", memberRepository.findByMembername(principal.getName()));
+        return "memberOverview";
+    }
+
     @PostMapping("/member/change")
     protected String saveOrUpdateMember(@ModelAttribute("member") int memberId, String membername, String password, BindingResult result) {
         if (result.hasErrors()) {
@@ -28,7 +35,7 @@ public class ChangeMemberController {
             member.setMembername(membername);
             member.setPassword(passwordEncoder.encode(member.getPassword()));
             memberRepository.save(member);
-            return "redirect:/member/all";
+            return "redirect:/member/current";
         }
     }
 

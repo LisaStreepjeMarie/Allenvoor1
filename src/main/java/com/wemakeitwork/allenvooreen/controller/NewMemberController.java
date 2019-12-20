@@ -25,11 +25,6 @@ public class NewMemberController{
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @GetMapping("member/current")
-    protected String showMember(Model model, Principal principal){
-        model.addAttribute("currentmember", memberRepository.findByMembername(principal.getName()));
-        return "memberOverview";
-    }
 
     @GetMapping("/member/select/{memberId}")
     protected String showMemberData(@PathVariable("memberId") final Integer memberId, Model model, Principal principal) {

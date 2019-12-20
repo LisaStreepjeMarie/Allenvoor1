@@ -22,7 +22,8 @@
                         <td>
                            <form:input path="membername" value= "${members.membername}" /></form>
                             </td>
-                           <td><a href="/member/delete/${member_memberId}">Verwijder gebruiker</a></td>
+                            <td><a href="/team/select/<c:out value="${members.memberId}" />"><c:out value="${members.membername}" /></a></td>
+                           <td><a href="/member/delete/${members.memberId}">Verwijder je profiel</a></td>
                         </tr>
                 </table>
                </form:form>
