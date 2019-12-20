@@ -4,34 +4,56 @@ import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.constraints.Positive;
+import java.security.Principal;
+import java.util.Optional;
 
 @Controller
 public class ChangeMemberController {
 
- @Autowired
- private MemberRepository memberRepository;
+    @Autowired
+    private MemberRepository memberRepository;
 
- @Autowired
- private PasswordEncoder passwordEncoder;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
- // wijzig gebruiker (ingelogde gebruiker kan gebruikersnaam & wachtwoord wijzigen)
- @RequestMapping("/member/update")
- @ResponseBody
- public String changeMember(int memberId, String membername, String password) {
-  try {
-   Member member = memberRepository.getOne(memberId);
-   member.setMembername(membername);
-   member.setPassword(passwordEncoder.encode(member.getPassword()));
-   memberRepository.save(member);
-  } catch (Exception ex) {
-   return "Error " + ex.toString();
-  }
-  return "Gebruiker gewijzigd";
- }
+    @GetMapping("member/current")
+    protected String showMember(Model model, Principal principal){
+        model.addAttribute("currentmember", memberRepository.findByMembername(principal.getName()));
+        return "memberOverview";
+    }
 
+    @PostMapping("/member/change")
+    protected String saveOrUpdateMember(@ModelAttribute("member") Member newNameMember, BindingResult result, Principal principal) {
+        if (result.hasErrors()) {
+            return "changeMember";
+        } else {
+            Optional<Member> originalMember = memberRepository.findByMembername(principal.getName());
+            if (originalMember.isPresent()){
+                newNameMember.setPassword(originalMember.get().getPassword());
+                newNameMember.setMemberId(originalMember.get().getMemberId());
+            }
+            memberRepository.save(newNameMember);
+            return "redirect:/member/current";
+        }
+    }
+
+    @GetMapping("/member/change")
+    protected String goToMemberChange(Model model){
+        model.addAttribute("member", new Member());
+        return "changeMember";
+    }
 }
+
+
+
+
+
+
 
 
 
