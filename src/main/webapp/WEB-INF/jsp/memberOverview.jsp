@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<html>
+<html xmlns:form="http://www.w3.org/1999/xhtml" xmlns:c="">
     <head>
         <link href="../css/style.css" rel="stylesheet" type="text/css"/>
         <title>Overzicht gebruiker</title>
@@ -23,7 +23,7 @@
                            <form:input path="membername" value= "${members.membername}" /></form>
                             </td>
                             <td><a href="/team/select/<c:out value="${members.memberId}" />"><c:out value="${members.membername}" /></a></td>
-                           <td><a href="/member/delete/${members.memberId}">Verwijder je profiel</a></td>
+                           <td><a href="/member/delete">Verwijder je profiel</a></td>
                         </tr>
                 </table>
                </form:form>

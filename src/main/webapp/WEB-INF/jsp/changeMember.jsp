@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<html>
+<html xmlns:form="http://www.w3.org/1999/xhtml">
     <head>
         <link href="../css/style.css" rel="stylesheet" type="text/css"/>
         <title>Wijzig je gegevens gebruiker</title>

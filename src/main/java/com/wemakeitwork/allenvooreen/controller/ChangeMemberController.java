@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Positive;
 import java.security.Principal;
+import java.util.Optional;
 
 @Controller
 public class ChangeMemberController {
@@ -27,20 +28,23 @@ public class ChangeMemberController {
     }
 
     @PostMapping("/member/change")
-    protected String saveOrUpdateMember(@ModelAttribute("member") int memberId, String membername, String password, BindingResult result) {
+    protected String saveOrUpdateMember(@ModelAttribute("member") Member newNameMember, BindingResult result, Principal principal) {
         if (result.hasErrors()) {
             return "changeMember";
         } else {
-            Member member = memberRepository.getOne(memberId);
-            member.setMembername(membername);
-            member.setPassword(passwordEncoder.encode(member.getPassword()));
-            memberRepository.save(member);
+            Optional<Member> originalMember = memberRepository.findByMembername(principal.getName());
+            if (originalMember.isPresent()){
+                newNameMember.setPassword(originalMember.get().getPassword());
+                newNameMember.setMemberId(originalMember.get().getMemberId());
+            }
+            memberRepository.save(newNameMember);
             return "redirect:/member/current";
         }
     }
 
     @GetMapping("/member/change")
-    protected String goToMemberChange(@ModelAttribute("member") Member member, BindingResult result){
+    protected String goToMemberChange(Model model){
+        model.addAttribute("member", new Member());
         return "changeMember";
     }
 }
