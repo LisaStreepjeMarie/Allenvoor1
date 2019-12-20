@@ -123,12 +123,16 @@ body {
 
 }
 
-table tr td, table tr th {
+table tr td {
+    font-family: "Open Sans", Arial, Helvetica, sans-serif;
 	padding: 4px 10px 4px 0px;
 }
 
-table td {
-    font-family: "Open Sans", Arial, Helvetica, sans-serif;
+table tr th {
+    font-size: 16pt;
+}
+
+td {
 	font-size: 12pt;
 	vertical-align: middle;
 	text-align: left;
