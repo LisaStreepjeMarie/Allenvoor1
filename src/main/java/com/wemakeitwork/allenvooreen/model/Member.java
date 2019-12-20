@@ -4,27 +4,34 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "members")
 public class Member implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer memberId;
-
-    @Column (name = "membername", unique = true, nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer memberId = 0;
+    // @Column(name = "membername", unique = true)
     private String membername;
-
-    @Column(name = "password", nullable = false)
+    // @Column(name = "password")
     private String password;
-
-    @Column(name = "rol")
+    // @Column(name = "rol")
     private String rol;
+
+    @ManyToMany
+    // @ManyToMany(cascade = CascadeType.ALL)
+    // @JoinTable(name = "team_member", joinColumns = @JoinColumn(name = "teamMemberId"), inverseJoinColumns = @JoinColumn(name = "teamId"))
+    private Set<Team> teamName = new HashSet<>();
+
+    public Set<Team> getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(Set<Team> teamName) {
+        this.teamName = teamName;
+    }
 
     public String getRol() {
         return rol;
@@ -42,12 +49,15 @@ public class Member implements UserDetails {
     public Collection<GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        System.out.println(authorities);
         return authorities;
     }
+
     @Override
     public String getUsername() {
         return this.getMembername();
     }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -79,24 +89,26 @@ public class Member implements UserDetails {
     public String getPassword() {
         return password;
     }
-
-    public String setPassword(String password) {
-        if (password != null && password.isEmpty()) {
-            return null;
-        } else {
-            return this.password = password;
-        }
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getMembername() {
         return membername;
     }
 
-    public String setMembername(String membername) {
-        if (membername != null && membername.isEmpty()) {
-            return null;
-        } else {
-            return this.membername= membername;
-        }
+    public void setMembername(String membername) {
+        this.membername = membername;
     }
+
+//    @Override
+//    public String toString() {
+//        return "Member{" +
+//                "memberId=" + memberId +
+//                ", membername='" + membername + '\'' +
+//                ", password='" + password + '\'' +
+//                ", rol='" + rol + '\'' +
+//                ", teamName=" + teamName +
+//                '}';
+//    }
 }
