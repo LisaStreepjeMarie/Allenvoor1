@@ -3,15 +3,31 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
+// @Table(name = "team")
 public class Team {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer teamId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int teamId = 0;
+
+    // @Column(name = "teamName")
     private String teamName;
 
-    /* @OnDelete(action = OnDeleteAction.CASCADE) */
+    @ManyToMany
+    // @ManyToMany(cascade = CascadeType.ALL)
+    // @JoinTable(name = "team_member", joinColumns = @JoinColumn(name = "memberId"), inverseJoinColumns = @JoinColumn(name = "teamMemberId"))
+    private Set<Member> membername = new HashSet<>();
+
+    public Set<Member> getMembername() {
+        return membername;
+    }
+
+    public void setMembername(Set<Member> membername) {
+        this.membername = membername;
+    }
 
     public Integer getTeamId() {
         return teamId;
@@ -32,4 +48,13 @@ public class Team {
             return this.teamName = teamName;
         }
     }
+
+    /* @Override
+    public String toString() {
+        return "Team{" +
+                "teamId=" + teamId +
+                ", teamName='" + teamName + '\'' +
+                ", membername=" + membername +
+                '}';
+    } */
 }

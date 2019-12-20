@@ -118,21 +118,21 @@ body {
 	line-height:135%;
 }
 
-
 #container {
 
 }
 
-table tr td {
+table tr td, table tr th {
     font-family: "Open Sans", Arial, Helvetica, sans-serif;
 	padding: 4px 10px 4px 0px;
 }
 
 table tr th {
     font-size: 16pt;
+    color: #0e4171;
 }
 
-td {
+th, td {
 	font-size: 12pt;
 	vertical-align: middle;
 	text-align: left;
@@ -144,7 +144,7 @@ p {}
 	line-height:135%;
     font-family: "Open Sans", Arial, Helvetica, sans-serif;
     font-size: 12pt;
-    color: #ff0000;
+    color: #555555;
 }
 
 a {
