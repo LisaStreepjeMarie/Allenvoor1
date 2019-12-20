@@ -1,4 +1,5 @@
 package com.wemakeitwork.allenvooreen.model;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -38,5 +39,4 @@ public class Activity {
     public void setActivityCategory(String activityCategory) {
         this.activityCategory = activityCategory;
     }
-
 }

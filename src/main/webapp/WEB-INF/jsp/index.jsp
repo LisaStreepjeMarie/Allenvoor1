@@ -18,6 +18,12 @@
 <input type="submit" value="Nieuwe gebruiker" onclick="window.location='/member/new';" />
 </div>
 <div>
+    <input type="submit" value="Wijzig gebruiker" onclick="window.location='/member/change';" />
+</div>
+<div>
+    <input type="submit" value="Profiel" onclick="window.location='/member/current';" />
+</div>
+<div>
 <input type="submit" value="Toon groepen" onclick="window.location='/team/all';" />
 </div>
 <div>
