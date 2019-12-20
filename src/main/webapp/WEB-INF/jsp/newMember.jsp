@@ -13,7 +13,8 @@
     </head>
     <body class="webpage">
         <div id="container">
-        <h1>Registeren</h1>
+            <img class="mb-4" src="https://upload.wikimedia.org/wikipedia/commons/a/a4/All_for_One_Midmarket_logo.svg" alt="" width="300" height="50">
+            <h1 class="h3 mb-3 font-weight-normal">Registeren</h1>
          <form:form action="/member/new" modelAttribute="member">
             <table>
                 <tr>
@@ -26,6 +27,7 @@
                     <td>Wachtwoord:</td>
                     <td>
                         <form:input path="password" />
+                        </br>
                     </td>
                 </tr>
                 </br>
