@@ -40,13 +40,17 @@
                         <button class="btn btn-lg btn-primary btn-block" type="submit">Registreer</button>
                     </td>
                 </tr>
-            </table>
            </form:form>
-            <form action="/logout" method="post">
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Inloggen</button>
+           <tr>
+            <td colspan="2">
+        <form action="/logout" method="post">
+              <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+              <button class="btn btn-lg btn-primary btn-block" type="submit">Inloggen</button>
                 <p class="mt-5 mb-3 text-muted">&copy; 2019 Allenvooreen</p>
+                </td>
+               </tr>
             </form>
+          </table>
     </body>
 </html>
 
