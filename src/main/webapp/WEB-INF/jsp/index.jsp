@@ -14,13 +14,21 @@
 <body>
 <h1>Welkom bij de 'Allen voor 1' webinterface</h1>
 
-<input type="submit" value="Nieuwe gebruiker" onclick="window.location='/member/new';" /><br><br>
-<input type="submit" value="Nieuwe activiteit" onclick="window.location='/activity/new';" /><br><br>
-<input type="submit" value="Nieuwe afspraak" onclick="window.location='/event/new';" /><br><br>
-<input type="submit" value="Wijzig afspraak" onclick="window.location='/event/change';" /><br><br>
-<input type="submit" value="Nieuwe Event" onclick="window.location='/event/new';" /><br><br>
-<input type="submit" value="Uitloggen" onclick="window.location='/logout';" /><br><br>
-<input type="submit" value="Kalender" onclick="window.location='/calender';" />
+<div>
+<input type="submit" value="Nieuwe gebruiker" onclick="window.location='/member/new';" />
+</div>
+<div>
+<input type="submit" value="Toon groepen" onclick="window.location='/team/all';" />
+</div>
+<div>
+<input type="submit" value="Toon afspraken" onclick="window.location='/event/all';" />
+</div>
+<div>
+<input type="submit" value="Kalender" onclick="window.location='/calendar';" />
+</div>
+<div>
+<input type="submit" value="Uitloggen" onclick="window.location='/logout';" />
+</div>
 
 </body>
 </html>

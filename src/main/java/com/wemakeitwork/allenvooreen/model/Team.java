@@ -3,22 +3,24 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "team")
+// @Table(name = "team")
 public class Team {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int teamId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int teamId = 0;
 
-    @Column(name = "teamName")
+    // @Column(name = "teamName")
     private String teamName;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "team_member", joinColumns = @JoinColumn(name = "memberId"), inverseJoinColumns = @JoinColumn(name = "teamMemberId"))
-    private Set<Member> membername;
+    @ManyToMany
+    // @ManyToMany(cascade = CascadeType.ALL)
+    // @JoinTable(name = "team_member", joinColumns = @JoinColumn(name = "memberId"), inverseJoinColumns = @JoinColumn(name = "teamMemberId"))
+    private Set<Member> membername = new HashSet<>();
 
     public Set<Member> getMembername() {
         return membername;
@@ -48,12 +50,12 @@ public class Team {
         }
     }
 
-    @Override
+    /* @Override
     public String toString() {
         return "Team{" +
                 "teamId=" + teamId +
                 ", teamName='" + teamName + '\'' +
                 ", membername=" + membername +
                 '}';
-    }
+    } */
 }

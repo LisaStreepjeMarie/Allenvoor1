@@ -16,6 +16,11 @@ public class IndexController {
         return "/login";
     }
 
+    @GetMapping("/logout")
+    public String logout() {
+        return "/logout";
+    }
+
     @GetMapping("/calendar")
     public String calendar() {
         return "calendar";

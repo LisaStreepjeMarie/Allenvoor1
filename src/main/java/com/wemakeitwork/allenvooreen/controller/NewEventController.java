@@ -36,7 +36,7 @@ public class NewEventController {
             activity.setActivityName(event.getEventName());
             event.setActivity(activity);
             eventRepository.save(event);
-            return "redirect:/event/new";
+            return "redirect:/event/all";
         }
     }
 }

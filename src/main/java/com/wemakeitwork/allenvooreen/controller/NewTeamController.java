@@ -1,4 +1,5 @@
 package com.wemakeitwork.allenvooreen.controller;
+
 import com.wemakeitwork.allenvooreen.model.Member;
 import com.wemakeitwork.allenvooreen.model.Team;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
@@ -26,13 +28,13 @@ public class NewTeamController {
     MemberRepository memberRepository;
 
     @GetMapping("/team/all")
-    protected String showTeams(Model model){
+    protected String showTeams(Model model) {
         model.addAttribute("allTeams", teamRepository.findAll());
         return "teamOverview";
     }
 
     @GetMapping("/team/new")
-    protected String showTeamForm(Model model){
+    protected String showTeamForm(Model model) {
         model.addAttribute("team", new Team());
         model.addAttribute("member", new Member());
         model.addAttribute("teamList", teamRepository.findAll());
@@ -55,16 +57,24 @@ public class NewTeamController {
     }
 
     @PostMapping("/team/new")
-    protected String saveOrUpdateTeam(@ModelAttribute("team") Team team, @ModelAttribute("member") Member member,
-                                      BindingResult result) {
-        System.out.println(team);
-        System.out.println(member);
-        if (result.hasErrors()) {
+    protected String saveOrUpdateTeam(HttpServletRequest request) {
+      // System.out.println(team);
+
+        String teamName = request.getParameter("teamName");
+        String membername = request.getParameter("membername");
+        System.out.println("teamName: " + teamName);
+        System.out.println("membername: " + membername);
+        /* if (result.hasErrors()) {
             return "teamForm";
-        } else {
-            team.getMembername().add(member);
-            teamRepository.save(team);
-            return "redirect:/team/all";
-        }
+        } else { */
+        Team team = new Team();
+        team.setTeamName(teamName);
+        Member member = memberRepository.findByMembername(membername).get();
+        member.getTeamName().add(team);
+        team.getMembername().add(member);
+        teamRepository.save(team);
+        memberRepository.save(member);
+        return "redirect:/team/all";
+        //}
     }
 }
