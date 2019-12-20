@@ -70,7 +70,7 @@
             <div class="col-xs-1">
             </div>
             <div class="col-xs-2">
-                <input type="submit" value="Maak afspraak!" />
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Maak afspraak!</button>
             </div>
         </div>
     </form:form>

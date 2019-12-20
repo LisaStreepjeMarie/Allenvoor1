@@ -32,8 +32,6 @@
                         </br>
                     </td>
                 </tr>
-
-
                 <tr>
                     <td colspan="2">
                         <button class="btn btn-lg btn-primary btn-block" type="submit">Registreer</button>
