@@ -33,7 +33,6 @@ public class Member implements UserDetails {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "member_team", joinColumns = @JoinColumn(name = "member_id"), inverseJoinColumns = @JoinColumn(name = "team_id"))
 
-
     public void setRol(String rol) {
         this.rol = rol;
     }
