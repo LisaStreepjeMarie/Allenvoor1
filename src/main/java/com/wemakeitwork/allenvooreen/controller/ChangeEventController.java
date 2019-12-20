@@ -1,4 +1,8 @@
 package com.wemakeitwork.allenvooreen.controller;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.wemakeitwork.allenvooreen.model.Activity;
 import com.wemakeitwork.allenvooreen.model.Event;
 import com.wemakeitwork.allenvooreen.repository.ActivityRepository;
@@ -12,8 +16,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.jsp.tagext.Tag;
+import java.sql.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 @Controller
 public class ChangeEventController {
@@ -24,9 +34,8 @@ public class ChangeEventController {
     @Autowired
     ActivityRepository activityRepository;
 
-
     @GetMapping("/event/all")
-    protected String showTeams(Model model){
+    protected String showTeams(Model model) {
         model.addAttribute("allEvents", eventRepository.findAll());
         return "eventOverview";
     }

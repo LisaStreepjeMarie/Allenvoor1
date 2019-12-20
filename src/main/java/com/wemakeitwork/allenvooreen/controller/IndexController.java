@@ -1,7 +1,11 @@
 package com.wemakeitwork.allenvooreen.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.wemakeitwork.allenvooreen.model.Event;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Controller
 public class IndexController {
@@ -22,7 +26,9 @@ public class IndexController {
     }
 
     @GetMapping("/calendar")
-    public String calendar() {
+    public String calendar(@ModelAttribute("event") Event event, Model model) throws JsonProcessingException {
+        String eventJson = EventToJson.eventToJson(event);
+        model.addAttribute(eventJson);
         return "calendar";
     }
 
