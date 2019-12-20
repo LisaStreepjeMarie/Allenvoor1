@@ -5,21 +5,18 @@
 <html xmlns:form="http://www.w3.org/1999/xhtml">
     <head>
         <title>Maak een nieuwe gebruiker</title>
+        <!-- Bootstrap core CSS -->
+                <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <link href="https://getbootstrap.com/docs/4.0/examples/sign-in/signin.css" rel="stylesheet">
-        <link href="../css/style.css" rel="stylesheet" type="text/css"/>
-
+                <!-- Custom styles for this template -->
+                <link href="https://getbootstrap.com/docs/4.0/examples/sign-in/signin.css" rel="stylesheet">
+            </head>
     </head>
     <body class="webpage">
         <div class="container">
             <form class="form-signin" method="post" action="/member/new">
-                <img class="mb-4" src="https://upload.wikimedia.org/wikipedia/commons/a/a4/All_for_One_Midmarket_logo.svg" alt="" width="300" height="50">
+             <img class="mb-4" src="https://upload.wikimedia.org/wikipedia/commons/a/a4/All_for_One_Midmarket_logo.svg" alt="" width="240" height="50">
                 <h1 class="h3 mb-3 font-weight-normal">Nieuw? Meld je aan:</h1>
-
-
 
         <form:form action="/member/new" modelAttribute="member">
             <table>
@@ -32,9 +29,9 @@
                     <td>
                         <form:input path="password" class="form-control" placeholder= "Wachtwoord"/>
                         </br>
+                     </div>
                     </td>
                 </tr>
-
                 <tr>
                     <td colspan="2">
                         <button class="btn btn-lg btn-primary btn-block" type="submit">Registreer</button>
