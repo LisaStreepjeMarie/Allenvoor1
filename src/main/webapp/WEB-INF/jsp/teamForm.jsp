@@ -11,8 +11,8 @@
     </head>
     <body class="webpage">
         <div id="container">
-            <p>
-                <input class="btn btn-primary" type="submit" value="Logout" onclick="window.location='/logout';" />
+            <p class="text">
+                <input class="btn btn-primary" type="submit" value="Logout" onclick="window.location='/logout';" /> test
             </p>
             <h1>Voeg gegevens groep toe</h1>
             <form:form action="/team/new" modelAttribute="team">

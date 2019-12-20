@@ -4,16 +4,15 @@
 
 <html xmlns:form="http://www.w3.org/1999/xhtml">
     <head>
-        <title>Maak een nieuwe gebruiker</title>
-
-        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+                        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+            <link href="../css/style.css" rel="stylesheet" type="text/css"/>
+             <title>Maak een nieuwe gebruiker</title>
     </head>
-    <body>
-        <h4>Registeren</h4>
-
-        <form:form action="/member/new" modelAttribute="member">
+    <body class="webpage">
+        <div id="container">
+        <h1>Registeren</h1>
+         <form:form action="/member/new" modelAttribute="member">
             <table>
                 <tr>
                     <td>Naam:</td>
@@ -39,7 +38,8 @@
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="submit" value="Logout" />
         </form>
-    </body>
+       </div>
+    <body>
 </html>
 
 

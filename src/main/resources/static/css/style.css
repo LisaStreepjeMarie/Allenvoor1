@@ -128,10 +128,19 @@ table tr td, table tr th {
 }
 
 table td {
+    font-family: "Open Sans", Arial, Helvetica, sans-serif;
 	font-size: 12pt;
 	vertical-align: middle;
 	text-align: left;
 	line-height:135%;
+}
+
+p {}
+.text {
+	line-height:135%;
+    font-family: "Open Sans", Arial, Helvetica, sans-serif;
+    font-size: 12pt;
+    color: #ff0000;
 }
 
 a {
@@ -150,12 +159,14 @@ a:hover {
 .button {
 	background-color: #777777;
 	vertical-align: middle;
-	font-family: "Open Sans", sans-serif;
+	font-family: "Open Sans", Arial, Helvetica, sans-serif;
 	font-weight: normal;
 	color: #0e4171;
 }
 
 h1 {
     font-family: "Trebuchet MS", sans-serif;
+    font-size: 26pt;
     color: #0e4171;
 }
+

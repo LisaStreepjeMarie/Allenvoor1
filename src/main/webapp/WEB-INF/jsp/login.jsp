@@ -18,40 +18,41 @@
 
     <!-- Custom styles for this template -->
     <link href="https://getbootstrap.com/docs/4.0/examples/sign-in/signin.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet" type="text/css"/>
 </head>
 
-<body class="text-center">
-<div class="container">
-    <form class="form-signin" method="post" action="/login">
-        <img class="mb-4" src="https://upload.wikimedia.org/wikipedia/commons/a/a4/All_for_One_Midmarket_logo.svg" alt="" width="300" height="50">
-        <h1 class="h3 mb-3 font-weight-normal">Log in:</h1>
+<body class="webpage">
+    <div class="container">
+        <form class="form-signin" method="post" action="/login">
+            <img class="mb-4" src="https://upload.wikimedia.org/wikipedia/commons/a/a4/All_for_One_Midmarket_logo.svg" alt="" width="300" height="50">
+            <h1 class="h3 mb-3 font-weight-normal">Log in:</h1>
 
-        <c:if test="${param.error}">
-        <div class="alert alert-danger" role="alert">
-            Foute inloggegevens
-        </div>
-        </c:if>
+            <c:if test="${param.error}">
+            <div class="alert alert-danger" role="alert">
+                Foute inloggegevens
+            </div>
+            </c:if>
 
-        <label for="username" class="sr-only">Gebruikersnaam</label>
-        <input type="text" id="username" name="username" class="form-control" placeholder="Gebruikersnaam" required autofocus>
-        <label for="password" class="sr-only">Wachtwoord</label>
-        <input type="password" id="password" name="password" class="form-control" placeholder="Wachtwoord" required>
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" value="remember-me">Onthoud mij
-            </label>
-        </div>
-        <input name="_csrf" type="hidden" value="${_csrf.token}" />
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
-    </form>
+            <label for="username" class="sr-only">Gebruikersnaam</label>
+            <input type="text" id="username" name="username" class="form-control" placeholder="Gebruikersnaam" required autofocus>
+            <label for="password" class="sr-only">Wachtwoord</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Wachtwoord" required>
+            <div class="checkbox mb-3">
+                <p class="text">
+                    <input type="checkbox" value="remember-me"> Onthoud mij
+                </p>
+            </div>
+            <input name="_csrf" type="hidden" value="${_csrf.token}" />
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
+        </form>
 
-    <form class="form-signin" action="/member/new">
-        <h1 class="h3 mb-3 font-weight-normal">Of registreer:</h1>
-        <input name="_csrf" type="hidden" value="${_csrf.token}" />
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Registreer</button>
-        <p class="mt-5 mb-3 text-muted">&copy; 2019 Allenvooreen</p>
-    </form>
-</div >
+        <form class="form-signin" action="/member/new">
+            <h1 class="h3 mb-3 font-weight-normal">Of registreer:</h1>
+            <input name="_csrf" type="hidden" value="${_csrf.token}" />
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Registreer</button>
+            <p class="mt-5 mb-3 text-muted">&copy; 2019 Allenvooreen</p>
+        </form>
+    </div >
 
 </body>
 </html>

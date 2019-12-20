@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
 </head>
-<body>
+<body class="container">
 <h1>Maak nieuwe afspraak aan:</h1>
 <div class="container-fluid">
     <form:form action="/event/new" modelAttribute="event" method="post">
