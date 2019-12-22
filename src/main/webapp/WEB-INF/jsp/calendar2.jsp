@@ -3,7 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <!DOCTYPE html>
-<html>
+<html xmlns:form="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset='utf-8' />
     <title>Kalender</title>
@@ -40,9 +40,17 @@
     <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' rel='stylesheet' />
 </head>
 <body>
+<h1>asjdios</h1>
     <div class="container w-80 p-3">
         <div id="calendar"></div>
     </div>
+<div class="row">
+    <div class="col-xs-1">
+    </div>
+    <div class="col-xs-2">
+        <input type="submit" value="Maak nieuwe afspraak" onclick="window.location='/event/new';" />
+    </div>
+</div>
 </body>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
@@ -65,7 +73,7 @@
       },
       weekNumbers: true,
       eventLimit: true, // allow "more" link when too many events
-      events: 'https://fullcalendar.io/demo-events.json'
+      events: ${calendarData}
     });
 
     calendar.render();
