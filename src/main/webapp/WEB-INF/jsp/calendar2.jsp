@@ -40,7 +40,6 @@
     <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' rel='stylesheet' />
 </head>
 <body>
-<h1>asjdios</h1>
     <div class="container w-80 p-3">
         <div id="calendar"></div>
     </div>
