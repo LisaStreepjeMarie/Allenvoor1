@@ -96,6 +96,7 @@
 <script>
 $(function() {
   $('#dateTimePickerStartDate').datetimepicker({
+     <!-- month before day -->
      format: 'MM/DD/YYYY HH:mm',
    });
    $('#dateTimePickerEndDate').datetimepicker({
