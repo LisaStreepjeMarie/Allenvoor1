@@ -2,12 +2,16 @@ package com.wemakeitwork.allenvooreen.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wemakeitwork.allenvooreen.model.Activity;
 import com.wemakeitwork.allenvooreen.model.Event;
 import com.wemakeitwork.allenvooreen.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -23,8 +27,22 @@ public class CalendarController {
         for (Event event : eventList) {
             calendarData += "" + new ObjectMapper().writeValueAsString(event) + ",";
         }
+        model.addAttribute("event", new Event());
         model.addAttribute("calendarData", calendarData);
         return "calendar2";
     }
 
+    @PostMapping("/calendar/new")
+    protected String newEventCalendar(@ModelAttribute("event") Event event, Activity activity, BindingResult result) {
+        if (result.hasErrors()) {
+            return "calendar2";
+        }
+        else {
+            //N.B.: activityname == eventname for now
+            activity.setActivityName(event.getEventName());
+            event.setActivity(activity);
+            eventRepository.save(event);
+            return "redirect:/calendar";
+        }
+    }
 }

@@ -43,7 +43,7 @@
 
 </head>
 <body>
-<p>${calendarData}</p>
+<form:form action="/calendar/new" modelAttribute="event" method="post">
     <div class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -54,20 +54,20 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-xs-12">
-                            <label class="col-xs-4" for="title">Onderwerp</label>
-                            <input type="text" name="title" id="title" />
+                            <label class="col-xs-4" for="eventName">Onderwerp</label>
+                            <input type="text" name="eventName" id="eventName" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12">
-                            <label class="col-xs-4" for="description">Beschrijving</label>
-                            <input type="text" name="description" id="description" />
+                            <label class="col-xs-4" for="eventComment">Beschrijving</label>
+                            <input type="text" name="eventComment" id="eventComment" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12">
-                            <label class="col-xs-4" for="category">Categorie</label>
-                            <select id="category" name="category">
+                            <label class="col-xs-4" for="activityCategory">Categorie</label>
+                            <select name="activityCategory" id="activityCategory">
                                 <option disabled selected="selected">Selecteer categorie</option>
                                 <option value="Huishouden">Huishouden</option>
                                 <option value="Medisch">Medisch</option>
@@ -78,24 +78,26 @@
 
                     <div class="row">
                         <div class="col-xs-12">
-                            <label class="col-xs-4" for="starts-at">Starttijd</label>
-                            <input type="text" name="starts_at" id="starts-at" />
+                            <label class="col-xs-4" for="eventStartDate">Starttijd</label>
+                            <input type="text" name="eventStartDate" id="eventStartDate" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12">
-                            <label class="col-xs-4" for="ends-at">Eindtijd</label>
-                            <input type="text" name="ends_at" id="ends-at" />
+                            <label class="col-xs-4" for="eventEndDate">Eindtijd</label>
+                            <input type="text" name="eventEndDate" id="eventEndDate" />
                         </div>
                     </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Sluiten</button>
-                    <button type="button" class="btn btn-primary" id="save-event">Maak afspraak</button>
+                    <button type="submit" class="btn btn-primary" id="save-event">Maak afspraak</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+</form:form>
 
     <div class="container w-80 p-3">
         <div id="calendar"></div>
@@ -135,20 +137,20 @@
 
             select: function(start, end) {
                 $('.modal').modal('show');
-                $('.modal').find('#title').val("");
-                $('.modal').find('#description').val("");
-                $('.modal').find('#category').val("Selecteer categorie");
-                $('.modal').find('#starts-at').val("");
-                $('.modal').find('#ends-at').val("");
+                $('.modal').find('#eventName').val("");
+                $('.modal').find('#eventComment').val("");
+                $('.modal').find('#activityCategory').val("Selecteer categorie");
+                $('.modal').find('#eventStartDate').val("");
+                $('.modal').find('#eventEndDate').val("");
             },
 
             eventClick: function(event, element) {
                 $('.modal').modal('show');
-                $('.modal').find('#title').val(event.title);
-                $('.modal').find('#description').val(event.description);
-                $('.modal').find('#category').val(event.category);
-                $('.modal').find('#starts-at').val(event.start);
-                $('.modal').find('#ends-at').val(event.end);
+                $('.modal').find('#eventName').val(event.title);
+                $('.modal').find('#eventComment').val(event.description);
+                $('.modal').find('#activityCategory').val(event.category);
+                $('.modal').find('#eventStartDate').val(event.start);
+                $('.modal').find('#eventEndDate').val(event.end);
             },
 
             editable: true,
@@ -158,28 +160,8 @@
 
         // Bind the dates to datetimepicker.
         // You should pass the options you need
-        $("#starts-at, #ends-at").datetimepicker({
-             format: 'DD/MM/YYYY HH:mm',
-        });
-
-        // Whenever the user clicks on the "save" button om the dialog
-        $('#save-event').on('click', function() {
-            var title = $('#title').val();
-            if (title) {
-                var eventData = {
-                    title: title,
-                    start: $('#starts-at').val(),
-                    end: $('#ends-at').val()
-                };
-                $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
-            }
-            $('#calendar').fullCalendar('unselect');
-
-            // Clear modal inputs
-            $('.modal').find('input').val('');
-
-            // hide modal
-            $('.modal').modal('hide');
+        $("#eventStartDate, #eventEndDate").datetimepicker({
+             format: 'MM/DD/YYYY HH:mm',
         });
     });
     </script>

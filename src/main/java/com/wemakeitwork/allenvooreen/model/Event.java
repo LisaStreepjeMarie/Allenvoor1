@@ -11,7 +11,7 @@ import java.util.Date;
 public class Event {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("id")
     private Integer eventId;
 
@@ -33,7 +33,7 @@ public class Event {
 
     //TODO: cascade needs to not be ALL when event and activity planning are split up (in future releases).
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "activityId", referencedColumnName = "activityId", nullable = false)
     private Activity activity;
 
