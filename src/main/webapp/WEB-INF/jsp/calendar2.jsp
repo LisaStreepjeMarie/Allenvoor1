@@ -43,6 +43,7 @@
 
 </head>
 <body>
+<div>${calendarData}</div>
     <div class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -128,8 +129,8 @@
 
             },
             editable: true,
-            eventLimit: true, // allow "more" link when too many events
-            events: ${calendarData}
+            events: [ ${calendarData} ],
+            eventLimit: true // allow "more" link when too many events
         });
 
         // Bind the dates to datetimepicker.
