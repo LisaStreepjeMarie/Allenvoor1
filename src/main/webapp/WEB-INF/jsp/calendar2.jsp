@@ -43,6 +43,7 @@
 
 </head>
 <body>
+<p>${calendarData}</p>
     <div class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -57,6 +58,24 @@
                             <input type="text" name="title" id="title" />
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label class="col-xs-4" for="description">Beschrijving</label>
+                            <input type="text" name="description" id="description" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label class="col-xs-4" for="category">Categorie</label>
+                            <select id="category" name="category">
+                                <option disabled selected="selected">Selecteer categorie</option>
+                                <option value="Huishouden">Huishouden</option>
+                                <option value="Medisch">Medisch</option>
+                                <option value="Vrije tijd" >Vrije tijd</option>
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col-xs-12">
                             <label class="col-xs-4" for="starts-at">Starttijd</label>
@@ -117,16 +136,21 @@
             select: function(start, end) {
                 $('.modal').modal('show');
                 $('.modal').find('#title').val("");
+                $('.modal').find('#description').val("");
+                $('.modal').find('#category').val("Selecteer categorie");
                 $('.modal').find('#starts-at').val("");
                 $('.modal').find('#ends-at').val("");
             },
+
             eventClick: function(event, element) {
                 $('.modal').modal('show');
                 $('.modal').find('#title').val(event.title);
+                $('.modal').find('#description').val(event.description);
+                $('.modal').find('#category').val(event.category);
                 $('.modal').find('#starts-at').val(event.start);
                 $('.modal').find('#ends-at').val(event.end);
-
             },
+
             editable: true,
             events: [ ${calendarData} ],
             eventLimit: true // allow "more" link when too many events
