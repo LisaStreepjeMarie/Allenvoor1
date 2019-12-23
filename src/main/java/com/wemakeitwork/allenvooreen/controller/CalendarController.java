@@ -19,11 +19,10 @@ public class CalendarController {
     @GetMapping("/calendar")
     public String calendar(Model model) throws JsonProcessingException {
         List<Event> eventList = eventRepository.findAll();
-        String calendarData = "[";
+        String calendarData = "";
         for (Event event : eventList) {
             calendarData += "" + new ObjectMapper().writeValueAsString(event) + ",";
         }
-        calendarData = calendarData.substring(0, calendarData.length() - 1) + "],";
         model.addAttribute("calendarData", calendarData);
         return "calendar2";
     }

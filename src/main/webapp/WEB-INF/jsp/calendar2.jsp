@@ -1,6 +1,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <!DOCTYPE html>
 <html xmlns:form="http://www.w3.org/1999/xhtml">
 <head>
@@ -23,116 +24,139 @@
     <script src="webjars/fullcalendar/4.2.0/packages/timegrid/main.min.js"></script>
     <script src="webjars/fullcalendar/4.2.0/packages/moment/main.min.js"></script>-->
 
-    <link href='https://unpkg.com/@fullcalendar/core@4.3.1/main.min.css' rel='stylesheet' />
-    <link href='https://unpkg.com/@fullcalendar/daygrid@4.3.0/main.min.css' rel='stylesheet' />
-    <link href='https://unpkg.com/@fullcalendar/timegrid@4.3.0/main.min.css' rel='stylesheet' />
-    <link href='https://unpkg.com/@fullcalendar/list@4.3.0/main.min.css' rel='stylesheet' />
-    <link href='https://unpkg.com/@fullcalendar/bootstrap@4.3.0/main.min.css' rel='stylesheet' />
 
-    <script src='https://unpkg.com/@fullcalendar/core@4.3.1/main.min.js'></script>
-    <script src='https://unpkg.com/@fullcalendar/daygrid@4.3.0/main.min.js'></script>
-    <script src='https://unpkg.com/@fullcalendar/timegrid@4.3.0/main.min.js'></script>
-    <script src='https://unpkg.com/@fullcalendar/list@4.3.0/main.min.js'></script>
-    <script src='https://unpkg.com/@fullcalendar/bootstrap@4.3.0/main.min.js'></script>
-    <script src="https://unpkg.com/@fullcalendar/interaction@4.3.0/main.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/core/locales/nl.js"></script>
+    <link href='https://unpkg.com/fullcalendar@3.10.1/dist/fullcalendar.min.css' rel='stylesheet' />
+    <link href='https://unpkg.com/fullcalendar@3.10.1/dist/fullcalendar.print.css' rel='stylesheet' media='print' />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.42/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+
+    <script src='https://unpkg.com/moment@2.24.0/min/moment.min.js'></script>
+    <script src='https://unpkg.com/jquery@3.4.1/dist/jquery.min.js'></script>
+    <script src='https://unpkg.com/fullcalendar@3.10.1/dist/fullcalendar.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.42/js/bootstrap-datetimepicker.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/locale/nl.js" integrity="sha256-LAjE4KdsUdfZ4yMkV+UMRbHqEyfyvtCeIyD6qRYhTtQ=" crossorigin="anonymous"></script>
 
     <link href='https://use.fontawesome.com/releases/v5.0.6/css/all.css' rel='stylesheet'>
     <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' />
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
 
 </head>
 <body>
-
-<div class="modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Create new event</h4>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <label class="col-xs-4" for="title">Event title</label>
-                        <input type="text" name="title" id="title" />
+    <div class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Maak nieuwe afspraak</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label class="col-xs-4" for="title">Onderwerp</label>
+                            <input type="text" name="title" id="title" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label class="col-xs-4" for="starts-at">Starttijd</label>
+                            <input type="text" name="starts_at" id="starts-at" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label class="col-xs-4" for="ends-at">Eindtijd</label>
+                            <input type="text" name="ends_at" id="ends-at" />
+                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <label class="col-xs-4" for="starts-at">Starts at</label>
-                        <input type="text" name="starts_at" id="starts-at" />
-                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Sluiten</button>
+                    <button type="button" class="btn btn-primary" id="save-event">Maak afspraak</button>
                 </div>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <label class="col-xs-4" for="ends-at">Ends at</label>
-                        <input type="text" name="ends_at" id="ends-at" />
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="save-event">Save changes</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
     <div class="container w-80 p-3">
         <div id="calendar"></div>
+        <div id='datepicker'></div>
+    </div>
 
+    <div class="row">
+        <div class="col-xs-1">
+        </div>
+        <div class="col-xs-2">
+            <input type="submit" value="Maak nieuwe afspraak" onclick="window.location='/event/new';" />
+        </div>
     </div>
-<div class="row">
-    <div class="col-xs-1">
-    </div>
-    <div class="col-xs-2">
-        <input type="submit" value="Maak nieuwe afspraak" onclick="window.location='/event/new';" />
-    </div>
-</div>
 </body>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('calendar');
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-      plugins: [ 'dayGrid', 'timeGrid', 'list', 'bootstrap', 'interaction' ],
-      schedulerLicenseKey: 'GPL-My-Project-Is-Open-Source',
-      navLinks: true, // can click day/week names to navigate views
-      selectable: true,
-      selectHelper: true,
 
-      select: function(start, end) {
-                // Display the modal.
-                // You could fill in the start and end fields based on the parameters
+<script type="text/javascript">
+  $(document).ready(function() {
 
-                $('.modal').show();
+        $('#calendar').fullCalendar({
+            themeSystem: 'bootstrap4',
+            timeZone: 'Europe/Amsterdam',
+            timeFormat: 'H(:mm)',
+            locale: 'nl',
 
-      },
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay'
+            },
 
-      eventClick: function(event, element) {
-        $('.modal').show();
-        $('.modal').find('#title').val(event.title);
-        $('.modal').find('#starts-at').val(event.start);
-        $('.modal').find('#ends-at').val(event.end);
-      },
+            weekNumbers: true,
+            eventLimit: true, // allow "more" link when too many events
+            defaultDate: '2019-12-12',
+            navLinks: true, // can click day/week names to navigate views
+            selectable: true,
+            selectHelper: true,
 
-      timeZone: 'Europe/Amsterdam',
-      timeFormat: 'H(:mm)',
-      locale: 'nl',
-      themeSystem: 'bootstrap',
-      header: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
-      },
-      weekNumbers: true,
-      eventLimit: true, // allow "more" link when too many events
-      events: ${calendarData}
+            select: function(start, end) {
+                $('.modal').modal('show');
+                $('.modal').find('#title').val("");
+                $('.modal').find('#starts-at').val("");
+                $('.modal').find('#ends-at').val("");
+            },
+            eventClick: function(event, element) {
+                $('.modal').modal('show');
+                $('.modal').find('#title').val(event.title);
+                $('.modal').find('#starts-at').val(event.start);
+                $('.modal').find('#ends-at').val(event.end);
+
+            },
+            editable: true,
+            eventLimit: true, // allow "more" link when too many events
+            events: ${calendarData}
+        });
+
+        // Bind the dates to datetimepicker.
+        // You should pass the options you need
+        $("#starts-at, #ends-at").datetimepicker({
+             format: 'DD/MM/YYYY HH:mm',
+        });
+
+        // Whenever the user clicks on the "save" button om the dialog
+        $('#save-event').on('click', function() {
+            var title = $('#title').val();
+            if (title) {
+                var eventData = {
+                    title: title,
+                    start: $('#starts-at').val(),
+                    end: $('#ends-at').val()
+                };
+                $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+            }
+            $('#calendar').fullCalendar('unselect');
+
+            // Clear modal inputs
+            $('.modal').find('input').val('');
+
+            // hide modal
+            $('.modal').modal('hide');
+        });
     });
-    calendar.render();
-  });
-</script>
+    </script>
 </html>
