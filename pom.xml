@@ -51,7 +51,6 @@
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		<dependency>
-
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
@@ -102,36 +101,48 @@
 		</dependency>
 
 		<!-- WEBJARS -->
-		<!-- bootstrap -->
+		<!-- fullcalendar -->
 		<dependency>
 			<groupId>org.webjars</groupId>
-			<artifactId>bootstrap</artifactId>
-			<version>4.4.1</version>
+			<artifactId>fullcalendar</artifactId>
+			<version>3.9.0</version>
 		</dependency>
 
-		<!--jquery -->
+		<!-- bootstrap-datetimepicker -->
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>Eonasdan-bootstrap-datetimepicker</artifactId>
+			<version>4.17.47</version>
+		</dependency>
+
+		<!-- moment -->
+		<dependency>
+			<groupId>org.webjars.bower</groupId>
+			<artifactId>moment</artifactId>
+			<version>2.24.0</version>
+		</dependency>
+
+		<!-- jquery -->
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>jquery</artifactId>
 			<version>3.4.1</version>
 		</dependency>
-		<dependency>
-           <groupId>org.webjars</groupId>
-           <artifactId>jquery-ui</artifactId>
-           <version>1.8.2</version>
-		</dependency>
 
-		<!--fullcalendar 4.3.1 -->
-		<dependency>
-           <groupId>org.webjars</groupId>
-           <artifactId>fullcalendar</artifactId>
-           <version>4.3.1</version>
-		</dependency>
+		<!-- font-awesome -->
 		<dependency>
 			<groupId>org.webjars</groupId>
-			<artifactId>fullcalendar-scheduler</artifactId>
-			<version>1.9.2</version>
+			<artifactId>font-awesome</artifactId>
+			<version>5.0.6</version>
 		</dependency>
+
+		<!-- bootstrap -->
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>bootstrap</artifactId>
+			<version>3.3.7-1</version>
+		</dependency>
+
 
 
 		<dependency>
@@ -154,17 +165,15 @@
            <artifactId>json</artifactId>
            <version>20190722</version>
 		</dependency>
-
-
 	</dependencies>
 
-   <build>
-       <plugins>
-           <plugin>
-               <groupId>org.springframework.boot</groupId>
-               <artifactId>spring-boot-maven-plugin</artifactId>
-           </plugin>
-       </plugins>
-   </build>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>

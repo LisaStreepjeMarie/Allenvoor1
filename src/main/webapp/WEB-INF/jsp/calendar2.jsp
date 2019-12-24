@@ -7,40 +7,40 @@
 <head>
     <meta charset='utf-8' />
     <title>Kalender</title>
-    <!--    Using webjars (disabled for now; calendar not loading)
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="webjars/fullcalendar/4.2.0/packages/bootstrap/main.min.css" />
-    <link rel="stylesheet" href="webjars/fullcalendar/4.2.0/packages/core/main.css" />
-    <link rel="stylesheet" href="webjars/fullcalendar/4.2.0/packages/daygrid/main.min.css" />
-    <link rel="stylesheet" href="webjars/fullcalendar/4.2.0/packages/list/main.min.css" />
-    <link rel="stylesheet" href="webjars/fullcalendar/4.2.0/packages/timegrid/main.min.css" />
+    <!-- webjars are preferable to content delivery networks (CDNs)-->
+    <!--<link href='https://unpkg.com/fullcalendar@3.10.1/dist/fullcalendar.min.css' rel='stylesheet' />-->
+    <link href="webjars/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet" />
 
-    <script src="webjars/fullcalendar/4.2.0/packages/bootstrap/main.min.js"></script>
-    <script src="webjars/fullcalendar/4.2.0/packages/interaction/main.min.js"></script>
-    <script src="webjars/fullcalendar/4.2.0/packages/core/main.min.js"></script>
-    <script src="webjars/fullcalendar/4.2.0/packages/daygrid/main.min.js"></script>
-    <script src="webjars/fullcalendar/4.2.0/packages/list/main.min.js"></script>
-    <script src="webjars/fullcalendar/4.2.0/packages/timegrid/main.min.js"></script>
-    <script src="webjars/fullcalendar/4.2.0/packages/moment/main.min.js"></script>-->
+    <!--<link href='https://unpkg.com/fullcalendar@3.10.1/dist/fullcalendar.print.css' rel='stylesheet' media='print' />-->
+    <link href="webjars/fullcalendar/3.9.0/fullcalendar.print.min.css" rel="stylesheet" media='print' />
 
+    <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.42/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />-->
+    <link href="webjars/Eonasdan-bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 
-    <link href='https://unpkg.com/fullcalendar@3.10.1/dist/fullcalendar.min.css' rel='stylesheet' />
-    <link href='https://unpkg.com/fullcalendar@3.10.1/dist/fullcalendar.print.css' rel='stylesheet' media='print' />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.42/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <!--<script src='https://unpkg.com/moment@2.24.0/min/moment.min.js'></script>-->
+    <script src="webjars/moment/2.24.0/min/moment.min.js"></script>
 
-    <script src='https://unpkg.com/moment@2.24.0/min/moment.min.js'></script>
-    <script src='https://unpkg.com/jquery@3.4.1/dist/jquery.min.js'></script>
-    <script src='https://unpkg.com/fullcalendar@3.10.1/dist/fullcalendar.min.js'></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.42/js/bootstrap-datetimepicker.min.js"></script>
+    <!--<script src='https://unpkg.com/jquery@3.4.1/dist/jquery.min.js'></script>-->
+    <script src="webjars/jquery/3.4.1/jquery.slim.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/locale/nl.js" integrity="sha256-LAjE4KdsUdfZ4yMkV+UMRbHqEyfyvtCeIyD6qRYhTtQ=" crossorigin="anonymous"></script>
+    <!--<script src='https://unpkg.com/fullcalendar@3.10.1/dist/fullcalendar.min.js'></script>-->
+    <script src="webjars/fullcalendar/3.9.0/fullcalendar.min.js"></script>
 
-    <link href='https://use.fontawesome.com/releases/v5.0.6/css/all.css' rel='stylesheet'>
-    <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' />
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.42/js/bootstrap-datetimepicker.min.js"></script>-->
+    <script src="webjars/Eonasdan-bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/locale/nl.js" integrity="sha256-LAjE4KdsUdfZ4yMkV+UMRbHqEyfyvtCeIyD6qRYhTtQ=" crossorigin="anonymous"></script>-->
+    <script src="webjars/fullcalendar/3.9.0/locale/nl.js"></script>
 
+    <!--<link href='https://use.fontawesome.com/releases/v5.0.6/css/all.css' rel='stylesheet'>-->
+    <link href="webjars/font-awesome/5.0.6/web-fonts-with-css/css/fontawesome-all.min.css" rel='stylesheet'>
+
+    <!--<link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' />-->
+    <link href="webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" rel='stylesheet'>
+
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+    <script src="webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
 </head>
 <body>
 <form:form action="/calendar/new" modelAttribute="event" method="post">
@@ -140,8 +140,8 @@
                 $('.modal').find('#eventName').val("");
                 $('.modal').find('#eventComment').val("");
                 $('.modal').find('#activityCategory').val("Selecteer categorie");
-                $('.modal').find('#eventStartDate').val("");
-                $('.modal').find('#eventEndDate').val("");
+                $('.modal').find('#eventStartDate').val(start);
+                $('.modal').find('#eventEndDate').val(end);
             },
 
             eventClick: function(event, element) {
@@ -149,8 +149,8 @@
                 $('.modal').find('#eventName').val(event.title);
                 $('.modal').find('#eventComment').val(event.description);
                 $('.modal').find('#activityCategory').val(event.category);
-                $('.modal').find('#eventStartDate').val(event.start);
-                $('.modal').find('#eventEndDate').val(event.end);
+                $('.modal').find('#eventStartDate').val(start);
+                $('.modal').find('#eventEndDate').val(end);
             },
 
             editable: true,
