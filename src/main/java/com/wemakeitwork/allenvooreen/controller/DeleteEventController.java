@@ -14,6 +14,6 @@ public class DeleteEventController {
     @GetMapping("/event/delete/{eventId}")
     public String deleteEvent(@PathVariable("eventId") final Integer eventId) {
         eventRepository.deleteById(eventId);
-        return "redirect:/event/all";
+        return "redirect:/calendar";
     }
 }

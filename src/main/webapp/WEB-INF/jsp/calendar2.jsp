@@ -43,19 +43,22 @@
     <script src="webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
 </head>
 <body>
+<p>${calendarData}</p>
 <form:form action="/calendar/new" modelAttribute="event" method="post">
+
     <div class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Maak nieuwe afspraak</h4>
+                    <h4 id="modal-title" class="modal-title">Maak nieuwe afspraak</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-xs-12">
                             <label class="col-xs-4" for="eventName">Onderwerp</label>
                             <input type="text" name="eventName" id="eventName" />
+                            <input type="text" name="eventId" id="eventId" />
                         </div>
                     </div>
                     <div class="row">
@@ -91,6 +94,7 @@
 
                 </div>
                 <div class="modal-footer">
+                    <button type="submit" id="delete-button" onclick="window.location='/event/delete/${id}';" class="btn btn-danger" data-dismiss="modal">Verwijder Afspraak</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Sluiten</button>
                     <button type="submit" class="btn btn-primary" id="save-event">Maak afspraak</button>
                 </div>
@@ -125,7 +129,7 @@
             header: {
                 left: 'prev,next today',
                 center: 'title',
-                right: 'month,agendaWeek,agendaDay'
+                right: 'month,agendaWeek,agendaDay,list'
             },
 
             weekNumbers: true,
@@ -136,6 +140,9 @@
             selectHelper: true,
 
             select: function(start, end) {
+                document.getElementById("modal-title").innerHTML = "Maak nieuwe afspraak";
+                document.getElementById("save-event").innerHTML = "Maak afspraak";
+                $("#delete-button").hide();
                 $('.modal').modal('show');
                 $('.modal').find('#eventName').val("");
                 $('.modal').find('#eventComment').val("");
@@ -145,8 +152,13 @@
             },
 
             eventClick: function(event, element) {
+                document.getElementById("modal-title").innerHTML = "Wijzig of verwijder afspraak";
+                document.getElementById("save-event").innerHTML = "Wijzig afspraak";
+                $("#delete-button").show();
+                this.style.display = 'none'
                 $('.modal').modal('show');
                 $('.modal').find('#eventName').val(event.title);
+                $('.modal').find('#eventId').val(event.id);
                 $('.modal').find('#eventComment').val(event.description);
                 $('.modal').find('#activityCategory').val(event.category);
                 $('.modal').find('#eventStartDate').val(start);

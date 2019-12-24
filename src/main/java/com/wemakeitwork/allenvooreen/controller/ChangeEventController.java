@@ -67,7 +67,6 @@ public class ChangeEventController {
         Optional<Event> eventOptional = eventRepository.findById(eventId);
         Event event;
         event = eventOptional.orElseGet(Event::new);
-
         Optional<Activity> activityOptional = activityRepository.findById(event.getActivity().getActivityId());
         Activity activity;
         activity = activityOptional.orElseGet(Activity::new);
