@@ -2,77 +2,208 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
+<!DOCTYPE html>
+<html xmlns:form="http://www.w3.org/1999/xhtml" xmlns:c="">
 
-<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Allen voor 1</title>
+    <meta charset='utf-8' />
+    <title>Kalender</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
 
-    <link href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!-- webjars are preferable to content delivery networks (CDNs)-->
+    <!--<link href='https://unpkg.com/fullcalendar@3.10.1/dist/fullcalendar.min.css' rel='stylesheet' />-->
+    <link href="webjars/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet" />
 
-    <!-- webjars worden nog niet geladen -->
-    <script src="webjars/fullcalendar/4.3.1/core/main.min.js"></script>
-    <script src="webjars/fullcalendar/4.3.1/daygrid/main.min.js"></script>
-    <script src="webjars/fullcalendar/4.3.1/moment/main.min.js"></script>
-    <script src="webjars/fullcalendar/4.3.1/list/main.min.js"></script>
-    <script src="webjars/fullcalendar/4.3.1/timegrid/main.min.js"></script>
+    <!--<link href='https://unpkg.com/fullcalendar@3.10.1/dist/fullcalendar.print.css' rel='stylesheet' media='print' />-->
+    <link href="webjars/fullcalendar/3.9.0/fullcalendar.print.min.css" rel="stylesheet" media='print' />
 
-    <!-- daarom voor nu maar met cdns -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/bootstrap/main.min.css" integrity="sha256-auNBxJ+1OpvUJfYRsPihqLzJFUM9D3gpb8nOh5v0LiM=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/core/main.css" integrity="sha256-nJK+Jim06EmZazdCbGddx5ixnqfXA13Wlw3JizKK1GU=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/daygrid/main.min.css" integrity="sha256-AVsv7CEpB2Y1F7ZjQf0WI8SaEDCycSk4vnDRt0L2MNQ=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/list/main.min.css" integrity="sha256-saO3mkZVAcyqsfgsGMrmE7Cs/TLN1RgVykZ5dnnJKug=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/timegrid/main.min.css" integrity="sha256-DOWdbe6a1VwJwFpkimY6z5tW9mmrBNre2jZsAige5PE=" crossorigin="anonymous" />
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@fullcalendar/interaction@4.2.0/main.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/bootstrap/main.js" integrity="sha256-YLvGa/6UrzsYa6pgPIwxuiXtsS854c/pImjL3kfK+sY=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/core/main.js" integrity="sha256-F4ovzqUMsKm41TQVQO+dWHQA+sshyOUdmnDcTPMIHkM=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/daygrid/main.min.js" integrity="sha256-FT1eN+60LmWX0J8P25UuTjEEE0ZYvpC07nnU6oFKFuI=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/list/main.min.js" integrity="sha256-q57s73NpMCTQ4ZXqb1X5bIywrICySeB6WvYxFGfz/PA=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/timegrid/main.min.js" integrity="sha256-L9T+qE3Ms6Rsuxl+KwLST6a3R/2o6m33zB5mR2KyPjU=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/4.2.0/moment/main.min.js" integrity="sha256-iCYfw93enxd8O5zz/jL4UamQ8bgrUfidO4C5500RSd4=" crossorigin="anonymous"></script>
+    <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.42/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />-->
+    <link href="webjars/Eonasdan-bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
 
+    <!--<script src='https://unpkg.com/moment@2.24.0/min/moment.min.js'></script>-->
+    <script src="webjars/moment/2.24.0/min/moment.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
+    <!--<script src='https://unpkg.com/jquery@3.4.1/dist/jquery.min.js'></script>-->
+    <script src="webjars/jquery/3.4.1/jquery.slim.min.js"></script>
 
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
+    <!--<script src='https://unpkg.com/fullcalendar@3.10.1/dist/fullcalendar.min.js'></script>-->
+    <script src="webjars/fullcalendar/3.9.0/fullcalendar.min.js"></script>
 
-        plugins: [ 'bootstrap', 'interaction', 'dayGrid' ],
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.42/js/bootstrap-datetimepicker.min.js"></script>-->
+    <script src="webjars/Eonasdan-bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
 
-        themeSystem: 'bootstrap4',
-        events: [
-                <c:forEach items="${activityList}" var="activity">
-                			{
-                				title: '${activity.activityName}',
-                				start: '2019-11-01'
-                			},
-                </c:forEach>
-			{
-				title: 'Click for Google',
-				url: 'http://google.com/',
-				start: '2019-11-28'
-			}
-		],
-        header: { center: 'dayGridWeek,dayGridMonth,dayGridDay,listWeek' },
-            plugins: [ 'dayGridPlugin', 'dayGrid', 'list' ],
-            contentHeight: 600,
-        });
-        calendar.render();
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/locale/nl.js" integrity="sha256-LAjE4KdsUdfZ4yMkV+UMRbHqEyfyvtCeIyD6qRYhTtQ=" crossorigin="anonymous"></script>-->
+    <script src="webjars/fullcalendar/3.9.0/locale/nl.js"></script>
 
-      });
-    </script>
+    <!--<link href='https://use.fontawesome.com/releases/v5.0.6/css/all.css' rel='stylesheet'>-->
+    <link href="webjars/font-awesome/5.0.6/web-fonts-with-css/css/fontawesome-all.min.css" rel='stylesheet'>
+
+    <!--<link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' />-->
+    <link href="webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" rel='stylesheet'>
+
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+    <script src="webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
 </head>
 <body>
+<form:form id="modal-form" action="/event/change" modelAttribute="event" method="post">
+    <div class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 id="modal-title" class="modal-title">Maak nieuwe afspraak</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label class="col-xs-4" for="eventName">Onderwerp</label>
+                            <input type="text" name="eventName" id="eventName" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label class="col-xs-4" for="eventComment">Beschrijving</label>
+                            <input type="text" name="eventComment" id="eventComment" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label class="col-xs-4" for="activityCategory">Categorie</label>
+                            <select name="activityCategory" id="activityCategory">
+                                <option disabled selected="selected">Selecteer categorie</option>
+                                <option value="Huishouden">Huishouden</option>
+                                <option value="Medisch">Medisch</option>
+                                <option value="Vrije tijd" >Vrije tijd</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label class="col-xs-4" for="eventStartDate">Starttijd</label>
+                            <input type="text" name="eventStartDate" id="eventStartDate" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label class="col-xs-4" for="eventEndDate">Eindtijd</label>
+                            <input type="text" name="eventEndDate" id="eventEndDate" />
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="delete-event" class="btn btn-danger" data-dismiss="modal" >Verwijder Afspraak</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Sluiten</button>
+                    <button type="submit" class="btn btn-primary" id="save-change-event">Maak afspraak</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</form:form>
+
 <div class="container w-80 p-3">
     <div id="calendar"></div>
+    <div id='datepicker'></div>
+</div>
+
+<div class="row">
+    <div class="col-xs-1">
+    </div>
+    <div class="col-xs-2">
+        <input type="submit" value="Maak nieuwe afspraak" onclick="window.location='/event/new';" />
+    </div>
 </div>
 </body>
 
+<script type="text/javascript">
+  $(document).ready(function() {
+
+        $('#calendar').fullCalendar({
+            themeSystem: 'bootstrap4',
+            timeZone: 'Europe/Amsterdam',
+            timeFormat: 'H(:mm)',
+            locale: 'nl',
+
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay,list'
+            },
+
+            weekNumbers: true,
+            eventLimit: true, // allow "more" link when too many events
+            defaultDate: '2019-12-12',
+            navLinks: true, // can click day/week names to navigate views
+            selectable: true,
+            selectHelper: true,
+
+            select: function(start, end) {
+                $('#modal-form').attr('action',"/event/new");
+                $('#save-change-event').attr('action',"/event/new");
+
+                $('.modal').find('#eventName').val("");
+                $('.modal').find('#eventComment').val("");
+                $('.modal').find('#activityCategory').val("Selecteer categorie");
+                $('.modal').find('#eventStartDate').val(start);
+                $('.modal').find('#eventEndDate').val(end);
+
+                document.getElementById("modal-title").innerHTML = "Maak nieuwe afspraak";
+                document.getElementById("save-change-event").innerHTML = "Maak afspraak";
+                $("#delete-event").hide();
+                $('.modal').modal('show');
+            },
+
+            eventClick: function(event, element) {
+                <!--pass eventId to a simple <a href> link: -->
+                <!--$('#deleteEvent').attr('href',"/event/delete/" + event.id);-->
+
+                <!--pass eventId to a <button> onclick action: -->
+                $('#delete-event').attr('onclick',"window.location='/event/delete/" + event.id + "'");
+
+                $('#modal-form').attr('action',"/event/change");
+                $('#save-change-event').attr('action',"/event/change");
+
+                $('.modal').find('#eventName').val(event.title);
+                $('.modal').find('#eventComment').val(event.description);
+                $('.modal').find('#activityCategory').val(event.category);
+                $('.modal').find('#eventStartDate').val(event.start);
+                $('.modal').find('#eventEndDate').val(event.end);
+
+                document.getElementById("modal-title").innerHTML = "Wijzig of verwijder afspraak";
+                document.getElementById("save-change-event").innerHTML = "Wijzig afspraak";
+                $("#delete-event").show();
+                $('.modal').modal('show');
+
+            },
+
+            eventDrop: function( event, delta, revertFunc, jsEvent, ui, view ) {
+                console.log(event.title + ' was dragged to ' + event.description);
+                console.log("delta is: " + delta);
+                console.log("event is: " + event);
+                console.log("revert is: " + revertFunc);
+                console.log("jsEvent is: " + jsEvent);
+
+                if (!confirm("Weet je zeker dat je de afspraak wilt verplaatsen?")) {
+                    revertFunc();
+                }
+            },
+
+            eventDragStop: function(info) {
+            },
+
+            editable: true,
+            events: [ ${calendarData} ],
+            eventLimit: true // allow "more" link when too many events
+        });
+
+        // Bind the dates to datetimepicker.
+        // You should pass the options you need
+        $("#eventStartDate, #eventEndDate").datetimepicker({
+             format: 'MM/DD/YYYY HH:mm',
+        });
+    });
+    </script>
 </html>

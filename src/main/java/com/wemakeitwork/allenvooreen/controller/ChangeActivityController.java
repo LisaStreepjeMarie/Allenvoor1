@@ -23,5 +23,4 @@ public class ChangeActivityController {
             return "redirect:/activity/all";
         }
     }
-
 }

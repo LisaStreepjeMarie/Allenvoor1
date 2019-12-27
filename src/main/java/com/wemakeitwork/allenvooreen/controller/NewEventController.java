@@ -25,14 +25,14 @@ public class NewEventController {
     @PostMapping("/event/new")
     protected String saveOrUpdateEvent(@ModelAttribute("event") Event event, Activity activity, BindingResult result) {
         if (result.hasErrors()) {
-            return "newEvent";
+            return "calendar";
         }
         else {
             //N.B.: activityname == eventname for now
             activity.setActivityName(event.getEventName());
             event.setActivity(activity);
             eventRepository.save(event);
-            return "redirect:/event/all";
+            return "redirect:/calendar";
         }
     }
 }

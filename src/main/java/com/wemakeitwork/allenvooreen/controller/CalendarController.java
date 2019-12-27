@@ -29,20 +29,6 @@ public class CalendarController {
         }
         model.addAttribute("event", new Event());
         model.addAttribute("calendarData", calendarData);
-        return "calendar2";
-    }
-
-    @PostMapping("/calendar/new")
-    protected String newEventCalendar(@ModelAttribute("event") Event event, Activity activity, BindingResult result) {
-        if (result.hasErrors()) {
-            return "calendar2";
-        }
-        else {
-            //N.B.: activityname == eventname for now
-            activity.setActivityName(event.getEventName());
-            event.setActivity(activity);
-            eventRepository.save(event);
-            return "redirect:/calendar";
-        }
+        return "calendar";
     }
 }
