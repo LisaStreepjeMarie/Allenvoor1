@@ -59,7 +59,7 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <label class="col-xs-4" for="eventName">Onderwerp</label>
-                            <input type="text" name="eventName" id="eventName" />
+                            <input type="text" name="eventName" path="eventName" id="eventName" />
                             <input type="hidden" name="eventId" id="eventId" />
                         </div>
                     </div>
@@ -98,6 +98,7 @@
                 <div class="modal-footer">
                     <button type="button" id="delete-event" class="btn btn-danger" data-dismiss="modal" >Verwijder Afspraak</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Sluiten</button>
+                    <form:errors path="eventName" cssClass="error" />
                     <button type="submit" class="btn btn-primary" id="save-change-event">Maak afspraak</button>
                 </div>
             </div><!-- /.modal-content -->
@@ -109,7 +110,6 @@
     <div id="calendar"></div>
     <div id='datepicker'></div>
 </div>
-
 <div class="row">
     <div class="col-xs-1">
     </div>
@@ -169,9 +169,9 @@
                 $('#modal-form').attr('action',"/event/change");
                 $('#save-change-event').attr('action',"/event/change");
 
-                $('.modal').find('#eventName').val(event.name);
+                $('.modal').find('#eventName').val(event.title);
                 $('.modal').find('#eventComment').val(event.description);
-                $('.modal').find('#activityCategory').val(event.category);
+                $('.modal').find('#activityCategory').val("Selecteer categorie");
                 $('.modal').find('#eventStartDate').val(event.start);
                 $('.modal').find('#eventEndDate').val(event.end);
 

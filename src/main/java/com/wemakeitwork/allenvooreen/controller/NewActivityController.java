@@ -41,11 +41,7 @@ public class NewActivityController {
         model.addAttribute("activity", new Activity());
         Optional<Activity> optActivity = activityRepository.findById(activtyId);
         Activity activity;
-        if (optActivity.isPresent()) {
-            activity = optActivity.get();
-        } else {
-            activity = new Activity();
-        }
+        activity = optActivity.orElseGet(Activity::new);
         model.addAttribute("activity", activity);
         return "activityData";
     }
