@@ -60,6 +60,7 @@
                         <div class="col-xs-12">
                             <label class="col-xs-4" for="eventName">Onderwerp</label>
                             <input type="text" name="eventName" id="eventName" />
+                            <input type="hidden" name="eventId" id="eventId" />
                         </div>
                     </div>
                     <div class="row">
@@ -163,10 +164,12 @@
                 <!--pass eventId to a <button> onclick action: -->
                 $('#delete-event').attr('onclick',"window.location='/event/delete/" + event.id + "'");
 
+                $("#eventId").val(event.id);
+
                 $('#modal-form').attr('action',"/event/change");
                 $('#save-change-event').attr('action',"/event/change");
 
-                $('.modal').find('#eventName').val(event.title);
+                $('.modal').find('#eventName').val(event.name);
                 $('.modal').find('#eventComment').val(event.description);
                 $('.modal').find('#activityCategory').val(event.category);
                 $('.modal').find('#eventStartDate').val(event.start);

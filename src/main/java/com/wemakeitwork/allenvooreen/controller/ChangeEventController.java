@@ -23,9 +23,8 @@ public class ChangeEventController {
         if (result.hasErrors()) {
             return "calendar";
         } else {
-            /*
             activity.setActivityName(event.getEventName());
-            activity.setActivityId(event.getActivity().getActivityId());*/
+            activity.setActivityId(eventRepository.findActivityIdByEventId(event.getEventId()));
             event.setActivity(activity);
             eventRepository.save(event);
             return "redirect:/calendar";
