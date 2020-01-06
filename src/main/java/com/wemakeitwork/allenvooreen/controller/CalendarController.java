@@ -2,6 +2,7 @@ package com.wemakeitwork.allenvooreen.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wemakeitwork.allenvooreen.model.Activity;
 import com.wemakeitwork.allenvooreen.model.Event;
 import com.wemakeitwork.allenvooreen.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ public class CalendarController {
         for (Event event : eventList) {
             calendarData += "" + new ObjectMapper().writeValueAsString(event) + ",";
         }
+        Event event = new Event();
+        event.setActivity(new Activity());
         model.addAttribute("event", new Event());
         model.addAttribute("calendarData", calendarData);
         return "calendar";

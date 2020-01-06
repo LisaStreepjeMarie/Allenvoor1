@@ -45,82 +45,13 @@
 
     <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
     <script src="webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
-</head>
-<body>
-<form:form id="modal-form" action="/event/change" modelAttribute="event" method="post">
-    <div class="modal fade" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 id="modal-title" class="modal-title">Maak nieuwe afspraak</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <label class="col-xs-4" for="eventName">Onderwerp</label>
-                            <input type="text" name="eventName" path="eventName" id="eventName" />
-                            <input type="hidden" name="eventId" id="eventId" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <label class="col-xs-4" for="eventComment">Beschrijving</label>
-                            <input type="text" name="eventComment" id="eventComment" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <label class="col-xs-4" for="activityCategory">Categorie</label>
-                            <select name="activityCategory" id="activityCategory">
-                                <option disabled selected="selected">Selecteer categorie</option>
-                                <option value="Huishouden">Huishouden</option>
-                                <option value="Medisch">Medisch</option>
-                                <option value="Vrije tijd" >Vrije tijd</option>
-                            </select>
-                        </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <label class="col-xs-4" for="eventStartDate">Starttijd</label>
-                            <input type="text" name="eventStartDate" id="eventStartDate" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <label class="col-xs-4" for="eventEndDate">Eindtijd</label>
-                            <input type="text" name="eventEndDate" id="eventEndDate" />
-                        </div>
-                    </div>
+    <!-- added the below 2 links and the javascript to make sure the end date is the same/above the start date -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.0/css/bootstrap-datepicker.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.0/js/bootstrap-datepicker.min.js"></script>
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" id="delete-event" class="btn btn-danger" data-dismiss="modal" >Verwijder Afspraak</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Sluiten</button>
-                    <form:errors path="eventName" cssClass="error" />
-                    <button type="submit" class="btn btn-primary" id="save-change-event">Maak afspraak</button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-</form:form>
-
-<div class="container w-80 p-3">
-    <div id="calendar"></div>
-    <div id='datepicker'></div>
-</div>
-<div class="row">
-    <div class="col-xs-1">
-    </div>
-    <div class="col-xs-2">
-        <input type="submit" value="Maak nieuwe afspraak" onclick="window.location='/event/new';" />
-    </div>
-</div>
-</body>
-
-<script type="text/javascript">
-  $(document).ready(function() {
+    <script type="text/javascript">
+    $(document).ready(function() {
 
         $('#calendar').fullCalendar({
             themeSystem: 'bootstrap4',
@@ -136,7 +67,6 @@
 
             weekNumbers: true,
             eventLimit: true, // allow "more" link when too many events
-            defaultDate: '2019-12-12',
             navLinks: true, // can click day/week names to navigate views
             selectable: true,
             selectHelper: true,
@@ -147,7 +77,7 @@
 
                 $('.modal').find('#eventName').val("");
                 $('.modal').find('#eventComment').val("");
-                $('.modal').find('#activityCategory').val("Selecteer categorie");
+                $('.modal').find('#activity.activityCategory').val("Selecteer categorie");
                 $('.modal').find('#eventStartDate').val(start);
                 $('.modal').find('#eventEndDate').val(end);
 
@@ -171,7 +101,7 @@
 
                 $('.modal').find('#eventName').val(event.title);
                 $('.modal').find('#eventComment').val(event.description);
-                $('.modal').find('#activityCategory').val("Selecteer categorie");
+                $('.modal').find('#event.activityCategory').val("Selecteer categorie");
                 $('.modal').find('#eventStartDate').val(event.start);
                 $('.modal').find('#eventEndDate').val(event.end);
 
@@ -202,6 +132,19 @@
             eventLimit: true // allow "more" link when too many events
         });
 
+        $("#eventStartDate").datepicker({
+            todayBtn: 1,
+            autoclose: true,
+        }).on('changeDate', function (selected) {
+           var minDate = new Date(selected.date.valueOf());
+        $('#eventEndDate').datepicker('setStartDate', minDate);
+        });
+        $("#eventEndDate").datepicker()
+           .on('changeDate', function (selected) {
+            var minDate = new Date(selected.date.valueOf());
+        $('#eventStartDate').datepicker('setEndDate', minDate);
+        });
+
         // Bind the dates to datetimepicker.
         // You should pass the options you need
         $("#eventStartDate, #eventEndDate").datetimepicker({
@@ -209,4 +152,78 @@
         });
     });
     </script>
+</head>
+
+<body>
+<form:form id="modal-form" action="/event/change" modelAttribute="event" method="post">
+    <div class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 id="modal-title" class="modal-title">Maak nieuwe afspraak</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label class="col-xs-4" for="eventName">Onderwerp</label>
+                            <input type="text" name="eventName" path="eventName" id="eventName" required/>
+                            <input type="hidden" name="eventId" id="eventId" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label class="col-xs-4" for="eventComment">Beschrijving</label>
+                            <input type="text" name="eventComment" id="eventComment" required/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label class="col-xs-4" for="activity.activityCategory">Categorie</label>
+                            <select name="activity.activityCategory" id="activity.activityCategory" required>
+                                <option disabled selected="selected">Selecteer categorie</option>
+                                <option value="Huishouden">Huishouden</option>
+                                <option value="Medisch">Medisch</option>
+                                <option value="Vrije tijd" >Vrije tijd</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label class="col-xs-4" for="eventStartDate">Starttijd</label>
+                            <input type="text" name="eventStartDate" id="eventStartDate" required/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label class="col-xs-4" for="eventEndDate">Eindtijd</label>
+                            <input type="text" name="eventEndDate" id="eventEndDate" required/>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="delete-event" class="btn btn-danger" data-dismiss="modal" >Verwijder Afspraak</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Sluiten</button>
+                    <form:errors path="eventName" cssClass="error" />
+                    <button type="submit" class="btn btn-primary" id="save-change-event">Maak afspraak</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</form:form>
+
+<div class="container w-80 p-3">
+    <div id="calendar"></div>
+    <div id='datepicker'></div>
+</div>
+<div class="row">
+    <div class="col-xs-1">
+    </div>
+    <div class="col-xs-2">
+        <input type="submit" value="Maak nieuwe afspraak" onclick="window.location='/event/new';" />
+    </div>
+</div>
+</body>
 </html>

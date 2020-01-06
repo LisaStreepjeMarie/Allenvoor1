@@ -1,5 +1,4 @@
 package com.wemakeitwork.allenvooreen.controller;
-import com.wemakeitwork.allenvooreen.model.Activity;
 import com.wemakeitwork.allenvooreen.model.Event;
 import com.wemakeitwork.allenvooreen.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +22,13 @@ public class NewEventController {
     }
 
     @PostMapping("/event/new")
-    protected String saveOrUpdateEvent(@ModelAttribute("event") Event event, Activity activity, BindingResult result) {
+    protected String saveOrUpdateEvent(@ModelAttribute("event") Event event, BindingResult result) {
         if (result.hasErrors()) {
             return "calendar";
         }
         else {
             //N.B.: activityname == eventname for now
-            activity.setActivityName(event.getEventName());
-            event.setActivity(activity);
+            event.getActivity().setActivityName(event.getEventName());
             eventRepository.save(event);
             return "redirect:/calendar";
         }

@@ -1,7 +1,6 @@
 package com.wemakeitwork.allenvooreen.model;
 
 import com.fasterxml.jackson.annotation.*;
-import com.wemakeitwork.allenvooreen.service.EventNameConstraint;
 import javax.persistence.*;
 import java.util.Date;
 
@@ -15,7 +14,6 @@ public class Event {
     @JsonProperty("id")
     private Integer eventId;
 
-    @EventNameConstraint
     @JsonProperty("title")
     private String eventName;
 
