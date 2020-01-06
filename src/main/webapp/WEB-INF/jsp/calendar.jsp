@@ -13,7 +13,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
 
     <!-- webjars are preferable to content delivery networks (CDNs)-->
-    <link href='https://unpkg.com/fullcalendar@3.10.1/dist/fullcalendar.min.css' rel='stylesheet' />
+    <!--<link href='https://unpkg.com/fullcalendar@3.10.1/dist/fullcalendar.min.css' rel='stylesheet' />
     <link href='https://unpkg.com/fullcalendar@3.10.1/dist/fullcalendar.print.css' rel='stylesheet' media='print' />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.42/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
     <script src='https://unpkg.com/moment@2.24.0/min/moment.min.js'></script>
@@ -23,9 +23,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/locale/nl.js" integrity="sha256-LAjE4KdsUdfZ4yMkV+UMRbHqEyfyvtCeIyD6qRYhTtQ=" crossorigin="anonymous"></script>
     <link href='https://use.fontawesome.com/releases/v5.0.6/css/all.css' rel='stylesheet' />
     <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' />
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
 
-    <!--<link href="webjars/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet" />
+    <link href="webjars/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet" />
     <link href="webjars/fullcalendar/3.9.0/fullcalendar.print.min.css" rel="stylesheet" media='print' />
     <link href="webjars/Eonasdan-bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
     <script src="webjars/moment/2.24.0/min/moment.min.js"></script>
@@ -35,11 +35,11 @@
     <script src="webjars/fullcalendar/3.9.0/locale/nl.js"></script>
     <link href="webjars/font-awesome/5.0.6/web-fonts-with-css/css/fontawesome-all.min.css" rel='stylesheet'>
     <link href="webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" rel='stylesheet'>
-    <script src="webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>-->
+    <script src="webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
 
     <!-- added the below 2 links and the javascript to make sure the end date is the same/above the start date -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.0/css/bootstrap-datepicker.css" rel="stylesheet" type="text/css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.0/js/bootstrap-datepicker.min.js"></script>
+    <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.0/css/bootstrap-datepicker.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.0/js/bootstrap-datepicker.min.js"></script>-->
 
     <script type="text/javascript">
     $(document).ready(function() {
@@ -123,19 +123,6 @@
             eventLimit: true // allow "more" link when too many events
         });
 
-        $("#eventStartDate").datepicker({
-            todayBtn: 1,
-            autoclose: true,
-        }).on('changeDate', function (selected) {
-           var minDate = new Date(selected.date.valueOf());
-        $('#eventEndDate').datepicker('setStartDate', minDate);
-        });
-        $("#eventEndDate").datepicker()
-           .on('changeDate', function (selected) {
-            var minDate = new Date(selected.date.valueOf());
-        $('#eventStartDate').datepicker('setEndDate', minDate);
-        });
-
         // Bind the dates to datetimepicker.
         // You should pass the options you need
         $("#eventStartDate, #eventEndDate").datetimepicker({
@@ -143,6 +130,8 @@
         });
     });
     </script>
+
+    <!--<link href="../css/style.css" rel="stylesheet" type="text/css"/>-->
 </head>
 
 <body>
@@ -204,16 +193,22 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 </form:form>
-
-<div class="container w-80 p-3">
-    <div id="calendar"></div>
-    <div id='datepicker'></div>
-</div>
-<div class="row">
-    <div class="col-xs-1">
+<div class="container">
+    <div class="row">
+           <div class="col-sm-12">&nbsp;</div>
     </div>
-    <div class="col-xs-2">
-        <input type="submit" value="Maak nieuwe afspraak" onclick="window.location='/event/new';" />
+    <div class="row">
+       <div class="col-sm-2">
+            <input class="btn btn-primary" type="submit" value="Logout" onclick="window.location='/logout';" /><br />
+            <br />
+            <input class="btn btn-primary" type="submit" value="Gebruikersprofiel" onclick="window.location='/member/current';" /><br />
+           <br />
+           <input class="btn btn-primary" type="submit" value="Toon groepen" onclick="window.location='/team/all';" />
+       </div>
+       <div class="col-sm-10">
+           <div id="calendar"></div>
+           <div id='datepicker'></div>
+       </div>
     </div>
 </div>
 </body>
