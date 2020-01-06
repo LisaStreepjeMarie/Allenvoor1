@@ -7,6 +7,9 @@ import java.util.Set;
 @Entity
 // @Table(name = "team")
 public class Team {
+    public Team() {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int teamId = 0;
@@ -17,7 +20,7 @@ public class Team {
     @ManyToMany
     // @ManyToMany(cascade = CascadeType.ALL)
     // @JoinTable(name = "team_member", joinColumns = @JoinColumn(name = "memberId"), inverseJoinColumns = @JoinColumn(name = "teamMemberId"))
-    public Set<Member> membername = new HashSet<>();
+    private Set<Member> membername = new HashSet<>();
 
     public Set<Member> getMembername() {
         return membername;

@@ -29,7 +29,12 @@ public class NewTeamController {
 
     @GetMapping("/team/all")
     protected String showTeams(Model model) {
-        model.addAttribute("allTeams", teamRepository.findAll());
+        List<Team> allTeams = teamRepository.findAll();
+        /* for(Team team : allTeams) {
+            System.out.println("");
+        } */
+        model.addAttribute("allTeams", allTeams);
+        System.out.println("");
         return "teamOverview";
     }
 
@@ -63,14 +68,14 @@ public class NewTeamController {
         /* if (result.hasErrors()) {
             return "teamForm";
         } else { */
-            Team team = new Team();
-            team.setTeamName(teamName);
-            Member member = memberRepository.findByMembername(membername).get();
-            member.getTeamName().add(team);
-            team.getMembername().add(member);
-            teamRepository.save(team);
-            memberRepository.save(member);
-            return "redirect:/team/all";
+        Team team = new Team();
+        team.setTeamName(teamName);
+        Member member = memberRepository.findByMembername(membername).get();
+        member.getTeamName().add(team);
+        team.getMembername().add(member);
+        teamRepository.save(team);
+        memberRepository.save(member);
+        return "redirect:/team/all";
         //}
     }
 }
