@@ -25,18 +25,13 @@ public class NewMemberController{
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-
     @GetMapping("/member/select/{memberId}")
     protected String showMemberData(@PathVariable("memberId") final Integer memberId, Model model, Principal principal) {
         // extra regel om te testen:
         model.addAttribute("member", new Member());
         Optional<Member> memberOpt = memberRepository.findByMembername(principal.getName());
         Member member;
-        if (memberOpt.isPresent()) {
-            member = memberOpt.get();
-        } else {
-            member = new Member();
-        }
+        member = memberOpt.orElseGet(Member::new);
         model.addAttribute("member", member);
         return "changeMember";
     }

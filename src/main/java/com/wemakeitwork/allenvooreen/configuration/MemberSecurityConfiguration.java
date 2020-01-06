@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 @Configuration
 @EnableGlobalMethodSecurity(securedEnabled = true)
@@ -43,7 +44,7 @@ public class MemberSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/member/new/**").permitAll()
+                .antMatchers("/member/new/**","/webjars/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
