@@ -12,7 +12,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
-.login-page {
+/* .login-page {
   width: 360px;
   padding: 8% 0 0;
   margin: auto;
@@ -99,9 +99,13 @@ body {
 }
 .container .info span .fa {
   color: #EF3B3A;
-}
+} */
 
 /* new design */
+
+.header {
+    height: 20px;
+}
 
 .webpage {
 	margin: 30px 0px 0px 30px;

@@ -12,6 +12,7 @@
     <body class="webpage">
         <div id="container">
             <p>
+                <input class="btn btn-primary" type="submit" value="home" onclick="window.location='/';" />
                 <input class="btn btn-primary" type="submit" value="Logout" onclick="window.location='/logout';" />
             </p>
             <h1>Overzicht groepen</h1>
