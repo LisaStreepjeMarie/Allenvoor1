@@ -59,15 +59,8 @@ public class NewTeamController {
 
     @PostMapping("/team/new")
     protected String saveOrUpdateTeam(HttpServletRequest request) {
-      // System.out.println(team);
-
         String teamName = request.getParameter("teamName");
         String membername = request.getParameter("membername");
-        System.out.println("teamName: " + teamName);
-        System.out.println("membername: " + membername);
-        /* if (result.hasErrors()) {
-            return "teamForm";
-        } else { */
         Team team = new Team();
         team.setTeamName(teamName);
         Member member = memberRepository.findByMembername(membername).get();
@@ -76,6 +69,5 @@ public class NewTeamController {
         teamRepository.save(team);
         memberRepository.save(member);
         return "redirect:/team/all";
-        //}
     }
 }
