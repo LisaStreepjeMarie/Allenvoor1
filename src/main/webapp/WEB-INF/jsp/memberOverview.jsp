@@ -4,15 +4,16 @@
 
 <html xmlns:form="http://www.w3.org/1999/xhtml" xmlns:c="">
     <head>
+         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+                    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link href="../css/style.css" rel="stylesheet" type="text/css"/>
         <title>Overzicht gebruiker</title>
     </head>
     <body class="webpage">
             <div id="container">
+                <table>
                 <p>
-                    <form:form action="/logout" method="post">
-                       <input type="submit" value="Logout" />
-                   </form:form>
+                <input class="btn btn-primary" type="submit" value="Logout" onclick="window.location='/logout';" />
                 </p>
                 <h1>Overzicht gebruiker</h1>
                 <form:form action="/member/current" modelAttribute="currentmember">

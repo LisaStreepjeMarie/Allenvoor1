@@ -16,9 +16,11 @@
             </p>
             <h1>Overzicht groepen</h1>
             <table>
+                <tr><td>Groep</td><td>Deelnemer</td><td></td></tr>
                 <c:forEach items="${allTeams}" var="team">
                     <tr>
                         <td><a href="/team/select/<c:out value="${team.teamId}" />"><c:out value="${team.teamName}" /></a></td>
+                        <td><a href="/team/select/<c:out value="${member.memberId}" />"><c:out value="${member.membername}" /></a></td>
                         <td><input class="btn btn-primary" type="submit" value="Verwijder groep" onclick="window.location='/team/delete/${team.teamId}';" /></td>
                     </tr>
                 </c:forEach>

@@ -6,12 +6,13 @@
     <head>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
             integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <link href="../css/style.css" rel="stylesheet" type="text/css"/>
+        <link href="../../css/style.css" rel="stylesheet" type="text/css"/>
         <title>Wijzig de gegevens van een groep</title>
     </head>
     <body class="webpage">
         <div id="container">
             <p>
+                <input class="btn btn-primary" type="submit" value="Al je groepen" onclick="window.location='/team/all';" />
                 <input class="btn btn-primary" type="submit" value="Logout" onclick="window.location='/logout';" />
             </p>
             <h1>Wijzig gegevens groep</h1>
@@ -23,7 +24,17 @@
                         <td>
                             <form:input path="teamName" value="${team.teamName}" />
                             </form>
-                                <input class="btn btn-primary" type="submit" value="Bewaar" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Groepslid:</td>
+                        <td>
+                            <form:input path="membername" value="${members.membername}" /></form>
+                        </td>
+                    </tr>
+                    <tr colspan="2">
+                        <td>
+                            <input class="btn btn-primary" type="submit" value="Bewaar" />
                         </td>
                     </tr>
                 </table>

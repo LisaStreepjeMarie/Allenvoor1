@@ -47,7 +47,7 @@ body {
   border: 0;
   padding: 15px;
   color: #FFFFFF;
-  font-size: 14px;
+  font-size: 13px;
   -webkit-transition: all 0.3 ease;
   transition: all 0.3 ease;
   cursor: pointer;
@@ -118,20 +118,33 @@ body {
 	line-height:135%;
 }
 
-
 #container {
 
 }
 
 table tr td, table tr th {
+    font-family: "Open Sans", Arial, Helvetica, sans-serif;
 	padding: 4px 10px 4px 0px;
 }
 
-table td {
+table tr th {
+    font-size: 16pt;
+    color: #0e4171;
+}
+
+th, td {
 	font-size: 12pt;
 	vertical-align: middle;
 	text-align: left;
 	line-height:135%;
+}
+
+p {}
+.text {
+	line-height:135%;
+    font-family: "Open Sans", Arial, Helvetica, sans-serif;
+    font-size: 12pt;
+    color: #555555;
 }
 
 a {
@@ -150,12 +163,13 @@ a:hover {
 .button {
 	background-color: #777777;
 	vertical-align: middle;
-	font-family: "Open Sans", sans-serif;
+	font-family: "Open Sans", Arial, Helvetica, sans-serif;
 	font-weight: normal;
 	color: #0e4171;
 }
 
 h1 {
     font-family: "Trebuchet MS", sans-serif;
+    font-size: 23pt;
     color: #0e4171;
 }
