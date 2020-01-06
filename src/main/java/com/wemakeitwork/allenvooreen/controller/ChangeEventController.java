@@ -19,12 +19,14 @@ public class ChangeEventController {
     ActivityRepository activityRepository;
 
     @PostMapping("/event/change")
-    protected String saveOrUpdateActivity(@ModelAttribute("event") Event event, Activity activity, BindingResult result) {
+    protected String saveOrUpdateActivity(@ModelAttribute("event") Event event, BindingResult result) {
         if (result.hasErrors()) {
             return "calendar";
         } else {
-            activity.setActivityName(event.getEventName());
+            Activity activity = new Activity();
+            activity.setActivityCategory(event.getActivity().getActivityCategory());
             activity.setActivityId(eventRepository.findActivityIdByEventId(event.getEventId()));
+            activity.setActivityName(event.getEventName());
             event.setActivity(activity);
             eventRepository.save(event);
             return "redirect:/calendar";
