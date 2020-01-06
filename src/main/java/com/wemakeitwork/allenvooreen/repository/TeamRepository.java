@@ -8,6 +8,8 @@ import java.util.Optional;
 public interface TeamRepository extends JpaRepository<Team, Integer> {
     Optional<Team> findByTeamName(String teamName);
 
+    // List<Team> findByMember(Member member);
+
     @Override
     void deleteById(Integer integer);
 }

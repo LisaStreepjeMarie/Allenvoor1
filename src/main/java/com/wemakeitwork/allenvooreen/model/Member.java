@@ -2,7 +2,9 @@ package com.wemakeitwork.allenvooreen.model;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -12,17 +14,30 @@ import java.util.List;
 public class Member implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer memberId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer memberId = 0;
 
-    @Column (name = "membername", unique = true, nullable = false)
+    //@Column (name = "membername", unique = true, nullable = false)
     private String membername;
 
-    @Column(name = "password", nullable = false)
+    //@Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "rol")
+    //@Column(name = "rol")
     private String rol;
+
+    @ManyToMany
+    // @ManyToMany(cascade = CascadeType.ALL)
+    // @JoinTable(name = "team_member", joinColumns = @JoinColumn(name = "teamMemberId"), inverseJoinColumns = @JoinColumn(name = "teamId"))
+    private Set<Team> teamName = new HashSet<>();
+
+    public Set<Team> getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(Set<Team> teamName) {
+        this.teamName = teamName;
+    }
 
     public String getRol() {
         return rol;
@@ -41,10 +56,12 @@ public class Member implements UserDetails {
         authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
         return authorities;
     }
+
     @Override
     public String getUsername() {
         return this.getMembername();
     }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -96,4 +113,15 @@ public class Member implements UserDetails {
             return this.membername= membername;
         }
     }
+
+//    @Override
+//    public String toString() {
+//        return "Member{" +
+//                "memberId=" + memberId +
+//                ", membername='" + membername + '\'' +
+//                ", password='" + password + '\'' +
+//                ", rol='" + rol + '\'' +
+//                ", teamName=" + teamName +
+//                '}';
+//    }
 }
