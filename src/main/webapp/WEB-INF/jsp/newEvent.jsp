@@ -22,10 +22,10 @@
     <form:form action="/event/new" modelAttribute="event" method="post">
     <div class="row">
         <div class="col-xs-1">
-            <p class="font-weight-normal">Eventnaam: </p>
+            <p class="font-weight-normal">Onderwerp: </p>
         </div>
         <div class="col-xs-2">
-            <input type="text" id="eventName" name="eventName" value="${updateEventName}" required>
+            <input type="text" id="eventName" name="eventName" required>
         </div>
     </div>
     <div class="row">
@@ -33,7 +33,7 @@
             <p class="font-weight-normal">Beschrijving: </p>
         </div>
         <div class="col-xs-2">
-            <input type="text" id="eventComment" name="eventComment" value="${updateEventComment}" required>
+            <input type="text" id="eventComment" name="eventComment" required>
         </div>
     </div>
     <div class="row">
@@ -51,13 +51,13 @@
     </div>
     <div class="row">
         <div class="col-xs-1">
-            <p class="font-weight-normal">Datum: </p>
+            <p class="font-weight-normal">Begintijd: </p>
         </div>
-        <div class="col-xs-2">
+        <div class="col-xs-3">
             <div class='col-sm'>
                 <div class="form-group">
-                    <div class='input-group date' id='datetimepicker1'>
-                        <input type='text' class="form-control" name="eventDate" required>
+                    <div class='input-group date' id='dateTimePickerStartDate'>
+                        <input type='text' class="form-control" name="eventStartDate" required>
                         <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                         </span>
@@ -68,6 +68,23 @@
     </div>
         <div class="row">
             <div class="col-xs-1">
+                <p class="font-weight-normal">Eindtijd: </p>
+            </div>
+            <div class="col-xs-3">
+                <div class='col-sm'>
+                    <div class="form-group">
+                        <div class='input-group date' id='dateTimePickerEndDate'>
+                            <input type='text' class="form-control" name="eventEndDate" required>
+                            <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-1">
             </div>
             <div class="col-xs-2">
                 <input type="submit" value="Maak afspraak!" />
@@ -75,13 +92,15 @@
         </div>
     </form:form>
 </div>
-
-
 </body>
 <script>
 $(function() {
-  $('#datetimepicker1').datetimepicker({
-     format: 'DD/MM/YYYY HH:mm',
+  $('#dateTimePickerStartDate').datetimepicker({
+     <!-- month before day -->
+     format: 'MM/DD/YYYY HH:mm',
+   });
+   $('#dateTimePickerEndDate').datetimepicker({
+     format: 'MM/DD/YYYY HH:mm',
    });
 });
 </script>

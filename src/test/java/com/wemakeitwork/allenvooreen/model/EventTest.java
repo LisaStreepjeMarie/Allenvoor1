@@ -3,10 +3,7 @@ package com.wemakeitwork.allenvooreen.model;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
 import java.util.Date;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class EventTest {
     Event testEvent = new Event();
@@ -71,20 +68,20 @@ class EventTest {
     void getEventDate() {
         //arrange
         Date testdate = new Date(2323223232L);
-        testEvent.setEventDate(testdate);
+        testEvent.setEventStartDate(testdate);
 
         //assert
-        Assertions.assertThat(testEvent.getEventDate()).isEqualTo(testdate);
+        Assertions.assertThat(testEvent.getEventStartDate()).isEqualTo(testdate);
     }
 
     @Test
     void setEventDate() {
         //arrange
         Date testdate = new Date(2323223232L);
-        testEvent.setEventDate(testdate);
+        testEvent.setEventStartDate(testdate);
 
         //assert
-        Assertions.assertThat(testEvent.getEventDate()).isEqualTo(testdate);
+        Assertions.assertThat(testEvent.getEventStartDate()).isEqualTo(testdate);
     }
 
     @Test

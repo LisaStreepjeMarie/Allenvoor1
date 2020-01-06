@@ -1,4 +1,5 @@
 package com.wemakeitwork.allenvooreen.service;
+
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

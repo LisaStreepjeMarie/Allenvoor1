@@ -32,11 +32,7 @@ public class NewMemberController{
         model.addAttribute("member", new Member());
         Optional<Member> memberOpt = memberRepository.findByMembername(principal.getName());
         Member member;
-        if (memberOpt.isPresent()) {
-            member = memberOpt.get();
-        } else {
-            member = new Member();
-        }
+        member = memberOpt.orElseGet(Member::new);
         model.addAttribute("member", member);
         return "changeMember";
     }

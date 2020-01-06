@@ -37,11 +37,7 @@ public class NewTeamController {
         model.addAttribute("team", new Team());
         Optional<Team> teamOpt = teamRepository.findById(teamId);
         Team team;
-        if (teamOpt.isPresent()) {
-            team = teamOpt.get();
-        } else {
-            team = new Team();
-        }
+        team = teamOpt.orElseGet(Team::new);
         model.addAttribute("team", team);
         return "teamData";
     }

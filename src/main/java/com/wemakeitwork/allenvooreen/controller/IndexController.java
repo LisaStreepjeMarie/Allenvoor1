@@ -3,6 +3,7 @@ package com.wemakeitwork.allenvooreen.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+
 @Controller
 public class IndexController {
 
@@ -19,10 +20,5 @@ public class IndexController {
     @GetMapping("/logout")
     public String logout() {
         return "/logout";
-    }
-
-    @GetMapping("/calendar")
-    public String calendar() {
-        return "calendar";
     }
 }

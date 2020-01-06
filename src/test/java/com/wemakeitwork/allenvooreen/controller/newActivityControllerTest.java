@@ -73,7 +73,5 @@ class newActivityControllerTest {
 
         Assertions.assertThat(formObject.getActivityName()).isEqualTo(activityname);
         Assertions.assertThat(formObject.getActivityCategory()).isEqualTo(activitycategory);
-
     }
-
 }
