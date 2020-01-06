@@ -29,7 +29,12 @@ public class NewTeamController {
 
     @GetMapping("/team/all")
     protected String showTeams(Model model) {
-        model.addAttribute("allTeams", teamRepository.findAll());
+        List<Team> allTeams = teamRepository.findAll();
+        /* for(Team team : allTeams) {
+            System.out.println("");
+        } */
+        model.addAttribute("allTeams", allTeams);
+        System.out.println("");
         return "teamOverview";
     }
 

@@ -25,7 +25,6 @@ public class NewMemberController{
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-
     @GetMapping("/member/select/{memberId}")
     protected String showMemberData(@PathVariable("memberId") final Integer memberId, Model model, Principal principal) {
         // extra regel om te testen:

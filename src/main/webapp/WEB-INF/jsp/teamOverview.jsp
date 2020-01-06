@@ -20,7 +20,11 @@
                 <c:forEach items="${allTeams}" var="team">
                     <tr>
                         <td><a href="/team/select/<c:out value="${team.teamId}" />"><c:out value="${team.teamName}" /></a></td>
-                        <td><a href="/team/select/<c:out value="${member.memberId}" />"><c:out value="${member.membername}" /></a></td>
+                        <td>
+                        <c:forEach items="${team.membername}" var="member">
+                        <a href="/team/select/<c:out value="${member.membername}" />"><c:out value="${member.membername}" /></a><br />
+                        </c:forEach>
+                        </td>
                         <td><input class="btn btn-primary" type="submit" value="Verwijder groep" onclick="window.location='/team/delete/${team.teamId}';" /></td>
                     </tr>
                 </c:forEach>
