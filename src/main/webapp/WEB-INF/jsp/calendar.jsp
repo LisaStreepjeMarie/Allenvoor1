@@ -37,9 +37,9 @@
     <link href="webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" rel='stylesheet'>
     <script src="webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>-->
 
-    <!-- added the below 2 links and the javascript to make sure the end date is the same/above the start date -->
+    <!-- added the below 2 links and the javascript to make sure the end date is the same/above the start date
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.0/css/bootstrap-datepicker.css" rel="stylesheet" type="text/css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.0/js/bootstrap-datepicker.min.js"></script> -->
 
     <script type="text/javascript">
     $(document).ready(function() {
@@ -123,19 +123,6 @@
             eventLimit: true // allow "more" link when too many events
         });
 
-        $("#eventStartDate").datepicker({
-            todayBtn: 1,
-            autoclose: true,
-        }).on('changeDate', function (selected) {
-           var minDate = new Date(selected.date.valueOf());
-        $('#eventEndDate').datepicker('setStartDate', minDate);
-        });
-        $("#eventEndDate").datepicker()
-           .on('changeDate', function (selected) {
-            var minDate = new Date(selected.date.valueOf());
-        $('#eventStartDate').datepicker('setEndDate', minDate);
-        });
-
         // Bind the dates to datetimepicker.
         // You should pass the options you need
         $("#eventStartDate, #eventEndDate").datetimepicker({
@@ -143,6 +130,8 @@
         });
     });
     </script>
+
+    <link href="../css/style.css" rel="stylesheet" type="text/css"/>
 </head>
 
 <body>
@@ -204,16 +193,22 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 </form:form>
-
-<div class="container w-80 p-3">
-    <div id="calendar"></div>
-    <div id='datepicker'></div>
-</div>
-<div class="row">
-    <div class="col-xs-1">
+<div class="container">
+    <div class="row">
+           <div class="col-sm-12">&nbsp;</div>
     </div>
-    <div class="col-xs-2">
-        <input type="submit" value="Maak nieuwe afspraak" onclick="window.location='/event/new';" />
+    <div class="row">
+       <div class="col-sm-2">
+            <input class="btn btn-primary" type="submit" value="Logout" onclick="window.location='/logout';" /><br />
+            <br />
+            <input class="btn btn-primary" type="submit" value="Gebruikersprofiel" onclick="window.location='/member/current';" /><br />
+           <br />
+           <input class="btn btn-primary" type="submit" value="Toon groepen" onclick="window.location='/team/all';" />
+       </div>
+       <div class="col-sm-10">
+           <div id="calendar"></div>
+           <div id='datepicker'></div>
+       </div>
     </div>
 </div>
 </body>
