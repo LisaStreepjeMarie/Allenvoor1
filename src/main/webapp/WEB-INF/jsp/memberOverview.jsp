@@ -14,16 +14,15 @@
                        <input type="submit" value="Logout" />
                    </form:form>
                 </p>
-                <h1>Profiel pagina</h1>
-                <form:form action="/member/change" modelAttribute="currentmember" method="post">
+                <h1>Overzicht gebruiker</h1>
+                <form:form action="/member/current" modelAttribute="currentmember">
                 <form:input path="memberId" type="hidden" />
                 <table>
                       <tr>
-                        <td>
-                           <form:input path="membername" value= "${members.membername}" /></form>
-                            </td>
-                            <td><a href="/team/select/<c:out value="${members.memberId}" />"><c:out value="${members.membername}" /></a></td>
-                           <td><a href="/member/change">Verander je naam/inlog</a></td>
+
+                         <td><a href="/team/select/<c:out value="${members.memberId}" />"><c:out value="${members.membername}" /></a></td>
+                           <td><a href="/member/delete">Verwijder je profiel</a></td>
+                           <td><a href="/member/change">Verander je inlog naam</a></td>
                         </tr>
                 </table>
                </form:form>
