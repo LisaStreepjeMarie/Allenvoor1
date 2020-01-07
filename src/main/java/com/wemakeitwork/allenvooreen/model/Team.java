@@ -1,7 +1,9 @@
 package com.wemakeitwork.allenvooreen.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -21,6 +23,10 @@ public class Team {
     // @ManyToMany(cascade = CascadeType.ALL)
     // @JoinTable(name = "team_member", joinColumns = @JoinColumn(name = "memberId"), inverseJoinColumns = @JoinColumn(name = "teamMemberId"))
     private Set<Member> membername = new HashSet<>();
+
+    @OneToMany( cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
+    List<Event> eventList = new ArrayList<>();
 
     public Set<Member> getMembername() {
         return membername;
@@ -48,6 +54,14 @@ public class Team {
         } else {
             return this.teamName = teamName;
         }
+    }
+
+    public List<Event> getEventList() {
+        return eventList;
+    }
+
+    public void setEventList(Event event) {
+        this.eventList.add(event);
     }
 
     /* @Override

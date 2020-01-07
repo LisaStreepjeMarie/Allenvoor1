@@ -21,11 +21,10 @@
                 <form:input path="memberId" type="hidden" />
                 <table>
                       <tr>
-                        <td>
-                           <form:input path="membername" value= "${members.membername}" /></form>
-                            </td>
-                            <td><a href="/team/select/<c:out value="${members.memberId}" />"><c:out value="${members.membername}" /></a></td>
+
+                         <td><a href="/team/select/<c:out value="${members.memberId}" />"><c:out value="${members.membername}" /></a></td>
                            <td><a href="/member/delete">Verwijder je profiel</a></td>
+                           <td><a href="/member/change">Verander je inlog naam</a></td>
                         </tr>
                 </table>
                </form:form>
