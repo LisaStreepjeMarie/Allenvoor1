@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Entity
 @JsonPropertyOrder(value = {"id","title","description","start", "end"}, alphabetic = true)
-@JsonIgnoreProperties({ "activity" })
+@JsonIgnoreProperties({ "activity", "team" })
 public class Event {
 
     @Id
@@ -35,6 +35,9 @@ public class Event {
     @OneToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "activityId", referencedColumnName = "activityId", nullable = false)
     private Activity activity;
+
+    @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    private Team team;
 
     @JsonGetter
     public String getEventName() {
@@ -88,5 +91,13 @@ public class Event {
 
     public void setEventComment(String eventComment) {
         this.eventComment = eventComment;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
     }
 }
