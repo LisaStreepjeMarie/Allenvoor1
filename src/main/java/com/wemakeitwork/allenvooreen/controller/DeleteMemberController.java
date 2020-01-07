@@ -13,7 +13,6 @@ public class DeleteMemberController {
     @Autowired
     MemberRepository memberRepository;
 
-    // Verwijder gebruiker (ingelogd gebruiker kan zichzelf verwijderen)
     @GetMapping("/member/delete")
     public String deleteMember(Principal principal) {
         Optional<Member> member = memberRepository.findByMembername(principal.getName());
