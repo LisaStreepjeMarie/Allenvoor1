@@ -66,12 +66,4 @@ public class Team {
         this.eventList.add(event);
     }
 
-    /* @Override
-    public String toString() {
-        return "Team{" +
-                "teamId=" + teamId +
-                ", teamName='" + teamName + '\'' +
-                ", membername=" + membername +
-                '}';
-    } */
 }
