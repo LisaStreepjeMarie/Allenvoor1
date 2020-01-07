@@ -16,12 +16,9 @@ public class Team {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int teamId = 0;
 
-    // @Column(name = "teamName")
     private String teamName;
 
     @ManyToMany
-    // @ManyToMany(cascade = CascadeType.ALL)
-    // @JoinTable(name = "team_member", joinColumns = @JoinColumn(name = "memberId"), inverseJoinColumns = @JoinColumn(name = "teamMemberId"))
     private Set<Member> membername = new HashSet<>();
 
     @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "team")
@@ -62,13 +59,4 @@ public class Team {
     public void setEventList(Event event) {
         this.eventList.add(event);
     }
-
-    /* @Override
-    public String toString() {
-        return "Team{" +
-                "teamId=" + teamId +
-                ", teamName='" + teamName + '\'' +
-                ", membername=" + membername +
-                '}';
-    } */
 }
