@@ -17,15 +17,32 @@
                 <input class="btn btn-primary" type="submit" value="Logout" onclick="window.location='/logout';" />
             </p>
             <h1>Wijzig gegevens groep</h1>
-            <form:form action="/team/change" modelAttribute="team">
+            <form:form action="/team/new" modelAttribute="team">
             <form:input path="teamId" type="hidden" />
                 <table>
                     <tr>
                         <td>Groepsnaam:</td>
                         <td>
-                            <form:input path="teamName" value="${team.teamName}" />
-                            </form>
-                                <input class="btn btn-primary" type="submit" value="Bewaar" />
+                            <form:input size="30" path="teamName" value="${team.teamName}" /></form>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Groepslid:</td>
+                        <td>
+                            <c:forEach items="${team.membername}" var="member">
+                                <a href="/team/select/<c:out value="${member.membername}" />"><c:out value="${member.membername}" /></a><br />
+                            </c:forEach>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Nieuw groepslid:</td>
+                        <td>
+                           <form:input path="membername" /></form>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                             <input class="btn btn-primary" type="submit" value="Wijzig" />
                         </td>
                     </tr>
                 </table>

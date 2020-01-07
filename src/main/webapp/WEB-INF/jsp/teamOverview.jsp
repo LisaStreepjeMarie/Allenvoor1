@@ -13,6 +13,7 @@
         <div id="container">
             <p>
                 <input class="btn btn-primary" type="submit" value="home" onclick="window.location='/';" />
+                <input class="btn btn-primary" type="submit" value="Al je groepen" onclick="window.location='/team/all';" />
                 <input class="btn btn-primary" type="submit" value="Logout" onclick="window.location='/logout';" />
             </p>
             <h1>Overzicht groepen</h1>
@@ -23,7 +24,7 @@
                         <td><a href="/team/select/<c:out value="${team.teamId}" />"><c:out value="${team.teamName}" /></a></td>
                         <td>
                         <c:forEach items="${team.membername}" var="member">
-                        <a href="/team/select/<c:out value="${member.membername}" />"><c:out value="${member.membername}" /></a><br />
+                            <a href="/team/select/<c:out value="${member.membername}" />"><c:out value="${member.membername}" /></a><br />
                         </c:forEach>
                         </td>
                         <td><input class="btn btn-primary" type="submit" value="Verwijder groep" onclick="window.location='/team/delete/${team.teamId}';" /></td>
