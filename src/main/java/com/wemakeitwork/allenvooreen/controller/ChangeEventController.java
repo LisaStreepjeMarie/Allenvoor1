@@ -32,7 +32,7 @@ public class ChangeEventController {
             event.setTeam(team);
 
             eventRepository.save(event);
-            return "redirect:/calendar";
+            return "redirect:/calendar/" + team.getTeamId();
         }
     }
 }

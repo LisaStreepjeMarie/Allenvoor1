@@ -44,10 +44,11 @@ public class NewEventController {
             return "calendar";
         }
         else {
-            event.setTeam((Team) httpSession.getAttribute("team"));
+            Team team = (Team) httpSession.getAttribute("team");
+            event.setTeam(team);
             event.getActivity().setActivityName(event.getEventName());
             eventRepository.save(event);
-            return "redirect:/home";
+            return "redirect:/calendar/" + team.getTeamId();
         }
     }
 }
