@@ -27,7 +27,7 @@ public class Member implements UserDetails {
     //@Column(name = "rol")
     private String rol;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     // @ManyToMany(cascade = CascadeType.ALL)
     // @JoinTable(name = "team_member", joinColumns = @JoinColumn(name = "teamMemberId"), inverseJoinColumns = @JoinColumn(name = "teamId"))
     private Set<Team> teamName = new HashSet<>();
@@ -44,7 +44,7 @@ public class Member implements UserDetails {
         return rol;
     }
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "member_team", joinColumns = @JoinColumn(name = "member_id"), inverseJoinColumns = @JoinColumn(name = "team_id"))
 
     public void setRol(String rol) {

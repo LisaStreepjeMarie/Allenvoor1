@@ -36,8 +36,10 @@ public class CalendarController {
         Optional<Member> member = memberRepository.findByMembername(principal.getName());
         Team team = new Team();
         if(member.isPresent()){
-            team = teamRepository.findTeamById(teamRepository.findTeamIdByMemberid(member.get().getMemberId()));
-            eventList = team.getEventList();
+            if (teamRepository.findTeamIdByMemberid(member.get().getMemberId()) != null) {
+                team = teamRepository.findTeamById(teamRepository.findTeamIdByMemberid(member.get().getMemberId()));
+                eventList = team.getEventList();
+            }
         }
 
         String calendarData = "";
