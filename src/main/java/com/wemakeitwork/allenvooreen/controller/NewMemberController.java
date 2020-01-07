@@ -1,9 +1,7 @@
 package com.wemakeitwork.allenvooreen.controller;
 import com.wemakeitwork.allenvooreen.model.Member;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
-import org.hibernate.transform.AliasToEntityMapResultTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,7 +9,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.io.PrintWriter;
 import java.security.Principal;
 import java.util.Optional;
 
@@ -26,9 +23,9 @@ public class NewMemberController{
     private PasswordEncoder passwordEncoder;
 
     @GetMapping("/member/select/{memberId}")
-    protected String showMemberData(@PathVariable("memberId") final Integer memberId, Model model, Principal principal) {
-        // extra regel om te testen:
+    protected String showMemberData(Model model, Principal principal) {
         model.addAttribute("member", new Member());
+
         Optional<Member> memberOpt = memberRepository.findByMembername(principal.getName());
         Member member;
         member = memberOpt.orElseGet(Member::new);
