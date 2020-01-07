@@ -48,6 +48,7 @@ public class NewEventController {
             //N.B.: activityname == eventname for now
             team.setEventList(event);
             event.getActivity().setActivityName(event.getEventName());
+            event.setTeam(team);
             eventRepository.save(event);
             return "redirect:/calendar";
         }
