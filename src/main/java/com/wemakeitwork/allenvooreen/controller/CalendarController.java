@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,9 @@ public class CalendarController {
     EventRepository eventRepository;
 
     @Autowired
+    private HttpSession httpSession;
+
+    @Autowired
     MemberRepository memberRepository;
 
     @Autowired
@@ -35,6 +39,7 @@ public class CalendarController {
     public String showmyCalender(@PathVariable("teamId") final Integer teamId, Model model, Principal principal) throws JsonProcessingException {
         Team team = teamRepository.findTeamById(teamId);
         List<Event> eventList = team.getEventList();
+        httpSession.setAttribute("team", team);
 
         String calendarData = "";
         for (Event event : eventList) {
