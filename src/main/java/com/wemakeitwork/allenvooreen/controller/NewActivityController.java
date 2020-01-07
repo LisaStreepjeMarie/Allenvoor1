@@ -36,10 +36,11 @@ public class NewActivityController {
     }
 
     @GetMapping("/activity/select/{activityId}")
-    protected String showTeamData(@PathVariable("activityId") final Integer activtyId, Model model) {
-        // extra regel om te testen:
+    protected String showTeamData(@PathVariable("activityId") final Integer activityId, Model model) {
+
         model.addAttribute("activity", new Activity());
-        Optional<Activity> optActivity = activityRepository.findById(activtyId);
+
+        Optional<Activity> optActivity = activityRepository.findById(activityId);
         Activity activity;
         activity = optActivity.orElseGet(Activity::new);
         model.addAttribute("activity", activity);
