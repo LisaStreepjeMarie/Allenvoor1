@@ -1,5 +1,6 @@
 package com.wemakeitwork.allenvooreen.controller;
 
+import com.wemakeitwork.allenvooreen.dto.TeamMemberDTO;
 import com.wemakeitwork.allenvooreen.model.Member;
 import com.wemakeitwork.allenvooreen.model.Team;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
@@ -53,7 +54,14 @@ public class NewTeamController {
         Optional<Team> teamOpt = teamRepository.findById(teamId);
         Team team;
         team = teamOpt.orElseGet(Team::new);
+        Integer addMembernameToTeam = 0;
+        model.addAttribute("addMembernameToTeam", addMembernameToTeam);
         model.addAttribute("team", team);
+
+        TeamMemberDTO teamMemberDTO = new TeamMemberDTO();
+        teamMemberDTO.setTeamId(teamId);
+        model.addAttribute("teamMemberDTO", teamMemberDTO);
+
         return "teamData";
     }
 

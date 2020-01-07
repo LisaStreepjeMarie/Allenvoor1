@@ -64,6 +64,10 @@ public class Team {
         this.eventList.add(event);
     }
 
+    public void addTeamMember(Member member){
+        membername.add(member);
+    }
+
     /* @Override
     public String toString() {
         return "Team{" +

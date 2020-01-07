@@ -24,6 +24,7 @@
                         <td>Groepsnaam:</td>
                         <td>
                             <form:input size="30" path="teamName" value="${team.teamName}" /></form>
+                            <input class="btn btn-primary" type="submit" value="Wijzig" />
                         </td>
                     </tr>
                     <tr>
@@ -34,10 +35,15 @@
                              </c:forEach>
                          </td>
                      </tr>
+                 </table>
+             </form:form>
+             <form:form action="/team/addMember" modelAttribute="teamMemberDTO">
+                 <form:input path="teamId" type="hidden" />
+                    <table>
                     <tr>
                         <td>Nieuw groepslid:</td>
                         <td>
-                           <form:input path="membername" /></form>
+                           <form:input path="teamMemberName" /></form>
                         </td>
                     </tr>
                     <tr>
