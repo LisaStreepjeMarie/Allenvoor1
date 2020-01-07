@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.Optional;
 
@@ -29,6 +30,9 @@ public class NewEventController {
     @Autowired
     MemberRepository memberRepository;
 
+    @Autowired
+    private HttpSession httpSession;
+
     @GetMapping("/event/new")
     protected String showEventForm(Model model) {
         model.addAttribute("event", new Event());
@@ -36,22 +40,15 @@ public class NewEventController {
     }
 
     @PostMapping("/event/new")
-    protected String saveOrUpdateEvent(@ModelAttribute("event") Event event, BindingResult result, Principal principal) {
+    protected String saveOrUpdateEvent(@ModelAttribute("event") Event event, BindingResult result) {
         if (result.hasErrors()) {
             return "calendar";
         }
         else {
-            Optional<Member> member = memberRepository.findByMembername(principal.getName());
-            Team team = new Team();
-            if(member.isPresent()){
-                team = teamRepository.findTeamById(teamRepository.findTeamIdByMemberid(member.get().getMemberId()));
-            }
-            //N.B.: activityname == eventname for now
-            team.setEventList(event);
+            event.setTeam((Team) httpSession.getAttribute("team"));
             event.getActivity().setActivityName(event.getEventName());
-            event.setTeam(team);
             eventRepository.save(event);
-            return "redirect:/calendar";
+            return "redirect:/home";
         }
     }
 }

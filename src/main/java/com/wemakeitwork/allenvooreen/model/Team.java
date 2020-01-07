@@ -1,5 +1,8 @@
 package com.wemakeitwork.allenvooreen.model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -16,9 +19,22 @@ public class Team {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int teamId = 0;
 
+    public static Team getCurrentTeam() {
+        return CURRENT_TEAM;
+    }
+
+    public static void setCurrentTeam(Team currentTeam) {
+        CURRENT_TEAM = currentTeam;
+    }
+
+    private static Team CURRENT_TEAM = null;
+
+    // @Column(name = "teamName")
     private String teamName;
 
     @ManyToMany
+    // @ManyToMany(cascade = CascadeType.ALL)
+    // @JoinTable(name = "team_member", joinColumns = @JoinColumn(name = "memberId"), inverseJoinColumns = @JoinColumn(name = "teamMemberId"))
     private Set<Member> membername = new HashSet<>();
 
     @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "team")
@@ -59,4 +75,5 @@ public class Team {
     public void setEventList(Event event) {
         this.eventList.add(event);
     }
+
 }
