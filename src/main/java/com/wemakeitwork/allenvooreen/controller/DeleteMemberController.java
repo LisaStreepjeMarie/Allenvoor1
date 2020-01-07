@@ -1,4 +1,5 @@
 package com.wemakeitwork.allenvooreen.controller;
+
 import com.wemakeitwork.allenvooreen.model.Member;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,6 @@ public class DeleteMemberController {
     @Autowired
     MemberRepository memberRepository;
 
-    // Verwijder gebruiker (ingelogd gebruiker kan zichzelf verwijderen)
     @GetMapping("/member/delete")
     public String deleteMember(Principal principal) {
         Optional<Member> member = memberRepository.findByMembername(principal.getName());
