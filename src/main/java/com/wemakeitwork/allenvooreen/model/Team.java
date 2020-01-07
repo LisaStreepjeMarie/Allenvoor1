@@ -24,7 +24,8 @@ public class Team {
     // @JoinTable(name = "team_member", joinColumns = @JoinColumn(name = "memberId"), inverseJoinColumns = @JoinColumn(name = "teamMemberId"))
     private Set<Member> membername = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "eventId")
+    @OneToMany( cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
     List<Event> eventList = new ArrayList<>();
 
     public Set<Member> getMembername() {
