@@ -7,4 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 public interface EventRepository extends JpaRepository<Event, Integer> {
     @Query(value = "SELECT activity_id FROM event WHERE event.event_id = ?1", nativeQuery = true)
     Integer findActivityIdByEventId(Integer event_id);
+
+    @Query(value = "SELECT team_id FROM event WHERE event_id = ?1", nativeQuery = true)
+    Integer findTeamIdByEventId(Integer eventId);
 }

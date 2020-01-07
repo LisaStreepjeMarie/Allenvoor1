@@ -1,12 +1,15 @@
 package com.wemakeitwork.allenvooreen.model;
 
 import com.fasterxml.jackson.annotation.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @JsonPropertyOrder(value = {"id","title","description","start", "end"}, alphabetic = true)
-@JsonIgnoreProperties({ "activity" })
+@JsonIgnoreProperties({ "activity", "team" })
 public class Event {
 
     @Id
@@ -33,6 +36,11 @@ public class Event {
     @OneToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "activityId", referencedColumnName = "activityId", nullable = false)
     private Activity activity;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "teamId", referencedColumnName = "teamId", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Team team;
 
     @JsonGetter
     public String getEventName() {
@@ -86,5 +94,13 @@ public class Event {
 
     public void setEventComment(String eventComment) {
         this.eventComment = eventComment;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
     }
 }
