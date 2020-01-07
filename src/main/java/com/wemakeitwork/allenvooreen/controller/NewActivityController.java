@@ -1,4 +1,5 @@
 package com.wemakeitwork.allenvooreen.controller;
+
 import com.wemakeitwork.allenvooreen.model.Activity;
 import com.wemakeitwork.allenvooreen.repository.ActivityRepository;
 import org.springframework.beans.factory.annotation.Autowired;

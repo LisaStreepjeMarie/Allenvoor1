@@ -3,7 +3,6 @@ package com.wemakeitwork.allenvooreen.model;
 import com.fasterxml.jackson.annotation.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.*;
 import java.util.Date;
 
