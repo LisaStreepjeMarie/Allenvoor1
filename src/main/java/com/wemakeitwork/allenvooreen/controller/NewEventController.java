@@ -1,4 +1,5 @@
 package com.wemakeitwork.allenvooreen.controller;
+
 import com.wemakeitwork.allenvooreen.model.Event;
 import com.wemakeitwork.allenvooreen.model.Member;
 import com.wemakeitwork.allenvooreen.model.Team;
@@ -48,6 +49,7 @@ public class NewEventController {
             //N.B.: activityname == eventname for now
             team.setEventList(event);
             event.getActivity().setActivityName(event.getEventName());
+            event.setTeam(team);
             eventRepository.save(event);
             return "redirect:/calendar";
         }

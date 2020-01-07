@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,8 +35,10 @@ public class CalendarController {
         Optional<Member> member = memberRepository.findByMembername(principal.getName());
         Team team = new Team();
         if(member.isPresent()){
-            team = teamRepository.findTeamById(teamRepository.findTeamIdByMemberid(member.get().getMemberId()));
-            eventList = team.getEventList();
+            if (teamRepository.findTeamIdByMemberid(member.get().getMemberId()) != null) {
+                team = teamRepository.findTeamById(teamRepository.findTeamIdByMemberid(member.get().getMemberId()));
+                eventList = team.getEventList();
+            }
         }
 
         String calendarData = "";

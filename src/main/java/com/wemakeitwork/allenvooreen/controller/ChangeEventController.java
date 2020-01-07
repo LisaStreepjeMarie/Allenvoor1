@@ -1,8 +1,9 @@
 package com.wemakeitwork.allenvooreen.controller;
-import com.wemakeitwork.allenvooreen.model.Activity;
+
 import com.wemakeitwork.allenvooreen.model.Event;
-import com.wemakeitwork.allenvooreen.repository.ActivityRepository;
+import com.wemakeitwork.allenvooreen.model.Team;
 import com.wemakeitwork.allenvooreen.repository.EventRepository;
+import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -16,18 +17,21 @@ public class ChangeEventController {
     EventRepository eventRepository;
 
     @Autowired
-    ActivityRepository activityRepository;
+    TeamRepository teamRepository;
 
     @PostMapping("/event/change")
     protected String saveOrUpdateActivity(@ModelAttribute("event") Event event, BindingResult result) {
         if (result.hasErrors()) {
             return "calendar";
         } else {
-            Activity activity = new Activity();
-            activity.setActivityCategory(event.getActivity().getActivityCategory());
-            activity.setActivityId(eventRepository.findActivityIdByEventId(event.getEventId()));
-            activity.setActivityName(event.getEventName());
-            event.setActivity(activity);
+            event.getActivity().setActivityName(event.getEventName());
+            //activity loses the ID so below is to get it back
+            event.getActivity().setActivityId(eventRepository.findActivityIdByEventId(event.getEventId()));
+
+            //finding/setting the team corresponding with the event
+            Team team = teamRepository.findTeamById(eventRepository.findTeamIdByEventId(event.getEventId()));
+            event.setTeam(team);
+
             eventRepository.save(event);
             return "redirect:/calendar";
         }
