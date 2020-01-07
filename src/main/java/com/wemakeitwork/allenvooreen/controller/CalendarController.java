@@ -32,7 +32,7 @@ public class CalendarController {
     TeamRepository teamRepository;
 
     @GetMapping("/calendar/{teamId}")
-    public String showmyCalender(@PathVariable("teamId") final Integer teamId, Model model) throws JsonProcessingException {
+    public String showmyCalender(@PathVariable("teamId") final Integer teamId, Model model, Principal principal) throws JsonProcessingException {
         Team team = teamRepository.findTeamById(teamId);
         List<Event> eventList = team.getEventList();
 
@@ -41,9 +41,17 @@ public class CalendarController {
             calendarData += "" + new ObjectMapper().writeValueAsString(event) + ",";
         }
 
+        List<Team> teamList = new ArrayList<>();
+        Optional<Member> member = memberRepository.findByMembername(principal.getName());
+        if(member.isPresent()){
+            teamList = teamList(member.get().getMemberId());
+
+        }
+
         Event event = new Event();
         event.setActivity(new Activity());
-        model.addAttribute("event", new Event());
+        model.addAttribute("teamList", teamList);
+        model.addAttribute("event", event);
         model.addAttribute("calendarData", calendarData);
 
         return "calendar";
@@ -51,13 +59,23 @@ public class CalendarController {
 
 
     @GetMapping("/home")
-    public String calendar(Model model, Principal principal) throws JsonProcessingException {
-        List<Integer> TeamList = new ArrayList<>();
+    public String calendar(Model model, Principal principal){
+        List<Team> teamList = new ArrayList<>();
         Optional<Member> member = memberRepository.findByMembername(principal.getName());
         if(member.isPresent()){
-            TeamList = teamRepository.findTeamsByIdMember(member.get().getMemberId());
+            teamList = teamList(member.get().getMemberId());
+
         }
-        model.addAttribute("teamList", TeamList);
-        return "calendar";
+        model.addAttribute("teamList", teamList);
+        return "home";
+    }
+
+    private List<Team> teamList (Integer memberId){
+        List<Team> teamList = new ArrayList<>();
+        List<Integer> allMyTeamsById = teamRepository.findTeamsByIdMember(memberId);
+        for (Integer integer : allMyTeamsById){
+            teamList.add(teamRepository.findTeamById(integer));
+        }
+        return teamList;
     }
 }

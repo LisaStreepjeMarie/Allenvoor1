@@ -149,6 +149,7 @@
                             <label class="col-xs-4" for="eventName">Onderwerp</label>
                             <input type="text" name="eventName" path="eventName" id="eventName" required/>
                             <input type="hidden" name="eventId" id="eventId" />
+                            <input type="hidden" name="teamId" id="team.teamId" />
                         </div>
                     </div>
                     <div class="row">
@@ -193,33 +194,6 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 </form:form>
-<div class="container">
-    <div class="row">
-           <div class="col-sm-12">&nbsp;</div>
-    </div>
-    <div class="row">
-       <div class="col-sm-2">
-            <input class="btn btn-primary" type="submit" value="Logout" onclick="window.location='/logout';" /><br />
-            <br>
-            <input class="btn btn-primary" type="submit" value="Gebruikersprofiel" onclick="window.location='/member/current';" /><br />
-           <br>
-           <input class="btn btn-primary" type="submit" value="Toon groepen" onclick="window.location='/team/all';" />
-           <br>
-           <br>
-                   <table>
-                       <c:forEach items="${allTeams}" var="team">
-                           <tr>
-                               <button type="button" class="btn btn-info">Info</button>
-                               <td><a href="/calender/<c:out value="${team.teamId}" />">Add</a></td>
-                           </tr>
-                       </c:forEach>
-                   </table>
-       </div>
-       <div class="col-sm-10">
-           <div id="calendar"></div>
-           <div id='datepicker'></div>
-       </div>
-    </div>
-</div>
+  <jsp:include page="home.jsp" />
 </body>
 </html>

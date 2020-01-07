@@ -19,6 +19,16 @@ public class Team {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int teamId = 0;
 
+    public static Team getCurrentTeam() {
+        return CURRENT_TEAM;
+    }
+
+    public static void setCurrentTeam(Team currentTeam) {
+        CURRENT_TEAM = currentTeam;
+    }
+
+    private static Team CURRENT_TEAM = null;
+
     // @Column(name = "teamName")
     private String teamName;
 

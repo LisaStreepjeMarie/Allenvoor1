@@ -35,20 +35,14 @@ public class NewEventController {
     }
 
     @PostMapping("/event/new")
-    protected String saveOrUpdateEvent(@ModelAttribute("event") Event event, BindingResult result, Principal principal) {
+    protected String saveOrUpdateEvent(@ModelAttribute("event") Event event, Team team, BindingResult result, Principal principal) {
         if (result.hasErrors()) {
             return "calendar";
         }
         else {
-            Optional<Member> member = memberRepository.findByMembername(principal.getName());
-            Team team = new Team();
-            if(member.isPresent()){
-                team = teamRepository.findTeamById(teamRepository.findTeamIdByMemberid(member.get().getMemberId()));
-            }
             //N.B.: activityname == eventname for now
-            team.setEventList(event);
+            //TODO get the team out of session
             event.getActivity().setActivityName(event.getEventName());
-            event.setTeam(team);
             eventRepository.save(event);
             return "redirect:/calendar";
         }
