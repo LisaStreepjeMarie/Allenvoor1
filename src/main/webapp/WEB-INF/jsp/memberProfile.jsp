@@ -28,7 +28,7 @@
                   </tr>
                   <tr>
                      <td>
-                     <input type="submit" class= "btn btn-primary" value="Wijzig je inlognaam" />
+                     <input type="submit" class= "btn btn-primary" value="Wijzig je inlognaam (log opnieuw in)" />
                      </td>
                   </tr>
                 </table>

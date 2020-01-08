@@ -9,8 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.Optional;
@@ -77,9 +75,9 @@ public class MemberController {
     }
 
     @PostMapping("/member/change")
-    protected String saveOrUpdateMember(@ModelAttribute("member") Member newNameMember, BindingResult result, Principal principal) {
+    protected String saveOrUpdateMember(@ModelAttribute("currentmember") Member newNameMember, BindingResult result, Principal principal) {
         if (result.hasErrors()) {
-            return "changeMember";
+            return "currentMember";
         } else {
             Optional<Member> originalMember = memberRepository.findByMembername(principal.getName());
             if (originalMember.isPresent()){
@@ -87,7 +85,7 @@ public class MemberController {
                 newNameMember.setMemberId(originalMember.get().getMemberId());
             }
             memberRepository.save(newNameMember);
-            return "redirect:/member/current";
+            return "redirect:/logout";
         }
     }
 }
