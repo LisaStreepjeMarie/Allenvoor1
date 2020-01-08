@@ -1,5 +1,6 @@
 package com.wemakeitwork.allenvooreen.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.wemakeitwork.allenvooreen.dto.TeamMemberDTO;
 import com.wemakeitwork.allenvooreen.model.Member;
 import com.wemakeitwork.allenvooreen.model.Team;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,11 +31,20 @@ public class TeamController {
     MemberRepository memberRepository;
 
     @GetMapping("/team/all")
-    protected String showTeams(Model model) {
+    protected String showTeams(Model model, Principal principal) throws JsonProcessingException {
         List<Team> allTeams = teamRepository.findAll();
         /* for(Team team : allTeams) {
             System.out.println("");
         } */
+        Optional<Member> member = memberRepository.findByMembername(principal.getName());
+        Team team = new Team();
+        if(member.isPresent()){
+            if (teamRepository.findTeamIdByMemberid(member.get().getMemberId()) != null) {
+                team = teamRepository.findTeamById(teamRepository.findTeamIdByMemberid(member.get().getMemberId()));
+                // eventList = team.getEventList();
+            }
+        }
+
         model.addAttribute("allTeams", allTeams);
         System.out.println("");
         return "teamOverview";
