@@ -33,15 +33,20 @@ public class TeamController {
     @GetMapping("/team/all")
     protected String showTeams(Model model, Principal principal) throws JsonProcessingException {
         List<Team> allTeams = teamRepository.findAll();
-        /* for(Team team : allTeams) {
-            System.out.println("");
-        } */
+        for(Team team : allTeams) {
+            System.out.println("Alle teams: " + team.getTeamName());
+        }
         Optional<Member> member = memberRepository.findByMembername(principal.getName());
+        System.out.println("Ingelogde member: " + principal.getName());
         Team team = new Team();
         if(member.isPresent()){
+            System.out.println("2e Ingelogde member: " + principal.getName() +
+                    " en memberId: ");
             if (teamRepository.findTeamIdByMemberid(member.get().getMemberId()) != null) {
+                System.out.println("3e Ingelogde member: " + principal.getName());
                 team = teamRepository.findTeamById(teamRepository.findTeamIdByMemberid(member.get().getMemberId()));
                 // eventList = team.getEventList();
+                System.out.println("Eigen teams " + team);
             }
         }
 

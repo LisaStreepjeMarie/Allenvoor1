@@ -149,16 +149,6 @@
            <scope>test</scope>
 		</dependency>
 		<dependency>
-           <groupId>junit</groupId>
-           <artifactId>junit</artifactId>
-           <scope>test</scope>
-		</dependency>
-		<dependency>
-		   <groupId>junit</groupId>
-           <artifactId>junit</artifactId>
-           <scope>test</scope>
-		</dependency>
-		<dependency>
            <groupId>org.json</groupId>
            <artifactId>json</artifactId>
            <version>20190722</version>
