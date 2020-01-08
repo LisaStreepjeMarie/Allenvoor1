@@ -26,8 +26,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(controllers = NewTeamController.class)
-class NewTeamControllerTest {
+@WebMvcTest(controllers = TeamController.class)
+class TeamControllerTest {
 
     @MockBean
     TeamRepository teamRepository;

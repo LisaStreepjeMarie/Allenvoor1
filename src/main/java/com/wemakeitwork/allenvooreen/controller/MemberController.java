@@ -14,13 +14,25 @@ import java.util.Optional;
 
 
 @Controller
-public class NewMemberController{
+public class MemberController {
 
     @Autowired
-    MemberRepository memberRepository;
+    private MemberRepository memberRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @GetMapping("member/current")
+    protected String showMember(Model model, Principal principal){
+        model.addAttribute("currentmember", memberRepository.findByMembername(principal.getName()));
+        return "memberOverview";
+    }
+
+    @GetMapping("/member/change")
+    protected String changeMember(Model model){
+        model.addAttribute("member", new Member());
+        return "changeMember";
+    }
 
     @GetMapping("/member/select/{memberId}")
     protected String showMemberData(Model model, Principal principal) {
@@ -40,6 +52,13 @@ public class NewMemberController{
         return "newMember";
     }
 
+    @GetMapping("/member/delete")
+    public String deleteMember(Principal principal) {
+        Optional<Member> member = memberRepository.findByMembername(principal.getName());
+        member.ifPresent(value -> memberRepository.delete(value));
+        return "/logout";
+    }
+
     @PostMapping("/member/new")
     protected String saveOrUpdateMember(@ModelAttribute("member") @Valid Member member, BindingResult result) {
         if (result.hasErrors()) {
@@ -51,6 +70,21 @@ public class NewMemberController{
             member.setRol("gebruiker");
             memberRepository.save(member);
             return "redirect:/member/new";
+        }
+    }
+
+    @PostMapping("/member/change")
+    protected String saveOrUpdateMember(@ModelAttribute("member") Member newNameMember, BindingResult result, Principal principal) {
+        if (result.hasErrors()) {
+            return "changeMember";
+        } else {
+            Optional<Member> originalMember = memberRepository.findByMembername(principal.getName());
+            if (originalMember.isPresent()){
+                newNameMember.setPassword(originalMember.get().getPassword());
+                newNameMember.setMemberId(originalMember.get().getMemberId());
+            }
+            memberRepository.save(newNameMember);
+            return "redirect:/member/current";
         }
     }
 }

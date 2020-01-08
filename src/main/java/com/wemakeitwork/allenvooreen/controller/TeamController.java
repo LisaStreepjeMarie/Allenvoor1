@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-public class NewTeamController {
+public class TeamController {
 
     @Autowired
     TeamRepository teamRepository;
@@ -65,6 +65,12 @@ public class NewTeamController {
         return "teamData";
     }
 
+    @GetMapping("/team/delete/{teamId}")
+    public String deleteTeam(@PathVariable("teamId") final Integer teamId) {
+        teamRepository.deleteById(teamId);
+        return "redirect:/team/all";
+    }
+
     @PostMapping("/team/new")
     protected String saveOrUpdateTeam(HttpServletRequest request) {
         String teamName = request.getParameter("teamName");
@@ -77,5 +83,28 @@ public class NewTeamController {
         teamRepository.save(team);
         memberRepository.save(member);
         return "redirect:/team/all";
+    }
+
+    @PostMapping("/team/change")
+    protected String saveOrUpdateTeam(@ModelAttribute("team") Team team, BindingResult result){
+        if (result.hasErrors()) {
+            return "teamData";
+        } else {
+            teamRepository.save(team);
+            return "redirect:/team/all";
+        }
+    }
+
+    @PostMapping("team/addMember")
+    protected String addMember(@ModelAttribute("teamMemberDTO")TeamMemberDTO teamMemberDTO, BindingResult result) {
+        if (result.hasErrors()) {
+            return "teamData";
+        } else {
+            Optional<Member> member = memberRepository.findByMembername(teamMemberDTO.getTeamMemberName());
+            Team team = teamRepository.findTeamById(teamMemberDTO.getTeamId());
+            member.ifPresent(team::addTeamMember);
+            teamRepository.save(team);
+            return "redirect:/team/select/" + teamMemberDTO.getTeamId();
+        }
     }
 }

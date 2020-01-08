@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(controllers = NewActivityController.class)
+@WebMvcTest(controllers = ActivityController.class)
 class newActivityControllerTest {
 
     @MockBean
