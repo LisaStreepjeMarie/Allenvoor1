@@ -17,7 +17,7 @@
                    <input class="btn btn-primary" type="submit" value="Jouw groepen" onclick="window.location='/team/all';" />
                    <input class="btn btn-primary" type="submit" value="Logout" onclick="window.location='/logout';" />
                </p>
-                <h1>Overzicht gebruiker</h1>
+                <h1>Overzicht profiel gebruiker</h1>
                 <form:form action="/member/current" modelAttribute="currentmember">
                 <form:input path="memberId" type="hidden" />
                 <table>
