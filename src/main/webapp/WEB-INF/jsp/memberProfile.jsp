@@ -17,19 +17,32 @@
                    <input class="btn btn-primary" type="submit" value="Jouw groepen" onclick="window.location='/team/all';" />
                    <input class="btn btn-primary" type="submit" value="Logout" onclick="window.location='/logout';" />
                </p>
-                <h1>Overzicht profiel gebruiker</h1>
-                <form:form action="/member/current" modelAttribute="currentmember">
+                <h1>Overzicht profiel ${currentmember.membername}</h1>
+                <form:form action="/member/change" modelAttribute="currentmember">
                 <form:input path="memberId" type="hidden" />
                 <table>
-                      <tr>
-
-                         <td><a href="/team/select/<c:out value="${members.memberId}" />"><c:out value="${members.membername}" /></a></td>
-                        </tr>
-
+                  <tr>
+                     <td>
+                        <form:input path="membername" value="${members.membername}" /></form>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                     <input type="submit" class= "btn btn-primary" value="Wijzig je inlognaam" />
+                     </td>
+                  </tr>
                 </table>
-                 <a href="/member/delete"class= "btn btn-primary">Verwijder je profiel</a>
-                 <td><a href="/member/change"class="btn btn-primary">Verander je inlog naam</a></td>
-               </form:form>
+                </form:form>
+                <form:form action="/member/delete" modelAttribute="currentmember">
+                <form:input path="memberId" type="hidden" />
+                <table>
+                  <tr>
+                     <td>
+                        <input type="submit" class= "btn btn-primary" value="Verwijder je profiel" />
+                     </td>
+                  </tr>
+                </table>
+                </form:form>
              </div>
         </body>
 </html>

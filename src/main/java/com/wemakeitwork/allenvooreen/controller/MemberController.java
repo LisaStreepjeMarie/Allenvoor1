@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.security.Principal;
@@ -22,15 +23,12 @@ public class MemberController {
     private MemberRepository memberRepository;
 
     @Autowired
-    HttpSession httpSession;
-
-    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @GetMapping("member/current")
     protected String showMember(Model model, Principal principal){
-        model.addAttribute("currentmember", memberRepository.findByMembername(principal.getName()));
-        return "memberOverview";
+        model.addAttribute("currentmember", memberRepository.findByMembername(principal.getName()).orElse(new Member()));
+        return "memberProfile";
     }
 
     @GetMapping("/member/change")
