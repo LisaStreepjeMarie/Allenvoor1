@@ -4,8 +4,4 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
-  <servlet-mapping>
-    <servlet-name>Allenvoor1</servlet-name>
-    <url-pattern>/jsp/*.jsp</url-pattern>
-  </servlet-mapping>
 </web-app>
