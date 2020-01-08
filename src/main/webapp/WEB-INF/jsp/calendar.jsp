@@ -110,9 +110,33 @@
                 console.log("revert is: " + revertFunc);
                 console.log("jsEvent is: " + jsEvent);
 
-                if (!confirm("Weet je zeker dat je de afspraak wilt verplaatsen?")) {
-                    revertFunc();
-                }
+                $.ajax({
+                  type: "POST",
+                  url: "/event/change/2",
+                  data: {
+                        id: "2",
+                        title: "Nieuwe ajax titel",
+                        description: "Nieuwe ajax beschrijving",
+                        start: "1578355200000",
+                        end: "1578441600000"
+                  },
+                  dataType: "json",
+                  data: JSON.stringify({
+                     id: "2",
+                     title: "Nieuwe ajax titel",
+                     description: "Nieuwe ajax beschrijving",
+                     start: "1578355200000",
+                     end: "1578441600000"
+                  }),
+                  success: function(response) {
+                    console.log("Ajax posted succesful!: ");
+                    console.log(response);
+                  },
+                  error: function(response) {
+                    console.log("FAIL: ");
+                    console.log(response);
+                  }
+                });
             },
 
             eventDragStop: function(info) {
@@ -133,6 +157,7 @@
 </head>
 
 <body>
+${calendarData}
 <form:form id="modal-form" action="/event/change" modelAttribute="event" method="post">
     <div class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
