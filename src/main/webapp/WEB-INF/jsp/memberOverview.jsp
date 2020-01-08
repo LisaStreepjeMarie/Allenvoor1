@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
+
 <html xmlns:form="http://www.w3.org/1999/xhtml" xmlns:c="">
     <head>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -23,10 +24,11 @@
                       <tr>
 
                          <td><a href="/team/select/<c:out value="${members.memberId}" />"><c:out value="${members.membername}" /></a></td>
-                           <td><a href="/member/delete">Verwijder je profiel</a></td>
-                           <td><a href="/member/change">Verander je inlog naam</a></td>
                         </tr>
+
                 </table>
+                 <a href="/member/delete"class= "btn btn-primary">Verwijder je profiel</a>
+                 <td><a href="/member/change"class="btn btn-primary">Verander je inlog naam</a></td>
                </form:form>
              </div>
         </body>
