@@ -12,13 +12,14 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.security.Principal;
 import java.util.Optional;
 
 @Controller
-public class NewEventController {
+public class EventController {
 
     @Autowired
     EventRepository eventRepository;
@@ -33,6 +34,12 @@ public class NewEventController {
     protected String showEventForm(Model model) {
         model.addAttribute("event", new Event());
         return "newEvent";
+    }
+
+    @GetMapping("/event/delete/{eventId}")
+    public String deleteEvent(@PathVariable("eventId") final Integer eventId) {
+        eventRepository.deleteById(eventId);
+        return "redirect:/calendar";
     }
 
     @PostMapping("/event/new")
@@ -50,6 +57,24 @@ public class NewEventController {
             team.setEventList(event);
             event.getActivity().setActivityName(event.getEventName());
             event.setTeam(team);
+            eventRepository.save(event);
+            return "redirect:/calendar";
+        }
+    }
+
+    @PostMapping("/event/change")
+    protected String saveOrUpdateActivity(@ModelAttribute("event") Event event, BindingResult result) {
+        if (result.hasErrors()) {
+            return "calendar";
+        } else {
+            event.getActivity().setActivityName(event.getEventName());
+            //activity loses the ID so below is to get it back
+            event.getActivity().setActivityId(eventRepository.findActivityIdByEventId(event.getEventId()));
+
+            //finding/setting the team corresponding with the event
+            Team team = teamRepository.findTeamById(eventRepository.findTeamIdByEventId(event.getEventId()));
+            event.setTeam(team);
+
             eventRepository.save(event);
             return "redirect:/calendar";
         }

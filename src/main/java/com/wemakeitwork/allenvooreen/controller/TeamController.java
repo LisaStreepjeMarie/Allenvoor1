@@ -7,7 +7,9 @@ import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-public class NewTeamController {
+public class TeamController {
 
     @Autowired
     TeamRepository teamRepository;
@@ -49,6 +51,12 @@ public class NewTeamController {
         return "teamData";
     }
 
+    @GetMapping("/team/delete/{teamId}")
+    public String deleteTeam(@PathVariable("teamId") final Integer teamId) {
+        teamRepository.deleteById(teamId);
+        return "redirect:/team/all";
+    }
+
     @PostMapping("/team/new")
     protected String saveOrUpdateTeam(HttpServletRequest request) {
         String teamName = request.getParameter("teamName");
@@ -61,5 +69,15 @@ public class NewTeamController {
         teamRepository.save(team);
         memberRepository.save(member);
         return "redirect:/team/all";
+    }
+
+    @PostMapping("/team/change")
+    protected String saveOrUpdateTeam(@ModelAttribute("team") Team team, BindingResult result){
+        if (result.hasErrors()) {
+            return "teamData";
+        } else {
+            teamRepository.save(team);
+            return "redirect:/team/all";
+        }
     }
 }
