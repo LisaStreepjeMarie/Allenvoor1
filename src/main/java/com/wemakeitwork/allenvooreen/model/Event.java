@@ -3,7 +3,6 @@ package com.wemakeitwork.allenvooreen.model;
 import com.fasterxml.jackson.annotation.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.*;
 import java.util.Date;
 
@@ -32,8 +31,6 @@ public class Event {
 
     @JsonProperty("description")
     private String eventComment;
-
-    //TODO: cascade needs to not be ALL when event and activity planning are split up (in future releases).
 
     @OneToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "activityId", referencedColumnName = "activityId", nullable = false)

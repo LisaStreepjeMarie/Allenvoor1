@@ -12,14 +12,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
 @Controller
-public class NewTeamController {
+public class TeamController {
 
     @Autowired
     TeamRepository teamRepository;
@@ -30,11 +28,7 @@ public class NewTeamController {
     @GetMapping("/team/all")
     protected String showTeams(Model model) {
         List<Team> allTeams = teamRepository.findAll();
-        /* for(Team team : allTeams) {
-            System.out.println("");
-        } */
         model.addAttribute("allTeams", allTeams);
-        System.out.println("");
         return "teamOverview";
     }
 
@@ -48,13 +42,19 @@ public class NewTeamController {
 
     @GetMapping("/team/select/{teamId}")
     protected String showTeamData(@PathVariable("teamId") final Integer teamId, Model model) {
-        // extra regel om te testen:
         model.addAttribute("team", new Team());
+
         Optional<Team> teamOpt = teamRepository.findById(teamId);
         Team team;
         team = teamOpt.orElseGet(Team::new);
         model.addAttribute("team", team);
         return "teamData";
+    }
+
+    @GetMapping("/team/delete/{teamId}")
+    public String deleteTeam(@PathVariable("teamId") final Integer teamId) {
+        teamRepository.deleteById(teamId);
+        return "redirect:/team/all";
     }
 
     @PostMapping("/team/new")
@@ -69,5 +69,15 @@ public class NewTeamController {
         teamRepository.save(team);
         memberRepository.save(member);
         return "redirect:/team/all";
+    }
+
+    @PostMapping("/team/change")
+    protected String saveOrUpdateTeam(@ModelAttribute("team") Team team, BindingResult result){
+        if (result.hasErrors()) {
+            return "teamData";
+        } else {
+            teamRepository.save(team);
+            return "redirect:/team/all";
+        }
     }
 }
