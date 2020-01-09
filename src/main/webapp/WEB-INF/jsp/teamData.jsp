@@ -19,6 +19,7 @@
             <h1>Wijzig gegevens groep</h1>
             <form:form action="/team/change" modelAttribute="team">
             <form:input path="teamId" type="hidden" />
+            <form:input path="membername" type="hidden" />
                 <table>
                     <tr>
                         <td>Groepsnaam:</td>
