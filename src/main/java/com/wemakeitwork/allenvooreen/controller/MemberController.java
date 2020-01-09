@@ -57,7 +57,7 @@ public class MemberController {
     public String deleteMember(Principal principal) {
         Optional<Member> member = memberRepository.findByMembername(principal.getName());
         member.ifPresent(value -> memberRepository.delete(value));
-        return "/logout";
+        return "confirmLogout";
     }
 
     @PostMapping("/member/new")

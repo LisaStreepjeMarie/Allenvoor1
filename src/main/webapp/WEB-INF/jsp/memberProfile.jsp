@@ -23,7 +23,7 @@
                 <form:form action="/member/change" modelAttribute="currentmember">
                 <form:input path="memberId" type="hidden" />
                 <table>
-
+                    <tr>
                      <td>
                         <h7>Gebruikersnaam:
                         <form:input path="membername" value="${members.membername}" /></form> </h7>
@@ -35,7 +35,7 @@
                   </div>
                 </table>
                 </form:form>
-                <form:form action="/member/delete" modelAttribute="currentmember">
+                <form:form action="/member/delete" method="get" modelAttribute="currentmember">
                 <form:input path="memberId" type="hidden" />
                 <table>
                   <tr>
