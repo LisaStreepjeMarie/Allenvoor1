@@ -17,20 +17,22 @@
                    <input class="btn btn-primary" type="submit" value="Jouw groepen" onclick="window.location='/team/all';" />
                    <input class="btn btn-primary" type="submit" value="Logout" onclick="window.location='/logout';" />
                </p>
-                <h1>Overzicht profiel ${currentmember.membername}</h1>
+                <h1>Hallo ${currentmember.membername} !</h1>
+                <br>
+                    <h4>Wijzig hieronder je gebruikersnaam of verwijder je profiel</h4><br>
                 <form:form action="/member/change" modelAttribute="currentmember">
                 <form:input path="memberId" type="hidden" />
                 <table>
-                  <tr>
+
                      <td>
-                        <form:input path="membername" value="${members.membername}" /></form>
+                        <h7>Gebruikersnaam:
+                        <form:input path="membername" value="${members.membername}" /></form> </h7>
+                        <input type="submit" class= "btn btn-primary" value="Wijzigen" />
                      </td>
                   </tr>
-                  <tr>
-                     <td>
-                     <input type="submit" class= "btn btn-primary" value="Wijzig je inlognaam (log opnieuw in)" />
-                     </td>
-                  </tr>
+                  <div class="alert alert-warning" role="alert">
+                    <strong>Let op!</strong> Bij wijziging van je gebruikersnaam is opnieuw inloggen vereist.
+                  </div>
                 </table>
                 </form:form>
                 <form:form action="/member/delete" modelAttribute="currentmember">
