@@ -83,6 +83,7 @@ public class MemberController {
             if (originalMember.isPresent()){
                 newNameMember.setPassword(originalMember.get().getPassword());
                 newNameMember.setMemberId(originalMember.get().getMemberId());
+                newNameMember.setRol(originalMember.get().getRol());
             }
             memberRepository.save(newNameMember);
             return "redirect:/logout";
