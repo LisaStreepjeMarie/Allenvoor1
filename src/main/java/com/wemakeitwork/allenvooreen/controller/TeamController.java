@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,28 +32,24 @@ public class TeamController {
     MemberRepository memberRepository;
 
     @GetMapping("/team/all")
-    protected String showTeams(Model model, Principal principal) throws JsonProcessingException {
-        List<Team> allTeams = teamRepository.findAll();
-        for(Team team : allTeams) {
-            System.out.println("Alle teams: " + team.getTeamName());
-        }
+    protected String showTeamsPerMember(Model model, Principal principal){
+        List<Team> teamList = new ArrayList<>();
         Optional<Member> member = memberRepository.findByMembername(principal.getName());
-        System.out.println("Ingelogde member: " + principal.getName());
-        Team team = new Team();
         if(member.isPresent()){
-            System.out.println("2e Ingelogde member: " + principal.getName() +
-                    " en memberId: ");
-            if (teamRepository.findTeamIdByMemberid(member.get().getMemberId()) != null) {
-                System.out.println("3e Ingelogde member: " + principal.getName());
-                team = teamRepository.findTeamById(teamRepository.findTeamIdByMemberid(member.get().getMemberId()));
-                // eventList = team.getEventList();
-                System.out.println("Eigen teams " + team);
-            }
-        }
+            teamList = teamList(member.get().getMemberId());
 
-        model.addAttribute("allTeams", allTeams);
-        System.out.println("");
+        }
+        model.addAttribute("teamList", teamList);
         return "teamOverview";
+    }
+
+    private List<Team> teamList (Integer memberId){
+        List<Team> teamList = new ArrayList<>();
+        List<Integer> allMyTeamsById = teamRepository.findTeamsByIdMember(memberId);
+        for (Integer integer : allMyTeamsById){
+            teamList.add(teamRepository.findTeamById(integer));
+        }
+        return teamList;
     }
 
     @GetMapping("/team/new")

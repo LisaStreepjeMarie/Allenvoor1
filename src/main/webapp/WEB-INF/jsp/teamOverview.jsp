@@ -19,7 +19,7 @@
             <h1>Overzicht groepen</h1>
             <table>
                 <tr><th>Groep</th><th>Deelnemer</th><th></th></tr>
-                <c:forEach items="${allTeams}" var="team">
+                <c:forEach items="${teamList}" var="team">
                     <tr>
                         <td><a href="/team/select/<c:out value="${team.teamId}" />"><c:out value="${team.teamName}" /></a></td>
                         <td>
