@@ -30,7 +30,7 @@
                     <tr>
                          <td>Groepslid:</td>
                          <td>
-                             <c:forEach items="${team.membername}" var="member">
+                            <c:forEach items="${team.membername}" var="member">
                                  <c:out value="${member.membername}" /><br />
                              </c:forEach>
                          </td>
