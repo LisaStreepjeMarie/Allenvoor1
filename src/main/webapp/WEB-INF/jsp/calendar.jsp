@@ -13,7 +13,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
 
      <!--webjars are preferable to content delivery networks (CDNs) -->
-    <link href='https://unpkg.com/fullcalendar@3.10.1/dist/fullcalendar.min.css' rel='stylesheet' />
+    <!--<link href='https://unpkg.com/fullcalendar@3.10.1/dist/fullcalendar.min.css' rel='stylesheet' />
     <link href='https://unpkg.com/fullcalendar@3.10.1/dist/fullcalendar.print.css' rel='stylesheet' media='print' />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.42/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
     <script src='https://unpkg.com/moment@2.24.0/min/moment.min.js'></script>
@@ -23,19 +23,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/locale/nl.js" integrity="sha256-LAjE4KdsUdfZ4yMkV+UMRbHqEyfyvtCeIyD6qRYhTtQ=" crossorigin="anonymous"></script>
     <link href='https://use.fontawesome.com/releases/v5.0.6/css/all.css' rel='stylesheet' />
     <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' />
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
 
-    <!--<link href="webjars/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet" />
-    <link href="webjars/fullcalendar/3.9.0/fullcalendar.print.min.css" rel="stylesheet" media='print' />
-    <link href="webjars/Eonasdan-bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
-    <script src="webjars/moment/2.24.0/min/moment.min.js"></script>
-    <script src="webjars/jquery/3.4.1/jquery.slim.min.js"></script>
-    <script src="webjars/fullcalendar/3.9.0/fullcalendar.min.js"></script>
-    <script src="webjars/Eonasdan-bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="webjars/fullcalendar/3.9.0/locale/nl.js"></script>
-    <link href="webjars/font-awesome/5.0.6/web-fonts-with-css/css/fontawesome-all.min.css" rel='stylesheet'>
-    <link href="webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" rel='stylesheet'>
-    <script src="webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>-->
+    <link href="/webjars/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet" />
+    <link href="/webjars/fullcalendar/3.9.0/fullcalendar.print.min.css" rel="stylesheet" media='print' />
+    <link href="/webjars/Eonasdan-bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <script src="/webjars/moment/2.24.0/min/moment.min.js"></script>
+    <script src="/webjars/jquery/3.4.1/jquery.slim.min.js"></script>
+    <script src="/webjars/fullcalendar/3.9.0/fullcalendar.min.js"></script>
+    <script src="/webjars/Eonasdan-bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="/webjars/fullcalendar/3.9.0/locale/nl.js"></script>
+    <link href="/webjars/font-awesome/5.0.6/web-fonts-with-css/css/fontawesome-all.min.css" rel='stylesheet'>
+    <link href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" rel='stylesheet'>
+    <script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
 
     <!-- added the below 2 links and the javascript to make sure the end date is the same/above the start date -->
     <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.0/css/bootstrap-datepicker.css" rel="stylesheet" type="text/css" />
@@ -142,6 +142,18 @@
             eventDragStop: function(info) {
             },
 
+            eventResize: function(event, delta, revertFunc) {
+                alert(event.title + " end is now " + event.end.format());
+
+                revertFunc();
+            },
+
+            // Remember last view on page reload
+            viewRender: function (view, element) {
+                localStorage.setItem("fcDefaultView", view.name);
+            },
+            defaultView: (localStorage.getItem("fcDefaultView") !== null ? localStorage.getItem("fcDefaultView") : "month"),
+
             editable: true,
             events: [ ${calendarData} ],
             eventLimit: true // allow "more" link when too many events
@@ -154,8 +166,6 @@
         });
     });
     </script>
-
-    <!--<link href="../css/style.css" rel="stylesheet" type="text/css"/>-->
 </head>
 
 <body>
