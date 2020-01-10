@@ -1,8 +1,6 @@
 package com.wemakeitwork.allenvooreen.controller;
 
-import com.wemakeitwork.allenvooreen.model.Event;
-import com.wemakeitwork.allenvooreen.model.Member;
-import com.wemakeitwork.allenvooreen.model.Team;
+import com.wemakeitwork.allenvooreen.model.*;
 import com.wemakeitwork.allenvooreen.repository.EventRepository;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;

@@ -187,7 +187,7 @@
                     <div class="row">
                         <div class="col-xs-12"  id="showEventName">
                             <label class="col-xs-4" for="eventName" control-label>Onderwerp</label>
-                            <input type="text" name="eventName" path="eventName" id="eventName" required/>
+                            <input type="text" name="eventName" path="eventName" id="eventName" />
                             <input type="hidden" name="eventId" id="eventId" />
                             <input type="hidden" name="teamId" id="team.teamId" />
                         </div>
@@ -195,31 +195,31 @@
                     <div class="row">
                         <div class="col-xs-12" id="showEventComment">
                             <label class="col-xs-4" for="eventComment">Beschrijving</label>
-                            <input type="text" name="eventComment" id="eventComment" required/>
+                            <input type="text" name="eventComment" id="eventComment" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12" id="showMedication" >
-                            <label class="col-xs-4" for="medicationName" control-label>Medicatie</label>
-                            <input type="text" name="medicationName" id="medicationName" required/>
+                            <label class="col-xs-4" for="eventName" control-label>Medicatie</label>
+                            <input type="text" name="eventName" id="eventName" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12" id="showMedicationAmount" >
-                            <label class="col-xs-4" for="medicationAmount" control-label>Hoeveelheid</label>
-                            <input type="text" name="medicationAmount" id="medicationAmount" required/>
+                            <label class="col-xs-4" for="activity.medicationAmount" control-label>Hoeveelheid</label>
+                            <input type="text" name="medicationAmount" id="medicationAmount" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12" id="showStartDate">
                             <label class="col-xs-4" for="eventStartDate">Datum</label>
-                            <input type="text" name="eventStartDate" id="eventStartDate" required/>
+                            <input type="text" name="eventStartDate" id="eventStartDate" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12" id="showEndDate">
                             <label class="col-xs-4" for="eventEndDate">EindDatum</label>
-                            <input type="text" name="eventEndDate" id="eventEndDate" required/>
+                            <input type="text" name="eventEndDate" id="eventEndDate" />
                         </div>
                     </div>
 

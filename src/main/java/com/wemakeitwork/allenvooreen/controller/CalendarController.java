@@ -2,10 +2,7 @@ package com.wemakeitwork.allenvooreen.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wemakeitwork.allenvooreen.model.Activity;
-import com.wemakeitwork.allenvooreen.model.Event;
-import com.wemakeitwork.allenvooreen.model.Member;
-import com.wemakeitwork.allenvooreen.model.Team;
+import com.wemakeitwork.allenvooreen.model.*;
 import com.wemakeitwork.allenvooreen.repository.EventRepository;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
@@ -54,11 +51,10 @@ public class CalendarController {
         }
 
         Event event = new Event();
-        event.setActivity(new Activity());
+        event.setActivity(new MedicationActivity());
         model.addAttribute("teamList", teamList);
         model.addAttribute("event", event);
         model.addAttribute("calendarData", calendarData);
-
         return "calendar";
     }
 
