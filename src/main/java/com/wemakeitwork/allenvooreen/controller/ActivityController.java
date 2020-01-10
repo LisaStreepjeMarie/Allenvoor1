@@ -20,9 +20,6 @@ public class ActivityController {
     @Autowired
     ActivityRepository activityRepository;
 
-    //TODO in this sprint we don't need this form. Remember to link this back to the event
-
-
     @GetMapping("/activity/new")
     protected String showActivityForm(Model model) {
         model.addAttribute("activity", new Activity());
