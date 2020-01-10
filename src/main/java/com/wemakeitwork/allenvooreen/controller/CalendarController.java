@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wemakeitwork.allenvooreen.model.*;
 import com.wemakeitwork.allenvooreen.repository.EventRepository;
+import com.wemakeitwork.allenvooreen.repository.MedicationRepository;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,9 @@ public class CalendarController {
     @Autowired
     TeamRepository teamRepository;
 
+    @Autowired
+    MedicationRepository medicationRepository;
+
     @GetMapping("/calendar/{teamId}")
     public String showmyCalender(@PathVariable("teamId") final Integer teamId, Model model, Principal principal) throws JsonProcessingException {
         Team team = teamRepository.findTeamById(teamId);
@@ -49,12 +53,19 @@ public class CalendarController {
             teamList = teamList(member.get().getMemberId());
 
         }
+        List<Medication> medicationList = medicationRepository.findAll();
+
+        MedicationActivity medicationActivity = new MedicationActivity();
+        medicationActivity.setMedication(new Medication());
 
         Event event = new Event();
         event.setActivity(new MedicationActivity());
+
+        model.addAttribute("medicationActivity", medicationActivity);
         model.addAttribute("teamList", teamList);
         model.addAttribute("event", event);
         model.addAttribute("calendarData", calendarData);
+        model.addAttribute("medicationList", medicationList);
         return "calendar";
     }
 

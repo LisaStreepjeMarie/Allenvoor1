@@ -154,9 +154,9 @@
 
     function toggleFields() {
         if ($("#selectie").val() === "Medisch")
-            $("#showMedication, #showStartDate,#showMedicationAmount").show();
+            $("#showMedication, #showStartDate, #showMedication, #showMedicationAmount, #showEndDate").show();
         else
-            $("#showEventName, #showEventComment, #showStartDate").show();
+            $("#showEventName, #showEventComment, #showStartDate, #showEndDate").show();
     }
     </script>
 
@@ -200,14 +200,19 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-12" id="showMedication" >
-                            <label class="col-xs-4" for="eventName" control-label>Medicatie</label>
-                            <input type="text" name="eventName" id="eventName" />
+                           <label class="col-xs-4" for="medication" control-label>Medicijn</label>
+                            <select name="medication" id="medication" required>
+                                <option disabled selected="selected">Kies een medicijn</option>
+                        <c:forEach var="medication" items="${medicationList}">
+                            <option value="${medication}">${medication.medicationName}</option>
+                        </c:forEach>
+                            </select>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12" id="showMedicationAmount" >
-                            <label class="col-xs-4" for="activity.medicationAmount" control-label>Hoeveelheid</label>
-                            <input type="text" name="medicationAmount" id="medicationAmount" />
+                            <label class="col-xs-4" for="medicationActivity.takenMedication" control-label>Hoeveelheid</label>
+                            <input type="number" name="medicationActivity.takenMedication" id="takenMedication" />
                         </div>
                     </div>
                     <div class="row">

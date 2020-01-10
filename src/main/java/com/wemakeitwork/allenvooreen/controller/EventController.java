@@ -46,13 +46,19 @@ public class EventController {
     }
 
     @PostMapping("/event/new")
-    protected String saveOrUpdateEvent(@ModelAttribute("event") Event event, BindingResult result) {
+    protected String saveOrUpdateEvent(@ModelAttribute("event") Event event, MedicationActivity medicationActivity,
+                                       BindingResult result) {
         if (result.hasErrors()) {
             return "calendar";
         }
         else {
+            System.out.println(medicationActivity);
             Team team = (Team) httpSession.getAttribute("team");
             event.setTeam(team);
+            if (event.getActivity().getActivityCategory().equals("Medisch")){
+                event.setActivity(medicationActivity);
+                event.getActivity().setActivityCategory("Medisch");
+            }
             event.getActivity().setActivityName(event.getEventName());
             eventRepository.save(event);
             return "redirect:/calendar/" + team.getTeamId();

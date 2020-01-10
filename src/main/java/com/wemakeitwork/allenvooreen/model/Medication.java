@@ -4,6 +4,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Medication {
@@ -22,6 +23,13 @@ public class Medication {
     @JoinColumn(name = "teamId", referencedColumnName = "teamId", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Team team;
+
+    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "medication")
+    private List<MedicationActivity> takenMedications;
+
+    public void medicationTaken(Integer integer){
+        this.medicationAmount -= integer;
+    }
 
     public Integer getMedicationId() {
         return medicationId;
