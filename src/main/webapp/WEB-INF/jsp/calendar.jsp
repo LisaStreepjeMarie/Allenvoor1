@@ -44,6 +44,12 @@
     <script type="text/javascript">
     $(document).ready(function() {
 
+    toggleFields(); // call this first so we start out with the correct visibility depending on the selected form values
+    // this will call our toggleFields function every time the selection value of our other field changes
+
+    $("#selectie").change(function () {
+        toggleFields();
+    });
         $('#calendar').fullCalendar({
             themeSystem: 'bootstrap4',
             timeZone: 'Europe/Amsterdam',
@@ -128,7 +134,15 @@
         $("#eventStartDate, #eventEndDate").datetimepicker({
              format: 'MM/DD/YYYY HH:mm',
         });
+
     });
+
+    function toggleFields() {
+        if ($("#selectie").val() === "Medisch")
+            $("#eventName").show();
+        else
+            $("#eventName").hide();
+    }
     </script>
 
     <!--<link href="../css/style.css" rel="stylesheet" type="text/css"/>-->
@@ -146,7 +160,18 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-xs-12">
-                            <label class="col-xs-4" for="eventName">Onderwerp</label>
+                            <label class="col-xs-4" for="selectie" control-label>Categorie</label>
+                            <select class="form-control" name="activity.activityCategory" id="selectie" required>
+                                <option disabled selected="selected">Selecteer categorie</option>
+                                <option value="Huishouden">Huishouden</option>
+                                <option value="Medisch">Medisch</option>
+                                <option value="Vrije tijd" >Vrije tijd</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label class="col-xs-4" for="eventName" control-label>Onderwerp</label>
                             <input type="text" name="eventName" path="eventName" id="eventName" required/>
                             <input type="hidden" name="eventId" id="eventId" />
                             <input type="hidden" name="teamId" id="team.teamId" />
@@ -156,17 +181,6 @@
                         <div class="col-xs-12">
                             <label class="col-xs-4" for="eventComment">Beschrijving</label>
                             <input type="text" name="eventComment" id="eventComment" required/>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <label class="col-xs-4" for="activity.activityCategory">Categorie</label>
-                            <select name="activity.activityCategory" id="activity.activityCategory" required>
-                                <option disabled selected="selected">Selecteer categorie</option>
-                                <option value="Huishouden">Huishouden</option>
-                                <option value="Medisch">Medisch</option>
-                                <option value="Vrije tijd" >Vrije tijd</option>
-                            </select>
                         </div>
                     </div>
 
