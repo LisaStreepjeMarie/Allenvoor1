@@ -13,19 +13,22 @@
         <div id="container">
             <p>
                 <input class="btn btn-primary" type="submit" value="home" onclick="window.location='/';" />
+                <input class="btn btn-primary" type="submit" value="Al je groepen" onclick="window.location='/team/all';" />
                 <input class="btn btn-primary" type="submit" value="Logout" onclick="window.location='/logout';" />
             </p>
             <h1>Voeg gegevens groep toe</h1>
             <form:form action="/team/new" modelAttribute="team">
                 <table>
                     <tr>
+                        <td>Groepsnaam:</td>
                         <td>
-                            <form:input path="teamName" value="" class="form-control" placeholder= "Groepsnaam"/></form>
+                            <form:input path="teamName" value="" /></form>
                         </td>
                     </tr>
                     <tr>
+                        <td>Groepslid:</td>
                         <td>
-                            <form:input path="membername" value="${members.membername}" class="form-control" placeholder= "Groepslid"/></form>
+                            <form:input path="membername" value="${members.membername}" /></form>
                         </td>
                     </tr>
                     <tr><td colspan="2"><input class="btn btn-primary" type="submit" value="Bewaar" /></td></tr>

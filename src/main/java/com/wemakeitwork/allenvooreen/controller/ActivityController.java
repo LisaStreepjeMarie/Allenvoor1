@@ -15,13 +15,10 @@ import java.util.Optional;
 
 
 @Controller
-public class NewActivityController {
+public class ActivityController {
 
     @Autowired
     ActivityRepository activityRepository;
-
-    //TODO in this sprint we don't need this form. Remember to link this back to the event
-
 
     @GetMapping("/activity/new")
     protected String showActivityForm(Model model) {
@@ -48,12 +45,28 @@ public class NewActivityController {
         return "activityData";
     }
 
+    @GetMapping("/activity/delete/{activityId}")
+    public String deleteTeam(@PathVariable("activityId") final Integer activityId) {
+        activityRepository.deleteById(activityId);
+        return "redirect:/activity/all";
+    }
+
     @PostMapping("/activity/new")
     protected String saveOrUpdateActivity(@ModelAttribute("activity") Activity activity, BindingResult result) {
         if (result.hasErrors()) {
             return "newActivity";
         }
         else {
+            activityRepository.save(activity);
+            return "redirect:/activity/all";
+        }
+    }
+
+    @PostMapping("/activity/change")
+    protected String saveOrUpdateActivity2(@ModelAttribute("activity") Activity activity, BindingResult result) {
+        if (result.hasErrors()) {
+            return "activityData";
+        } else {
             activityRepository.save(activity);
             return "redirect:/activity/all";
         }
