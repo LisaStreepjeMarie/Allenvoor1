@@ -47,10 +47,25 @@
     toggleFields(); // call this first so we start out with the correct visibility depending on the selected form values
     // this will call our toggleFields function every time the selection value of our other field changes
 
+
     $("#selectie").change(function () {
+        $("#showEventName").css("display", "none");
+        $("#showEventComment").css("display", "none");
+        $("#showMedication").css("display", "none");
+        $("#showMedicationAmount").css("display", "none");
+        $("#showStartDate").css("display", "none");
+        $("#showEndDate").css("display", "none");
         toggleFields();
     });
-        $('#calendar').fullCalendar({
+
+    $("#showEventName").css("display", "none");
+    $("#showEventComment").css("display", "none");
+    $("#showMedication").css("display", "none");
+    $("#showMedicationAmount").css("display", "none");
+    $("#showStartDate").css("display", "none");
+    $("#showEndDate").css("display", "none");
+
+            $('#calendar').fullCalendar({
             themeSystem: 'bootstrap4',
             timeZone: 'Europe/Amsterdam',
             timeFormat: 'H(:mm)',
@@ -139,9 +154,9 @@
 
     function toggleFields() {
         if ($("#selectie").val() === "Medisch")
-            $("#eventName").show();
+            $("#showMedication, #showStartDate,#showMedicationAmount").show();
         else
-            $("#eventName").hide();
+            $("#showEventName, #showEventComment, #showStartDate").show();
     }
     </script>
 
@@ -161,7 +176,7 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <label class="col-xs-4" for="selectie" control-label>Categorie</label>
-                            <select class="form-control" name="activity.activityCategory" id="selectie" required>
+                            <select name="activity.activityCategory" id="selectie" required>
                                 <option disabled selected="selected">Selecteer categorie</option>
                                 <option value="Huishouden">Huishouden</option>
                                 <option value="Medisch">Medisch</option>
@@ -170,7 +185,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-12">
+                        <div class="col-xs-12"  id="showEventName">
                             <label class="col-xs-4" for="eventName" control-label>Onderwerp</label>
                             <input type="text" name="eventName" path="eventName" id="eventName" required/>
                             <input type="hidden" name="eventId" id="eventId" />
@@ -178,21 +193,32 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-12">
+                        <div class="col-xs-12" id="showEventComment">
                             <label class="col-xs-4" for="eventComment">Beschrijving</label>
                             <input type="text" name="eventComment" id="eventComment" required/>
                         </div>
                     </div>
-
                     <div class="row">
-                        <div class="col-xs-12">
-                            <label class="col-xs-4" for="eventStartDate">Starttijd</label>
+                        <div class="col-xs-12" id="showMedication" >
+                            <label class="col-xs-4" for="medicationName" control-label>Medicatie</label>
+                            <input type="text" name="medicationName" id="medicationName" required/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12" id="showMedicationAmount" >
+                            <label class="col-xs-4" for="medicationAmount" control-label>Hoeveelheid</label>
+                            <input type="text" name="medicationAmount" id="medicationAmount" required/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12" id="showStartDate">
+                            <label class="col-xs-4" for="eventStartDate">Datum</label>
                             <input type="text" name="eventStartDate" id="eventStartDate" required/>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-12">
-                            <label class="col-xs-4" for="eventEndDate">Eindtijd</label>
+                        <div class="col-xs-12" id="showEndDate">
+                            <label class="col-xs-4" for="eventEndDate">EindDatum</label>
                             <input type="text" name="eventEndDate" id="eventEndDate" required/>
                         </div>
                     </div>
