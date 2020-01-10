@@ -159,7 +159,6 @@
 </head>
 
 <body>
-${calendarData}
 <form:form id="modal-form" action="/event/change" modelAttribute="event" method="post">
     <div class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
