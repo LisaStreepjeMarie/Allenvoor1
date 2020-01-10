@@ -5,7 +5,7 @@
 
 <html xmlns:form="http://www.w3.org/1999/xhtml" xmlns:c="">
     <head>
-        <link href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" rel='stylesheet'>
+        <link href="/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
         <link href="../../css/style.css" rel="stylesheet" type="text/css"/>
         <title>Overzicht gebruiker</title>
     </head>

@@ -34,8 +34,10 @@
     <script src="/webjars/Eonasdan-bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
     <script src="/webjars/fullcalendar/3.9.0/locale/nl.js"></script>
     <link href="/webjars/font-awesome/5.0.6/web-fonts-with-css/css/fontawesome-all.min.css" rel='stylesheet'>
-    <link href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" rel='stylesheet'>
-    <script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+    <!--<link href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" rel='stylesheet'>
+    <script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>-->
+    <link href="/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
+    <script src="/webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
     <!-- added the below 2 links and the javascript to make sure the end date is the same/above the start date -->
     <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.0/css/bootstrap-datepicker.css" rel="stylesheet" type="text/css" />
@@ -175,26 +177,26 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 id="modal-title" class="modal-title">Maak nieuwe afspraak</h4>
+                    <h4 id="modal-title" class="col-12" class="modal-title">Maak nieuwe afspraak</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-xs-12">
-                            <label class="col-xs-4" for="eventName">Onderwerp</label>
+                        <div class="col-12">
+                            <label class="col-4" for="eventName">Onderwerp</label>
                             <input type="text" name="eventName" path="eventName" id="eventName" required/>
                             <input type="hidden" name="eventId" id="eventId" />
                             <input type="hidden" name="teamId" id="team.teamId" />
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-12">
-                            <label class="col-xs-4" for="eventComment">Beschrijving</label>
+                        <div class="col-12">
+                            <label class="col-4" for="eventComment">Beschrijving</label>
                             <input type="text" name="eventComment" id="eventComment" required/>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-12">
-                            <label class="col-xs-4" for="activity.activityCategory">Categorie</label>
+                        <div class="col-12">
+                            <label class="col-4" for="activity.activityCategory">Categorie</label>
                             <select name="activity.activityCategory" id="activity.activityCategory" required>
                                 <option disabled selected="selected">Selecteer categorie</option>
                                 <option value="Huishouden">Huishouden</option>
@@ -205,14 +207,14 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-xs-12">
-                            <label class="col-xs-4" for="eventStartDate">Starttijd</label>
+                        <div class="col-12">
+                            <label class="col-4" for="eventStartDate">Starttijd</label>
                             <input type="text" name="eventStartDate" id="eventStartDate" required/>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-12">
-                            <label class="col-xs-4" for="eventEndDate">Eindtijd</label>
+                        <div class="col-12">
+                            <label class="col-4" for="eventEndDate">Eindtijd</label>
                             <input type="text" name="eventEndDate" id="eventEndDate" required/>
                         </div>
                     </div>

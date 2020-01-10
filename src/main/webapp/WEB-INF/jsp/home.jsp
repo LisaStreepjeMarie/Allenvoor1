@@ -12,14 +12,15 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
 
-    <link href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" rel='stylesheet'>
+    <!--<link href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" rel='stylesheet'>-->
+    <link href="/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
 <body>
 <div class="container">
     <div class="row">
-           <div class="col-sm-12">&nbsp;</div>
+           <div class="col-12">&nbsp;</div>
     </div>
     <div class="row">
-       <div class="col-sm-2">
+       <div class="col-2">
             <input class="btn btn-primary" type="submit" value="Logout" onclick="window.location='/logout';" /><br />
             <br>
             <input class="btn btn-primary" type="submit" value="Gebruikersprofiel" onclick="window.location='/member/current';" /><br />
@@ -39,7 +40,7 @@
                        </c:forEach>
                    </table>
        </div>
-       <div class="col-sm-10">
+       <div class="col-10">
            <div id="calendar"></div>
            <div id='datepicker'></div>
        </div>

@@ -5,7 +5,7 @@
 
 <html xmlns:form="http://www.w3.org/1999/xhtml">
     <head>
-        <link href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" rel='stylesheet'>
+        <link href="/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
         <link href="../css/style.css" rel="stylesheet" type="text/css"/>
         <title>Wijzig de gegevens van een activiteit</title>
     </head>
