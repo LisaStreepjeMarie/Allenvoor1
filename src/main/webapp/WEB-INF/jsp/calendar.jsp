@@ -222,7 +222,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" id="delete-event" class="btn btn-danger" data-dismiss="modal" >Verwijder Afspraak</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Sluiten</button>
+                    <button type="button" class="btn btn-light" data-dismiss="modal">Sluiten</button>
                     <form:errors path="eventName" cssClass="error" />
                     <button type="submit" class="btn btn-primary" id="save-change-event">Maak afspraak</button>
                 </div>
