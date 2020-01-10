@@ -19,23 +19,37 @@
             <h1>Wijzig gegevens groep</h1>
             <form:form action="/team/change" modelAttribute="team">
             <form:input path="teamId" type="hidden" />
+            <form:input path="membername" type="hidden" />
                 <table>
                     <tr>
                         <td>Groepsnaam:</td>
                         <td>
-                            <form:input path="teamName" value="${team.teamName}" />
-                            </form>
+                            <form:input size="30" path="teamName" value="${team.teamName}" /></form>
+                            <input class="btn btn-primary" type="submit" value="Wijzig" />
                         </td>
                     </tr>
                     <tr>
-                        <td>Groepslid:</td>
+                         <td>Groepslid:</td>
+                         <td>
+                            <c:forEach items="${team.membername}" var="member">
+                                 <c:out value="${member.membername}" /><br />
+                             </c:forEach>
+                         </td>
+                     </tr>
+                 </table>
+             </form:form>
+             <form:form action="/team/addMember" modelAttribute="teamMemberDTO">
+                 <form:input path="teamId" type="hidden" />
+                    <table>
+                    <tr>
+                        <td>Nieuw groepslid:</td>
                         <td>
-                            <form:input path="membername" value="${members.membername}" /></form>
+                           <form:input path="teamMemberName" /></form>
                         </td>
                     </tr>
-                    <tr colspan="2">
+                    <tr>
                         <td>
-                            <input class="btn btn-primary" type="submit" value="Bewaar" />
+                             <input class="btn btn-primary" type="submit" value="Wijzig" />
                         </td>
                     </tr>
                 </table>

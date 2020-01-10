@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.Optional;
 
@@ -30,6 +31,9 @@ public class EventController {
     @Autowired
     MemberRepository memberRepository;
 
+    @Autowired
+    private HttpSession httpSession;
+
     @GetMapping("/event/new")
     protected String showEventForm(Model model) {
         model.addAttribute("event", new Event());
@@ -39,26 +43,21 @@ public class EventController {
     @GetMapping("/event/delete/{eventId}")
     public String deleteEvent(@PathVariable("eventId") final Integer eventId) {
         eventRepository.deleteById(eventId);
-        return "redirect:/calendar";
+        Team team = (Team) httpSession.getAttribute("team");
+        return "redirect:/calendar/" + team.getTeamId();
     }
 
     @PostMapping("/event/new")
-    protected String saveOrUpdateEvent(@ModelAttribute("event") Event event, BindingResult result, Principal principal) {
+    protected String saveOrUpdateEvent(@ModelAttribute("event") Event event, BindingResult result) {
         if (result.hasErrors()) {
             return "calendar";
         }
         else {
-            Optional<Member> member = memberRepository.findByMembername(principal.getName());
-            Team team = new Team();
-            if(member.isPresent()){
-                team = teamRepository.findTeamById(teamRepository.findTeamIdByMemberid(member.get().getMemberId()));
-            }
-            //N.B.: activityname == eventname for now
-            team.setEventList(event);
-            event.getActivity().setActivityName(event.getEventName());
+            Team team = (Team) httpSession.getAttribute("team");
             event.setTeam(team);
+            event.getActivity().setActivityName(event.getEventName());
             eventRepository.save(event);
-            return "redirect:/calendar";
+            return "redirect:/calendar/" + team.getTeamId();
         }
     }
 
@@ -76,7 +75,7 @@ public class EventController {
             event.setTeam(team);
 
             eventRepository.save(event);
-            return "redirect:/calendar";
+            return "redirect:/calendar/" + team.getTeamId();
         }
     }
 }
