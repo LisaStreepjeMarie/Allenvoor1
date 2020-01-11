@@ -12,11 +12,10 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
 
-    <!--<link href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" rel='stylesheet'>-->
     <link href="/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
 <body>
-<div class="container">
-    <div class="row">
+<div class="container" >
+    <div class="row" >
            <div class="col-12">&nbsp;</div>
     </div>
     <div class="row">
