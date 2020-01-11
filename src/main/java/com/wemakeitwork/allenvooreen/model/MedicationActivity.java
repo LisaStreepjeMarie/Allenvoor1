@@ -36,6 +36,5 @@ public class MedicationActivity extends Activity{
 
     public void setTakenMedication(Integer takenMedication) {
         this.takenMedication = takenMedication;
-        this.medication.medicationTaken(takenMedication);
     }
 }

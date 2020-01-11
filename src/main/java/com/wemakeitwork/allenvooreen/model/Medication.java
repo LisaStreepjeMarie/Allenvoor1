@@ -26,12 +26,17 @@ public class Medication {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Team team;
 
+    public List<MedicationActivity> getTakenMedications() {
+        return takenMedications;
+    }
+
+    public void setTakenMedications(MedicationActivity medicationActivity) {
+        this.takenMedications.add(medicationActivity);
+        this.medicationAmount -= medicationActivity.getTakenMedication();
+    }
+
     @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "medication")
     private List<MedicationActivity> takenMedications;
-
-    public void medicationTaken(Integer integer){
-        this.medicationAmount -= integer;
-    }
 
     public Integer getMedicationId() {
         return medicationId;

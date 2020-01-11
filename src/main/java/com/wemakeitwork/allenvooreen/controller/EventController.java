@@ -2,6 +2,7 @@ package com.wemakeitwork.allenvooreen.controller;
 
 import com.wemakeitwork.allenvooreen.model.*;
 import com.wemakeitwork.allenvooreen.repository.EventRepository;
+import com.wemakeitwork.allenvooreen.repository.MedicationRepository;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class EventController {
 
     @Autowired
     TeamRepository teamRepository;
+
+    @Autowired
+    MedicationRepository medicationRepository;
 
     @Autowired
     MemberRepository memberRepository;
@@ -62,7 +66,8 @@ public class EventController {
             event.getActivity().setActivityName(event.getEventName());
             if(event.getActivity() instanceof MedicationActivity){
                 System.out.println("Take your chill pills");
-                System.out.println(medicationActivity.getMedication().getMedicationName());
+                Optional<Medication> medication = medicationRepository.findById(medicationActivity.getMedication().getMedicationId());
+                medication.ifPresent(value -> value.setTakenMedications(medicationActivity));
             }
             eventRepository.save(event);
             return "redirect:/calendar/" + team.getTeamId();

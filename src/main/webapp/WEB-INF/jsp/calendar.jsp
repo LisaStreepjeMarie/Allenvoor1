@@ -211,8 +211,8 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-12" id="showMedicationAmount" modelAttribute="medicationActivity">
-                            <label class="col-xs-4" for="medication.takenMedication" control-label>Hoeveelheid</label>
-                            <input type="text" name="medication.takenMedication" id="medication.takenMedication" />
+                            <label class="col-xs-4" for="takenMedication" control-label>Hoeveelheid</label>
+                            <input type="number" name="takenMedication" id="takenMedication" />
                         </div>
                     </div>
                     <div class="row">
