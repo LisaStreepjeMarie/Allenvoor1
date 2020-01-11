@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +46,7 @@ public class TeamController {
         List<Team> teamList = new ArrayList<>();
         List<Integer> allMyTeamsById = teamRepository.findTeamsByIdMember(memberId);
         for (Integer integer : allMyTeamsById){
-            teamList.add(teamRepository.findTeamById(integer));
+            teamList.add(teamRepository.getOne(integer));
         }
         return teamList;
     }
@@ -114,7 +113,7 @@ public class TeamController {
             return "teamData";
         } else {
             Optional<Member> member = memberRepository.findByMembername(teamMemberDTO.getTeamMemberName());
-            Team team = teamRepository.findTeamById(teamMemberDTO.getTeamId());
+            Team team = teamRepository.getOne(teamMemberDTO.getTeamId());
             member.ifPresent(team::addTeamMember);
             teamRepository.save(team);
             return "redirect:/team/select/" + teamMemberDTO.getTeamId();
