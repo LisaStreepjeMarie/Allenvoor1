@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Controller
 public class CalendarController {
@@ -45,7 +45,7 @@ public class CalendarController {
             calendarData += "" + new ObjectMapper().writeValueAsString(event) + ",";
         }
 
-        List<Team> teamList = new ArrayList<>();
+        Set<Team> teamList = null;
         Optional<Member> member = memberRepository.findByMembername(principal.getName());
         if(member.isPresent()){
             teamList = teamList(member.get().getMemberId());
@@ -64,22 +64,22 @@ public class CalendarController {
 
     @GetMapping("/home")
     public String calendar(Model model, Principal principal){
-        List<Team> teamList = new ArrayList<>();
+        Set<Team> teamList = null;
         Optional<Member> member = memberRepository.findByMembername(principal.getName());
         if(member.isPresent()){
             teamList = teamList(member.get().getMemberId());
 
         }
-        model.addAttribute("teamList", teamList);
+        if (teamList != null) {
+            model.addAttribute("teamList", teamList);
+        }
         return "home";
     }
 
-    private List<Team> teamList (Integer memberId){
-        List<Team> teamList = new ArrayList<>();
-        List<Integer> allMyTeamsById = teamRepository.findTeamsByIdMember(memberId);
-        for (Integer integer : allMyTeamsById){
-            teamList.add(teamRepository.getOne(integer));
-        }
+    private Set<Team> teamList (Integer memberId){
+        Set<Team> teamList;
+        Member member = memberRepository.getOne(memberId);
+        teamList = member.getTeamName();
         return teamList;
     }
 }

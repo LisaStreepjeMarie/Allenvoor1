@@ -1,6 +1,5 @@
 package com.wemakeitwork.allenvooreen.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.wemakeitwork.allenvooreen.dto.TeamMemberDTO;
 import com.wemakeitwork.allenvooreen.model.Member;
 import com.wemakeitwork.allenvooreen.model.Team;
@@ -14,12 +13,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Controller
 public class TeamController {
@@ -32,22 +29,25 @@ public class TeamController {
 
     @GetMapping("/team/all")
     protected String showTeamsPerMember(Model model, Principal principal){
-        List<Team> teamList = new ArrayList<>();
+        Set<Team> teamList = null;
         Optional<Member> member = memberRepository.findByMembername(principal.getName());
         if(member.isPresent()){
             teamList = teamList(member.get().getMemberId());
 
         }
-        model.addAttribute("teamList", teamList);
+        if (teamList != null) {
+            model.addAttribute("teamList", teamList);
+        } else {
+            //Temporary sysout to see if there are cases where this happens, if so: fix it.
+            System.out.println("!!!     teamList is null        !!!");
+        }
         return "teamOverview";
     }
 
-    private List<Team> teamList (Integer memberId){
-        List<Team> teamList = new ArrayList<>();
-        List<Integer> allMyTeamsById = teamRepository.findTeamsByIdMember(memberId);
-        for (Integer integer : allMyTeamsById){
-            teamList.add(teamRepository.getOne(integer));
-        }
+    private Set<Team> teamList (Integer memberId){
+        Set<Team> teamList;
+        Member member = memberRepository.getOne(memberId);
+        teamList = member.getTeamName();
         return teamList;
     }
 
