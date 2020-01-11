@@ -6,10 +6,9 @@
     <head>
         <title>Overzicht groepen</title>
         <link href="/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
-        <link href="../css/style.css" rel="stylesheet" type="text/css"/>
     </head>
     <body class="webpage">
-        <div id="container">
+        <div id="container" class="ml-4 mt-4">
             <p>
                 <input class="btn btn-primary" type="submit" value="home" onclick="window.location='/';" />
                 <input class="btn btn-primary" type="submit" value="Al je groepen" onclick="window.location='/team/all';" />
