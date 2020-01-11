@@ -59,7 +59,7 @@ public class CalendarController {
         medicationActivity.setMedication(new Medication());
 
         Event event = new Event();
-        event.setActivity(new MedicationActivity());
+        event.setActivity(new Activity());
 
         model.addAttribute("medicationActivity", medicationActivity);
         model.addAttribute("teamList", teamList);

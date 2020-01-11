@@ -199,20 +199,20 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-12" id="showMedication" >
+                        <div class="col-xs-12" id="showMedication" modelAttribute="medicationActivity">
                            <label class="col-xs-4" for="medication" control-label>Medicijn</label>
-                            <select name="medication" id="medication" required>
+                            <select name="medication.medicationId" id="medication.medicationId" >
                                 <option disabled selected="selected">Kies een medicijn</option>
                         <c:forEach var="medication" items="${medicationList}">
-                            <option value="${medication}">${medication.medicationName}</option>
+                            <option value="${medication.medicationId}">${medication.medicationName}</option>
                         </c:forEach>
                             </select>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-12" id="showMedicationAmount" >
-                            <label class="col-xs-4" for="medicationActivity.takenMedication" control-label>Hoeveelheid</label>
-                            <input type="number" name="medicationActivity.takenMedication" id="takenMedication" />
+                        <div class="col-xs-12" id="showMedicationAmount" modelAttribute="medicationActivity">
+                            <label class="col-xs-4" for="medication.takenMedication" control-label>Hoeveelheid</label>
+                            <input type="text" name="medication.takenMedication" id="medication.takenMedication" />
                         </div>
                     </div>
                     <div class="row">

@@ -2,6 +2,7 @@ package com.wemakeitwork.allenvooreen.model;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.List;
 @Entity
 public class Medication {
 
+    //TODO made this able to be nullable since it's a subclass of activity. Is this the right way? Who knows!
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer medicationId;

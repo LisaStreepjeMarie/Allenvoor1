@@ -60,6 +60,10 @@ public class EventController {
                 event.getActivity().setActivityCategory("Medisch");
             }
             event.getActivity().setActivityName(event.getEventName());
+            if(event.getActivity() instanceof MedicationActivity){
+                System.out.println("Take your chill pills");
+                System.out.println(medicationActivity.getMedication().getMedicationName());
+            }
             eventRepository.save(event);
             return "redirect:/calendar/" + team.getTeamId();
         }
