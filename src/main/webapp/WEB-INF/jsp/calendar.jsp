@@ -2,9 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<!DOCTYPE html>
-<html xmlns:form="http://www.w3.org/1999/xhtml" xmlns:c="">
-
+<html xmlns:form="http://www.w3.org/1999/xhtml" xmlns:c="" xmlns:jsp="http://www.w3.org/1999/XSL/Transform">
 <head>
     <meta charset='utf-8' />
     <title>Kalender</title>
@@ -66,11 +64,11 @@
                 <!--$('#deleteEvent').attr('href',"/event/delete/" + event.id);-->
 
                 <!--pass eventId to a <button> onclick action: -->
-                $('#delete-event').attr('onclick',"window.location='/event/delete/" + event.id + "'");
+                $('#delete-event').attr('onclick',"window.location='/event/delete/" + event.id + "/" + event.activity.activityId + "'");
 
                 $("#eventId").val(event.id);
 
-                $('#modal-form').attr('action',"/event/change");
+                $('#modal-form').attr('action',"/event/change/" + event.activity.activityId);
                 $('#save-change-event').attr('action',"/event/change");
 
                 $('.modal').find('#eventName').val(event.title);
@@ -152,6 +150,7 @@
 </head>
 
 <body>
+
 <form:form id="modal-form" action="/event/change" modelAttribute="event" method="post">
     <div class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">

@@ -2,11 +2,11 @@ package com.wemakeitwork.allenvooreen.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.wemakeitwork.allenvooreen.model.Activity;
 import com.wemakeitwork.allenvooreen.model.Event;
 import com.wemakeitwork.allenvooreen.model.Member;
 import com.wemakeitwork.allenvooreen.model.Team;
-import com.wemakeitwork.allenvooreen.repository.EventRepository;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +23,6 @@ import java.util.Set;
 @Controller
 public class CalendarController {
     @Autowired
-    EventRepository eventRepository;
-
-    @Autowired
     private HttpSession httpSession;
 
     @Autowired
@@ -35,21 +32,24 @@ public class CalendarController {
     TeamRepository teamRepository;
 
     @GetMapping("/calendar/{teamId}")
-    public String showmyCalender(@PathVariable("teamId") final Integer teamId, Model model, Principal principal) throws JsonProcessingException {
+    public String showmyCalender(@PathVariable("teamId") final Integer teamId, Model model, Principal principal)
+            throws JsonProcessingException {
         Team team = teamRepository.getOne(teamId);
         List<Event> eventList = team.getEventList();
         httpSession.setAttribute("team", team);
 
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+
         String calendarData = "";
         for (Event event : eventList) {
-            calendarData += "" + new ObjectMapper().writeValueAsString(event) + ",";
+            calendarData += "" + mapper.writeValueAsString(event) + ",";
         }
 
         Set<Team> teamList = null;
         Optional<Member> member = memberRepository.findByMembername(principal.getName());
         if(member.isPresent()){
             teamList = teamList(member.get().getMemberId());
-
         }
 
         Event event = new Event();
