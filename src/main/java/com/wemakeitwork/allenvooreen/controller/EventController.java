@@ -29,9 +29,6 @@ public class EventController {
     TeamRepository teamRepository;
 
     @Autowired
-    MemberRepository memberRepository;
-
-    @Autowired
     private HttpSession httpSession;
 
     @GetMapping("/event/new")
@@ -71,9 +68,10 @@ public class EventController {
         }
     }
 
-    @PostMapping("/event/change/{activityId}")
+    @PostMapping("/event/change/{activityId}/{teamId}")
     protected String changeEvent(@ModelAttribute("event") Event event,
-                                          @PathVariable("activityId") final Integer activityId, BindingResult result) {
+                                 @ModelAttribute("teamId") Integer teamId,
+                                 @PathVariable("activityId") final Integer activityId, BindingResult result) {
         if (result.hasErrors()) {
             return "calendar";
         } else {
@@ -81,7 +79,7 @@ public class EventController {
             event.getActivity().setActivityId(activityId);
 
             //finding/setting the team corresponding with the event
-            Team team = teamRepository.getOne(eventRepository.findTeamIdByEventId(event.getEventId()));
+            Team team = teamRepository.getOne(teamId);
             event.setTeam(team);
 
             eventRepository.save(event);

@@ -11,8 +11,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
 
     <link href="/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
-<body>
-<div class="container" >
+<body class="webpage">
+<div class="container-fluid" >
     <div class="row" >
            <div class="col-12">&nbsp;</div>
     </div>

@@ -61,7 +61,6 @@ public class CalendarController {
         return "calendar";
     }
 
-
     @GetMapping("/home")
     public String calendar(Model model, Principal principal){
         Set<Team> teamList = null;

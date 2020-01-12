@@ -7,8 +7,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@JsonPropertyOrder(value = {"id","title","description","start", "end"}, alphabetic = true)
-@JsonIgnoreProperties({ "team" })
+@JsonPropertyOrder(value = {"id", "title", "description", "start", "end"}, alphabetic = true)
 public class Event {
 
     @Id
