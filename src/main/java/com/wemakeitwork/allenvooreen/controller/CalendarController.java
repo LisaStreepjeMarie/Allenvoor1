@@ -53,7 +53,12 @@ public class CalendarController {
             teamList = teamList(member.get().getMemberId());
 
         }
-        List<Medication> medicationList = medicationRepository.findAll();
+
+        //trying out lambda and streams below to load the correct medication for the team
+        List<Medication> medicationList = new ArrayList<>();
+        medicationRepository.findAll().stream()
+                .filter(x -> x.getTeam() == team)
+                .forEach(medicationList::add);
 
         MedicationActivity medicationActivity = new MedicationActivity();
         medicationActivity.setMedication(new Medication());
