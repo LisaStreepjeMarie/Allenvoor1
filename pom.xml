@@ -12,6 +12,7 @@
     <artifactId>allenvooreen</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>allenvooreen</name>
+    <packaging>war</packaging>
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -153,15 +154,15 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
-        </dependency>
+        </dependency><!--
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20190722</version>
-        </dependency>
+        </dependency>-->
     </dependencies>
 
-    <build>
+<!--    <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -175,6 +176,15 @@
                     <source>11</source>
                     <target>11</target>
                 </configuration>
+            </plugin>
+        </plugins>
+    </build>-->
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
