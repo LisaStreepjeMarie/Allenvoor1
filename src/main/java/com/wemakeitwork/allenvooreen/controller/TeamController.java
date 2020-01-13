@@ -33,7 +33,6 @@ public class TeamController {
         Optional<Member> member = memberRepository.findByMembername(principal.getName());
         if(member.isPresent()){
             teamList = teamList(member.get().getMemberId());
-
         }
         if (teamList != null) {
             model.addAttribute("teamList", teamList);

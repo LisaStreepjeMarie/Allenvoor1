@@ -136,7 +136,7 @@
             defaultView: (localStorage.getItem("fcDefaultView") !== null ? localStorage.getItem("fcDefaultView") : "month"),
 
             editable: true,
-            events: [ ${calendarData} ],
+            events: ${calendarData},
             eventLimit: true // allow "more" link when too many events
         });
 

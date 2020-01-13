@@ -25,6 +25,7 @@ public class Member implements UserDetails {
     private String rol;
 
     @ManyToMany
+    @JoinTable(name = "member_team", joinColumns = @JoinColumn(name = "member_id"), inverseJoinColumns = @JoinColumn(name = "team_id"))
     private Set<Team> teamName = new HashSet<>();
 
     public Set<Team> getTeamName() {
@@ -38,9 +39,6 @@ public class Member implements UserDetails {
     public String getRol() {
         return rol;
     }
-
-    @ManyToMany
-    @JoinTable(name = "member_team", joinColumns = @JoinColumn(name = "member_id"), inverseJoinColumns = @JoinColumn(name = "team_id"))
 
     public void setRol(String rol) {
         this.rol = rol;

@@ -35,16 +35,7 @@ public class CalendarController {
     public String showmyCalender(@PathVariable("teamId") final Integer teamId, Model model, Principal principal)
             throws JsonProcessingException {
         Team team = teamRepository.getOne(teamId);
-        List<Event> eventList = team.getEventList();
         httpSession.setAttribute("team", team);
-
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.enable(SerializationFeature.INDENT_OUTPUT);
-
-        String calendarData = "";
-        for (Event event : eventList) {
-            calendarData += "" + mapper.writeValueAsString(event) + ",";
-        }
 
         Set<Team> teamList = null;
         Optional<Member> member = memberRepository.findByMembername(principal.getName());
@@ -56,7 +47,9 @@ public class CalendarController {
         event.setActivity(new Activity());
         model.addAttribute("teamList", teamList);
         model.addAttribute("event", event);
-        model.addAttribute("calendarData", calendarData);
+
+        ObjectMapper mapper = new ObjectMapper();
+        model.addAttribute("calendarData", mapper.writeValueAsString(team.getEventList()));
 
         return "calendar";
     }
@@ -67,7 +60,6 @@ public class CalendarController {
         Optional<Member> member = memberRepository.findByMembername(principal.getName());
         if(member.isPresent()){
             teamList = member.get().getTeamName();
-
         }
         if (teamList != null) {
             model.addAttribute("teamList", teamList);

@@ -4,7 +4,6 @@ import com.wemakeitwork.allenvooreen.model.Event;
 import com.wemakeitwork.allenvooreen.model.Team;
 import com.wemakeitwork.allenvooreen.repository.ActivityRepository;
 import com.wemakeitwork.allenvooreen.repository.EventRepository;
-import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
