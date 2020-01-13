@@ -2,7 +2,6 @@ package com.wemakeitwork.allenvooreen.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.wemakeitwork.allenvooreen.model.Activity;
 import com.wemakeitwork.allenvooreen.model.Event;
 import com.wemakeitwork.allenvooreen.model.Member;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 

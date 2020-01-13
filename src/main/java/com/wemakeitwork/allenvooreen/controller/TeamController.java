@@ -112,8 +112,13 @@ public class TeamController {
             return "teamData";
         } else {
             Optional<Member> member = memberRepository.findByMembername(teamMemberDTO.getTeamMemberName());
+            System.out.println("member uit DTO:   " + teamMemberDTO.getTeamMemberName());
             Team team = teamRepository.getOne(teamMemberDTO.getTeamId());
-            member.ifPresent(team::addTeamMember);
+            System.out.println("teamId uit DTO:   " + teamMemberDTO.getTeamId());
+            //member.ifPresent(team::addTeamMember);
+            if (member.isPresent()){
+                memberRepository.save(member.get());
+            };
             teamRepository.save(team);
             return "redirect:/team/select/" + teamMemberDTO.getTeamId();
         }

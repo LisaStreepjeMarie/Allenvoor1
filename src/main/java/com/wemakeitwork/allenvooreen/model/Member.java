@@ -25,8 +25,12 @@ public class Member implements UserDetails {
     private String rol;
 
     @ManyToMany
-    @JoinTable(name = "member_team", joinColumns = @JoinColumn(name = "member_id"), inverseJoinColumns = @JoinColumn(name = "team_id"))
+    @JoinTable(name = "team_membername", joinColumns = @JoinColumn(name = "membername_member_id"), inverseJoinColumns = @JoinColumn(name = "team_team_id"))
     private Set<Team> teamName = new HashSet<>();
+
+    //@JoinTable(name = "member_team", joinColumns = @JoinColumn(name = "member_id"), inverseJoinColumns = @JoinColumn(name = "team_id"))
+
+    //@JoinTable(name = "team", joinColumns = @JoinColumn(name = "member_id"),  inverseJoinColumns = @JoinColumn(name = "team_id"))
 
     public Set<Team> getTeamName() {
         return teamName;
