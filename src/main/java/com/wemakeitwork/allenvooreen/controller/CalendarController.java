@@ -49,7 +49,7 @@ public class CalendarController {
         Set<Team> teamList = null;
         Optional<Member> member = memberRepository.findByMembername(principal.getName());
         if(member.isPresent()){
-            teamList = teamList(member.get().getMemberId());
+            teamList = member.get().getTeamName();
         }
 
         Event event = new Event();
@@ -66,19 +66,12 @@ public class CalendarController {
         Set<Team> teamList = null;
         Optional<Member> member = memberRepository.findByMembername(principal.getName());
         if(member.isPresent()){
-            teamList = teamList(member.get().getMemberId());
+            teamList = member.get().getTeamName();
 
         }
         if (teamList != null) {
             model.addAttribute("teamList", teamList);
         }
         return "home";
-    }
-
-    private Set<Team> teamList (Integer memberId){
-        Set<Team> teamList;
-        Member member = memberRepository.getOne(memberId);
-        teamList = member.getTeamName();
-        return teamList;
     }
 }
