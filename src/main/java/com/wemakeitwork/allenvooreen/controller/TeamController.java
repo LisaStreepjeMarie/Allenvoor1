@@ -115,10 +115,12 @@ public class TeamController {
             System.out.println("member uit DTO:   " + teamMemberDTO.getTeamMemberName());
             Team team = teamRepository.getOne(teamMemberDTO.getTeamId());
             System.out.println("teamId uit DTO:   " + teamMemberDTO.getTeamId());
-            //member.ifPresent(team::addTeamMember);
+
             if (member.isPresent()){
+                member.get().getTeamName().add(team);
+                team.getMembername().add(member.get());
                 memberRepository.save(member.get());
-            };
+            }
             teamRepository.save(team);
             return "redirect:/team/select/" + teamMemberDTO.getTeamId();
         }
