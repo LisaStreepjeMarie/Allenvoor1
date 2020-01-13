@@ -22,22 +22,6 @@
     <form:form action="/event/new" modelAttribute="event" method="post">
     <div class="row">
         <div class="col-xs-1">
-            <p class="font-weight-normal">Onderwerp: </p>
-        </div>
-        <div class="col-xs-2">
-            <input type="text" id="eventName" name="eventName" required>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-1">
-            <p class="font-weight-normal">Beschrijving: </p>
-        </div>
-        <div class="col-xs-2">
-            <input type="text" id="eventComment" name="eventComment" required>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-1">
             <p class="font-weight-normal">Categorie: </p>
         </div>
         <div class="col-xs-2">
@@ -49,47 +33,6 @@
             </select>
         </div>
     </div>
-    <div class="row">
-        <div class="col-xs-1">
-            <p class="font-weight-normal">Begintijd: </p>
-        </div>
-        <div class="col-xs-3">
-            <div class='col-sm'>
-                <div class="form-group">
-                    <div class='input-group date' id='dateTimePickerStartDate'>
-                        <input type='text' class="form-control" name="eventStartDate" required>
-                        <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-        <div class="row">
-            <div class="col-xs-1">
-                <p class="font-weight-normal">Eindtijd: </p>
-            </div>
-            <div class="col-xs-3">
-                <div class='col-sm'>
-                    <div class="form-group">
-                        <div class='input-group date' id='dateTimePickerEndDate'>
-                            <input type='text' class="form-control" name="eventEndDate" required>
-                            <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-1">
-            </div>
-            <div class="col-xs-2">
-                <input type="submit" value="Maak afspraak!" />
-            </div>
-        </div>
     </form:form>
 </div>
 </body>
