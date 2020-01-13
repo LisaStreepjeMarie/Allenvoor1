@@ -26,7 +26,6 @@ public class ActivityController {
     @GetMapping("/activity/new")
     protected String showActivityForm(Model model) {
         model.addAttribute("activity", new Activity());
-        model.addAttribute("activityList", activityRepository.findAll());
         return "newActivity";
     }
 

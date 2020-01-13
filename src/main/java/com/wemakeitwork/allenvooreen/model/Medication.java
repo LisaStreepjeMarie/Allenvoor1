@@ -2,7 +2,6 @@ package com.wemakeitwork.allenvooreen.model;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.util.List;
@@ -10,7 +9,6 @@ import java.util.List;
 @Entity
 public class Medication {
 
-    //TODO made this able to be nullable since it's a subclass of activity. Is this the right way? Who knows!
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer medicationId;
@@ -26,6 +24,13 @@ public class Medication {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Team team;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "medication")
+    private List<MedicationActivity> takenMedications;
+
+    public Integer getMedicationId() {
+        return medicationId;
+    }
+
     public List<MedicationActivity> getTakenMedications() {
         return takenMedications;
     }
@@ -33,13 +38,6 @@ public class Medication {
     public void setTakenMedications(MedicationActivity medicationActivity) {
         this.takenMedications.add(medicationActivity);
         this.medicationAmount -= medicationActivity.getTakenMedication();
-    }
-
-    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "medication")
-    private List<MedicationActivity> takenMedications;
-
-    public Integer getMedicationId() {
-        return medicationId;
     }
 
     public void setMedicationId(Integer medicationId) {

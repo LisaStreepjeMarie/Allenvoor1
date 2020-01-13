@@ -47,23 +47,12 @@
     toggleFields(); // call this first so we start out with the correct visibility depending on the selected form values
     // this will call our toggleFields function every time the selection value of our other field changes
 
-
     $("#selectie").change(function () {
-        $("#showEventName").css("display", "none");
-        $("#showEventComment").css("display", "none");
-        $("#showMedication").css("display", "none");
-        $("#showMedicationAmount").css("display", "none");
-        $("#showStartDate").css("display", "none");
-        $("#showEndDate").css("display", "none");
+        hideAll();
         toggleFields();
     });
 
-    $("#showEventName").css("display", "none");
-    $("#showEventComment").css("display", "none");
-    $("#showMedication").css("display", "none");
-    $("#showMedicationAmount").css("display", "none");
-    $("#showStartDate").css("display", "none");
-    $("#showEndDate").css("display", "none");
+            hideAll();
 
             $('#calendar').fullCalendar({
             themeSystem: 'bootstrap4',
@@ -157,6 +146,15 @@
             $("#showMedication, #showStartDate, #showMedication, #showMedicationAmount, #showEndDate").show();
         else
             $("#showEventName, #showEventComment, #showStartDate, #showEndDate").show();
+    }
+
+    function hideAll(){
+        $("#showEventName").css("display", "none");
+        $("#showEventComment").css("display", "none");
+        $("#showMedication").css("display", "none");
+        $("#showMedicationAmount").css("display", "none");
+        $("#showStartDate").css("display", "none");
+        $("#showEndDate").css("display", "none");
     }
     </script>
 

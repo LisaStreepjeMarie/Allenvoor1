@@ -12,15 +12,16 @@ import javax.persistence.ManyToOne;
 @Entity
 public class MedicationActivity extends Activity{
 
-    @Nullable
     private Integer takenMedication;
 
-    //TODO removed the nullable to fix an error, check if this can be added in somehow
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "medicationId", referencedColumnName = "medicationId")
+    @JoinColumn(name = "medicationId", referencedColumnName = "medicationId", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @Nullable
     private Medication medication;
+
+    public MedicationActivity() {
+        this.setActivityCategory("Medisch");
+    }
 
     public Integer getTakenMedication() {
         return takenMedication;

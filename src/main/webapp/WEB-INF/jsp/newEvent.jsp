@@ -41,11 +41,11 @@
             <p class="font-weight-normal">Categorie: </p>
         </div>
         <div class="col-xs-2">
-            <select id="activityCategory" name="activityCategory" required>
+            <select id="activityCategory" name="activityCategory" required onChange="window.location.redirect(this.value)">
                 <option disabled selected="selected">Selecteer categorie</option>
-                <option value="Huishouden">Huishouden</option>
-                <option value="Medisch">Medisch</option>
-                <option value="Vrije tijd" >Vrije tijd</option>
+                <option value="Huishouden" href="/activity/new">Huishouden</option>
+                <option value="Medisch" href="/medicationActivity/new">Medisch</option>
+                <option value="Vrije tijd" href="/activity/new">Vrije tijd</option>
             </select>
         </div>
     </div>
@@ -94,6 +94,10 @@
 </div>
 </body>
 <script>
+
+document.getElementById('activityCategory').onchange = function() {
+    window.location.href = this.children[this.selectedIndex].getAttribute('href');
+}
 $(function() {
   $('#dateTimePickerStartDate').datetimepicker({
      <!-- month before day -->
