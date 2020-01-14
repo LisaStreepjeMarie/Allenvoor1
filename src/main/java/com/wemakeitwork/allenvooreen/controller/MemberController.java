@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.Optional;
@@ -24,8 +25,8 @@ public class MemberController {
 
     @GetMapping("member/current")
     protected String showMember(Model model, Principal principal){
-        model.addAttribute("currentmember", memberRepository.findByMembername(principal.getName()));
-        return "memberOverview";
+        model.addAttribute("currentmember", memberRepository.findByMembername(principal.getName()).orElse(new Member()));
+        return "memberProfile";
     }
 
     @GetMapping("/member/change")
@@ -56,7 +57,7 @@ public class MemberController {
     public String deleteMember(Principal principal) {
         Optional<Member> member = memberRepository.findByMembername(principal.getName());
         member.ifPresent(value -> memberRepository.delete(value));
-        return "/logout";
+        return "confirmLogout";
     }
 
     @PostMapping("/member/new")
@@ -74,17 +75,18 @@ public class MemberController {
     }
 
     @PostMapping("/member/change")
-    protected String saveOrUpdateMember(@ModelAttribute("member") Member newNameMember, BindingResult result, Principal principal) {
+    protected String saveOrUpdateMember(@ModelAttribute("currentmember") Member newNameMember, BindingResult result, Principal principal) {
         if (result.hasErrors()) {
-            return "changeMember";
+            return "currentMember";
         } else {
             Optional<Member> originalMember = memberRepository.findByMembername(principal.getName());
             if (originalMember.isPresent()){
                 newNameMember.setPassword(originalMember.get().getPassword());
                 newNameMember.setMemberId(originalMember.get().getMemberId());
+                newNameMember.setRol(originalMember.get().getRol());
             }
             memberRepository.save(newNameMember);
-            return "redirect:/member/current";
+            return "redirect:/logout";
         }
     }
 }
