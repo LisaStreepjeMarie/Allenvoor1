@@ -152,7 +152,7 @@
              format: 'MM/DD/YYYY HH:mm',
         });
     });
-
+<!-- below function shows the correct modal form based on the activity selection -->
     function activitySelection() {
         if ($("#selectie").val() === "Medisch")
             $("#medicationActivity").show();
@@ -160,6 +160,7 @@
             $("#eventActivity").show();
     }
 
+<!-- below function hides all modal options -->
     function hideAll() {
         $("#eventActivity, #medicationActivity ").css("display", "none");
     }
@@ -180,7 +181,7 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <label class="col-xs-4" for="selectie" control-label>Categorie</label>
-                            <select name="activity.activityCategory" id="selectie" required>
+                            <select name="activity.activityCategory" id="selectie" >
                                 <option disabled selected="selected">Selecteer categorie</option>
                                 <option value="Huishouden">Huishouden</option>
                                 <option value="Medisch">Medisch</option>
@@ -189,13 +190,12 @@
                         </div>
                     </div>
                  </div>
-
                  <!-- event with activity modal input fields -->
                    <div class="modal-body" id="eventActivity">
                     <div class="row">
                         <div class="col-12">
                             <label class="col-4" for="eventName">Onderwerp</label>
-                            <input type="text" name="eventName" id="eventName" required/>
+                            <input type="text" name="eventName" id="eventName" />
                             <input type="hidden" name="eventId" id="eventId" />
                             <input type="hidden" name="teamId" id="team.teamId" />
                         </div>
@@ -203,7 +203,7 @@
                     <div class="row">
                         <div class="col-12">
                             <label class="col-4" for="eventComment">Beschrijving</label>
-                            <input type="text" name="eventComment" id="eventComment" required/>
+                            <input type="text" name="eventComment" id="eventComment" />
                         </div>
                     </div>
                     <div class="row">
@@ -219,11 +219,12 @@
                         </div>
                     </div>
                 </div>
+                 <!-- event with MedicationActivity modal input fields -->
                    <div class="modal-body" id="medicationActivity">
                     <div class="row">
                         <div class="col-12">
                             <label class="col-4" for="eventName">Onderwerp</label>
-                            <input type="text" name="eventName" id="eventName" required/>
+                            <input type="text" name="eventName" id="eventName" />
                             <input type="hidden" name="eventId" id="eventId" />
                             <input type="hidden" name="teamId" id="team.teamId" />
                         </div>
@@ -258,7 +259,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="modal-footer">
                     <button type="button" id="delete-event" class="btn btn-danger" data-dismiss="modal" >Verwijder Afspraak</button>
                     <button type="button" class="btn btn-light" data-dismiss="modal">Sluiten</button>

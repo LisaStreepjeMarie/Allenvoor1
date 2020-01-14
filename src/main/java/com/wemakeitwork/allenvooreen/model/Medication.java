@@ -1,5 +1,6 @@
 package com.wemakeitwork.allenvooreen.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -7,10 +8,11 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@JsonIgnoreProperties({ "medicationName", "medicationAmount", "medicationComment", "team", "getTakenMedications" })
 public class Medication {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer medicationId;
 
     private String medicationName;

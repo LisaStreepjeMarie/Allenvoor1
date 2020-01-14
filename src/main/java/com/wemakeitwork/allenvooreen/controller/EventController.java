@@ -1,9 +1,12 @@
 package com.wemakeitwork.allenvooreen.controller;
 
 import com.wemakeitwork.allenvooreen.model.Event;
+import com.wemakeitwork.allenvooreen.model.Medication;
+import com.wemakeitwork.allenvooreen.model.MedicationActivity;
 import com.wemakeitwork.allenvooreen.model.Team;
 import com.wemakeitwork.allenvooreen.repository.ActivityRepository;
 import com.wemakeitwork.allenvooreen.repository.EventRepository;
+import com.wemakeitwork.allenvooreen.repository.MedicationRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -14,9 +17,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.Optional;
 
 @Controller
 public class EventController {
+    @Autowired
+    MedicationRepository medicationRepository;
 
     @Autowired
     EventRepository eventRepository;
@@ -54,14 +60,29 @@ public class EventController {
     }
 
     @PostMapping("/event/new")
-    protected String newEvent(@ModelAttribute("event") Event event, BindingResult result) {
+    protected String saveOrUpdateEvent(@ModelAttribute("event") Event event, @ModelAttribute("medicationActivity")
+            MedicationActivity medicationActivity, BindingResult result) {
         if (result.hasErrors()) {
             return "calendar";
         }
+
         else {
+            System.out.println(medicationActivity);
             Team team = (Team) httpSession.getAttribute("team");
             event.setTeam(team);
+
+            if (event.getActivity().getActivityCategory().equals("Medisch")){
+                event.setActivity(medicationActivity);
+            }
+
             event.getActivity().setActivityName(event.getEventName());
+            if(event.getActivity() instanceof MedicationActivity){
+                System.out.println("Take your chill pills");
+                Optional<Medication> medication = medicationRepository.findById(medicationActivity.getMedication().getMedicationId());
+                medication.ifPresent(value -> value.setTakenMedications(medicationActivity));
+            }else {
+                System.out.println("dit is een normale activiteit");
+            }
             eventRepository.save(event);
             return "redirect:/calendar/" + team.getTeamId();
         }

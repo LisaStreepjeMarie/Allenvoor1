@@ -58,7 +58,7 @@ class newActivityControllerTest {
                 .flashAttr("activity", new Activity())
                 .with(csrf())
         )
-                .andExpect(status().isMovedTemporarily())
+                .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/activity/all"))
                 .andExpect(redirectedUrl("/activity/all"));
 
