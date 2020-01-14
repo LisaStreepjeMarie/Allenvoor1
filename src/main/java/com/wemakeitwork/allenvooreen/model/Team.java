@@ -26,10 +26,10 @@ public class Team {
     @JsonProperty("name")
     private String teamName;
 
-    @ManyToMany(mappedBy = "teamName")
+    @ManyToMany(cascade = CascadeType.PERSIST, mappedBy = "teamName")
     private Set<Member> membername = new HashSet<>();
 
-    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "team")
+    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "team")
     List<Event> eventList = new ArrayList<>();
 
     public Set<Member> getMembername() {
@@ -70,5 +70,9 @@ public class Team {
 
     public void addTeamMember(Member member){
         membername.add(member);
+    }
+
+    public void removeTeamMember(Member member){
+        membername.remove(member);
     }
 }

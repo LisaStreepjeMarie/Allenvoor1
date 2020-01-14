@@ -7,12 +7,18 @@ import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.Optional;
@@ -26,6 +32,9 @@ public class TeamController {
 
     @Autowired
     MemberRepository memberRepository;
+
+    @PersistenceContext
+    EntityManager entityManager;
 
     @GetMapping("/team/all")
     protected String showTeamsPerMember(Model model, Principal principal){
@@ -76,9 +85,40 @@ public class TeamController {
         return "teamData";
     }
 
+    @Transactional
     @GetMapping("/team/delete/{teamId}")
     public String deleteTeam(@PathVariable("teamId") final Integer teamId) {
-        teamRepository.deleteById(teamId);
+        Optional<Team> teamOpt = teamRepository.findById(teamId);
+        if (teamOpt.isPresent()) {
+            Set<Member> memberList = teamOpt.get().getMembername();
+
+            teamOpt.get().getMembername().removeAll(memberList);
+            for (Member member : teamOpt.get().getMembername()) {
+                System.out.println(member.getMembername());
+            }
+            for (Member member : memberList){
+                member.removeTeamFromMember(teamOpt.get());
+                System.out.println("saving: " + member.getMembername());
+                memberRepository.save(member);
+            }
+            teamRepository.save(teamOpt.get());
+            teamRepository.deleteById(teamOpt.get().getTeamId());
+
+//
+//            teamRepository.save(teamOpt.get());
+//            System.out.println("Grootte is: " + teamOpt.get().getMembername().size());
+            //teamRepository.save(teamOpt.get());
+            //for (Member member : memberList) {
+
+
+                    //System.out.println("Nieuwe member set: "    + newMemberSet.size());
+                                   //teamOpt.get().setMembername(newMemberSet);
+                    //teamOpt.get().getMembername().clear();
+
+                    //teamRepository.save(teamOpt.get());
+            //}
+        }
+        //teamRepository.deleteById(teamId);
         return "redirect:/team/all";
     }
 
@@ -111,15 +151,15 @@ public class TeamController {
         if (result.hasErrors()) {
             return "teamData";
         } else {
-            Optional<Member> member = memberRepository.findByMembername(teamMemberDTO.getTeamMemberName());
+            Optional<Member> memberOpt = memberRepository.findByMembername(teamMemberDTO.getTeamMemberName());
             System.out.println("member uit DTO:   " + teamMemberDTO.getTeamMemberName());
             Team team = teamRepository.getOne(teamMemberDTO.getTeamId());
             System.out.println("teamId uit DTO:   " + teamMemberDTO.getTeamId());
 
-            if (member.isPresent()){
-                member.get().getTeamName().add(team);
-                team.getMembername().add(member.get());
-                memberRepository.save(member.get());
+            if (memberOpt.isPresent()){
+                memberOpt.get().getTeamName().add(team);
+                team.getMembername().add(memberOpt.get());
+                memberRepository.save(memberOpt.get());
             }
             teamRepository.save(team);
             return "redirect:/team/select/" + teamMemberDTO.getTeamId();
