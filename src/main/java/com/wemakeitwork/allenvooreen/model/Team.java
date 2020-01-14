@@ -26,10 +26,10 @@ public class Team {
     @JsonProperty("name")
     private String teamName;
 
-    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, mappedBy = "teamName")
+    @ManyToMany(mappedBy = "teamName")
     private Set<Member> membername = new HashSet<>();
 
-    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "team")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "team")
     List<Event> eventList = new ArrayList<>();
 
     public Set<Member> getMembername() {
