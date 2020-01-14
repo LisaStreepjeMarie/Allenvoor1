@@ -1,22 +1,19 @@
 package com.wemakeitwork.allenvooreen.controller;
 
-import com.wemakeitwork.allenvooreen.model.*;
+import com.wemakeitwork.allenvooreen.model.Event;
+import com.wemakeitwork.allenvooreen.model.Team;
+import com.wemakeitwork.allenvooreen.repository.ActivityRepository;
 import com.wemakeitwork.allenvooreen.repository.EventRepository;
-import com.wemakeitwork.allenvooreen.repository.MedicationRepository;
-import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.security.Principal;
-import java.util.Optional;
 
 @Controller
 public class EventController {
@@ -25,13 +22,10 @@ public class EventController {
     EventRepository eventRepository;
 
     @Autowired
+    ActivityRepository activityRepository;
+
+    @Autowired
     TeamRepository teamRepository;
-
-    @Autowired
-    MedicationRepository medicationRepository;
-
-    @Autowired
-    MemberRepository memberRepository;
 
     @Autowired
     private HttpSession httpSession;
@@ -42,56 +36,53 @@ public class EventController {
         return "newEvent";
     }
 
-    @GetMapping("/event/delete/{eventId}")
-    public String deleteEvent(@PathVariable("eventId") final Integer eventId) {
-        eventRepository.deleteById(eventId);
+    @GetMapping("/event/delete/{eventId}/{activityId}")
+    @ResponseStatus(HttpStatus.PERMANENT_REDIRECT)
+    public String deleteEvent(@PathVariable("eventId") final Integer eventId,
+                              @PathVariable("activityId") final Integer activityId) {
         Team team = (Team) httpSession.getAttribute("team");
+
+        eventRepository.deleteById(eventId);
+        try {
+            activityRepository.deleteById(activityId);
+        } catch (EmptyResultDataAccessException ex) {
+            return "redirect:/calendar/" + team.getTeamId();
+        }
+
+        // The responsestatus that is preceding this method is necessary to prevent a 500 error.
         return "redirect:/calendar/" + team.getTeamId();
     }
 
     @PostMapping("/event/new")
-    protected String saveOrUpdateEvent(@ModelAttribute("event") Event event, @ModelAttribute("medicationActivity")
-            MedicationActivity medicationActivity, BindingResult result) {
+    protected String newEvent(@ModelAttribute("event") Event event, BindingResult result) {
         if (result.hasErrors()) {
             return "calendar";
         }
-
         else {
-            System.out.println(medicationActivity);
             Team team = (Team) httpSession.getAttribute("team");
             event.setTeam(team);
-
-            if (event.getActivity().getActivityCategory().equals("Medisch")){
-                event.setActivity(medicationActivity);
-            }
-
             event.getActivity().setActivityName(event.getEventName());
-            if(event.getActivity() instanceof MedicationActivity){
-                System.out.println("Take your chill pills");
-                Optional<Medication> medication = medicationRepository.findById(medicationActivity.getMedication().getMedicationId());
-                medication.ifPresent(value -> value.setTakenMedications(medicationActivity));
-            }
             eventRepository.save(event);
             return "redirect:/calendar/" + team.getTeamId();
         }
     }
 
-    @PostMapping("/event/change")
-    protected String saveOrUpdateActivity(@ModelAttribute("event") Event event, BindingResult result) {
+    @PostMapping("/event/change/{activityId}/{teamId}")
+    protected String changeEvent(@ModelAttribute("event") Event event,
+                                 @ModelAttribute("teamId") Integer teamId,
+                                 @PathVariable("activityId") final Integer activityId, BindingResult result) {
         if (result.hasErrors()) {
             return "calendar";
         } else {
             event.getActivity().setActivityName(event.getEventName());
-            //activity loses the ID so below is to get it back
-            event.getActivity().setActivityId(eventRepository.findActivityIdByEventId(event.getEventId()));
+            event.getActivity().setActivityId(activityId);
 
             //finding/setting the team corresponding with the event
-            Team team = teamRepository.findTeamById(eventRepository.findTeamIdByEventId(event.getEventId()));
+            Team team = teamRepository.getOne(teamId);
             event.setTeam(team);
 
             eventRepository.save(event);
             return "redirect:/calendar/" + team.getTeamId();
         }
     }
-
 }

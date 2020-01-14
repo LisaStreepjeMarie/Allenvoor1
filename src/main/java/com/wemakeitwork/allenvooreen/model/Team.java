@@ -1,5 +1,8 @@
 package com.wemakeitwork.allenvooreen.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -7,18 +10,23 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-// @Table(name = "team")
+@JsonPropertyOrder(value = {"id","name"}, alphabetic = true)
+// Ignoring 'hibernateLazyInitializer' & 'handler' is needed to prevent infinite recursion
+// when calling the ObjectMapper to create a JSON
+@JsonIgnoreProperties({ "membername", "eventList", "hibernateLazyInitializer", "handler" })
 public class Team {
     public Team() {
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("id")
     private int teamId = 0;
 
+    @JsonProperty("name")
     private String teamName;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "teamName")
     private Set<Member> membername = new HashSet<>();
 
     @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "team")
@@ -61,5 +69,9 @@ public class Team {
 
     public void setEventList(Event event) {
         this.eventList.add(event);
+    }
+
+    public void addTeamMember(Member member){
+        membername.add(member);
     }
 }

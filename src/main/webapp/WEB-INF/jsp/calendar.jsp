@@ -2,9 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<!DOCTYPE html>
-<html xmlns:form="http://www.w3.org/1999/xhtml" xmlns:c="">
-
+<html xmlns:form="http://www.w3.org/1999/xhtml" xmlns:c="" xmlns:jsp="http://www.w3.org/1999/XSL/Transform">
 <head>
     <meta charset='utf-8' />
     <title>Kalender</title>
@@ -12,49 +10,22 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
 
-     <!--webjars are preferable to content delivery networks (CDNs) -->
-    <link href='https://unpkg.com/fullcalendar@3.10.1/dist/fullcalendar.min.css' rel='stylesheet' />
-    <link href='https://unpkg.com/fullcalendar@3.10.1/dist/fullcalendar.print.css' rel='stylesheet' media='print' />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.42/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
-    <script src='https://unpkg.com/moment@2.24.0/min/moment.min.js'></script>
-    <script src='https://unpkg.com/jquery@3.4.1/dist/jquery.min.js'></script>
-    <script src='https://unpkg.com/fullcalendar@3.10.1/dist/fullcalendar.min.js'></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.42/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/locale/nl.js" integrity="sha256-LAjE4KdsUdfZ4yMkV+UMRbHqEyfyvtCeIyD6qRYhTtQ=" crossorigin="anonymous"></script>
-    <link href='https://use.fontawesome.com/releases/v5.0.6/css/all.css' rel='stylesheet' />
-    <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' />
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-    <!--<link href="webjars/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet" />
-    <link href="webjars/fullcalendar/3.9.0/fullcalendar.print.min.css" rel="stylesheet" media='print' />
-    <link href="webjars/Eonasdan-bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
-    <script src="webjars/moment/2.24.0/min/moment.min.js"></script>
-    <script src="webjars/jquery/3.4.1/jquery.slim.min.js"></script>
-    <script src="webjars/fullcalendar/3.9.0/fullcalendar.min.js"></script>
-    <script src="webjars/Eonasdan-bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="webjars/fullcalendar/3.9.0/locale/nl.js"></script>
-    <link href="webjars/font-awesome/5.0.6/web-fonts-with-css/css/fontawesome-all.min.css" rel='stylesheet'>
-    <link href="webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" rel='stylesheet'>
-    <script src="webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>-->
-
-    <!-- added the below 2 links and the javascript to make sure the end date is the same/above the start date -->
-    <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.0/css/bootstrap-datepicker.css" rel="stylesheet" type="text/css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.0/js/bootstrap-datepicker.min.js"></script>-->
+    <link href="/webjars/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet" />
+    <link href="/webjars/fullcalendar/3.9.0/fullcalendar.print.min.css" rel="stylesheet" media='print' />
+    <link href="/webjars/Eonasdan-bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <script src="/webjars/moment/2.24.0/min/moment.min.js"></script>
+    <script src="/webjars/jquery/3.4.1/jquery.slim.min.js"></script>
+    <script src="/webjars/fullcalendar/3.9.0/fullcalendar.min.js"></script>
+    <script src="/webjars/Eonasdan-bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="/webjars/fullcalendar/3.9.0/locale/nl.js"></script>
+    <link href="/webjars/font-awesome/5.0.6/web-fonts-with-css/css/fontawesome-all.min.css" rel='stylesheet'>
+    <link href="/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
+    <script src="/webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
     <script type="text/javascript">
     $(document).ready(function() {
 
-    toggleFields(); // call this first so we start out with the correct visibility depending on the selected form values
-    // this will call our toggleFields function every time the selection value of our other field changes
-
-    $("#selectie").change(function () {
-        hideAll();
-        toggleFields();
-    });
-
-            hideAll();
-
-            $('#calendar').fullCalendar({
+        $('#calendar').fullCalendar({
             themeSystem: 'bootstrap4',
             timeZone: 'Europe/Amsterdam',
             timeFormat: 'H(:mm)',
@@ -93,11 +64,11 @@
                 <!--$('#deleteEvent').attr('href',"/event/delete/" + event.id);-->
 
                 <!--pass eventId to a <button> onclick action: -->
-                $('#delete-event').attr('onclick',"window.location='/event/delete/" + event.id + "'");
+                $('#delete-event').attr('onclick',"window.location='/event/delete/" + event.id + "/" + event.activity.id + "'");
 
                 $("#eventId").val(event.id);
 
-                $('#modal-form').attr('action',"/event/change");
+                $('#modal-form').attr('action',"/event/change/" + event.activity.id + "/" + event.team.id);
                 $('#save-change-event').attr('action',"/event/change");
 
                 $('.modal').find('#eventName').val(event.title);
@@ -120,16 +91,52 @@
                 console.log("revert is: " + revertFunc);
                 console.log("jsEvent is: " + jsEvent);
 
-                if (!confirm("Weet je zeker dat je de afspraak wilt verplaatsen?")) {
-                    revertFunc();
-                }
+                $.ajax({
+                  type: "POST",
+                  url: "/event/change/2",
+                  data: {
+                        id: "2",
+                        title: "Nieuwe ajax titel",
+                        description: "Nieuwe ajax beschrijving",
+                        start: "1578355200000",
+                        end: "1578441600000"
+                  },
+                  dataType: "json",
+                  data: JSON.stringify({
+                     id: "2",
+                     title: "Nieuwe ajax titel",
+                     description: "Nieuwe ajax beschrijving",
+                     start: "1578355200000",
+                     end: "1578441600000"
+                  }),
+                  success: function(response) {
+                    console.log("Ajax posted succesful!: ");
+                    console.log(response);
+                  },
+                  error: function(response) {
+                    console.log("FAIL: ");
+                    console.log(response);
+                  }
+                });
             },
 
             eventDragStop: function(info) {
             },
 
+            eventResize: function(event, delta, revertFunc) {
+                alert(event.title + " end is now " + event.end.format());
+
+                revertFunc();
+            },
+
+            // Remember last view on page reload
+            viewRender: function (view, element) {
+                localStorage.setItem("fcDefaultView", view.name);
+            },
+            defaultView: (localStorage.getItem("fcDefaultView") !== null ? localStorage.getItem("fcDefaultView") : "month"),
+
             editable: true,
-            events: [ ${calendarData} ],
+            events: ${calendarData},
             eventLimit: true // allow "more" link when too many events
         });
 
@@ -138,36 +145,38 @@
         $("#eventStartDate, #eventEndDate").datetimepicker({
              format: 'MM/DD/YYYY HH:mm',
         });
-
     });
-
-    function toggleFields() {
-        if ($("#selectie").val() === "Medisch")
-            $("#showMedication, #showStartDate, #showMedication, #showMedicationAmount, #showEndDate").show();
-        else
-            $("#showEventName, #showEventComment, #showStartDate, #showEndDate").show();
-    }
-
-    function hideAll(){
-        $("#showEventName").css("display", "none");
-        $("#showEventComment").css("display", "none");
-        $("#showMedication").css("display", "none");
-        $("#showMedicationAmount").css("display", "none");
-        $("#showStartDate").css("display", "none");
-        $("#showEndDate").css("display", "none");
-    }
     </script>
-
-    <!--<link href="../css/style.css" rel="stylesheet" type="text/css"/>-->
 </head>
 
 <body>
 <form:form id="modal-form" action="/event/change" modelAttribute="event" method="post">
+    <div class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 id="modal-title" class="modal-title col-12">Maak nieuwe afspraak</h4>
+                </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-xs-12">
-                            <label class="col-xs-4" for="selectie" control-label>Categorie</label>
-                            <select name="activity.activityCategory" id="selectie" required>
+                        <div class="col-12">
+                            <label class="col-4" for="eventName">Onderwerp</label>
+                            <input type="text" name="eventName" id="eventName" required/>
+                            <input type="hidden" name="eventId" id="eventId" />
+                            <input type="hidden" name="teamId" id="team.teamId" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <label class="col-4" for="eventComment">Beschrijving</label>
+                            <input type="text" name="eventComment" id="eventComment" required/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <label class="col-4" for="activity.activityCategory">Categorie</label>
+                            <select name="activity.activityCategory" id="activity.activityCategory" required>
                                 <option disabled selected="selected">Selecteer categorie</option>
                                 <option value="Huishouden">Huishouden</option>
                                 <option value="Medisch">Medisch</option>
@@ -175,54 +184,24 @@
                             </select>
                         </div>
                     </div>
+
                     <div class="row">
-                        <div class="col-xs-12"  id="showEventName">
-                            <label class="col-xs-4" for="eventName" control-label>Onderwerp</label>
-                            <input type="text" name="eventName" path="eventName" id="eventName" />
-                            <input type="hidden" name="eventId" id="eventId" />
-                            <input type="hidden" name="teamId" id="team.teamId" />
+                        <div class="col-12">
+                            <label class="col-4" for="eventStartDate">Starttijd</label>
+                            <input type="text" name="eventStartDate" id="eventStartDate" required/>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-12" id="showEventComment">
-                            <label class="col-xs-4" for="eventComment">Beschrijving</label>
-                            <input type="text" name="eventComment" id="eventComment" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12" id="showMedication" modelAttribute="medicationActivity">
-                           <label class="col-xs-4" for="medication" control-label>Medicijn</label>
-                            <select name="medication.medicationId" id="medication.medicationId" >
-                                <option disabled selected="selected">Kies een medicijn</option>
-                        <c:forEach var="medication" items="${medicationList}">
-                            <option value="${medication.medicationId}">${medication.medicationName}</option>
-                        </c:forEach>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12" id="showMedicationAmount" modelAttribute="medicationActivity">
-                            <label class="col-xs-4" for="takenMedication" control-label>Hoeveelheid</label>
-                            <input type="number" name="takenMedication" id="takenMedication" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12" id="showStartDate">
-                            <label class="col-xs-4" for="eventStartDate">Datum</label>
-                            <input type="text" name="eventStartDate" id="eventStartDate" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12" id="showEndDate">
-                            <label class="col-xs-4" for="eventEndDate">EindDatum</label>
-                            <input type="text" name="eventEndDate" id="eventEndDate" />
+                        <div class="col-12">
+                            <label class="col-4" for="eventEndDate">Eindtijd</label>
+                            <input type="text" name="eventEndDate" id="eventEndDate" required/>
                         </div>
                     </div>
 
                 </div>
                 <div class="modal-footer">
                     <button type="button" id="delete-event" class="btn btn-danger" data-dismiss="modal" >Verwijder Afspraak</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Sluiten</button>
+                    <button type="button" class="btn btn-light" data-dismiss="modal">Sluiten</button>
                     <form:errors path="eventName" cssClass="error" />
                     <button type="submit" class="btn btn-primary" id="save-change-event">Maak afspraak</button>
                 </div>
