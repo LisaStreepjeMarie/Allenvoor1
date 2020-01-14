@@ -110,13 +110,10 @@
                      end: "1578441600000"
                   }),
                   success: function(response) {
-                     //console.log("Ajax posted succesful!: ");
-                     //console.log(response);
+                     console.log("Ajax posted succesful!: ");
+                     console.log(response);
 
-
-                     if(response.status == "SUCCESS"){
-                         console.log("Ajax posted succesful!: ");
-                         console.log(response);
+                     <!-- if(response.status == "SUCCESS"){
                          $('#error').hide('slow');
                          $('#info').show('slow');
                      } else {
@@ -124,14 +121,19 @@
                          for(i =0 ; i < response.result.length ; i++){
                              errorInfo += "<br>" + (i + 1) +". " + response.result[i].code;
                          }
-                         $('#error').html("Please correct following errors: " + errorInfo);
+                         // $('#error').html("Please correct following errors: " + errorInfo);
                          $('#info').hide('slow');
                          $('#error').show('slow');
-                     }
+                     } -->
 
 
                   },
                   error: function(response) {
+
+
+
+
+
                     console.log("FAIL: ");
                     console.log(response);
                   }
@@ -180,7 +182,7 @@
                     <div class="row">
                         <div class="col-12">
                             <label class="col-4" for="eventName">Onderwerp</label>
-                            <input type="text" name="eventName" id="eventName" pattern=".{1,}" required/> ${error}
+                            <input type="text" name="eventName" id="eventName" pattern=".{4,}" required/> ${error}
                             <input type="hidden" name="eventId" id="eventId" />
                             <input type="hidden" name="teamId" id="team.teamId" />
                         </div>
