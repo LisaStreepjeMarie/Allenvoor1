@@ -42,17 +42,18 @@ public class ActivityController {
         return "newActivity";
     }
 
-    @GetMapping("/medicationActivity/new")
-    protected String showMedicationForm(Model model) {
-        Team team = (Team) httpSession.getAttribute("team");
-        List<Medication> medicationList = new ArrayList<>();
-        medicationRepository.findAll().stream()
-                .filter(x -> x.getTeam() == team)
-                .forEach(medicationList::add);
-        model.addAttribute("medicationList", medicationList);
-        model.addAttribute("medicationActivity", new MedicationActivity());
-        return "home";
-    }
+    //todo note: this isn't used atm, going back to event.
+//    @GetMapping("/medicationActivity/new")
+//    protected String showMedicationForm(Model model) {
+//        Team team = (Team) httpSession.getAttribute("team");
+//        List<Medication> medicationList = new ArrayList<>();
+//        medicationRepository.findAll().stream()
+//                .filter(x -> x.getTeam() == team)
+//                .forEach(medicationList::add);
+//        model.addAttribute("medicationList", medicationList);
+//        model.addAttribute("medicationActivity", new MedicationActivity());
+//        return "home";
+//    }
 
     @GetMapping("/activity/all")
     protected String showTeams(Model model){
