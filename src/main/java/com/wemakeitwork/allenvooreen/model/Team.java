@@ -26,7 +26,7 @@ public class Team {
     @JsonProperty("name")
     private String teamName;
 
-    @ManyToMany(cascade = CascadeType.PERSIST, mappedBy = "teamName")
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, mappedBy = "teamName")
     private Set<Member> membername = new HashSet<>();
 
     @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "team")

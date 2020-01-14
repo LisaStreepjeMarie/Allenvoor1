@@ -85,40 +85,19 @@ public class TeamController {
         return "teamData";
     }
 
-    @Transactional
     @GetMapping("/team/delete/{teamId}")
     public String deleteTeam(@PathVariable("teamId") final Integer teamId) {
-        Optional<Team> teamOpt = teamRepository.findById(teamId);
-        if (teamOpt.isPresent()) {
-            Set<Member> memberList = teamOpt.get().getMembername();
 
-            teamOpt.get().getMembername().removeAll(memberList);
-            for (Member member : teamOpt.get().getMembername()) {
-                System.out.println(member.getMembername());
-            }
-            for (Member member : memberList){
-                member.removeTeamFromMember(teamOpt.get());
-                System.out.println("saving: " + member.getMembername());
-                memberRepository.save(member);
-            }
-            teamRepository.save(teamOpt.get());
-            teamRepository.deleteById(teamOpt.get().getTeamId());
+        Team team = teamRepository.getOne(teamId);
+        Member member = memberRepository.getOne(3);
 
-//
-//            teamRepository.save(teamOpt.get());
-//            System.out.println("Grootte is: " + teamOpt.get().getMembername().size());
-            //teamRepository.save(teamOpt.get());
-            //for (Member member : memberList) {
+        member.removeTeamFromMember(team);
+        team.removeTeamMember(member);
+
+        teamRepository.save(team);
+        memberRepository.save(member);
 
 
-                    //System.out.println("Nieuwe member set: "    + newMemberSet.size());
-                                   //teamOpt.get().setMembername(newMemberSet);
-                    //teamOpt.get().getMembername().clear();
-
-                    //teamRepository.save(teamOpt.get());
-            //}
-        }
-        //teamRepository.deleteById(teamId);
         return "redirect:/team/all";
     }
 
