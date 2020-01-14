@@ -57,7 +57,6 @@ public class CalendarController {
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
 
         model.addAttribute("calendarData", mapper.writeValueAsString(team.getEventList()));
-        System.out.println(mapper.writeValueAsString(team.getEventList()));
 
         return "calendar";
     }
