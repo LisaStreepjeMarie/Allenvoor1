@@ -21,6 +21,7 @@ import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
@@ -89,14 +90,16 @@ public class TeamController {
     public String deleteTeam(@PathVariable("teamId") final Integer teamId) {
 
         Team team = teamRepository.getOne(teamId);
-        Member member = memberRepository.getOne(3);
+        Set<Member> wegermee = new HashSet<>();
+        wegermee.addAll(team.getMembername());
 
-        member.removeTeamFromMember(team);
-        team.removeTeamMember(member);
+        for (Member member : wegermee){
+            member.removeTeamFromMember(team);
+            team.removeTeamMember(member);
+        }
 
         teamRepository.save(team);
-        memberRepository.save(member);
-
+        teamRepository.delete(team);
 
         return "redirect:/team/all";
     }
