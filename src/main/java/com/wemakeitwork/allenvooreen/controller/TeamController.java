@@ -1,5 +1,6 @@
 package com.wemakeitwork.allenvooreen.controller;
 
+import com.wemakeitwork.allenvooreen.dto.TeamMemberDTO;
 import com.wemakeitwork.allenvooreen.model.Member;
 import com.wemakeitwork.allenvooreen.model.Team;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
@@ -13,8 +14,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
+import java.security.Principal;
 import java.util.Optional;
+import java.util.Set;
 
 @Controller
 public class TeamController {
@@ -26,10 +28,26 @@ public class TeamController {
     MemberRepository memberRepository;
 
     @GetMapping("/team/all")
-    protected String showTeams(Model model) {
-        List<Team> allTeams = teamRepository.findAll();
-        model.addAttribute("allTeams", allTeams);
+    protected String showTeamsPerMember(Model model, Principal principal){
+        Set<Team> teamList = null;
+        Optional<Member> member = memberRepository.findByMembername(principal.getName());
+        if(member.isPresent()){
+            teamList = teamList(member.get().getMemberId());
+        }
+        if (teamList != null) {
+            model.addAttribute("teamList", teamList);
+        } else {
+            //Temporary sysout to see if there are cases where this happens, if so: fix it.
+            System.out.println("!!!     teamList is null        !!!");
+        }
         return "teamOverview";
+    }
+
+    private Set<Team> teamList (Integer memberId){
+        Set<Team> teamList;
+        Member member = memberRepository.getOne(memberId);
+        teamList = member.getTeamName();
+        return teamList;
     }
 
     @GetMapping("/team/new")
@@ -42,12 +60,19 @@ public class TeamController {
 
     @GetMapping("/team/select/{teamId}")
     protected String showTeamData(@PathVariable("teamId") final Integer teamId, Model model) {
+        // extra regel om te testen:
         model.addAttribute("team", new Team());
-
         Optional<Team> teamOpt = teamRepository.findById(teamId);
         Team team;
         team = teamOpt.orElseGet(Team::new);
+        Integer addMembernameToTeam = 0;
+        model.addAttribute("addMembernameToTeam", addMembernameToTeam);
         model.addAttribute("team", team);
+
+        TeamMemberDTO teamMemberDTO = new TeamMemberDTO();
+        teamMemberDTO.setTeamId(teamId);
+        model.addAttribute("teamMemberDTO", teamMemberDTO);
+
         return "teamData";
     }
 
@@ -78,6 +103,26 @@ public class TeamController {
         } else {
             teamRepository.save(team);
             return "redirect:/team/all";
+        }
+    }
+
+    @PostMapping("team/addMember")
+    protected String addMember(@ModelAttribute("teamMemberDTO")TeamMemberDTO teamMemberDTO, BindingResult result) {
+        if (result.hasErrors()) {
+            return "teamData";
+        } else {
+            Optional<Member> member = memberRepository.findByMembername(teamMemberDTO.getTeamMemberName());
+            System.out.println("member uit DTO:   " + teamMemberDTO.getTeamMemberName());
+            Team team = teamRepository.getOne(teamMemberDTO.getTeamId());
+            System.out.println("teamId uit DTO:   " + teamMemberDTO.getTeamId());
+
+            if (member.isPresent()){
+                member.get().getTeamName().add(team);
+                team.getMembername().add(member.get());
+                memberRepository.save(member.get());
+            }
+            teamRepository.save(team);
+            return "redirect:/team/select/" + teamMemberDTO.getTeamId();
         }
     }
 }

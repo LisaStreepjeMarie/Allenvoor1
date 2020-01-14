@@ -1,75 +1,7 @@
-body {
-    margin: 0px 0px 0px 0px;
-    padding: 0px 0px 0px 0px;
-    background: #ffffff;
-    font-family: "Trebuchet MS", sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
 
-.webpage {
-	margin: 30px 0px 0px 30px;
-	padding: 0px 0px 0px 0px;
-	background-position: center top;
-	background-position: 0px 0px 0px 0px;
-	background-repeat: no-repeat;
-	background-color: #ffffff;
-	text-align: left;
-	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-	font-size: 12pt;
-	font-weight: normal;
-	color: #333333;
-	line-height:135%;
+.nav-link[data-toggle].collapsed:after {
+    content: "▾";
 }
-
-table tr td {
-    font-family: "Open Sans", Arial, Helvetica, sans-serif;
-	padding: 4px 10px 4px 0px;
+.nav-link[data-toggle]:not(.collapsed):after {
+    content: "▴";
 }
-
-table tr th {
-    font-size: 16pt;
-}
-
-td {
-	font-size: 12pt;
-	vertical-align: middle;
-	text-align: left;
-	line-height:135%;
-}
-
-p {}
-.text {
-	line-height:135%;
-    font-family: "Open Sans", Arial, Helvetica, sans-serif;
-    font-size: 12pt;
-    color: #ff0000;
-}
-
-a {
-    color: #555555;
-	text-decoration: none
-}
-a:visited {
-	color: #0e4171;
-	text-decoration: none
-}
-a:hover {
-	color: #295385;
-	text-decoration: none
-}
-
-.button {
-	background-color: #777777;
-	vertical-align: middle;
-	font-family: "Open Sans", Arial, Helvetica, sans-serif;
-	font-weight: normal;
-	color: #0e4171;
-}
-
-h1 {
-    font-family: "Trebuchet MS", sans-serif;
-    font-size: 23pt;
-    color: #0e4171;
-}
-
