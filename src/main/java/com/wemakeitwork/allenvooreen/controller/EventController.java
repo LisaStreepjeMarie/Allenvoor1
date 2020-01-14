@@ -93,4 +93,5 @@ public class EventController {
             return "redirect:/calendar/" + team.getTeamId();
         }
     }
+
 }
