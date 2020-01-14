@@ -164,6 +164,18 @@
     function hideAll() {
         $("#eventActivity, #medicationActivity ").css("display", "none");
     }
+
+<!-- below function shows the correct modal form based on the activity selection -->
+    function showModalFilledOut() {
+        if $('.modal').find('#event.activityCategory').val("Selecteer categorie") === "Medisch")
+                $('.modal').find('#eventName').val(event.title);
+                $('.modal').find('#event. ').val(event.description);
+                $('.modal').find('#event.activityCategory').val("Selecteer categorie");
+                $('.modal').find('#eventStartDate').val(event.start);
+                $('.modal').find('#eventEndDate').val(event.end);
+        else
+            $("#eventActivity").show();
+    }
      </script>
 </head>
 
@@ -190,7 +202,6 @@
                         </div>
                     </div>
                  </div>
-
                  <!-- event with activity modal input fields -->
                    <div class="modal-body" id="eventActivity">
                     <div class="row">
@@ -209,13 +220,13 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-12">
-                            <label class="col-xs-4" for="eventStartDate">Datum</label>
+                            <label class="col-4" for="eventStartDate">Datum</label>
                             <input type="text" name="eventStartDate" id="eventStartDate" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12">
-                            <label class="col-xs-4" for="eventEndDate">EindDatum</label>
+                            <label class="col-4" for="eventEndDate">EindDatum</label>
                             <input type="text" name="eventEndDate" id="eventEndDate" />
                         </div>
                     </div>
