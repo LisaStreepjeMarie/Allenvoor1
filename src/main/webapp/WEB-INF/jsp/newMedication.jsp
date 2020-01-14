@@ -1,14 +1,20 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<html>
+<html xmlns:c="">
     <head>
-        <title>Voer nieuwe medicatie in</title>
+        <link href="/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
+        <link href="../css/style.css" rel="stylesheet" type="text/css"/>
+        <title>Medicatieoverzicht</title>
     </head>
-    <body>
-        <h1>Voer medicatie in</h1>
-
+    <body class="webpage">
+    <div id="container">
+        <p>
+            <input class="btn btn-primary" type="submit" value="Home" onclick="window.location='/';" />
+            <input class="btn btn-primary" type="submit" value="Logout" onclick="window.location='/logout';" />
+        </p>
+        <h1>Voer medicatie in:</h1>
         <form:form action="/medication/new" modelAttribute="medication">
             <table>
                 <tr>
@@ -31,7 +37,7 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <input type="submit" value="Sla medicatie op" />
+                        <input class="btn btn-primary" type="submit" value="Sla medicatie op" />
                     </td>
                 </tr>
             </table>

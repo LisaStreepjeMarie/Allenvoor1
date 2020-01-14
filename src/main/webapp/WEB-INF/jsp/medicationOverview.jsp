@@ -11,11 +11,12 @@
     <body class="webpage">
     <div id="container">
         <p>
+            <input class="btn btn-primary" type="submit" value="Home" onclick="window.location='/';" />
             <input class="btn btn-primary" type="submit" value="Logout" onclick="window.location='/logout';" />
         </p>
         <h1>Overzicht medicatie:</h1>
         <table>
-            <c:forEach items="${allMedication}" var="medication">
+            <c:forEach items="${medicationList}" var="medication">
                 <tr>
                     <td><a href="/medication/select/<c:out value="${medication.medicationId}" />"><c:out value="${medication.medicationName}" /></a></td>
                     <td><input class="btn btn-primary" type="submit" value="Verwijder medicatie" onclick="window.location='/medication/delete/${medication.medicationId}';" /></td>
@@ -23,6 +24,7 @@
             </c:forEach>
         </table>
         <p>
+        <br>
             <input class="btn btn-primary" type="submit" value="Voer medicatie in" onclick="window.location='/medication/new';" />
         </p>
     </div>

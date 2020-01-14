@@ -41,39 +41,46 @@ public class MedicationController {
         return "newMedication";
     }
 
-    @PostMapping("/medication/new")
-    protected String saveOrUpdateMedication(@ModelAttribute("medication") Medication medication, BindingResult result){
-        if(result.hasErrors()){
-            return "newMedication";
-        } else {
-            Team team = (Team) httpSession.getAttribute("team");
-            medication.setTeam(team);
-            medicationRepository.save(medication);
-            return "redirect:/medication/new/" + team.getTeamId();
-        }
-    }
-
     @GetMapping("/medication/{teamId}")
-    public String showMedication(@PathVariable("teamId") final Integer teamId, Model model, Principal principal)
-            throws JsonProcessingException {
+    public String showMedication(@PathVariable("teamId") final Integer teamId, Model model, Principal principal) {
         Team team = teamRepository.getOne(teamId);
         httpSession.setAttribute("team", team);
 
         Set<Team> teamList = null;
         Optional<Member> member = memberRepository.findByMembername(principal.getName());
-        if(member.isPresent()){
+        if (member.isPresent()) {
             teamList = member.get().getTeamName();
         }
 
-        Event event = new Event();
-        event.setActivity(new Activity());
-        model.addAttribute("teamList", teamList);
-        model.addAttribute("event", event);
+        Medication medication = new Medication();
+        //event.setActivity(new Activity());
+        //model.addAttribute("teamList", teamList);
+        //model.addAttribute("event", event);
 
-        ObjectMapper mapper = new ObjectMapper();
-        model.addAttribute("calendarData", mapper.writeValueAsString(team.getEventList()));
+        //Event event = new Event();
+        //event.setActivity(new Activity());
+        //model.addAttribute("teamList", teamList);
+        //model.addAttribute("medication", medication);
+        model.addAttribute("medicationList", team.getMedicationList());
 
         return "medicationOverview";
     }
 
+    @GetMapping("/medication/delete/{medicationId}")
+    public String deleteTeam(@PathVariable("medicationId") final Integer medicationId) {
+        medicationRepository.deleteById(medicationId);
+        return "redirect:/medication/new";
+    }
+
+    @PostMapping("/medication/new")
+    protected String saveOrUpdateMedication(@ModelAttribute("medication") Medication medication, BindingResult result) {
+        if (result.hasErrors()) {
+            return "newMedication";
+        } else {
+            Team team = (Team) httpSession.getAttribute("team");
+            medication.setTeam(team);
+            medicationRepository.save(medication);
+            return "medicationOverview";
+        }
+    }
 }
