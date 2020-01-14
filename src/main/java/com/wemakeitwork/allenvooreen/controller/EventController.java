@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 @Controller
 public class EventController {
@@ -68,8 +69,8 @@ public class EventController {
     }
 
     @PostMapping("/event/change/{activityId}/{teamId}")
-    protected String changeEvent(@ModelAttribute("event") Event event,
-                                 @ModelAttribute("teamId") Integer teamId,
+    protected String changeEvent(@Valid @ModelAttribute("event") Event event,
+                                 @PathVariable("teamId") Integer teamId,
                                  @PathVariable("activityId") final Integer activityId, BindingResult result) {
         if (result.hasErrors()) {
             return "calendar";
