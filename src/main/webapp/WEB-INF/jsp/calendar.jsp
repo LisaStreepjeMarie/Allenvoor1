@@ -24,6 +24,12 @@
 
     <script type="text/javascript">
     $(document).ready(function() {
+        hideAll();
+
+        $("#selectie").change(function () {
+            hideAll()
+            activitySelection();
+        });
 
         $('#calendar').fullCalendar({
             themeSystem: 'bootstrap4',
@@ -146,7 +152,18 @@
              format: 'MM/DD/YYYY HH:mm',
         });
     });
-    </script>
+
+    function activitySelection() {
+        if ($("#selectie").val() === "Medisch")
+            $("#medicationActivity").show();
+        else
+            $("#eventActivity").show();
+    }
+
+    function hideAll() {
+        $("#eventActivity, #medicationActivity ").css("display", "none");
+    }
+     </script>
 </head>
 
 <body>
@@ -158,7 +175,23 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 id="modal-title" class="modal-title col-12">Maak nieuwe afspraak</h4>
                 </div>
+                <!-- select below decides the input fields for event -->
                 <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label class="col-xs-4" for="selectie" control-label>Categorie</label>
+                            <select name="activity.activityCategory" id="selectie" required>
+                                <option disabled selected="selected">Selecteer categorie</option>
+                                <option value="Huishouden">Huishouden</option>
+                                <option value="Medisch">Medisch</option>
+                                <option value="Vrije tijd" >Vrije tijd</option>
+                            </select>
+                        </div>
+                    </div>
+                 </div>
+
+                 <!-- event with activity modal input fields -->
+                   <div class="modal-body" id="eventActivity">
                     <div class="row">
                         <div class="col-12">
                             <label class="col-4" for="eventName">Onderwerp</label>
@@ -174,31 +207,58 @@
                         </div>
                     </div>
                     <div class="row">
+                        <div class="col-xs-12">
+                            <label class="col-xs-4" for="eventStartDate">Datum</label>
+                            <input type="text" name="eventStartDate" id="eventStartDate" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label class="col-xs-4" for="eventEndDate">EindDatum</label>
+                            <input type="text" name="eventEndDate" id="eventEndDate" />
+                        </div>
+                    </div>
+                </div>
+                   <div class="modal-body" id="medicationActivity">
+                    <div class="row">
                         <div class="col-12">
-                            <label class="col-4" for="activity.activityCategory">Categorie</label>
-                            <select name="activity.activityCategory" id="activity.activityCategory" required>
-                                <option disabled selected="selected">Selecteer categorie</option>
-                                <option value="Huishouden">Huishouden</option>
-                                <option value="Medisch">Medisch</option>
-                                <option value="Vrije tijd" >Vrije tijd</option>
+                            <label class="col-4" for="eventName">Onderwerp</label>
+                            <input type="text" name="eventName" id="eventName" required/>
+                            <input type="hidden" name="eventId" id="eventId" />
+                            <input type="hidden" name="teamId" id="team.teamId" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12" modelAttribute="medicationActivity">
+                           <label class="col-xs-4" for="medication" control-label>Medicijn</label>
+                            <select name="medication.medicationId" id="medication.medicationId" >
+                                <option disabled selected="selected">Kies een medicijn</option>
+                        <c:forEach var="medication" items="${medicationList}">
+                            <option value="${medication.medicationId}">${medication.medicationName}</option>
+                        </c:forEach>
                             </select>
                         </div>
                     </div>
-
                     <div class="row">
-                        <div class="col-12">
-                            <label class="col-4" for="eventStartDate">Starttijd</label>
-                            <input type="text" name="eventStartDate" id="eventStartDate" required/>
+                        <div class="col-xs-12" modelAttribute="medicationActivity">
+                            <label class="col-xs-4" for="takenMedication" control-label>Hoeveelheid</label>
+                            <input type="number" name="takenMedication" id="takenMedication" />
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-12">
-                            <label class="col-4" for="eventEndDate">Eindtijd</label>
-                            <input type="text" name="eventEndDate" id="eventEndDate" required/>
+                        <div class="col-xs-12">
+                            <label class="col-xs-4" for="eventStartDate">Datum</label>
+                            <input type="text" name="eventStartDate" id="eventStartDate" />
                         </div>
                     </div>
-
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <label class="col-xs-4" for="eventEndDate">EindDatum</label>
+                            <input type="text" name="eventEndDate" id="eventEndDate" />
+                        </div>
+                    </div>
                 </div>
+
                 <div class="modal-footer">
                     <button type="button" id="delete-event" class="btn btn-danger" data-dismiss="modal" >Verwijder Afspraak</button>
                     <button type="button" class="btn btn-light" data-dismiss="modal">Sluiten</button>

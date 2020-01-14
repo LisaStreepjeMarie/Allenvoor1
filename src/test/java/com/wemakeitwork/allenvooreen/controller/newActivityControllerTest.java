@@ -32,9 +32,6 @@ class newActivityControllerTest {
     ActivityRepository activityRepository;
 
     @Autowired
-    private ObjectMapper objectMapper;
-
-    @Autowired
     private MockMvc mockMvc;
 
     @MockBean

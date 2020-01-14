@@ -35,6 +35,14 @@ public class Team {
     @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "team")
     List<Medication> medicationList = new ArrayList<>();
 
+    public List<Medication> getMedicationList() {
+        return medicationList;
+    }
+
+    public void setMedicationList(Medication medication) {
+        this.medicationList.add(medication);
+    }
+
     public Set<Member> getMembername() {
         return membername;
     }
