@@ -190,6 +190,7 @@
                         </div>
                     </div>
                  </div>
+
                  <!-- event with activity modal input fields -->
                    <div class="modal-body" id="eventActivity">
                     <div class="row">
@@ -219,6 +220,7 @@
                         </div>
                     </div>
                 </div>
+
                  <!-- event with MedicationActivity modal input fields -->
                    <div class="modal-body" id="medicationActivity">
                     <div class="row">
