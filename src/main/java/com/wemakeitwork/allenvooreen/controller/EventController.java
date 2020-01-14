@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -69,7 +70,7 @@ public class EventController {
     }
 
     @PostMapping("/event/change/{activityId}/{teamId}")
-    protected String changeEvent(@Valid @ModelAttribute("event") Event event,
+    protected String changeEvent(@Validated @ModelAttribute("event") Event event,
                                  @PathVariable("teamId") Integer teamId,
                                  @PathVariable("activityId") final Integer activityId, BindingResult result) {
         if (result.hasErrors()) {
