@@ -73,6 +73,7 @@ public class EventController {
                                  @PathVariable("teamId") Integer teamId,
                                  @PathVariable("activityId") final Integer activityId, BindingResult result) {
         if (result.hasErrors()) {
+            System.out.println("Geen goede invoer");
             return "calendar";
         } else {
             event.getActivity().setActivityName(event.getEventName());
@@ -81,7 +82,6 @@ public class EventController {
             //finding/setting the team corresponding with the event
             Team team = teamRepository.getOne(teamId);
             event.setTeam(team);
-
             eventRepository.save(event);
             return "redirect:/calendar/" + team.getTeamId();
         }
