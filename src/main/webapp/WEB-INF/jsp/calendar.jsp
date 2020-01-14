@@ -162,7 +162,7 @@
                     <div class="row">
                         <div class="col-12">
                             <label class="col-4" for="eventName">Onderwerp</label>
-                            <input type="text" name="eventName" id="eventName" required/>
+                            <input type="text" name="eventName" id="eventName" pattern=".{1,}" required/>
                             <input type="hidden" name="eventId" id="eventId" />
                             <input type="hidden" name="teamId" id="team.teamId" />
                         </div>
