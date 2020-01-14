@@ -13,6 +13,7 @@
         <p>
             <input class="btn btn-primary" type="submit" value="Home" onclick="window.location='/';" />
             <input class="btn btn-primary" type="submit" value="Logout" onclick="window.location='/logout';" />
+            <input class="btn btn-primary" type="submit" value="Overzicht medicatie ${team.teamName}" onclick="window.location='/medication/${team.teamId}';" />
         </p>
         <h1>Voer medicatie in:</h1>
         <form:form action="/medication/new" modelAttribute="medication">

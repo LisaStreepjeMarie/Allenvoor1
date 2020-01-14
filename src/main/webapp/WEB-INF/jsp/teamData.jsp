@@ -10,7 +10,7 @@
 <body class="webpage">
     <div class="container-fluid">
         <p>
-            <input class="btn btn-primary" type="submit" value="home" onclick="window.location='/';" />
+            <input class="btn btn-primary" type="submit" value="Home" onclick="window.location='/';" />
             <input class="btn btn-primary" type="submit" value="Al je groepen" onclick="window.location='/team/all';" />
             <input class="btn btn-primary" type="submit" value="Logout" onclick="window.location='/logout';" />
         </p>

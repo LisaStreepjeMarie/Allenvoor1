@@ -69,7 +69,7 @@ public class MedicationController {
     @GetMapping("/medication/delete/{medicationId}")
     public String deleteTeam(@PathVariable("medicationId") final Integer medicationId) {
         medicationRepository.deleteById(medicationId);
-        return "redirect:/medication/new";
+        return "medicationOverview";
     }
 
     @PostMapping("/medication/new")
@@ -80,7 +80,8 @@ public class MedicationController {
             Team team = (Team) httpSession.getAttribute("team");
             medication.setTeam(team);
             medicationRepository.save(medication);
-            return "medicationOverview";
+            return "redirect:/medication/new";
         }
     }
 }
+

@@ -16,9 +16,13 @@
         </p>
         <h1>Overzicht medicatie:</h1>
         <table>
+          <tr><th>Naam</th><th>Hoeveelheid</th><th>Beschrijving</th></tr>
             <c:forEach items="${medicationList}" var="medication">
                 <tr>
-                    <td><a href="/medication/select/<c:out value="${medication.medicationId}" />"><c:out value="${medication.medicationName}" /></a></td>
+                    <td><a href="/medication/select/<c:out value="${medication.medicationId}" />"</td>
+                    <td><c:out value="${medication.medicationName}" /></a></td><br>
+                    <td><c:out value="${medication.medicationAmount}" /></td>
+                    <td><c:out value="${medication.medicationComment}" /></td>
                     <td><input class="btn btn-primary" type="submit" value="Verwijder medicatie" onclick="window.location='/medication/delete/${medication.medicationId}';" /></td>
                 </tr>
             </c:forEach>
