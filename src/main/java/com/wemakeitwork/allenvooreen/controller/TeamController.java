@@ -126,7 +126,7 @@ public class TeamController {
     }
 
     @PostMapping("team/addMember")
-    protected String addMember(@ModelAttribute("teamMemberDTO")TeamMemberDTO teamMemberDTO, BindingResult result) {
+    protected String addMember(@ModelAttribute("teamMemberDTO") TeamMemberDTO teamMemberDTO, BindingResult result) {
         if (result.hasErrors()) {
             return "teamData";
         } else {

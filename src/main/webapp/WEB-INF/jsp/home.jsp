@@ -25,8 +25,8 @@
            <input class="btn btn-primary" type="submit" value="Toon groepen" onclick="window.location='/team/all';" />
            <br>
            <br>
-           <br>
-            <h4>Mijn groepen: </h4>
+
+            <h5>Mijn groepen: </h5>
                    <table>
                        <c:forEach items="${teamList}" var="team">
                            <tr>
@@ -36,6 +36,16 @@
                            </tr>
                        </c:forEach>
                    </table>
+            <h5> Medicatie: </h5>
+             <table>
+               <c:forEach items="${teamList}" var="team">
+                      <tr>
+                         <button type="button" class="btn btn-info"
+                          onclick="window.location='/medication/${team.teamId}';"> Toon medicatie ${team.teamName}</button> <br>
+                           <br>
+                          </tr>
+                    </c:forEach>
+               </table>
        </div>
        <div class="col-10">
            <div id="calendar" style="width: 45rem;"></div>
