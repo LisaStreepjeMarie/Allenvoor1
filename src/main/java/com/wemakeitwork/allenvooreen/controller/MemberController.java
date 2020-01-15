@@ -66,6 +66,8 @@ public class MemberController {
             return "newMember";
         }
         else {
+
+
             //TODO: check of aan te maken loginnaam al bestaat (gooit nu whitelabel 500 met SQL constraint error)
             member.setPassword(passwordEncoder.encode(member.getPassword()));
             member.setRol("gebruiker");
