@@ -27,6 +27,7 @@ public class Member implements UserDetails {
     @ManyToMany
     @JoinTable(name = "team_membername", joinColumns = @JoinColumn(name = "membername_member_id"), inverseJoinColumns = @JoinColumn(name = "team_team_id"))
     private Set<Team> teamName = new HashSet<>();
+
     public Set<Team> getTeamName() {
         return teamName;
     }
@@ -103,9 +104,11 @@ public class Member implements UserDetails {
         if (membername != null && membername.isEmpty()) {
             return null;
         } else {
-            return this.membername= membername;
+            return this.membername = membername;
         }
     }
 
-
+    public void removeTeamFromMember(Team team){
+        teamName.remove(team);
+    }
 }
