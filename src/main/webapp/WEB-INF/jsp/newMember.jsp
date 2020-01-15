@@ -14,21 +14,23 @@
     </head>
     <body class="webpage">
         <div class="container">
+        <form class="form-signin" method="post" action="/member/new">
+         <img class="mb-4" src="https://upload.wikimedia.org/wikipedia/commons/a/a4/All_for_One_Midmarket_logo.svg" alt="" width="240" height="50">
+            <h1 class="h3 mb-3 font-weight-normal">Nieuw? Meld je aan:</h1>
 
-            <!-- <c:if test="${param.error}"> -->
+            <c:if test="${!param.error}">
             <div class="alert alert-danger" role="alert">
                 Gebruikersnaam bestaat al, kies een andere naam
             </div>
-            <!-- </c:if> -->
-            <form class="form-signin" method="post" action="/member/new">
-             <img class="mb-4" src="https://upload.wikimedia.org/wikipedia/commons/a/a4/All_for_One_Midmarket_logo.svg" alt="" width="240" height="50">
-                <h1 class="h3 mb-3 font-weight-normal">Nieuw? Meld je aan:</h1>
-
+            </c:if>
         <form:form action="/member/new" modelAttribute="member">
             <table>
                 <tr>
                     <td>
-                        <form:input path="membername" class="form-control" placeholder= "Gebruikersnaam" />
+                        <!-- <form:input path="membername" class="form-control" placeholder= "Gebruikersnaam" /> -->
+                        <label for="username" class="sr-only">Gebruikersnaam</label>
+                        <input type="text" id="username" name="membername" class="form-control" placeholder="Gebruikersnaam" required autofocus>
+
                     </td>
                 </tr>
                 <tr>
