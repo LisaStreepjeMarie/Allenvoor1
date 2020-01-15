@@ -5,14 +5,14 @@
 
 <html xmlns:form="http://www.w3.org/1999/xhtml" xmlns:c="">
     <head>
-        <script src="/webjars/jquery/3.4.1/jquery.slim.min.js"></script>
+        <script src="${pageContext.request.contextPath}/webjars/jquery/3.4.1/jquery.slim.min.js"></script>
 
-        <link href="/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
-        <script src="/webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+        <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
+        <script src="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
-        <link href="/webjars/font-awesome/5.0.6/web-fonts-with-css/css/fontawesome-all.min.css" rel='stylesheet'>
-        <script src="/webjars/font-awesome/5.0.6/on-server/js/fontawesome-all.min.js"></script>
-        <script src="/webjars/font-awesome/5.0.6/on-server/js/fa-solid.min.js"></script>
+        <link href="${pageContext.request.contextPath}/webjars/font-awesome/5.0.6/web-fonts-with-css/css/fontawesome-all.min.css" rel='stylesheet'>
+        <script src="${pageContext.request.contextPath}/webjars/font-awesome/5.0.6/on-server/js/fontawesome-all.min.js"></script>
+        <script src="${pageContext.request.contextPath}/webjars/font-awesome/5.0.6/on-server/js/fa-solid.min.js"></script>
         <title>Overzicht gebruiker</title>
 <body>
     <div class="container-fluid">
@@ -61,9 +61,9 @@
                 <div id="container" class="mt-3 col-12 form-inline toolbox-top clearfix">
                     <p>
                         <input class="btn btn-primary" type="submit" value="sidebar" data-target="#sidebar" data-toggle="collapse" class="d-*-none" />
-                        <input class="btn btn-primary" type="submit" value="Home" onclick="window.location='/';" />
-                        <input class="btn btn-primary" type="submit" value="Jouw groepen" onclick="window.location='/team/all';" />
-                        <input class="btn btn-primary" type="submit" value="Logout" onclick="window.location='/logout';" />
+                        <input class="btn btn-primary" type="submit" value="Home" onclick="window.location='${pageContext.request.contextPath}/';" />
+                        <input class="btn btn-primary" type="submit" value="Jouw groepen" onclick="window.location='${pageContext.request.contextPath}/team/all';" />
+                        <input class="btn btn-primary" type="submit" value="Logout" onclick="window.location='${pageContext.request.contextPath}/logout';" />
                     </p>
                 </div>
                 <div class="mt-3 col-12">
@@ -71,7 +71,7 @@
                     <h5>Wijzig hieronder je gebruikersnaam of verwijder je profiel</h5>
                 </div>
                 <div class="mt-3 col-12 form-inline toolbox-top clearfix">
-                    <form:form action="/member/change" modelAttribute="currentmember">
+                    <form:form action="${pageContext.request.contextPath}/member/change" modelAttribute="currentmember">
                         <form:input path="memberId" type="hidden" />
                         <table>
                             <tr>
@@ -89,7 +89,7 @@
                             </div>
                         </table>
                     </form:form>
-                    <form:form action="/member/delete" method="get" modelAttribute="currentmember">
+                    <form:form action="${pageContext.request.contextPath}/member/delete" method="get" modelAttribute="currentmember">
                         <form:input path="memberId" type="hidden" />
                         <table>
                             <tr>

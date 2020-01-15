@@ -11,7 +11,7 @@
 <h1>Voer de activiteit in!</h1>
 <br>
 
-<form action="/activity/new" modelAttribute="activity" method="Post">
+<form action="${pageContext.request.contextPath}/activity/new" modelAttribute="activity" method="Post">
     <input type="text" name="activityName" value="${updateActivityName}"><br><br>
         <select name="activityCategory">
             <option value="Huishouden" name="activityCategory">Huishouden</option>

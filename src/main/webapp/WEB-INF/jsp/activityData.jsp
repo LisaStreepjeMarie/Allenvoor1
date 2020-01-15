@@ -5,17 +5,17 @@
 
 <html xmlns:form="http://www.w3.org/1999/xhtml">
     <head>
-        <link href="/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
-        <link href="../css/style.css" rel="stylesheet" type="text/css"/>
+        <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
+        <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
         <title>Wijzig de gegevens van een activiteit</title>
     </head>
     <body class="webpage">
         <div id="container">
             <p>
-                <input class="btn btn-primary" type="submit" value="Logout" onclick="window.location='/logout';" />
+                <input class="btn btn-primary" type="submit" value="Logout" onclick="window.location='${pageContext.request.contextPath}/logout';" />
             </p>
             <h1>Wijzig gegevens groep</h1>
-            <form:form action="/activity/change" modelAttribute="activity">
+            <form:form action="${pageContext.request.contextPath}/activity/change" modelAttribute="activity">
                 <form:input path="activityId" type="hidden" />
                 <table>
                     <tr>

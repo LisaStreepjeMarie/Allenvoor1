@@ -10,7 +10,7 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
 
-    <link href="/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
+    <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
 <body class="webpage">
 <div class="container-fluid" >
     <div class="row" >
@@ -18,11 +18,11 @@
     </div>
     <div class="row">
        <div class="col-2">
-            <input class="btn btn-primary" type="submit" value="Logout" onclick="window.location='/logout';" /><br />
+            <input class="btn btn-primary" type="submit" value="Logout" onclick="window.location='${pageContext.request.contextPath}/logout';" /><br />
             <br>
-            <input class="btn btn-primary" type="submit" value="Gebruikersprofiel" onclick="window.location='/member/current';" /><br />
+            <input class="btn btn-primary" type="submit" value="Gebruikersprofiel" onclick="window.location='${pageContext.request.contextPath}/member/current';" /><br />
            <br>
-           <input class="btn btn-primary" type="submit" value="Toon groepen" onclick="window.location='/team/all';" />
+           <input class="btn btn-primary" type="submit" value="Toon groepen" onclick="window.location='${pageContext.request.contextPath}/team/all';" />
            <br>
            <br>
 
@@ -31,7 +31,7 @@
                        <c:forEach items="${teamList}" var="team">
                            <tr>
                                <button type="button" class="btn btn-info"
-                               onclick="window.location='/calendar/${team.teamId}';">${team.teamName}</button> <br>
+                               onclick="window.location='${pageContext.request.contextPath}/calendar/${team.teamId}';">${team.teamName}</button> <br>
                                <br>
                            </tr>
                        </c:forEach>
@@ -41,7 +41,7 @@
                <c:forEach items="${teamList}" var="team">
                       <tr>
                          <button type="button" class="btn btn-info"
-                          onclick="window.location='/medication/${team.teamId}';"> Toon medicatie ${team.teamName}</button> <br>
+                          onclick="window.location='${pageContext.request.contextPath}/medication/${team.teamId}';"> Toon medicatie ${team.teamName}</button> <br>
                            <br>
                           </tr>
                     </c:forEach>

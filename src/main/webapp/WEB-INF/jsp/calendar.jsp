@@ -11,17 +11,17 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
 
     <!-- Order is important -->
-    <link href="/webjars/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet" />
-    <link href="/webjars/fullcalendar/3.9.0/fullcalendar.print.min.css" rel="stylesheet" media='print' />
-    <link href="/webjars/Eonasdan-bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
-    <script src="/webjars/moment/2.24.0/min/moment.min.js"></script>
-    <script src="/webjars/jquery/3.4.1/jquery.slim.min.js"></script>
-    <script src="/webjars/fullcalendar/3.9.0/fullcalendar.min.js"></script>
-    <script src="/webjars/Eonasdan-bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="/webjars/fullcalendar/3.9.0/locale/nl.js"></script>
-    <link href="/webjars/font-awesome/5.0.6/web-fonts-with-css/css/fontawesome-all.min.css" rel='stylesheet'>
-    <link href="/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
-    <script src="/webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link href="${pageContext.request.contextPath}/webjars/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet" />
+    <link href="${pageContext.request.contextPath}/webjars/fullcalendar/3.9.0/fullcalendar.print.min.css" rel="stylesheet" media='print' />
+    <link href="${pageContext.request.contextPath}/webjars/Eonasdan-bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <script src="${pageContext.request.contextPath}/webjars/moment/2.24.0/min/moment.min.js"></script>
+    <script src="${pageContext.request.contextPath}/webjars/jquery/3.4.1/jquery.slim.min.js"></script>
+    <script src="${pageContext.request.contextPath}/webjars/fullcalendar/3.9.0/fullcalendar.min.js"></script>
+    <script src="${pageContext.request.contextPath}/webjars/Eonasdan-bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="${pageContext.request.contextPath}/webjars/fullcalendar/3.9.0/locale/nl.js"></script>
+    <link href="${pageContext.request.contextPath}/webjars/font-awesome/5.0.6/web-fonts-with-css/css/fontawesome-all.min.css" rel='stylesheet'>
+    <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
+    <script src="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
     <!-- this script loads FullCalendar -->
     <script type="text/javascript">
@@ -74,7 +74,7 @@
 
                 <!-- redefines the onclick action of the delete-event button, so that it will point the browser -->
                 <!-- to the /event/delete/{eventId}/{activityId} mapping -->
-                $('#delete-event').attr('onclick',"window.location='/event/delete/" + event.id + "/" + event.activity.id + "'");
+                $('#delete-event').attr('onclick',"window.location='${pageContext.request.contextPath}/event/delete/" + event.id + "/" + event.activity.id + "'");
 
                 $("#eventId").val(event.id);
 
@@ -184,7 +184,7 @@
 </head>
 
 <body>
-<form:form id="modal-form" action="/event/change" modelAttribute="event" method="post">
+<form:form id="modal-form" action="${pageContext.request.contextPath}/event/change" modelAttribute="event" method="post">
     <div class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">

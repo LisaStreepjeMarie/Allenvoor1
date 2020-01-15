@@ -42,7 +42,7 @@ $(document).ready(function() {
             <!--$('#deleteEvent').attr('href',"/event/delete/" + event.id);-->
 
             <!--pass eventId to a <button> onclick action: -->
-            $('#delete-event').attr('onclick',"window.location='/event/delete/" + event.id + "/" + event.activity.id + "'");
+            $('#delete-event').attr('onclick',"window.location='${pageContext.request.contextPath}/event/delete/" + event.id + "/" + event.activity.id + "'");
 
             $("#eventId").val(event.id);
 
