@@ -4,19 +4,19 @@
 
 <html xmlns:c="">
     <head>
-        <link href="/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
-        <link href="../css/style.css" rel="stylesheet" type="text/css"/>
+        <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
+        <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
         <title>Medicatieoverzicht</title>
     </head>
     <body class="webpage">
     <div id="container">
         <p>
-            <input class="btn btn-primary" type="submit" value="Home" onclick="window.location='/';" />
-            <input class="btn btn-primary" type="submit" value="Logout" onclick="window.location='/logout';" />
-            <input class="btn btn-primary" type="submit" value="Overzicht medicatie ${team.teamName}" onclick="window.location='/medication/${team.teamId}';" />
+            <input class="btn btn-primary" type="submit" value="Home" onclick="window.location='${pageContext.request.contextPath}/';" />
+            <input class="btn btn-primary" type="submit" value="Logout" onclick="window.location='${pageContext.request.contextPath}/logout';" />
+            <input class="btn btn-primary" type="submit" value="Overzicht medicatie ${team.teamName}" onclick="window.location='${pageContext.request.contextPath}/medication/${team.teamId}';" />
         </p>
         <h1>Voer medicatie voor ${team.teamName} in:</h1>
-        <form:form action="/medication/new" modelAttribute="medication">
+        <form:form action="${pageContext.request.contextPath}/medication/new" modelAttribute="medication">
             <table>
                 <tr>
                     <td>Naam medicatie:</td>
