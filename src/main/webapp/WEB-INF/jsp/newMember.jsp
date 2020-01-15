@@ -14,6 +14,12 @@
     </head>
     <body class="webpage">
         <div class="container">
+
+            <!-- <c:if test="${param.error}"> -->
+            <div class="alert alert-danger" role="alert">
+                Gebruikersnaam bestaat al, kies een andere naam
+            </div>
+            <!-- </c:if> -->
             <form class="form-signin" method="post" action="/member/new">
              <img class="mb-4" src="https://upload.wikimedia.org/wikipedia/commons/a/a4/All_for_One_Midmarket_logo.svg" alt="" width="240" height="50">
                 <h1 class="h3 mb-3 font-weight-normal">Nieuw? Meld je aan:</h1>
