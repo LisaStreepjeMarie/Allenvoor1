@@ -13,7 +13,7 @@ import java.util.Set;
 @JsonPropertyOrder(value = {"id","name"}, alphabetic = true)
 // Ignoring 'hibernateLazyInitializer' & 'handler' is needed to prevent infinite recursion
 // when calling the ObjectMapper to create a JSON
-@JsonIgnoreProperties({ "membername", "eventList", "hibernateLazyInitializer", "handler" })
+@JsonIgnoreProperties({ "membersInThisTeamSet", "eventList", "hibernateLazyInitializer", "handler" })
 public class Team {
     public Team() {
     }
@@ -27,17 +27,17 @@ public class Team {
     private String teamName;
 
     @ManyToMany(mappedBy = "teamName")
-    private Set<Member> membername = new HashSet<>();
+    private Set<Member> allMembersInThisTeamSet = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "team")
     List<Event> eventList = new ArrayList<>();
 
-    public Set<Member> getMembername() {
-        return membername;
+    public Set<Member> getAllMembersInThisTeamSet() {
+        return allMembersInThisTeamSet;
     }
 
-    public void setMembername(Set<Member> membername) {
-        this.membername = membername;
+    public void setAllMembersInThisTeamSet(Set<Member> allMembersInThisTeamSet) {
+        this.allMembersInThisTeamSet = allMembersInThisTeamSet;
     }
 
     public Integer getTeamId() {
@@ -69,10 +69,10 @@ public class Team {
     }
 
     public void addTeamMember(Member member){
-        membername.add(member);
+        allMembersInThisTeamSet.add(member);
     }
 
     public void removeTeamMember(Member member){
-        membername.remove(member);
+        allMembersInThisTeamSet.remove(member);
     }
 }

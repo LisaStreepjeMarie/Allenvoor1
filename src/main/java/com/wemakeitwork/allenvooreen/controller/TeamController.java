@@ -7,7 +7,6 @@ import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,8 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
@@ -91,7 +88,7 @@ public class TeamController {
 
         Team team = teamRepository.getOne(teamId);
         Set<Member> wegermee = new HashSet<>();
-        wegermee.addAll(team.getMembername());
+        wegermee.addAll(team.getAllMembersInThisTeamSet());
 
         for (Member member : wegermee){
             member.removeTeamFromMember(team);
@@ -112,7 +109,7 @@ public class TeamController {
         team.setTeamName(teamName);
         Member member = memberRepository.findByMembername(membername).get();
         member.getTeamName().add(team);
-        team.getMembername().add(member);
+        team.getAllMembersInThisTeamSet().add(member);
         teamRepository.save(team);
         memberRepository.save(member);
         return "redirect:/team/all";
@@ -140,7 +137,7 @@ public class TeamController {
 
             if (memberOpt.isPresent()){
                 memberOpt.get().getTeamName().add(team);
-                team.getMembername().add(memberOpt.get());
+                team.getAllMembersInThisTeamSet().add(memberOpt.get());
                 memberRepository.save(memberOpt.get());
             }
             teamRepository.save(team);
