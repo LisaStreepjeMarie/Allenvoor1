@@ -20,11 +20,11 @@
     </head>
     <body class="webpage">
         <div class="container">
-            <form:form method="post" modelAttribute="member" class="form-signin">
-            <!-- <form class="form-signin" method="post" action="/member/new"> -->
+            <!-- <form:form method="post" modelAttribute="member" class="form-signin"> -->
+            <form class="form-signin" method="post" action="/member/new">
             <img class="mb-4" src="https://upload.wikimedia.org/wikipedia/commons/a/a4/All_for_One_Midmarket_logo.svg" alt="" width="240" height="50">
               <h1 class="h3 mb-3 font-weight-normal">Nieuw? Meld je aan:</h1>
-              <!-- <form:form action="/member/new" modelAttribute="member"> -->
+              <form:form action="/member/new" modelAttribute="member">
               <!-- <h2 class="form-signin-heading">Create your account</h2> -->
               <spring:bind path="username">
                   <div class="form-group ${status.error ? 'has-error' : ''}">
@@ -65,7 +65,7 @@
                 </td>
             </tr>
             </table>
-        <!-- </form:form> -->
+        </form:form>
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
         <script src="${contextPath}/resources/js/bootstrap.min.js"></script>
