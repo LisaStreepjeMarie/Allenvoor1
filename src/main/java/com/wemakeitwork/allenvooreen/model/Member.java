@@ -26,6 +26,9 @@ public class Member implements UserDetails {
 
     private String rol;
 
+    @Transient
+    private String passwordConfirm;
+
     @ManyToMany
     @JoinTable(name = "team_membername", joinColumns = @JoinColumn(name = "membername_member_id"), inverseJoinColumns = @JoinColumn(name = "team_team_id"))
     private Set<Team> teamName = new HashSet<>();
@@ -44,6 +47,14 @@ public class Member implements UserDetails {
 
     public void setRol(String rol) {
         this.rol = rol;
+    }
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
     }
 
     @Override
