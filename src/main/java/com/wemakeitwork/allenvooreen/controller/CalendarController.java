@@ -41,7 +41,7 @@ public class CalendarController {
         Set<Team> teamList = null;
         Optional<Member> member = memberRepository.findByMemberName(principal.getName());
         if(member.isPresent()){
-            teamList = member.get().getTeamName();
+            teamList = member.get().getAllTeamsOfMemberSet();
         }
 
         List<Medication> medicationList = team.getMedicationList();
@@ -64,7 +64,7 @@ public class CalendarController {
         Set<Team> teamList = null;
         Optional<Member> member = memberRepository.findByMemberName(principal.getName());
         if(member.isPresent()){
-            teamList = member.get().getTeamName();
+            teamList = member.get().getAllTeamsOfMemberSet();
         }
         if (teamList != null) {
             model.addAttribute("teamList", teamList);

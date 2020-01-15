@@ -26,14 +26,14 @@ public class Member implements UserDetails {
 
     @ManyToMany
     @JoinTable(name = "team_membername", joinColumns = @JoinColumn(name = "membername_member_id"), inverseJoinColumns = @JoinColumn(name = "team_team_id"))
-    private Set<Team> teamName = new HashSet<>();
+    private Set<Team> allTeamsOfMemberSet = new HashSet<>();
 
-    public Set<Team> getTeamName() {
-        return teamName;
+    public Set<Team> getAllTeamsOfMemberSet() {
+        return allTeamsOfMemberSet;
     }
 
-    public void setTeamName(Set<Team> teamName) {
-        this.teamName = teamName;
+    public void setAllTeamsOfMemberSet(Set<Team> allTeamsOfMemberSet) {
+        this.allTeamsOfMemberSet = allTeamsOfMemberSet;
     }
 
     public String getRol() {
@@ -109,6 +109,6 @@ public class Member implements UserDetails {
     }
 
     public void removeTeamFromMember(Team team){
-        teamName.remove(team);
+        allTeamsOfMemberSet.remove(team);
     }
 }

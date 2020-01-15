@@ -53,7 +53,7 @@ public class TeamController {
     private Set<Team> teamList (Integer memberId){
         Set<Team> teamList;
         Member member = memberRepository.getOne(memberId);
-        teamList = member.getTeamName();
+        teamList = member.getAllTeamsOfMemberSet();
         return teamList;
     }
 
@@ -108,7 +108,7 @@ public class TeamController {
         Team team = new Team();
         team.setTeamName(teamName);
         Member member = memberRepository.findByMemberName(membername).get();
-        member.getTeamName().add(team);
+        member.getAllTeamsOfMemberSet().add(team);
         team.getAllMembersInThisTeamSet().add(member);
         teamRepository.save(team);
         memberRepository.save(member);
@@ -136,7 +136,7 @@ public class TeamController {
             System.out.println("teamId uit DTO:   " + teamMemberDTO.getTeamId());
 
             if (memberOpt.isPresent()){
-                memberOpt.get().getTeamName().add(team);
+                memberOpt.get().getAllTeamsOfMemberSet().add(team);
                 team.getAllMembersInThisTeamSet().add(memberOpt.get());
                 memberRepository.save(memberOpt.get());
             }
