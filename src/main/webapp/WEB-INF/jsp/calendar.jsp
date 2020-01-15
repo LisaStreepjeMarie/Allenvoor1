@@ -33,6 +33,7 @@
             timeFormat: 'H(:mm)',
             locale: 'nl',
 
+            <!-- The buttons and title that are displayed at the top of the calendar -->
             header: {
                 left: 'prev,next today',
                 center: 'title',
@@ -45,6 +46,7 @@
             selectable: true,
             selectHelper: true,
 
+            <!-- This function is executed when an empty date/time is clicked -->
             select: function(start, end) {
                 $('#modal-form').attr('action',"/event/new");
                 $('#save-change-event').attr('action',"/event/new");
@@ -55,17 +57,20 @@
                 $('.modal').find('#eventStartDate').val(start);
                 $('.modal').find('#eventEndDate').val(end);
 
+                <!-- redefines the label and button text -->
                 document.getElementById("modal-title").innerHTML = "Maak nieuwe afspraak";
                 document.getElementById("save-change-event").innerHTML = "Maak afspraak";
                 $("#delete-event").hide();
                 $('.modal').modal('show');
             },
 
+            <!-- This function is executed when an already planned event is clicked -->
             eventClick: function(event, element) {
-                <!--pass eventId to a simple <a href> link: -->
-                <!--$('#deleteEvent').attr('href',"/event/delete/" + event.id);-->
+                <!-- pass eventId to a simple <a href> link: -->
+                <!-- $('#deleteEvent').attr('href',"/event/delete/" + event.id); -->
 
-                <!--pass eventId to a <button> onclick action: -->
+                <!-- redefines the onclick action of the delete-event button, so that it will point the browser -->
+                <!-- to the /event/delete/{eventId}/{activityId} mapping -->
                 $('#delete-event').attr('onclick',"window.location='/event/delete/" + event.id + "/" + event.activity.id + "'");
 
                 $("#eventId").val(event.id);
@@ -73,19 +78,26 @@
                 $('#modal-form').attr('action',"/event/change/" + event.activity.id + "/" + event.team.id);
                 $('#save-change-event').attr('action',"/event/change");
 
+                <!-- loads the input fields with information of the clicked event -->
                 $('.modal').find('#eventName').val(event.title);
                 $('.modal').find('#eventComment').val(event.description);
                 $('.modal').find('#event.activityCategory').val("Selecteer categorie");
                 $('.modal').find('#eventStartDate').val(event.start);
                 $('.modal').find('#eventEndDate').val(event.end);
 
+                <!-- redefines the modal (popup) buttons with the appropriate button text -->
                 document.getElementById("modal-title").innerHTML = "Wijzig of verwijder afspraak";
                 document.getElementById("save-change-event").innerHTML = "Wijzig afspraak";
+
+                <!-- shows the delete button on the (still hidden) modal -->
                 $("#delete-event").show();
+
+                <!-- lastly, the modal (popup) is shown, which by now has been properly configured -->
                 $('.modal').modal('show');
 
             },
 
+            <!--  This function is executed on drop when an event was dragged. (not yet implemented) -->
             eventDrop: function( event, delta, revertFunc, jsEvent, ui, view ) {
                 console.log(event.title + ' was dragged to ' + event.description);
                 console.log("delta is: " + delta);
@@ -125,30 +137,33 @@
             eventDragStop: function(info) {
             },
 
+            <!-- This function is executed when an event was resized, not yet implemented -->
             eventResize: function(event, delta, revertFunc) {
                 alert(event.title + " end is now " + event.end.format());
 
                 revertFunc();
             },
 
-            // Remember last view on page reload
+            <!-- Remember last view on page reload. -->
             viewRender: function (view, element) {
                 localStorage.setItem("fcDefaultView", view.name);
             },
             defaultView: (localStorage.getItem("fcDefaultView") !== null ? localStorage.getItem("fcDefaultView") : "month"),
 
             editable: true,
+
+            <!-- calendarData is a JSON string with all calendar events -->
             events: ${calendarData},
             eventLimit: true // allow "more" link when too many events
         });
 
-        // Bind the dates to datetimepicker.
-        // You should pass the options you need
+        <!-- This function loads the start & end date calendars (datetimepickers) in the modal (popup). -->
         $("#eventStartDate, #eventEndDate").datetimepicker({
              format: 'MM/DD/YYYY HH:mm',
         });
     });
     </script>
+
 </head>
 
 <body>
