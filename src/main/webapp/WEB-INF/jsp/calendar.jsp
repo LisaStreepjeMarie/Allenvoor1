@@ -24,11 +24,21 @@
 
     <script type="text/javascript">
     $(document).ready(function() {
+
         hideAll();
+
+        <!-- below makes sure that the unwanted fields in the modal are hidden and calls the selection upon change -->
         $("#selectie").change(function () {
             hideAll()
             activitySelection();
         });
+
+        <!-- this will fill te modal based on the event -->
+        $('#modal-form').on('shown.bs.modal', function (e) {
+            hideAll();
+            fillingTheModal();
+        });
+
         $('#calendar').fullCalendar({
             themeSystem: 'bootstrap4',
             timeZone: 'Europe/Amsterdam',
@@ -47,9 +57,6 @@
             select: function(start, end) {
                 $('#modal-form').attr('action',"/event/new");
                 $('#save-change-event').attr('action',"/event/new");
-                $('.modal').find('#eventName').val("");
-                $('.modal').find('#eventComment').val("");
-                $('.modal').find('#activity.activityCategory').val("Selecteer categorie");
                 $('.modal').find('#eventStartDate').val(start);
                 $('.modal').find('#eventEndDate').val(end);
                 document.getElementById("modal-title").innerHTML = "Maak nieuwe afspraak";
@@ -67,7 +74,7 @@
                 $('#save-change-event').attr('action',"/event/change");
                 $('.modal').find('#eventName').val(event.title);
                 $('.modal').find('#eventComment').val(event.description);
-                $('.modal').find('#event.activityCategory').val("Selecteer categorie");
+                $('.modal').find('#event.activityCategory').val(event.activityCategory);
                 $('.modal').find('#eventStartDate').val(event.start);
                 $('.modal').find('#eventEndDate').val(event.end);
                 document.getElementById("modal-title").innerHTML = "Wijzig of verwijder afspraak";
@@ -146,6 +153,14 @@
     function fillingTheModall() {
         $("#eventActivity, #medicationActivity ").css("display", "none");
     }
+
+<!-- below function fills the modal with event info if it exist -->
+    function fillingTheModal() {
+        if ($('.modal').find('#event.activityCategory').val() == "Medisch")
+            $("#medicationActivity").show();
+        else
+            $("#eventActivity").show();
+    }
      </script>
 </head>
 
@@ -165,12 +180,11 @@
                         <div class="col-xs-12">
                             <span style="margin-left:2em">
                             <label class="col-xs-4" for="selectie" control-label>Categorie</label>
-                            <select name="activity.activityCategory" id="selectie" >
-                                <option disabled selected="selected">Selecteer categorie</option>
-                                <option value="Huishouden">Huishouden</option>
-                                <option value="Medisch">Medisch</option>
-                                <option value="Vrije tijd" >Vrije tijd</option>
-                            </select>
+                                <select name="activity.activityCategory" id="selectie" >
+                                    <option value="Huishouden">Huishouden</option>
+                                    <option value="Medisch">Medisch</option>
+                                    <option value="Vrije tijd" >Vrije tijd</option>
+                                </select>
                             </span>
                         </div>
                     </div>
