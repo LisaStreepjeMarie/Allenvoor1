@@ -29,14 +29,19 @@
 
         <!-- below makes sure that the unwanted fields in the modal are hidden and calls the selection upon change -->
         $("#selectie").change(function () {
-            hideAll()
+            hideAll();
             activitySelection();
         });
 
-        <!-- this will fill te modal based on the event -->
-        $('#modal-form').on('shown.bs.modal', function (e) {
+        $('#modal-form').on("hide.bs.modal", function() {
+            console.log("closingclosing");
+            $("#selectie").val("Selecteer categorie");
             hideAll();
-            fillingTheModal();
+        });
+
+        <!-- below cleans the modal upon closing -->
+         $('#modal-form').on('loaded.bs.modal', function () {
+            fillingTheModall();
         });
 
         $('#calendar').fullCalendar({
@@ -74,6 +79,7 @@
                 $('#save-change-event').attr('action',"/event/change");
                 $('.modal').find('#eventName').val(event.title);
                 $('.modal').find('#eventComment').val(event.description);
+                fillingTheModal();
                 $('.modal').find('#event.activityCategory').val(event.activityCategory);
                 $('.modal').find('#eventStartDate').val(event.start);
                 $('.modal').find('#eventEndDate').val(event.end);
@@ -147,11 +153,7 @@
 <!-- below function hides all modal options -->
     function hideAll() {
         $("#eventActivity, #medicationActivity ").css("display", "none");
-    }
 
-<!-- below function hides all modal options -->
-    function fillingTheModall() {
-        $("#eventActivity, #medicationActivity ").css("display", "none");
     }
 
 <!-- below function fills the modal with event info if it exist -->
@@ -181,9 +183,9 @@
                             <span style="margin-left:2em">
                             <label class="col-xs-4" for="selectie" control-label>Categorie</label>
                                 <select name="activity.activityCategory" id="selectie" >
-                                    <option value="Huishouden">Huishouden</option>
-                                    <option value="Medisch">Medisch</option>
+                                <option disabled selected="selected">Selecteer categorie</option>
                                     <option value="Vrije tijd" >Vrije tijd</option>
+                                    <option value="Medisch">Medisch</option>
                                 </select>
                             </span>
                         </div>
