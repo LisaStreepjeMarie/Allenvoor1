@@ -16,13 +16,13 @@
         </p>
         <h1>Overzicht medicatie:</h1>
         <table>
-          <tr><th>Naam</th><th>Hoeveelheid</th><th>Beschrijving</th></tr>
+          <tr><td><th>Naam</th><th>Hoeveelheid</th><th>Beschrijving</th></th></th>
             <c:forEach items="${medicationList}" var="medication">
                 <tr>
-                    <td><a href="/medication/select/<c:out value="${medication.medicationId}" />"</td>
-                    <td><c:out value="${medication.medicationName}" /></a></td><br>
+                    <td><a href="/medication/select/<c:out value="${medication.medicationId}" />"</a>
+                    <td><c:out value="${medication.medicationName}" /></td>
                     <td><c:out value="${medication.medicationAmount}" /></td>
-                    <td><c:out value="${medication.medicationComment}" /></td>
+                    <td><c:out value="${medication.medicationComment}" /></td><br>
                     <td><input class="btn btn-primary" type="submit" value="Verwijder medicatie" onclick="window.location='/medication/delete/${medication.medicationId}';" /></td>
                 </tr>
             </c:forEach>

@@ -53,14 +53,6 @@ public class MedicationController {
         }
 
         Medication medication = new Medication();
-        //event.setActivity(new Activity());
-        //model.addAttribute("teamList", teamList);
-        //model.addAttribute("event", event);
-
-        //Event event = new Event();
-        //event.setActivity(new Activity());
-        //model.addAttribute("teamList", teamList);
-        //model.addAttribute("medication", medication);
         model.addAttribute("medicationList", team.getMedicationList());
 
         return "medicationOverview";
