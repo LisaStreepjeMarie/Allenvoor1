@@ -1,10 +1,14 @@
 package com.wemakeitwork.allenvooreen.model;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "members")
@@ -13,16 +17,15 @@ public class Member implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer memberId = 0;
-    // @Column(name = "membername", unique = true)
+
     private String membername;
-    // @Column(name = "password")
+
     private String password;
-    // @Column(name = "rol")
+
     private String rol;
 
     @ManyToMany
-    // @ManyToMany(cascade = CascadeType.ALL)
-    // @JoinTable(name = "team_member", joinColumns = @JoinColumn(name = "teamMemberId"), inverseJoinColumns = @JoinColumn(name = "teamId"))
+    @JoinTable(name = "team_membername", joinColumns = @JoinColumn(name = "membername_member_id"), inverseJoinColumns = @JoinColumn(name = "team_team_id"))
     private Set<Team> teamName = new HashSet<>();
 
     public Set<Team> getTeamName() {
@@ -37,10 +40,6 @@ public class Member implements UserDetails {
         return rol;
     }
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "member_team", joinColumns = @JoinColumn(name = "member_id"), inverseJoinColumns = @JoinColumn(name = "team_id"))
-
-
     public void setRol(String rol) {
         this.rol = rol;
     }
@@ -49,7 +48,6 @@ public class Member implements UserDetails {
     public Collection<GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-        System.out.println(authorities);
         return authorities;
     }
 
@@ -89,26 +87,28 @@ public class Member implements UserDetails {
     public String getPassword() {
         return password;
     }
-    public void setPassword(String password) {
-        this.password = password;
+
+    public String setPassword(String password) {
+        if (password != null && password.isEmpty()) {
+            return null;
+        } else {
+            return this.password = password;
+        }
     }
 
     public String getMembername() {
         return membername;
     }
 
-    public void setMembername(String membername) {
-        this.membername = membername;
+    public String setMembername(String membername) {
+        if (membername != null && membername.isEmpty()) {
+            return null;
+        } else {
+            return this.membername = membername;
+        }
     }
 
-//    @Override
-//    public String toString() {
-//        return "Member{" +
-//                "memberId=" + memberId +
-//                ", membername='" + membername + '\'' +
-//                ", password='" + password + '\'' +
-//                ", rol='" + rol + '\'' +
-//                ", teamName=" + teamName +
-//                '}';
-//    }
+    public void removeTeamFromMember(Team team){
+        teamName.remove(team);
+    }
 }

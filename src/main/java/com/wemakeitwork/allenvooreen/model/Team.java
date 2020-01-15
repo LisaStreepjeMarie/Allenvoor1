@@ -1,25 +1,36 @@
 package com.wemakeitwork.allenvooreen.model;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
-// @Table(name = "team")
+@JsonPropertyOrder(value = {"id","name"}, alphabetic = true)
+// Ignoring 'hibernateLazyInitializer' & 'handler' is needed to prevent infinite recursion
+// when calling the ObjectMapper to create a JSON
+@JsonIgnoreProperties({ "membername", "eventList", "hibernateLazyInitializer", "handler" })
 public class Team {
+    public Team() {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("id")
     private int teamId = 0;
 
-    // @Column(name = "teamName")
+    @JsonProperty("name")
     private String teamName;
 
-    @ManyToMany
-    // @ManyToMany(cascade = CascadeType.ALL)
-    // @JoinTable(name = "team_member", joinColumns = @JoinColumn(name = "memberId"), inverseJoinColumns = @JoinColumn(name = "teamMemberId"))
-    public Set<Member> membername = new HashSet<>();
+    @ManyToMany(mappedBy = "teamName")
+    private Set<Member> membername = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "team")
+    List<Event> eventList = new ArrayList<>();
 
     public Set<Member> getMembername() {
         return membername;
@@ -49,12 +60,19 @@ public class Team {
         }
     }
 
-    /* @Override
-    public String toString() {
-        return "Team{" +
-                "teamId=" + teamId +
-                ", teamName='" + teamName + '\'' +
-                ", membername=" + membername +
-                '}';
-    } */
+    public List<Event> getEventList() {
+        return eventList;
+    }
+
+    public void setEventList(Event event) {
+        this.eventList.add(event);
+    }
+
+    public void addTeamMember(Member member){
+        membername.add(member);
+    }
+
+    public void removeTeamMember(Member member){
+        membername.remove(member);
+    }
 }

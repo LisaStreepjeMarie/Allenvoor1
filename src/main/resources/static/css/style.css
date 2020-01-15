@@ -139,17 +139,11 @@ th, td {
 	line-height:135%;
 }
 
-p {}
-.text {
-	line-height:135%;
-    font-family: "Open Sans", Arial, Helvetica, sans-serif;
-    font-size: 12pt;
-    color: #555555;
+.nav-link[data-toggle].collapsed:after {
+    content: "▾";
 }
-
-a {
-    color: #555555;
-	text-decoration: none
+.nav-link[data-toggle]:not(.collapsed):after {
+    content: "▴";
 }
 a:visited {
 	color: #0e4171;

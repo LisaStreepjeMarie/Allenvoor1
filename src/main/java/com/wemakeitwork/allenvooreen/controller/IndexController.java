@@ -8,7 +8,7 @@ public class IndexController {
 
     @GetMapping("/")
     public String index() {
-        return "index";
+        return "redirect:/home";
     }
 
     @GetMapping("/login")
@@ -19,10 +19,5 @@ public class IndexController {
     @GetMapping("/logout")
     public String logout() {
         return "/logout";
-    }
-
-    @GetMapping("/calendar")
-    public String calendar() {
-        return "calendar";
     }
 }
