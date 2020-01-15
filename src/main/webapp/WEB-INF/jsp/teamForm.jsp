@@ -27,7 +27,7 @@
                     <tr>
                         <td>Groepslid:</td>
                         <td>
-                            <form:input path="membername" value="${members.membername}" /></form>
+                            <form:input path="allMembersInThisTeamSet" value="${members.membername}" /></form>
                         </td>
                     </tr>
                     <tr><td colspan="2"><input class="btn btn-primary" type="submit" value="Bewaar" /></td></tr>

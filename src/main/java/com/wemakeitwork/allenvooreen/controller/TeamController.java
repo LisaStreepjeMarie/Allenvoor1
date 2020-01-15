@@ -104,7 +104,7 @@ public class TeamController {
     @PostMapping("/team/new")
     protected String saveOrUpdateTeam(HttpServletRequest request) {
         String teamName = request.getParameter("teamName");
-        String membername = request.getParameter("membername");
+        String membername = request.getParameter("allMembersInThisTeamSet");
         Team team = new Team();
         team.setTeamName(teamName);
         Member member = memberRepository.findByMembername(membername).get();
