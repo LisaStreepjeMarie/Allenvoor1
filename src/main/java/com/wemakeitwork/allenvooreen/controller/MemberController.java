@@ -2,6 +2,9 @@ package com.wemakeitwork.allenvooreen.controller;
 
 import com.wemakeitwork.allenvooreen.model.Member;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
+import com.wemakeitwork.allenvooreen.service.MemberService;
+import com.wemakeitwork.allenvooreen.service.SecurityService;
+import com.wemakeitwork.allenvooreen.validator.MemberValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -22,6 +25,15 @@ public class MemberController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private MemberService memberService;
+
+    @Autowired
+    private SecurityService securityService;
+
+    @Autowired
+    private MemberValidator memberValidator;
 
     @GetMapping("member/current")
     protected String showMember(Model model, Principal principal){
@@ -53,6 +65,19 @@ public class MemberController {
         return "newMember";
     }
 
+    // voorbeeldcode nog toepassen?
+    /* @GetMapping("/login")
+    public String login(Model model, String error, String logout) {
+        if (error != null)
+            model.addAttribute("error", "Your username and password is invalid.");
+
+        if (logout != null)
+            model.addAttribute("message", "You have been logged out successfully.");
+
+        return "login";
+    } */
+
+
     @GetMapping("/member/delete")
     public String deleteMember(Principal principal) {
         Optional<Member> member = memberRepository.findByMembername(principal.getName());
@@ -61,19 +86,27 @@ public class MemberController {
     }
 
     @PostMapping("/member/new")
-    protected String saveOrUpdateMember(@ModelAttribute("member") @Valid Member member, BindingResult result) {
+    /* protected String saveOrUpdateMember(@ModelAttribute("member") @Valid Member member, BindingResult result) {
         if (result.hasErrors()) {
             return "newMember";
         }
         else {
-
-
             //TODO: check of aan te maken loginnaam al bestaat (gooit nu whitelabel 500 met SQL constraint error)
             member.setPassword(passwordEncoder.encode(member.getPassword()));
             member.setRol("gebruiker");
             memberRepository.save(member);
             return "redirect:/member/new";
         }
+    } */
+    public String saveOrUpdateMember(@ModelAttribute("userForm") Member member, BindingResult result) {
+        memberValidator.validate(member, result);
+        if (result.hasErrors()) {
+            return "newMember";
+        }
+        memberService.save(member);
+        // securityService.autoLogin(member.getUsername(), member.getPasswordConfirm());
+        securityService.autoLogin(member.getMembername(), member.getPasswordConfirm());
+        return "redirect:/member/new";
     }
 
     @PostMapping("/member/change")
@@ -91,6 +124,7 @@ public class MemberController {
             return "redirect:/logout";
         }
     }
+
 }
 
 
