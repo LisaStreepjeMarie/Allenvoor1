@@ -29,7 +29,7 @@ public class Team {
     @ManyToMany(mappedBy = "teamName")
     private Set<Member> membername = new HashSet<>();
 
-    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "team")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "team")
     List<Event> eventList = new ArrayList<>();
 
     @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "team")
@@ -74,6 +74,10 @@ public class Team {
 
     public void addTeamMember(Member member){
         membername.add(member);
+    }
+
+    public void removeTeamMember(Member member){
+        membername.remove(member);
     }
 
     public List<Medication> getMedicationList() {

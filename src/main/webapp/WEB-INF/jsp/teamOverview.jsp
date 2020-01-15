@@ -2,12 +2,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<html>
+<html xmlns:c="">
     <head>
         <title>Overzicht groepen</title>
         <link href="/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
     </head>
     <body class="webpage">
+
         <div id="container" class="ml-4 mt-4">
             <p>
                 <input class="btn btn-primary" type="submit" value="Home" onclick="window.location='/';" />
@@ -25,7 +26,7 @@
                             <a href="/team/select/<c:out value="${member.membername}" />"><c:out value="${member.membername}" /></a><br />
                         </c:forEach>
                         </td>
-                        <td><input class="btn btn-primary" type="submit" value="Verwijder groep" onclick="window.location='/team/delete/${team.teamId}';" /></td>
+                        <td><input class="btn btn-primary" type="submit" value="Verwijder groep" onclick="window.location='/team/delete/${team.teamId}'" /></td>
                     </tr>
                 </c:forEach>
             </table>
