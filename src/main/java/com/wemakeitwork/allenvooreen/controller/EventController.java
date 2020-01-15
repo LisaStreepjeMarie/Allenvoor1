@@ -1,9 +1,6 @@
 package com.wemakeitwork.allenvooreen.controller;
 
-import com.wemakeitwork.allenvooreen.model.Event;
-import com.wemakeitwork.allenvooreen.model.Medication;
-import com.wemakeitwork.allenvooreen.model.MedicationActivity;
-import com.wemakeitwork.allenvooreen.model.Team;
+import com.wemakeitwork.allenvooreen.model.*;
 import com.wemakeitwork.allenvooreen.repository.ActivityRepository;
 import com.wemakeitwork.allenvooreen.repository.EventRepository;
 import com.wemakeitwork.allenvooreen.repository.MedicationRepository;
@@ -47,6 +44,14 @@ public class EventController {
     public String deleteEvent(@PathVariable("eventId") final Integer eventId,
                               @PathVariable("activityId") final Integer activityId) {
         Team team = (Team) httpSession.getAttribute("team");
+
+        Optional<Activity> activity = activityRepository.findById(activityId);
+
+        if (activity.get() instanceof MedicationActivity){
+            Medication medication = ((MedicationActivity) activity.get()).getMedication();
+            assert medication != null;
+            medication.removalActivityAddedAmount(((MedicationActivity) activity.get()).getTakenMedication());
+        }
 
         eventRepository.deleteById(eventId);
         try {

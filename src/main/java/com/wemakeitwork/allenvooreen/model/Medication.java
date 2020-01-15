@@ -77,4 +77,8 @@ public class Medication {
     public void setTeam(Team team) {
         this.team = team;
     }
+
+    public void removalActivityAddedAmount(Integer integer){
+        this.medicationAmount += integer;
+    }
 }
