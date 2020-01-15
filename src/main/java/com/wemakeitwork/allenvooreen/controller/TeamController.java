@@ -37,7 +37,7 @@ public class TeamController {
     @GetMapping("/team/all")
     protected String showTeamsPerMember(Model model, Principal principal){
         Set<Team> teamList = null;
-        Optional<Member> member = memberRepository.findByMembername(principal.getName());
+        Optional<Member> member = memberRepository.findByMemberName(principal.getName());
         if(member.isPresent()){
             teamList = teamList(member.get().getMemberId());
         }
@@ -107,7 +107,7 @@ public class TeamController {
         String membername = request.getParameter("allMembersInThisTeamSet");
         Team team = new Team();
         team.setTeamName(teamName);
-        Member member = memberRepository.findByMembername(membername).get();
+        Member member = memberRepository.findByMemberName(membername).get();
         member.getTeamName().add(team);
         team.getAllMembersInThisTeamSet().add(member);
         teamRepository.save(team);
@@ -130,7 +130,7 @@ public class TeamController {
         if (result.hasErrors()) {
             return "teamData";
         } else {
-            Optional<Member> memberOpt = memberRepository.findByMembername(teamMemberDTO.getTeamMemberName());
+            Optional<Member> memberOpt = memberRepository.findByMemberName(teamMemberDTO.getTeamMemberName());
             System.out.println("member uit DTO:   " + teamMemberDTO.getTeamMemberName());
             Team team = teamRepository.getOne(teamMemberDTO.getTeamId());
             System.out.println("teamId uit DTO:   " + teamMemberDTO.getTeamId());

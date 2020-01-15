@@ -22,7 +22,7 @@
             <table>
                 <tr>
                     <td>
-                        <form:input path="membername" class="form-control" placeholder= "Gebruikersnaam" />
+                        <form:input path="memberName" class="form-control" placeholder= "Gebruikersnaam" />
                     </td>
                 </tr>
                 <tr>

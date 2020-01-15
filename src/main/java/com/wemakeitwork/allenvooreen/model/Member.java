@@ -18,7 +18,7 @@ public class Member implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer memberId = 0;
 
-    private String membername;
+    private String memberName;
 
     private String password;
 
@@ -53,7 +53,7 @@ public class Member implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.getMembername();
+        return this.getMemberName();
     }
 
     @Override
@@ -96,15 +96,15 @@ public class Member implements UserDetails {
         }
     }
 
-    public String getMembername() {
-        return membername;
+    public String getMemberName() {
+        return memberName;
     }
 
-    public String setMembername(String membername) {
-        if (membername != null && membername.isEmpty()) {
+    public String setMemberName(String memberName) {
+        if (memberName != null && memberName.isEmpty()) {
             return null;
         } else {
-            return this.membername = membername;
+            return this.memberName = memberName;
         }
     }
 

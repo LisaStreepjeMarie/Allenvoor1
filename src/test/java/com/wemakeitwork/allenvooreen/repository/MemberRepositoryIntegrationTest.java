@@ -21,16 +21,16 @@ public class MemberRepositoryIntegrationTest {
     public void whenFindByMemberName_thenReturnMember() {
         // given
         Member testMember = new Member();
-        testMember.setMembername("testMember");
+        testMember.setMemberName("testMember");
         testMember.setMemberId(3);
         memberRepository.save(testMember);
 
         // when
-        Optional<Member> result = memberRepository.findByMembername(testMember.getMembername());
+        Optional<Member> result = memberRepository.findByMemberName(testMember.getMemberName());
 
         // then
-        result.ifPresent(member -> Assertions.assertThat(member.getMembername())
-                .isEqualTo(testMember.getMembername()));
+        result.ifPresent(member -> Assertions.assertThat(member.getMemberName())
+                .isEqualTo(testMember.getMemberName()));
     }
 
 }
