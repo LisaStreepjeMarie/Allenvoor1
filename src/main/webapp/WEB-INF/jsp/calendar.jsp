@@ -10,6 +10,7 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
 
+    <!-- Order is important -->
     <link href="/webjars/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet" />
     <link href="/webjars/fullcalendar/3.9.0/fullcalendar.print.min.css" rel="stylesheet" media='print' />
     <link href="/webjars/Eonasdan-bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
@@ -22,6 +23,7 @@
     <link href="/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
     <script src="/webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
+    <!-- this script loads FullCalendar -->
     <script type="text/javascript">
     $(document).ready(function() {
 
