@@ -40,13 +40,7 @@
        <div class="col-10">
            <div id="calendar" style="width: 45rem;"></div>
            <div id='datepicker'></div>
-           <c:if test="${not empty team.teamName}">
-               <div class="badge badge-primary text-wrap" style="width: 45rem; height: 4rem;">
-                   <p>
-                   <h5>Agenda van de groep: ${team.teamName}</h5>
-                   </p>
-               </div>
-           </c:if>
+
        </div>
     </div>
 </div>

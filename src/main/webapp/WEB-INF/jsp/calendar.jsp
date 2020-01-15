@@ -210,5 +210,12 @@
     </div><!-- /.modal -->
 </form:form>
   <jsp:include page="home.jsp" />
+<c:if test="${not empty team.teamName}">
+    <div class="badge badge-primary text-wrap" style="width: 45rem; height: 4rem; margin-left:308px;">
+        <p>
+        <h5>Agenda van de groep: ${team.teamName}</h5>
+        </p>
+    </div>
+</c:if>
 </body>
 </html>

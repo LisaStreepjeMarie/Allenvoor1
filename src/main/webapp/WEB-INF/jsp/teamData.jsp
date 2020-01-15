@@ -17,7 +17,7 @@
         <h1>Wijzig gegevens groep</h1>
         <form:form action="/team/change" modelAttribute="team">
         <form:input path="teamId" type="hidden" />
-        <form:input path="membername" type="hidden" />
+        <form:input path="allMembersInThisTeamSet" type="hidden" />
             <table>
                 <tr>
                     <td>Groepsnaam:</td>
@@ -29,8 +29,8 @@
                 <tr>
                      <td>Groepslid:</td>
                      <td>
-                        <c:forEach items="${team.membername}" var="member">
-                             <c:out value="${member.membername}" /><br />
+                        <c:forEach items="${team.allMembersInThisTeamSet}" var="member">
+                             <c:out value="${member.memberName}" /><br />
                          </c:forEach>
                      </td>
                  </tr>

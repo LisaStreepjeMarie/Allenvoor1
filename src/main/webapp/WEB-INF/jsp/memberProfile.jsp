@@ -67,7 +67,7 @@
                     </p>
                 </div>
                 <div class="mt-3 col-12">
-                    <h1>Hallo ${currentmember.membername} !</h1>
+                    <h1>Hallo ${currentmember.memberName} !</h1>
                     <h5>Wijzig hieronder je gebruikersnaam of verwijder je profiel</h5>
                 </div>
                 <div class="mt-3 col-12 form-inline toolbox-top clearfix">
@@ -77,7 +77,7 @@
                             <tr>
                                 <td>
                                     <h7>Gebruikersnaam:
-                                        <form:input path="membername" value="${members.membername}" /></form> </h7>
+                                        <form:input path="memberName" value="${members.memberName}" /></form> </h7>
                                     <input type="submit" class= "btn btn-primary" value="Wijzigen" />
                                 </td>
                             </tr>
