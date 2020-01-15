@@ -33,15 +33,11 @@
             activitySelection();
         });
 
+        <!-- below cleans the modal upon closing -->
         $('#modal-form').on("hide.bs.modal", function() {
             console.log("closingclosing");
             $("#selectie").val("Selecteer categorie");
             hideAll();
-        });
-
-        <!-- below cleans the modal upon closing -->
-         $('#modal-form').on('loaded.bs.modal', function () {
-            fillingTheModall();
         });
 
         $('#calendar').fullCalendar({
@@ -79,8 +75,12 @@
                 $('#save-change-event').attr('action',"/event/change");
                 $('.modal').find('#eventName').val(event.title);
                 $('.modal').find('#eventComment').val(event.description);
+                $('.modal').find('#selectie').val(event.activity.category);
+
+                <!-- below shows the modal based on the event.activity.category -->
                 fillingTheModal();
-                $('.modal').find('#event.activityCategory').val(event.activityCategory);
+                $('.modal').find('#eventStartDate').val(event.start);
+                $('.modal').find('#eventEndDate').val(event.end);
                 $('.modal').find('#eventStartDate').val(event.start);
                 $('.modal').find('#eventEndDate').val(event.end);
                 document.getElementById("modal-title").innerHTML = "Wijzig of verwijder afspraak";
@@ -158,10 +158,11 @@
 
 <!-- below function fills the modal with event info if it exist -->
     function fillingTheModal() {
-        if ($('.modal').find('#event.activityCategory').val() == "Medisch")
-            $("#medicationActivity").show();
+        if ($('.modal').find('#selectie').val() == "Medisch")
+            console.log("hallo");
         else
             $("#eventActivity").show();
+            console.log("heeeey lisa");
     }
      </script>
 </head>
