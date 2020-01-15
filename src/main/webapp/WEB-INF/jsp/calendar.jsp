@@ -63,7 +63,7 @@
                 <!--pass eventId to a <button> onclick action: -->
                 $('#delete-event').attr('onclick',"window.location='/event/delete/" + event.id + "/" + event.activity.id + "'");
                 $("#eventId").val(event.id);
-                $('#modal-form').attr('action',"/event/change/" + event.activity.id + "/" + event.team.id);
+                $('#modal-form').attr('action',"/event/change/" + event.activity.id);
                 $('#save-change-event').attr('action',"/event/change");
                 $('.modal').find('#eventName').val(event.title);
                 $('.modal').find('#eventComment').val(event.description);
@@ -139,6 +139,11 @@
     }
 <!-- below function hides all modal options -->
     function hideAll() {
+        $("#eventActivity, #medicationActivity ").css("display", "none");
+    }
+
+<!-- below function hides all modal options -->
+    function fillingTheModall() {
         $("#eventActivity, #medicationActivity ").css("display", "none");
     }
      </script>

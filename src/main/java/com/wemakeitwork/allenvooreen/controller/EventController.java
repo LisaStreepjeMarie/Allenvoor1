@@ -76,32 +76,37 @@ public class EventController {
             }
 
             event.getActivity().setActivityName(event.getEventName());
+
             if(event.getActivity() instanceof MedicationActivity){
-                System.out.println("Take your chill pills");
                 Optional<Medication> medication = medicationRepository.findById(medicationActivity.getMedication().getMedicationId());
                 medication.ifPresent(value -> value.setTakenMedications(medicationActivity));
-            }else {
-                System.out.println("dit is een normale activiteit");
             }
             eventRepository.save(event);
             return "redirect:/calendar/" + team.getTeamId();
         }
     }
 
-    @PostMapping("/event/change/{activityId}/{teamId}")
-    protected String changeEvent(@ModelAttribute("event") Event event,
-                                 @ModelAttribute("teamId") Integer teamId,
-                                 @PathVariable("activityId") final Integer activityId, BindingResult result) {
+    @PostMapping("/event/change/{activityId}")
+    protected String changeEvent(@ModelAttribute("event") Event event, @ModelAttribute("medicationActivity") MedicationActivity
+                                 medicationActivity, @PathVariable("activityId") final Integer activityId, BindingResult result) {
         if (result.hasErrors()) {
             return "calendar";
         } else {
-            event.getActivity().setActivityName(event.getEventName());
-            event.getActivity().setActivityId(activityId);
-
-            //finding/setting the team corresponding with the event
-            Team team = teamRepository.getOne(teamId);
+            System.out.println(activityId);
+            Team team = (Team) httpSession.getAttribute("team");
             event.setTeam(team);
 
+            if (event.getActivity().getActivityCategory().equals("Medisch")){
+                event.setActivity(medicationActivity);
+            }
+
+            event.getActivity().setActivityId(activityId);
+            event.getActivity().setActivityName(event.getEventName());
+
+            if(event.getActivity() instanceof MedicationActivity){
+                Optional<Medication> medication = medicationRepository.findById(medicationActivity.getMedication().getMedicationId());
+                medication.ifPresent(value -> value.setTakenMedications(medicationActivity));
+            }
             eventRepository.save(event);
             return "redirect:/calendar/" + team.getTeamId();
         }
