@@ -5,9 +5,9 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Activity</title>
 </head>
 <body>
+  <jsp:include page="newEvent.jsp" />
 <h1>Voer de activiteit in!</h1>
 <br>
 

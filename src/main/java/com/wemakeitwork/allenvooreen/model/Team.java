@@ -13,7 +13,7 @@ import java.util.Set;
 @JsonPropertyOrder(value = {"id","name"}, alphabetic = true)
 // Ignoring 'hibernateLazyInitializer' & 'handler' is needed to prevent infinite recursion
 // when calling the ObjectMapper to create a JSON
-@JsonIgnoreProperties({ "membername", "eventList", "hibernateLazyInitializer", "handler" })
+@JsonIgnoreProperties({ "membername", "eventList", "hibernateLazyInitializer", "handler", "medicationList" })
 public class Team {
     public Team() {
     }
@@ -29,8 +29,19 @@ public class Team {
     @ManyToMany(mappedBy = "teamName")
     private Set<Member> membername = new HashSet<>();
 
-    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "team")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "team")
     List<Event> eventList = new ArrayList<>();
+
+    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "team")
+    List<Medication> medicationList = new ArrayList<>();
+
+    public List<Medication> getMedicationList() {
+        return medicationList;
+    }
+
+    public void setMedicationList(Medication medication) {
+        this.medicationList.add(medication);
+    }
 
     public Set<Member> getMembername() {
         return membername;
@@ -70,5 +81,9 @@ public class Team {
 
     public void addTeamMember(Member member){
         membername.add(member);
+    }
+
+    public void removeTeamMember(Member member){
+        membername.remove(member);
     }
 }
