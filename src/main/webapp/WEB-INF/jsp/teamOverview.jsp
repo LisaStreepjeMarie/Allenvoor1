@@ -22,7 +22,7 @@
                     <tr>
                         <td><a href="/team/select/<c:out value="${team.teamId}" />"><c:out value="${team.teamName}" /></a></td>
                         <td>
-                        <c:forEach items="${team.membername}" var="member">
+                        <c:forEach items="${team.allMembersInThisTeamSet}" var="member">
                             <a href="/team/select/<c:out value="${member.membername}" />"><c:out value="${member.membername}" /></a><br />
                         </c:forEach>
                         </td>
