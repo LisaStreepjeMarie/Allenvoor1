@@ -39,8 +39,6 @@ public class CalendarController {
         httpSession.setAttribute("team", team);
 
         Set<Team> teamList = null;
-        Optional<Member> member = memberRepository.findByMembername(principal.getName());
-
         Optional<Member> member = memberRepository.findByMemberName(principal.getName());
         if(member.isPresent()){
             teamList = member.get().getTeamName();
