@@ -4,23 +4,27 @@
 
 <html>
     <head>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-            integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <link href="../css/style.css" rel="stylesheet" type="text/css"/>
         <title>Overzicht groepen</title>
+        <link href="/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
     </head>
     <body class="webpage">
-        <div id="container">
+        <div id="container" class="ml-4 mt-4">
             <p>
+                <input class="btn btn-primary" type="submit" value="home" onclick="window.location='/';" />
+                <input class="btn btn-primary" type="submit" value="Al je groepen" onclick="window.location='/team/all';" />
                 <input class="btn btn-primary" type="submit" value="Logout" onclick="window.location='/logout';" />
             </p>
             <h1>Overzicht groepen</h1>
             <table>
-                <tr><td>Groep</td><td>Deelnemer</td><td></td></tr>
-                <c:forEach items="${allTeams}" var="team">
+                <tr><th>Groep</th><th>Deelnemer</th><th></th></tr>
+                <c:forEach items="${teamList}" var="team">
                     <tr>
                         <td><a href="/team/select/<c:out value="${team.teamId}" />"><c:out value="${team.teamName}" /></a></td>
-                        <td><a href="/team/select/<c:out value="${member.memberId}" />"><c:out value="${member.membername}" /></a></td>
+                        <td>
+                        <c:forEach items="${team.membername}" var="member">
+                            <a href="/team/select/<c:out value="${member.membername}" />"><c:out value="${member.membername}" /></a><br />
+                        </c:forEach>
+                        </td>
                         <td><input class="btn btn-primary" type="submit" value="Verwijder groep" onclick="window.location='/team/delete/${team.teamId}';" /></td>
                     </tr>
                 </c:forEach>
