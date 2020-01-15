@@ -9,6 +9,7 @@
         <title>Afsprakenoverzicht</title>
     </head>
     <body class="webpage">
+    <div class="container"
     <div id="container">
         <p>
             <input class="btn btn-primary" type="submit" value="Logout" onclick="window.location='/logout';" />

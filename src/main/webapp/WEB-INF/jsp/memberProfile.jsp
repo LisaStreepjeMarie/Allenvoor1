@@ -13,6 +13,7 @@
         <link href="/webjars/font-awesome/5.0.6/web-fonts-with-css/css/fontawesome-all.min.css" rel='stylesheet'>
         <script src="/webjars/font-awesome/5.0.6/on-server/js/fontawesome-all.min.js"></script>
         <script src="/webjars/font-awesome/5.0.6/on-server/js/fa-solid.min.js"></script>
+        <link href="../css/style.css" rel="stylesheet" type="text/css"/>
         <title>Overzicht gebruiker</title>
 <body>
     <div class="container-fluid">

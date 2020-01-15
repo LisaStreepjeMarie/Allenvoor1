@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
+
 <html xmlns:form="http://www.w3.org/1999/xhtml" xmlns:c="">
 <head>
     <meta charset='utf-8' />
@@ -11,6 +12,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
 
     <link href="/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
+        <link href="../css/style.css" rel="stylesheet" type="text/css"/>
 <body class="webpage">
 <div class="container-fluid" >
     <div class="row" >
