@@ -14,9 +14,9 @@
             <input class="btn btn-primary" type="submit" value="Home" onclick="window.location='/';" />
             <input class="btn btn-primary" type="submit" value="Logout" onclick="window.location='/logout';" />
         </p>
-        <h1>Overzicht medicatie:</h1>
+        <h1>Overzicht medicatie ${team.teamName}:</h1>
         <table>
-          <tr><td><th>Naam</th><th>Hoeveelheid</th><th>Beschrijving</th></th></th>
+          <tr><th><th>Naam</th><th>Hoeveelheid</th><th>Beschrijving</th></th>
             <c:forEach items="${medicationList}" var="medication">
                 <tr>
                     <td><a href="/medication/select/<c:out value="${medication.medicationId}" />"</a>

@@ -61,7 +61,8 @@ public class MedicationController {
     @GetMapping("/medication/delete/{medicationId}")
     public String deleteTeam(@PathVariable("medicationId") final Integer medicationId) {
         medicationRepository.deleteById(medicationId);
-        return "medicationOverview";
+        Team team = (Team) httpSession.getAttribute("team");
+        return "redirect:/medication/"+ team.getTeamId();
     }
 
     @PostMapping("/medication/new")
@@ -72,7 +73,7 @@ public class MedicationController {
             Team team = (Team) httpSession.getAttribute("team");
             medication.setTeam(team);
             medicationRepository.save(medication);
-            return "redirect:/medication/new";
+            return "redirect:/medication/"+ team.getTeamId();
         }
     }
 }
