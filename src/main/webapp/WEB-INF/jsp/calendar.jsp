@@ -73,7 +73,6 @@
                 $("#eventId").val(event.id);
                 $('#modal-form').attr('action',"/event/change/" + event.activity.id);
                 $('#save-change-event').attr('action',"/event/change");
-                $('.modal').find('#eventName').val(event.title);
                 $('.modal').find('#eventComment').val(event.description);
                 $('.modal').find('#selectie').val(event.activity.category);
 
@@ -81,47 +80,12 @@
                 fillingTheModal();
                 $('.modal').find('#eventStartDate').val(event.start);
                 $('.modal').find('#eventEndDate').val(event.end);
-                $('.modal').find('#eventStartDate').val(event.start);
-                $('.modal').find('#eventEndDate').val(event.end);
                 document.getElementById("modal-title").innerHTML = "Wijzig of verwijder afspraak";
                 document.getElementById("save-change-event").innerHTML = "Wijzig afspraak";
                 $("#delete-event").show();
                 $('.modal').modal('show');
             },
-            eventDrop: function( event, delta, revertFunc, jsEvent, ui, view ) {
-                console.log(event.title + ' was dragged to ' + event.description);
-                console.log("delta is: " + delta);
-                console.log("event is: " + event);
-                console.log("revert is: " + revertFunc);
-                console.log("jsEvent is: " + jsEvent);
-                $.ajax({
-                  type: "POST",
-                  url: "/event/change/2",
-                  data: {
-                        id: "2",
-                        title: "Nieuwe ajax titel",
-                        description: "Nieuwe ajax beschrijving",
-                        start: "1578355200000",
-                        end: "1578441600000"
-                  },
-                  dataType: "json",
-                  data: JSON.stringify({
-                     id: "2",
-                     title: "Nieuwe ajax titel",
-                     description: "Nieuwe ajax beschrijving",
-                     start: "1578355200000",
-                     end: "1578441600000"
-                  }),
-                  success: function(response) {
-                    console.log("Ajax posted succesful!: ");
-                    console.log(response);
-                  },
-                  error: function(response) {
-                    console.log("FAIL: ");
-                    console.log(response);
-                  }
-                });
-            },
+
             eventDragStop: function(info) {
             },
             eventResize: function(event, delta, revertFunc) {
@@ -146,23 +110,23 @@
 <!-- below function shows the correct modal form based on the activity selection -->
     function activitySelection() {
         if ($("#selectie").val() === "Medisch")
-            $("#medicationActivity").show();
+            $("#eventName, #medicationActivity").show();
         else
-            $("#eventActivity").show();
+            $("#eventName, #eventActivity").show();
     }
 <!-- below function hides all modal options -->
     function hideAll() {
-        $("#eventActivity, #medicationActivity ").css("display", "none");
+        $("#eventActivity, #medicationActivity, #eventName").css("display", "none");
 
     }
 
 <!-- below function fills the modal with event info if it exist -->
+<!-- this function doesnt work properly yet. Work in progress -->
     function fillingTheModal() {
         if ($('.modal').find('#selectie').val() == "Medisch")
             console.log("hallo");
         else
-            $("#eventActivity").show();
-            console.log("heeeey lisa");
+            $("#eventName, #eventActivity").show();
     }
      </script>
 </head>
@@ -192,17 +156,17 @@
                         </div>
                     </div>
                  </div>
+                   <div class="row">
+                        <div class="col-12">
+                             <label class="col-4" for="eventName">Onderwerp</label>
+                              <input type="text" name="eventName" id="eventName" />
+                              <input type="hidden" name="eventId" id="eventId" />
+                              <input type="hidden" name="teamId" id="team.teamId" />
+                         </div>
+                   </div>
 
                  <!-- event with activity modal input fields -->
                    <div class="modal-body" id="eventActivity">
-                    <div class="row">
-                        <div class="col-12">
-                            <label class="col-4" for="eventName">Onderwerp</label>
-                            <input type="text" name="eventName" id="eventName" />
-                            <input type="hidden" name="eventId" id="eventId" />
-                            <input type="hidden" name="teamId" id="team.teamId" />
-                        </div>
-                    </div>
                     <div class="row">
                         <div class="col-12">
                             <label class="col-4" for="eventComment">Beschrijving</label>
@@ -230,24 +194,16 @@
                  <!-- event with MedicationActivity modal input fields -->
                    <div class="modal-body" id="medicationActivity">
                     <div class="row">
-                        <div class="col-12">
-                            <label class="col-4" for="eventName">Onderwerp</label>
-                            <input type="text" name="eventName" id="eventName" />
-                            <input type="hidden" name="eventId" id="eventId" />
-                            <input type="hidden" name="teamId" id="team.teamId" />
-                        </div>
-                    </div>
-                    <div class="row">
                         <div class="col-xs-12" modelAttribute="medicationActivity">
                            <span style="margin-left:2em">
                            <label class="col-xs-4" for="medication" control-label>Medicijn</label>
-                            <select name="medication.medicationId" id="medication.medicationId" >
+                                <select name="medication.medicationId" id="medication.medicationId" >
                                 <option disabled selected="selected">Kies een medicijn</option>
-                        <c:forEach var="medication" items="${medicationList}">
-                            <option value="${medication.medicationId}">${medication.medicationName}</option>
-                        </c:forEach>
+                                    <c:forEach var="medication" items="${medicationList}">
+                                        <option value="${medication.medicationId}">${medication.medicationName}</option>
+                                    </c:forEach>
                             </select>
-                            </span>
+                           </span>
                         </div>
                     </div>
                     <div class="row">
