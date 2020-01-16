@@ -85,7 +85,7 @@ public class MemberController {
         return "confirmLogout";
     }
 
-    @PostMapping("/member/new")
+    //@PostMapping("/member/new")
     /* protected String saveOrUpdateMember(@ModelAttribute("member") @Valid Member member, BindingResult result) {
         if (result.hasErrors()) {
             return "newMember";
@@ -99,7 +99,8 @@ public class MemberController {
             return "redirect:/member/new";
         }
     } */
-    public String saveOrUpdateMember(@ModelAttribute("userForm") Member member, BindingResult result) {
+    @PostMapping("/member/new")
+    public String saveOrUpdateMember(@ModelAttribute("member") Member member, BindingResult result) {
         memberValidator.validate(member, result);
         if (result.hasErrors()) {
             return "newMember";
