@@ -65,7 +65,7 @@ public class EventController {
     }
 
     @PostMapping("/event/new")
-    protected String saveOrUpdateEvent(@ModelAttribute("event") Event event, @ModelAttribute("medicationActivity")
+    protected String newEvent(@ModelAttribute("event") Event event, @ModelAttribute("medicationActivity")
             MedicationActivity medicationActivity, BindingResult result) {
         if (result.hasErrors()) {
             return "calendar";
@@ -117,7 +117,7 @@ public class EventController {
                 event.setActivity(medicationActivity);
             }
 
-            //arranging some stuff to adjust the medicaton amount from the orig activity med amount if available
+            //arranging some stuff to adjust the medication amount from the orig activity med amount if available
             int takenMedication = 0;
             Optional<Activity> activity = activityRepository.findById(activityId);
             Medication originalMedication = new Medication();
