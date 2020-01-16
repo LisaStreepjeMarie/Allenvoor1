@@ -24,7 +24,7 @@ public class MemberValidator implements Validator {
         Member member = (Member) o;
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "NotEmpty");
-        if (member.getUsername().length() < 6 || member.getUsername().length() > 32) {
+        if (member.getUsername().length() < 3 || member.getUsername().length() > 32) {
             errors.rejectValue("username", "Size.userForm.username");
         }
         if (memberService.findByMembername(member.getUsername()).isPresent()) {
