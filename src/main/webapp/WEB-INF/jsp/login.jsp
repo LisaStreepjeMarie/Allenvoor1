@@ -9,7 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="">
-        <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="${pageContext.request.contextPath}/images/favicon.ico" type="image/x-icon" />
 
         <title>Allenvooréén - Login pagina</title>
 
@@ -26,8 +26,8 @@
 
     <body class="text-center">
     <div class="container">
-        <form class="form-signin" method="post" action="/login">
-            <img class="mb-4" src="../images/LogoAllenVoorEen.png" alt="" width="300" height="228">
+        <form class="form-signin" method="post" action="${pageContext.request.contextPath}/login">
+            <img class="mb-4" src="${pageContext.request.contextPath}/images/LogoAllenVoorEen.png" alt="" width="300" height="228">
             <h1 class="h3 mb-3 font-weight-normal">Log in:</h1>
 
             <c:if test="${param.error}">
@@ -49,7 +49,7 @@
             <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
         </form>
 
-        <form class="form-signin" action="/member/new">
+        <form class="form-signin" action="${pageContext.request.contextPath}/member/new">
             <h1 class="h3 mb-3 font-weight-normal">Of registreer:</h1>
             <input name="_csrf" type="hidden" value="${_csrf.token}" />
             <button class="btn btn-lg btn-primary btn-block" type="submit">Registreer</button>

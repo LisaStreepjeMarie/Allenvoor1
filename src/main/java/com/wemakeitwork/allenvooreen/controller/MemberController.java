@@ -25,7 +25,7 @@ public class MemberController {
 
     @GetMapping("member/current")
     protected String showMember(Model model, Principal principal){
-        model.addAttribute("currentmember", memberRepository.findByMembername(principal.getName()).orElse(new Member()));
+        model.addAttribute("currentmember", memberRepository.findByMemberName(principal.getName()).orElse(new Member()));
         return "memberProfile";
     }
 
@@ -39,7 +39,7 @@ public class MemberController {
     protected String showMemberData(Model model, Principal principal) {
         model.addAttribute("member", new Member());
 
-        Optional<Member> memberOpt = memberRepository.findByMembername(principal.getName());
+        Optional<Member> memberOpt = memberRepository.findByMemberName(principal.getName());
         Member member;
         member = memberOpt.orElseGet(Member::new);
         model.addAttribute("member", member);
@@ -55,7 +55,7 @@ public class MemberController {
 
     @GetMapping("/member/delete")
     public String deleteMember(Principal principal) {
-        Optional<Member> member = memberRepository.findByMembername(principal.getName());
+        Optional<Member> member = memberRepository.findByMemberName(principal.getName());
         member.ifPresent(value -> memberRepository.delete(value));
         return "confirmLogout";
     }
@@ -67,6 +67,7 @@ public class MemberController {
         }
         else {
             //TODO: check of aan te maken loginnaam al bestaat (gooit nu whitelabel 500 met SQL constraint error)
+            System.out.println(member.getMemberName());
             member.setPassword(passwordEncoder.encode(member.getPassword()));
             member.setRol("gebruiker");
             memberRepository.save(member);
@@ -79,7 +80,7 @@ public class MemberController {
         if (result.hasErrors()) {
             return "currentMember";
         } else {
-            Optional<Member> originalMember = memberRepository.findByMembername(principal.getName());
+            Optional<Member> originalMember = memberRepository.findByMemberName(principal.getName());
             if (originalMember.isPresent()){
                 newNameMember.setPassword(originalMember.get().getPassword());
                 newNameMember.setMemberId(originalMember.get().getMemberId());

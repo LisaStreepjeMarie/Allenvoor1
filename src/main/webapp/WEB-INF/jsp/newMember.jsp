@@ -14,15 +14,15 @@
     </head>
     <body class="webpage">
         <div class="container">
-            <form class="form-signin" method="post" action="/member/new">
+            <form class="form-signin" method="post" action="${pageContext.request.contextPath}/member/new">
              <img class="mb-4" src="https://upload.wikimedia.org/wikipedia/commons/a/a4/All_for_One_Midmarket_logo.svg" alt="" width="240" height="50">
                 <h1 class="h3 mb-3 font-weight-normal">Nieuw? Meld je aan:</h1>
 
-        <form:form action="/member/new" modelAttribute="member">
+        <form:form action="${pageContext.request.contextPath}/member/new" modelAttribute="member">
             <table>
                 <tr>
                     <td>
-                        <form:input path="membername" class="form-control" placeholder= "Gebruikersnaam" />
+                        <form:input path="memberName" class="form-control" placeholder= "Gebruikersnaam" />
                     </td>
                 </tr>
                 <tr>
@@ -40,7 +40,7 @@
            </form:form>
            <tr>
             <td colspan="2">
-        <form action="/logout" method="post">
+        <form action="${pageContext.request.contextPath}/logout" method="post">
               <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
               <button class="btn btn-lg btn-primary btn-block" type="submit">Inloggen</button>
                 <p class="mt-5 mb-3 text-muted">&copy; 2019 Allenvooreen</p>

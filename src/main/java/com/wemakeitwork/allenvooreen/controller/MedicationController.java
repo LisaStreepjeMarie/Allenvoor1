@@ -1,7 +1,5 @@
 package com.wemakeitwork.allenvooreen.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wemakeitwork.allenvooreen.model.*;
 import com.wemakeitwork.allenvooreen.repository.MedicationRepository;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
@@ -47,9 +45,9 @@ public class MedicationController {
         httpSession.setAttribute("team", team);
 
         Set<Team> teamList = null;
-        Optional<Member> member = memberRepository.findByMembername(principal.getName());
+        Optional<Member> member = memberRepository.findByMemberName(principal.getName());
         if (member.isPresent()) {
-            teamList = member.get().getTeamName();
+            teamList = member.get().getAllTeamsOfMemberSet();
         }
 
         Medication medication = new Medication();

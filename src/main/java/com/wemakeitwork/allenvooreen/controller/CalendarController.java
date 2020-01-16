@@ -39,9 +39,9 @@ public class CalendarController {
         httpSession.setAttribute("team", team);
 
         Set<Team> teamList = null;
-        Optional<Member> member = memberRepository.findByMembername(principal.getName());
+        Optional<Member> member = memberRepository.findByMemberName(principal.getName());
         if(member.isPresent()){
-            teamList = member.get().getTeamName();
+            teamList = member.get().getAllTeamsOfMemberSet();
         }
 
         List<Medication> medicationList = team.getMedicationList();
@@ -62,9 +62,9 @@ public class CalendarController {
     @GetMapping("/home")
     public String calendar(Model model, Principal principal){
         Set<Team> teamList = null;
-        Optional<Member> member = memberRepository.findByMembername(principal.getName());
+        Optional<Member> member = memberRepository.findByMemberName(principal.getName());
         if(member.isPresent()){
-            teamList = member.get().getTeamName();
+            teamList = member.get().getAllTeamsOfMemberSet();
         }
         if (teamList != null) {
             model.addAttribute("teamList", teamList);
