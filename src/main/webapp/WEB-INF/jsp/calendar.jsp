@@ -55,9 +55,6 @@
                 $('#modal-form').attr('action',"${pageContext.request.contextPath}/event/new");
                 $('#save-change-event').attr('action',"${pageContext.request.contextPath}/event/new");
 
-                $('.modal').find('#eventName').val("");
-                $('.modal').find('#eventComment').val("");
-                $('.modal').find('#activity.activityCategory').val("Selecteer categorie");
                 $('.modal').find('#eventStartDate').val(start);
                 $('.modal').find('#eventEndDate').val(end);
 
@@ -84,7 +81,7 @@
                 <!-- loads the input fields with information of the clicked event -->
                 $('.modal').find('#eventName').val(event.title);
                 $('.modal').find('#eventComment').val(event.description);
-                $('.modal').find('#event.activityCategory').val("Selecteer categorie");
+                $('.modal').find('#event.activityCategory').val(event.activity.category);
                 $('.modal').find('#eventStartDate').val(event.start);
                 $('.modal').find('#eventEndDate').val(event.end);
 
