@@ -78,6 +78,7 @@
 
                 <!-- below shows the modal based on the event.activity.category -->
                 fillingTheModal();
+
                 $('.modal').find('#eventStartDate').val(event.start);
                 $('.modal').find('#eventEndDate').val(event.end);
                 document.getElementById("modal-title").innerHTML = "Wijzig of verwijder afspraak";
@@ -110,13 +111,13 @@
 <!-- below function shows the correct modal form based on the activity selection -->
     function activitySelection() {
         if ($("#selectie").val() === "Medisch")
-            $("#eventName, #medicationActivity").show();
+            $("#ShowDates, #ShowEventName, #medicationActivity").show();
         else
-            $("#eventName, #eventActivity").show();
+            $("#ShowDates, #ShowEventName, #eventActivity").show();
     }
 <!-- below function hides all modal options -->
     function hideAll() {
-        $("#eventActivity, #medicationActivity, #eventName").css("display", "none");
+        $("#ShowDates, #eventActivity, #medicationActivity, #ShowEventName").css("display", "none");
 
     }
 
@@ -126,7 +127,7 @@
         if ($('.modal').find('#selectie').val() == "Medisch")
             console.log("hallo");
         else
-            $("#eventName, #eventActivity").show();
+            $("#ShowDates, #ShowEventName, #eventActivity").show();
     }
      </script>
 </head>
@@ -156,7 +157,7 @@
                         </div>
                     </div>
                  </div>
-                   <div class="row">
+                   <div class="row" id="ShowEventName">
                         <div class="col-12">
                              <label class="col-4" for="eventName">Onderwerp</label>
                               <input type="text" name="eventName" id="eventName" />
@@ -214,6 +215,8 @@
                             </span>
                         </div>
                     </div>
+                    </div>
+                    <div class="modal-body" id="ShowDates">
                     <div class="row">
                         <div class="col-xs-12">
                         <span style="margin-left:2em">
@@ -230,7 +233,7 @@
                             </span>
                         </div>
                     </div>
-                </div>
+                    </div>
                 <div class="modal-footer">
                     <button type="button" id="delete-event" class="btn btn-danger" data-dismiss="modal" >Verwijder Afspraak</button>
                     <button type="button" class="btn btn-light" data-dismiss="modal">Sluiten</button>
