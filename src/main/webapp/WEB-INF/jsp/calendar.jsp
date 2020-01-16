@@ -37,6 +37,7 @@
         $('#modal-form').on("hide.bs.modal", function() {
             console.log("closingclosing");
             $("#selectie").val("Selecteer categorie");
+            $('#modal-form').trigger("reset");
             hideAll();
         });
 
@@ -172,22 +173,6 @@
                         <div class="col-12">
                             <label class="col-4" for="eventComment">Beschrijving</label>
                             <input type="text" name="eventComment" id="eventComment" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                        <span style="margin-left:2em">
-                            <label class="col-xs-4" for="eventStartDate">Datum</label>
-                            <input type="text" name="eventStartDate" id="eventStartDate" />
-                        </span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <span style="margin-left:2em">
-                            <label class="col-xs-4" for="eventEndDate">EindDatum</label>
-                            <input type="text" name="eventEndDate" id="eventEndDate" />
-                            </span>
                         </div>
                     </div>
                 </div>
