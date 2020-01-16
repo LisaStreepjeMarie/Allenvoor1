@@ -101,14 +101,15 @@ public class MemberController {
     } */
     @PostMapping("/member/new")
     public String saveOrUpdateMember(@ModelAttribute("member") Member member, BindingResult result) {
+        System.out.println("is er output? " + member.getMemberName());
         memberValidator.validate(member, result);
         if (result.hasErrors()) {
             return "newMember";
         } else {
             member.setPassword(passwordEncoder.encode(member.getPassword()));
             member.setRol("gebruiker");
-            // memberRepository.save(member);
-            memberService.save(member);
+            memberRepository.save(member);
+            // memberService.save(member);
             // securityService.autoLogin(member.getUsername(), member.getPasswordConfirm());
 
             return "redirect:/member/new";
