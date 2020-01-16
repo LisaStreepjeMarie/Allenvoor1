@@ -1,7 +1,4 @@
 package com.wemakeitwork.allenvooreen.controller;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import com.wemakeitwork.allenvooreen.model.Activity;
 import com.wemakeitwork.allenvooreen.repository.ActivityRepository;
 import com.wemakeitwork.allenvooreen.service.MemberDetailsService;
@@ -54,7 +51,7 @@ class newActivityControllerTest {
         mockMvc.perform(post("/activity/new")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("activityName", activityname)
-                .param("activityCategory",activitycategory)
+                .param("activityCategory", activitycategory)
                 .flashAttr("activity", new Activity())
                 .with(csrf())
         )

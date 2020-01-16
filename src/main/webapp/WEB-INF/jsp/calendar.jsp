@@ -27,10 +27,19 @@
     <script type="text/javascript">
     $(document).ready(function() {
         hideAll();
+
+        <!-- below makes sure that the unwanted fields in the modal are hidden and calls the selection upon change -->
         $("#selectie").change(function () {
             hideAll()
             activitySelection();
         });
+
+        <!-- below cleans the modal upon closing -->
+        $('#modal-form').on("hide.bs.modal", function() {
+            $('#modal-form').trigger("reset");
+            hideAll();
+        });
+
         $("#eventDone").change(function () {
             if(document.getElementById("eventDone").checked == true) {
                     $("#eventDoneDateDiv").show()
@@ -165,27 +174,42 @@
         });
 
         <!-- This function loads the start & end date calendars (datetimepickers) in the modal (popup). -->
-        $("#eventStartDate, #eventEndDate, #eventDoneDate").datetimepicker({
+        $("#eventStartDate, #eventEndDate").datetimepicker({
              format: 'MM/DD/YYYY HH:mm',
         });
     });
 
-    <!-- below function shows the correct modal form based on the activity selection -->
+<!-- below function shows the correct modal form based on the activity selection -->
     function activitySelection() {
         if ($("#selectie").val() === "Medisch")
-            $("#medicationActivity").show();
+            $("#ShowDates, #ShowEventName, #medicationActivity").show();
         else
-            $("#eventActivity").show();
+            $("#ShowDates, #ShowEventName, #eventActivity").show();
     }
 
-    <!-- below function hides all modal options -->
+<!-- below function hides all modal options -->
     function hideAll() {
-        $("#eventActivity, #medicationActivity, #eventDoneDateDiv").css("display", "none");
+        $("#ShowDates, #eventActivity, #medicationActivity, #ShowEventName").css("display", "none");
+
+    }
+
+    function showMedicationAmount(event, element){
+        if ($('.modal').find('#selectie').val() == "Medisch")
+          $('.modal').find('#takenMedication').val(event.activity.takenmedication);
+    }
+
+<!-- below function fills the modal with event info if it exist -->
+    function fillingTheModal() {
+        if ($('.modal').find('#selectie').val() == "Medisch")
+            $("#ShowDates, #ShowEventName, #medicationActivity").show();
+        else
+            $("#ShowDates, #ShowEventName, #eventActivity").show();
     }
      </script>
 </head>
 
 <body>
+
 <form:form id="modal-form" action="${pageContext.request.contextPath}/event/change" modelAttribute="event" method="post">
     <div class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
@@ -210,7 +234,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" id="ShowEventName">
                     <div class="col-12">
                         <label class="col-4" for="eventName">Onderwerp</label>
                         <input type="text" name="eventName" id="eventName" />
@@ -227,22 +251,6 @@
                             <input type="text" name="eventComment" id="eventComment" />
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                        <span style="margin-left:2em">
-                            <label class="col-xs-4" for="eventStartDate">Datum</label>
-                            <input type="text" name="eventStartDate" id="eventStartDate" />
-                        </span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <span style="margin-left:2em">
-                            <label class="col-xs-4" for="eventEndDate">EindDatum</label>
-                            <input type="text" name="eventEndDate" id="eventEndDate" />
-                            </span>
-                        </div>
-                    </div>
                 </div>
 
                 <!-- event with MedicationActivity modal input fields -->
@@ -250,13 +258,13 @@
                     <div class="row">
                         <div class="col-xs-12" modelAttribute="medicationActivity">
                            <span style="margin-left:2em">
-                           <label class="col-xs-4" for="medication" control-label>Medicijn</label>
-                                <select name="medication.medicationId" id="medication.medicationId" >
-                                    <option disabled selected="selected">Kies een medicijn</option>
+                           <label class="col-xs-4" for="selectie2" control-label>Medicijn</label>
+                                <select name="medication.medicationId" id="selectie2" >
+                                <option disabled selected="selected">Kies een medicijn</option>
                                     <c:forEach var="medication" items="${medicationList}">
                                         <option value="${medication.medicationId}">${medication.medicationName}</option>
                                     </c:forEach>
-                                </select>
+                            </select>
                            </span>
                         </div>
                     </div>
@@ -268,6 +276,8 @@
                             </span>
                         </div>
                     </div>
+                </div>
+                <div class="modal-body" id="ShowDates">
                     <div class="row">
                         <div class="col-xs-12">
                         <span style="margin-left:2em">
