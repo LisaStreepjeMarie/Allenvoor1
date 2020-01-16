@@ -12,15 +12,16 @@
 
     <link href="${pageContext.request.contextPath}/webjars/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet" />
     <link href="${pageContext.request.contextPath}/webjars/fullcalendar/3.9.0/fullcalendar.print.min.css" rel="stylesheet" media='print' />
-    <link href="${pageContext.request.contextPath}/webjars/Eonasdan-bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
     <script src="${pageContext.request.contextPath}/webjars/moment/2.24.0/min/moment.min.js"></script>
     <script src="${pageContext.request.contextPath}/webjars/jquery/3.4.1/jquery.slim.min.js"></script>
     <script src="${pageContext.request.contextPath}/webjars/fullcalendar/3.9.0/fullcalendar.min.js"></script>
-    <script src="${pageContext.request.contextPath}/webjars/Eonasdan-bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
     <script src="${pageContext.request.contextPath}/webjars/fullcalendar/3.9.0/locale/nl.js"></script>
     <link href="${pageContext.request.contextPath}/webjars/font-awesome/5.0.6/web-fonts-with-css/css/fontawesome-all.min.css" rel='stylesheet'>
     <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
     <script src="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+    <script src="${pageContext.request.contextPath}/webjars/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.js"></script>
+    <link href="${pageContext.request.contextPath}/webjars/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.css" rel='stylesheet'>
 
     <script type="text/javascript">
     $(document).ready(function() {
@@ -143,10 +144,26 @@
             eventLimit: true // allow "more" link when too many events
         });
 
-        <!-- This function loads the start & end date calendars (datetimepickers) in the modal (popup). -->
-        $("#eventStartDate, #eventEndDate, #eventDoneDate").datetimepicker({
-             format: 'MM/DD/YYYY HH:mm',
+        <!-- These functions load the start, end & done date calendars (datetimepickers) in the modal (popup). -->
+        $('#datetimepickerStart').datetimepicker({
+            useCurrent: false,
+            format: 'MM/DD/YYYY HH:mm'
         });
+        $('#datetimepickerEnd').datetimepicker({
+            useCurrent: false,
+            format: 'MM/DD/YYYY HH:mm'
+        });
+        $('#datetimepickerDone').datetimepicker({
+            useCurrent: false,
+            format: 'MM/DD/YYYY HH:mm'
+        });
+        $("#datetimepickerStart").on("change.datetimepicker", function (e) {
+            $('#datetimepickerEnd').datetimepicker('minDate', e.date);
+        });
+        $("#datetimepickerEnd").on("change.datetimepicker", function (e) {
+            $('#datetimepickerStart').datetimepicker('maxDate', e.date);
+        });
+        $('#datetimepickerDone').datetimepicker();
     });
 
 <!-- below function shows the correct modal form based on the activity selection -->
@@ -181,7 +198,6 @@
 </head>
 
 <body>
-
 <form:form id="modal-form" action="${pageContext.request.contextPath}/event/change" modelAttribute="event" method="post">
     <div class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
@@ -250,20 +266,28 @@
                     </div>
                 </div>
                 <div class="modal-body" id="ShowDates">
-                    <div class="row">
-                        <div class="col-xs-12">
-                        <span style="margin-left:2em">
-                            <label class="col-xs-4" for="eventStartDate">Datum</label>
-                            <input type="text" name="eventStartDate" id="eventStartDate" />
-                            </span>
+                    <div class="container">
+                        <div class='col-md-10'>
+                            <div class="form-group">
+                                <div class="input-group date" id="datetimepickerStart" data-target-input="nearest">
+                                    <label class="col-xs-4" for="eventStartDate">Starttijd</label>
+                                    <input id="eventStartDate" name="eventStartDate" type="text" class="form-control datetimepicker-input" data-target="#datetimepickerStart"/>
+                                    <div class="input-group-append" data-target="#datetimepickerStart" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <span style="margin-left:2em">
-                            <label class="col-xs-4" for="eventEndDate">EindDatum</label>
-                            <input type="text" name="eventEndDate" id="eventEndDate" />
-                            </span>
+                        <div class='col-md-10'>
+                            <div class="form-group">
+                                <div class="input-group date" id="datetimepickerEnd" data-target-input="nearest">
+                                    <label class="col-xs-4" for="eventEndDate">Eindtijd</label>
+                                    <input id="eventEndDate" name="eventEndDate" type="text" class="form-control datetimepicker-input" data-target="#datetimepickerEnd"/>
+                                    <div class="input-group-append" data-target="#datetimepickerEnd" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -279,7 +303,15 @@
                     <div class="col-xs-12">
                             <span style="margin-left:2em">
                                 <label class="col-xs-4" id="eventDone" for="eventDoneDate">Op datum</label>
-                                <input type="text" name="noEventDoneDate" id="eventDoneDate" />
+                                <div class="form-group">
+                                <div class="input-group date" id="datetimepickerDone" data-target-input="nearest">
+                                    <label class="col-xs-4" for="eventDoneDate">Eindtijd</label>
+                                    <input id="eventDoneDate" name="noEventDoneDate" type="text" class="form-control datetimepicker-input" data-target="#datetimepickerDone"/>
+                                    <div class="input-group-append" data-target="#datetimepickerDone" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
                             </span>
                     </div>
                 </div>

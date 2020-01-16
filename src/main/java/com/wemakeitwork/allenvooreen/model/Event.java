@@ -34,7 +34,7 @@ public class Event {
 
     @JsonProperty("donedate")
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private Date eventDoneDate;
+    private java.util.Date eventDoneDate;
 
     public Date getEventDoneDate() {
         return eventDoneDate;

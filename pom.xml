@@ -107,8 +107,8 @@
         <!-- bootstrap-datetimepicker -->
         <dependency>
             <groupId>org.webjars</groupId>
-            <artifactId>Eonasdan-bootstrap-datetimepicker</artifactId>
-            <version>4.17.47</version>
+            <artifactId>tempusdominus-bootstrap-4</artifactId>
+            <version>5.1.2</version>
         </dependency>
 
         <!-- moment -->
