@@ -72,8 +72,6 @@ public class EventController {
         }
 
         else {
-            System.out.println(event.getEventName());
-            System.out.println(medicationActivity);
             Team team = (Team) httpSession.getAttribute("team");
             event.setTeam(team);
 

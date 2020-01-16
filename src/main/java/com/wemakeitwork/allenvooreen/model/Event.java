@@ -3,7 +3,6 @@ package com.wemakeitwork.allenvooreen.model;
 import com.fasterxml.jackson.annotation.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -35,14 +34,14 @@ public class Event {
     @JsonProperty("description")
     private String eventComment;
 
-    @Column(nullable = true)
-    private LocalDate eventDoneDate;
+    @JsonProperty("donedate")
+    private Date eventDoneDate;
 
-    public Optional getEventDoneDate() {
-        return Optional.ofNullable(eventDoneDate);
+    public Date getEventDoneDate() {
+        return eventDoneDate;
     }
 
-    public void setEventDoneDate(LocalDate eventDoneDate) {
+    public void setEventDoneDate(Date eventDoneDate) {
         this.eventDoneDate = eventDoneDate;
     }
 
