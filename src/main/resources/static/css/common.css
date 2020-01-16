@@ -46,3 +46,6 @@ body {
 .has-error {
      color: red
  }
+ .passwordhaserror {
+      color: red
+  }

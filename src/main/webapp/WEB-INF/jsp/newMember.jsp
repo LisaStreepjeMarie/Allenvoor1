@@ -29,7 +29,8 @@
             </spring:bind>
 
             <spring:bind path="password">
-                <div class="form-group ${status.error ? 'has-error' : ''}">
+                <!-- <div class="form-group ${status.error ? 'has-error' : ''}"> -->
+                <div class="passwordhaserror">
                     <form:input type="password" path="password" class="form-control" placeholder="Password"></form:input>
                     <form:errors path="password"></form:errors>
                 </div>
