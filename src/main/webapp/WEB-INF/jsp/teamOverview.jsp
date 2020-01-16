@@ -6,7 +6,6 @@
     <head>
         <title>Overzicht groepen</title>
         <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
-        <link href="/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
         <link href="../css/style.css" rel="stylesheet" type="text/css"/>
     </head>
     <body class="webpage">

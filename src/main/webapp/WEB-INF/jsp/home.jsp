@@ -11,9 +11,9 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
 
-    <link href="/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
-        <link href="../css/style.css" rel="stylesheet" type="text/css"/>
     <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
+     <link href="../css/style.css" rel="stylesheet" type="text/css"/>
+
 <body class="webpage">
 <div class="container-fluid" >
 <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
@@ -21,7 +21,7 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <a class="navbar-brand" href="#">
-   <img class="mb-4" src="../images/LogoAllenVoorEen.png" alt="" width="230" height="178"> </a>
+   <img class="mb-4" src='${pageContext.request.contextPath}/images/LogoAllenVoorEen.png' alt="" width="230" height="178"> </a>
 
 
   <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
@@ -30,13 +30,13 @@
         <a class="nav-link" href="home">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/member/current">Mijn profiel</a>
+        <a class="nav-link" href='${pageContext.request.contextPath}/member/current'>Mijn profiel</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/team/all">Mijn groepen</a>
+        <a class="nav-link" href='${pageContext.request.contextPath}/team/all'>Mijn groepen</a>
        </li>
       <li class="nav-item">
-        <a class="nav-link" href="/logout" >Logout</a>
+        <a class="nav-link" href='${pageContext.request.contextPath}/logout' >Logout</a>
       </li>
     </ul>
   </div>
