@@ -31,11 +31,20 @@
             hideAll()
             activitySelection();
         });
+
+        <!-- this shows/hides the eventDone input field when the checkbox is toggled -->
         $("#eventDone").change(function () {
             if(document.getElementById("eventDone").checked == true) {
                     $("#eventDoneDateDiv").show()
+                    $('#eventDoneDate').attr('required', "true")
+                    $('#eventDoneDate').attr('name',"eventDoneDate")
             } else {
-                    $("#eventDoneDateDiv").hide();
+                    $("#eventDoneDateDiv").hide()
+                    $('#eventDoneDate').attr('required', "false")
+
+                    <!-- set name of eventDoneDate to noEventDoneDate -->
+                    <!-- so the controller doesn't pick up the value (and will not write an empty value into java.util.Date) -->
+                    $('#eventDoneDate').attr('name',"noEventDoneDate");
             }
         });
 
@@ -297,7 +306,7 @@
                     <div class="col-xs-12">
                             <span style="margin-left:2em">
                                 <label class="col-xs-4" for="eventDoneDate">Op datum</label>
-                                <input type="text" name="eventDoneDate" id="eventDoneDate" />
+                                <input type="text" name="noEventDoneDate" id="eventDoneDate" />
                             </span>
                     </div>
                 </div>
