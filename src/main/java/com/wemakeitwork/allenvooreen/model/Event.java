@@ -3,8 +3,12 @@ package com.wemakeitwork.allenvooreen.model;
 import com.fasterxml.jackson.annotation.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.lang.Nullable;
+
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.Optional;
 
 @Entity
 @JsonPropertyOrder(value = {"id", "title", "description", "start", "end"}, alphabetic = true)
@@ -30,6 +34,17 @@ public class Event {
 
     @JsonProperty("description")
     private String eventComment;
+
+    @Column(nullable = true)
+    private LocalDate eventDoneDate;
+
+    public Optional getEventDoneDate() {
+        return Optional.ofNullable(eventDoneDate);
+    }
+
+    public void setEventDoneDate(LocalDate eventDoneDate) {
+        this.eventDoneDate = eventDoneDate;
+    }
 
     @OneToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "activityId", referencedColumnName = "activityId", nullable = false)

@@ -31,6 +31,14 @@
             hideAll()
             activitySelection();
         });
+        $("#eventDone").change(function () {
+            if(document.getElementById("eventDone").checked == true) {
+                    $("#eventDoneDateDiv").show()
+            } else {
+                    $("#eventDoneDateDiv").hide();
+            }
+        });
+
         $('#calendar').fullCalendar({
             themeSystem: 'bootstrap4',
             timeZone: 'Europe/Amsterdam',
@@ -157,25 +165,22 @@
         });
 
         <!-- This function loads the start & end date calendars (datetimepickers) in the modal (popup). -->
-        $("#eventStartDate, #eventEndDate").datetimepicker({
+        $("#eventStartDate, #eventEndDate, #eventDoneDate").datetimepicker({
              format: 'MM/DD/YYYY HH:mm',
         });
     });
-<!-- below function shows the correct modal form based on the activity selection -->
+
+    <!-- below function shows the correct modal form based on the activity selection -->
     function activitySelection() {
         if ($("#selectie").val() === "Medisch")
             $("#medicationActivity").show();
         else
             $("#eventActivity").show();
     }
-<!-- below function hides all modal options -->
-    function hideAll() {
-        $("#eventActivity, #medicationActivity ").css("display", "none");
-    }
 
-<!-- below function hides all modal options -->
-    function fillingTheModall() {
-        $("#eventActivity, #medicationActivity ").css("display", "none");
+    <!-- below function hides all modal options -->
+    function hideAll() {
+        $("#eventActivity, #medicationActivity, #eventDoneDateDiv").css("display", "none");
     }
      </script>
 </head>
@@ -278,6 +283,22 @@
                             <input type="text" name="eventEndDate" id="eventEndDate" />
                             </span>
                         </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                            <span style="margin-left:2em">
+                                <label class="col-xs-4" for="eventDone">Afspraak al uitgevoerd?</label>
+                                <input type="checkbox" id="eventDone" name="eventDone"/>
+                            </span>
+                    </div>
+                </div>
+                <div class="row" id="eventDoneDateDiv">
+                    <div class="col-xs-12">
+                            <span style="margin-left:2em">
+                                <label class="col-xs-4" for="eventDoneDate">Op datum</label>
+                                <input type="text" name="eventDoneDate" id="eventDoneDate" />
+                            </span>
                     </div>
                 </div>
                 <div class="modal-footer">
