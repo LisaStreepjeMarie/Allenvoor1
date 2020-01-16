@@ -104,11 +104,15 @@ public class MemberController {
         memberValidator.validate(member, result);
         if (result.hasErrors()) {
             return "newMember";
+        } else {
+            member.setPassword(passwordEncoder.encode(member.getPassword()));
+            member.setRol("gebruiker");
+            // memberRepository.save(member);
+            memberService.save(member);
+            // securityService.autoLogin(member.getUsername(), member.getPasswordConfirm());
+
+            return "redirect:/member/new";
         }
-        memberService.save(member);
-        // securityService.autoLogin(member.getUsername(), member.getPasswordConfirm());
-        securityService.autoLogin(member.getMemberName(), member.getPasswordConfirm());
-        return "redirect:/member/new";
     }
 
     @PostMapping("/member/change")
