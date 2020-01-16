@@ -27,6 +27,6 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Optional<Member> findByMembername(String membername) {
-        return memberRepository.findByMembername(membername);
+        return memberRepository.findByMemberName(membername);
     }
 }

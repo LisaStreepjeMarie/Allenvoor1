@@ -106,7 +106,7 @@ public class MemberController {
         }
         memberService.save(member);
         // securityService.autoLogin(member.getUsername(), member.getPasswordConfirm());
-        securityService.autoLogin(member.getMembername(), member.getPasswordConfirm());
+        securityService.autoLogin(member.getMemberName(), member.getPasswordConfirm());
         return "redirect:/member/new";
     }
 
