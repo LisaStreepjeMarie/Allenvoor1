@@ -26,6 +26,22 @@
     $(document).ready(function() {
         hideAll();
 
+        <!-- this shows/hides the eventDone input field when the checkbox is toggled -->
+        $("#eventDone").change(function () {
+            if(document.getElementById("eventDone").checked == true) {
+                    $("#eventDoneDateDiv").show()
+                    $('#eventDoneDate').attr('required', "true")
+                    $('#eventDoneDate').attr('name',"eventDoneDate")
+            } else {
+                    document.getElementById("eventDoneDate").removeAttribute("required");
+                    $("#eventDoneDateDiv").hide()
+
+                    <!-- set name of eventDoneDate to noEventDoneDate -->
+                    <!-- so the controller doesn't pick up the value (and will not write an empty value into java.util.Date) -->
+                    $('#eventDoneDate').attr('name',"noEventDoneDate");
+            }
+        });
+
         <!-- below makes sure that the unwanted fields in the modal are hidden and calls the selection upon change -->
         $("#selectie").change(function () {
             hideAll();
@@ -135,15 +151,17 @@
 
 <!-- below function shows the correct modal form based on the activity selection -->
     function activitySelection() {
-        if ($("#selectie").val() === "Medisch")
+        if ($("#selectie").val() === "Medisch") {
             $("#ShowDates, #ShowEventName, #medicationActivity").show();
-        else
+        } else {
             $("#ShowDates, #ShowEventName, #eventActivity").show();
+        }
+        $("#eventDoneDiv").css("display", "");
     }
 
 <!-- below function hides all modal options -->
     function hideAll() {
-        $("#ShowDates, #eventActivity, #medicationActivity, #ShowEventName").css("display", "none");
+        $("#ShowDates, #eventActivity, #medicationActivity, #ShowEventName, #eventDoneDateDiv, #eventDoneDiv").css("display", "none");
 
     }
 
@@ -247,6 +265,22 @@
                             <input type="text" name="eventEndDate" id="eventEndDate" />
                             </span>
                         </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12" id="eventDoneDiv">
+                            <span style="margin-left:2em">
+                                <label class="col-xs-4" for="eventDone">Afspraak al uitgevoerd?</label>
+                                <input type="checkbox" id="eventDone" name="eventDone"/>
+                            </span>
+                    </div>
+                </div>
+                <div class="row" id="eventDoneDateDiv">
+                    <div class="col-xs-12">
+                            <span style="margin-left:2em">
+                                <label class="col-xs-4" id="eventDone" for="eventDoneDate">Op datum</label>
+                                <input type="text" name="noEventDoneDate" id="eventDoneDate" />
+                            </span>
                     </div>
                 </div>
                 <div class="modal-footer">
