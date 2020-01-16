@@ -1,129 +1,148 @@
 $(document).ready(function() {
+        <!-- loads the calendar (without data) -->
+        $('#calendar').fullCalendar({
+            themeSystem: 'bootstrap4',
+            timeZone: 'Europe/Amsterdam',
+            timeFormat: 'H(:mm)',
+            locale: 'nl',
 
-    $('#calendar').fullCalendar({
-        themeSystem: 'bootstrap4',
-        timeZone: 'Europe/Amsterdam',
-        timeFormat: 'H(:mm)',
-        locale: 'nl',
+            <!-- The buttons and title that are displayed at the top of the calendar -->
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,agendaWeek,agendaDay,list'
+            },
 
-        <!-- The buttons and title that are displayed at the top of the calendar -->
-        header: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'month,agendaWeek,agendaDay,list'
-        },
+            weekNumbers: true,
+            eventLimit: true, // allow "more" link when too many events
+            navLinks: true, // can click day/week names to navigate views
+            selectable: true,
+            selectHelper: true,
 
-        weekNumbers: true,
-        eventLimit: true, // allow "more" link when too many events
-        navLinks: true, // can click day/week names to navigate views
-        selectable: true,
-        selectHelper: true,
+            <!-- This function is executed when an empty date/time is clicked -->
+            select: function(start, end) {
+                $('#modal-form').attr('action',"${pageContext.request.contextPath}/event/new");
+                $('#save-change-event').attr('action',"${pageContext.request.contextPath}/event/new");
+                $('.modal').find('#eventStartDate').val(start);
+                $('.modal').find('#eventEndDate').val(end);
 
-        <!-- This function is executed when an empty date/time is clicked -->
-        select: function(start, end) {
-            $('#modal-form').attr('action',"/event/new");
-            $('#save-change-event').attr('action',"/event/new");
+                document.getElementById("modal-title").innerHTML = "Maak nieuwe afspraak";
+                document.getElementById("save-change-event").innerHTML = "Maak afspraak";
+                $("#delete-event").hide();
+                $('.modal').modal('show');
+            },
 
-            $('.modal').find('#eventName').val("");
-            $('.modal').find('#eventComment').val("");
-            $('.modal').find('#activity.activityCategory').val("Selecteer categorie");
-            $('.modal').find('#eventStartDate').val(start);
-            $('.modal').find('#eventEndDate').val(end);
+            <!-- This function is executed when an already planned event is clicked -->
+            eventClick: function(event, element) {
+                <!-- pass eventId to a simple <a href> link: -->
+                <!-- $('#deleteEvent').attr('href',"${pageContext.request.contextPath}/event/delete/" + event.id); -->
 
-            document.getElementById("modal-title").innerHTML = "Maak nieuwe afspraak";
-            document.getElementById("save-change-event").innerHTML = "Maak afspraak";
-            $("#delete-event").hide();
-            $('.modal').modal('show');
-        },
+                <!-- redefines the onclick action of the delete-event button, so that it will point the browser -->
+                <!-- to the /event/delete/{eventId}/{activityId} mapping -->
+                $('#delete-event').attr('onclick',"window.location='${pageContext.request.contextPath}/event/delete/" + event.id + "/" + event.activity.id + "'");
 
-        <!-- This function is executed when an already planned event is clicked -->
-        eventClick: function(event, element) {
-            <!--pass eventId to a simple <a href> link: -->
-            <!--$('#deleteEvent').attr('href',"/event/delete/" + event.id);-->
+                $("#eventId").val(event.id);
+                $('#modal-form').attr('action',"${pageContext.request.contextPath}/event/change/" + event.activity.id);
+                $('#save-change-event').attr('action',"{pageContext.request.contextPath}/event/change");
+                $('.modal').find('#eventComment').val(event.description);
+                $('.modal').find('#selectie').val(event.activity.category);
+                $('.modal').find('#eventName').val(event.title);
 
-            <!--pass eventId to a <button> onclick action: -->
-            $('#delete-event').attr('onclick',"window.location='${pageContext.request.contextPath}/event/delete/" + event.id + "/" + event.activity.id + "'");
+                <!-- below shows the modal based on the event.activity.category -->
+                fillingTheModal();
+                showMedicationAmount(event, element);
 
-            $("#eventId").val(event.id);
+                $('.modal').find('#eventStartDate').val(event.start);
+                $('.modal').find('#eventEndDate').val(event.end);
 
-            $('#modal-form').attr('action',"/event/change/" + event.activity.id + "/" + event.team.id);
-            $('#save-change-event').attr('action',"/event/change");
+                <!-- redefines the modal (popup) buttons with the appropriate button text -->
+                document.getElementById("modal-title").innerHTML = "Wijzig of verwijder afspraak";
+                document.getElementById("save-change-event").innerHTML = "Wijzig afspraak";
 
-            $('.modal').find('#eventName').val(event.title);
-            $('.modal').find('#eventComment').val(event.description);
-            $('.modal').find('#event.activityCategory').val("Selecteer categorie");
-            $('.modal').find('#eventStartDate').val(event.start);
-            $('.modal').find('#eventEndDate').val(event.end);
+                <!-- shows the delete button on the (still hidden) modal -->
+                $("#delete-event").show();
 
-            document.getElementById("modal-title").innerHTML = "Wijzig of verwijder afspraak";
-            document.getElementById("save-change-event").innerHTML = "Wijzig afspraak";
-            $("#delete-event").show();
-            $('.modal').modal('show');
+                <!-- lastly, the modal (popup) is shown, which by now has been properly configured -->
+                $('.modal').modal('show');
+            },
 
-        },
+            eventDragStop: function(info) {
+            },
 
-        <!-- This function is executed on drop when an event was dragged. (not yet implemented) -->
-        eventDrop: function( event, delta, revertFunc, jsEvent, ui, view ) {
-            console.log(event.title + ' was dragged to ' + event.description);
-            console.log("delta is: " + delta);
-            console.log("event is: " + event);
-            console.log("revert is: " + revertFunc);
-            console.log("jsEvent is: " + jsEvent);
+            <!-- This function is executed when an event was resized, not yet implemented -->
+            eventResize: function(event, delta, revertFunc) {
+                alert(event.title + " end is now " + event.end.format());
 
-            $.ajax({
-              type: "POST",
-              url: "/event/change/2",
-              data: {
-                    id: "2",
-                    title: "Nieuwe ajax titel",
-                    description: "Nieuwe ajax beschrijving",
-                    start: "1578355200000",
-                    end: "1578441600000"
-              },
-              dataType: "json",
-              data: JSON.stringify({
-                 id: "2",
-                 title: "Nieuwe ajax titel",
-                 description: "Nieuwe ajax beschrijving",
-                 start: "1578355200000",
-                 end: "1578441600000"
-              }),
-              success: function(response) {
-                console.log("Ajax posted succesful!: ");
-                console.log(response);
-              },
-              error: function(response) {
-                console.log("FAIL: ");
-                console.log(response);
-              }
-            });
-        },
+                revertFunc();
+            },
 
-        eventDragStop: function(info) {
-        },
+            <!-- Remember last view on page reload. -->
+            viewRender: function (view, element) {
+                localStorage.setItem("fcDefaultView", view.name);
+            },
+            defaultView: (localStorage.getItem("fcDefaultView") !== null ? localStorage.getItem("fcDefaultView") : "month"),
 
-        <!-- This function is executed when an event was resized -->
-        eventResize: function(event, delta, revertFunc) {
-            alert(event.title + " end is now " + event.end.format());
+            editable: true,
 
-            revertFunc();
-        },
+            <!-- calendarData is a JSON string with all calendar events -->
+            eventLimit: true // allow "more" link when too many events
+        });
 
-        <!-- Remember last view on page reload. -->
-        viewRender: function (view, element) {
-            localStorage.setItem("fcDefaultView", view.name);
-        },
-        defaultView: (localStorage.getItem("fcDefaultView") !== null ? localStorage.getItem("fcDefaultView") : "month"),
 
-        editable: true,
+        <!-- this shows/hides the eventDone input field when the checkbox is toggled -->
+        $("#eventDone").change(function () {
+            if(document.getElementById("eventDone").checked == true) {
+                    $("#eventDoneDateDiv").show()
+                    $('#eventDoneDate').attr('required', "true")
+                    $('#eventDoneDate').attr('name',"eventDoneDate")
+            } else {
+                    document.getElementById("eventDoneDate").removeAttribute("required");
+                    $("#eventDoneDateDiv").hide()
 
-        <!-- calendarData is a JSON string with all calendar events -->
-        events: ${calendarData},
-        eventLimit: true // allow "more" link when too many events
-    });
+                    <!-- set name of eventDoneDate to noEventDoneDate -->
+                    <!-- so the controller doesn't pick up the value (and will not write an empty value into java.util.Date) -->
+                    $('#eventDoneDate').attr('name',"noEventDoneDate");
+            }
+        });
 
-    <!-- This function loads the start & end date calendars (datetimepickers) in the modal (popup). -->
-    $("#eventStartDate, #eventEndDate").datetimepicker({
-         format: 'MM/DD/YYYY HH:mm',
-    });
-});
+        <!-- Makes unwanted fields in the modal hidden and calls the selection upon change -->
+        $("#selectie").change(function () {
+            hideAll();
+            activitySelection();
+        });
+
+        <!-- Cleans the modal upon closing -->
+        $('#modal-form').on("hide.bs.modal", function() {
+            $('#modal-form').trigger("reset");
+            hideAll();
+        });
+
+        <!-- Shows correct modal form based on the activity selection -->
+            function activitySelection() {
+                if ($("#selectie").val() === "Medisch") {
+                    $("#ShowDates, #ShowEventName, #medicationActivity").show();
+                } else {
+                    $("#ShowDates, #ShowEventName, #eventActivity").show();
+                }
+                $("#eventDoneDiv").css("display", "");
+            };
+
+        <!-- Hides all modal options -->
+        function hideAll() {
+            $("#ShowDates, #eventActivity, #medicationActivity, #ShowEventName, #eventDoneDateDiv, #eventDoneDiv").css("display", "none");
+        }
+        hideAll();
+
+        function showMedicationAmount(event, element){
+            if ($('.modal').find('#selectie').val() == "Medisch")
+              $('.modal').find('#takenMedication').val(event.activity.takenmedication);
+        }
+
+        <!-- below function fills the modal with event info if it exist -->
+        function fillingTheModal() {
+            if ($('.modal').find('#selectie').val() == "Medisch")
+                $("#ShowDates, #ShowEventName, #medicationActivity").show();
+            else
+                $("#ShowDates, #ShowEventName, #eventActivity").show();
+        }
+})
