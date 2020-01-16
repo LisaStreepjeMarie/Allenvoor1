@@ -5,12 +5,10 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.Date;
-import java.util.Optional;
 
 @Entity
-@JsonPropertyOrder(value = {"id", "title", "description", "start", "end"}, alphabetic = true)
+@JsonPropertyOrder(value = {"id", "title", "description", "start", "end", "donedate"}, alphabetic = true)
 public class Event {
 
     @Id
@@ -35,6 +33,7 @@ public class Event {
     private String eventComment;
 
     @JsonProperty("donedate")
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Date eventDoneDate;
 
     public Date getEventDoneDate() {

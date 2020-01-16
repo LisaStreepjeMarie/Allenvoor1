@@ -10,7 +10,6 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
 
-    <!-- Order is important -->
     <link href="${pageContext.request.contextPath}/webjars/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet" />
     <link href="${pageContext.request.contextPath}/webjars/fullcalendar/3.9.0/fullcalendar.print.min.css" rel="stylesheet" media='print' />
     <link href="${pageContext.request.contextPath}/webjars/Eonasdan-bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
@@ -23,14 +22,29 @@
     <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
     <script src="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
-    <!-- this script loads FullCalendar -->
     <script type="text/javascript">
     $(document).ready(function() {
         hideAll();
 
+        <!-- this shows/hides the eventDone input field when the checkbox is toggled -->
+        $("#eventDone").change(function () {
+            if(document.getElementById("eventDone").checked == true) {
+                    $("#eventDoneDateDiv").show()
+                    $('#eventDoneDate').attr('required', "true")
+                    $('#eventDoneDate').attr('name',"eventDoneDate")
+            } else {
+                    document.getElementById("eventDoneDate").removeAttribute("required");
+                    $("#eventDoneDateDiv").hide()
+
+                    <!-- set name of eventDoneDate to noEventDoneDate -->
+                    <!-- so the controller doesn't pick up the value (and will not write an empty value into java.util.Date) -->
+                    $('#eventDoneDate').attr('name',"noEventDoneDate");
+            }
+        });
+
         <!-- below makes sure that the unwanted fields in the modal are hidden and calls the selection upon change -->
         $("#selectie").change(function () {
-            hideAll()
+            hideAll();
             activitySelection();
         });
 
@@ -38,14 +52,6 @@
         $('#modal-form').on("hide.bs.modal", function() {
             $('#modal-form').trigger("reset");
             hideAll();
-        });
-
-        $("#eventDone").change(function () {
-            if(document.getElementById("eventDone").checked == true) {
-                    $("#eventDoneDateDiv").show()
-            } else {
-                    $("#eventDoneDateDiv").hide();
-            }
         });
 
         $('#calendar').fullCalendar({
@@ -71,7 +77,6 @@
             select: function(start, end) {
                 $('#modal-form').attr('action',"${pageContext.request.contextPath}/event/new");
                 $('#save-change-event').attr('action',"${pageContext.request.contextPath}/event/new");
-
                 $('.modal').find('#eventStartDate').val(start);
                 $('.modal').find('#eventEndDate').val(end);
 
@@ -91,14 +96,16 @@
                 $('#delete-event').attr('onclick',"window.location='${pageContext.request.contextPath}/event/delete/" + event.id + "/" + event.activity.id + "'");
 
                 $("#eventId").val(event.id);
-
-                $('#modal-form').attr('action',"${pageContext.request.contextPath}/event/change/" + event.activity.id + "/" + event.team.id);
-                $('#save-change-event').attr('action',"${pageContext.request.contextPath}/event/change");
-
-                <!-- loads the input fields with information of the clicked event -->
-                $('.modal').find('#eventName').val(event.title);
+                $('#modal-form').attr('action',"${pageContext.request.contextPath}/event/change/" + event.activity.id);
+                $('#save-change-event').attr('action',"{pageContext.request.contextPath}/event/change");
                 $('.modal').find('#eventComment').val(event.description);
-                $('.modal').find('#event.activityCategory').val(event.activity.category);
+                $('.modal').find('#selectie').val(event.activity.category);
+                $('.modal').find('#eventName').val(event.title);
+
+                <!-- below shows the modal based on the event.activity.category -->
+                fillingTheModal();
+                showMedicationAmount(event, element);
+
                 $('.modal').find('#eventStartDate').val(event.start);
                 $('.modal').find('#eventEndDate').val(event.end);
 
@@ -111,43 +118,6 @@
 
                 <!-- lastly, the modal (popup) is shown, which by now has been properly configured -->
                 $('.modal').modal('show');
-            },
-
-            <!--  This function is executed on drop when an event was dragged. (not yet implemented) -->
-            eventDrop: function( event, delta, revertFunc, jsEvent, ui, view ) {
-                console.log(event.title + ' was dragged to ' + event.description);
-                console.log("delta is: " + delta);
-                console.log("event is: " + event);
-                console.log("revert is: " + revertFunc);
-                console.log("jsEvent is: " + jsEvent);
-
-                $.ajax({
-                  type: "POST",
-                  url: "${pageContext.request.contextPath}/event/change/2",
-                  data: {
-                        id: "2",
-                        title: "Nieuwe ajax titel",
-                        description: "Nieuwe ajax beschrijving",
-                        start: "1578355200000",
-                        end: "1578441600000"
-                  },
-                  dataType: "json",
-                  data: JSON.stringify({
-                     id: "2",
-                     title: "Nieuwe ajax titel",
-                     description: "Nieuwe ajax beschrijving",
-                     start: "1578355200000",
-                     end: "1578441600000"
-                  }),
-                  success: function(response) {
-                    console.log("Ajax posted succesful!: ");
-                    console.log(response);
-                  },
-                  error: function(response) {
-                    console.log("FAIL: ");
-                    console.log(response);
-                  }
-                });
             },
 
             eventDragStop: function(info) {
@@ -174,22 +144,24 @@
         });
 
         <!-- This function loads the start & end date calendars (datetimepickers) in the modal (popup). -->
-        $("#eventStartDate, #eventEndDate").datetimepicker({
+        $("#eventStartDate, #eventEndDate, #eventDoneDate").datetimepicker({
              format: 'MM/DD/YYYY HH:mm',
         });
     });
 
 <!-- below function shows the correct modal form based on the activity selection -->
     function activitySelection() {
-        if ($("#selectie").val() === "Medisch")
+        if ($("#selectie").val() === "Medisch") {
             $("#ShowDates, #ShowEventName, #medicationActivity").show();
-        else
+        } else {
             $("#ShowDates, #ShowEventName, #eventActivity").show();
+        }
+        $("#eventDoneDiv").css("display", "");
     }
 
 <!-- below function hides all modal options -->
     function hideAll() {
-        $("#ShowDates, #eventActivity, #medicationActivity, #ShowEventName").css("display", "none");
+        $("#ShowDates, #eventActivity, #medicationActivity, #ShowEventName, #eventDoneDateDiv, #eventDoneDiv").css("display", "none");
 
     }
 
@@ -296,7 +268,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-12">
+                    <div class="col-xs-12" id="eventDoneDiv">
                             <span style="margin-left:2em">
                                 <label class="col-xs-4" for="eventDone">Afspraak al uitgevoerd?</label>
                                 <input type="checkbox" id="eventDone" name="eventDone"/>
@@ -306,8 +278,8 @@
                 <div class="row" id="eventDoneDateDiv">
                     <div class="col-xs-12">
                             <span style="margin-left:2em">
-                                <label class="col-xs-4" for="eventDoneDate">Op datum</label>
-                                <input type="text" name="eventDoneDate" id="eventDoneDate" />
+                                <label class="col-xs-4" id="eventDone" for="eventDoneDate">Op datum</label>
+                                <input type="text" name="noEventDoneDate" id="eventDoneDate" />
                             </span>
                     </div>
                 </div>
