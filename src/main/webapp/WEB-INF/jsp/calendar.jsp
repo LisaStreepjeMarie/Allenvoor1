@@ -79,9 +79,8 @@
 
                 <!-- below shows the modal based on the event.activity.category -->
                 fillingTheModal();
+                showMedicationAmount(event, element);
 
-                $('.modal').find('#selectie2').val(event.activity.medication.medicationName);
-                $('.modal').find('#takenMedication').val(event.activity.takenmedication);
                 $('.modal').find('#eventStartDate').val(event.start);
                 $('.modal').find('#eventEndDate').val(event.end);
                 document.getElementById("modal-title").innerHTML = "Wijzig of verwijder afspraak";
@@ -124,6 +123,11 @@
     function hideAll() {
         $("#ShowDates, #eventActivity, #medicationActivity, #ShowEventName").css("display", "none");
 
+    }
+
+    function showMedicationAmount(event, element){
+        if ($('.modal').find('#selectie').val() == "Medisch")
+          $('.modal').find('#takenMedication').val(event.activity.takenmedication);
     }
 
 <!-- below function fills the modal with event info if it exist -->

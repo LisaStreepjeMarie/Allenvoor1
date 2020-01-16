@@ -2,6 +2,7 @@ package com.wemakeitwork.allenvooreen.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -16,6 +17,7 @@ public class Medication {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer medicationId;
 
+    @JsonProperty("medicationname")
     private String medicationName;
 
     private Integer medicationAmount;
