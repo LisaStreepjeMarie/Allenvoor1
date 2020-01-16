@@ -52,8 +52,8 @@
 
             <!-- This function is executed when an empty date/time is clicked -->
             select: function(start, end) {
-                $('#modal-form').attr('action',"/event/new");
-                $('#save-change-event').attr('action',"/event/new");
+                $('#modal-form').attr('action',"${pageContext.request.contextPath}/event/new");
+                $('#save-change-event').attr('action',"${pageContext.request.contextPath}/event/new");
 
                 $('.modal').find('#eventName').val("");
                 $('.modal').find('#eventComment').val("");
@@ -70,7 +70,7 @@
             <!-- This function is executed when an already planned event is clicked -->
             eventClick: function(event, element) {
                 <!-- pass eventId to a simple <a href> link: -->
-                <!-- $('#deleteEvent').attr('href',"/event/delete/" + event.id); -->
+                <!-- $('#deleteEvent').attr('href',"${pageContext.request.contextPath}/event/delete/" + event.id); -->
 
                 <!-- redefines the onclick action of the delete-event button, so that it will point the browser -->
                 <!-- to the /event/delete/{eventId}/{activityId} mapping -->
@@ -78,8 +78,8 @@
 
                 $("#eventId").val(event.id);
 
-                $('#modal-form').attr('action',"/event/change/" + event.activity.id + "/" + event.team.id);
-                $('#save-change-event').attr('action',"/event/change");
+                $('#modal-form').attr('action',"${pageContext.request.contextPath}/event/change/" + event.activity.id + "/" + event.team.id);
+                $('#save-change-event').attr('action',"${pageContext.request.contextPath}/event/change");
 
                 <!-- loads the input fields with information of the clicked event -->
                 $('.modal').find('#eventName').val(event.title);
@@ -109,7 +109,7 @@
 
                 $.ajax({
                   type: "POST",
-                  url: "/event/change/2",
+                  url: "${pageContext.request.contextPath}/event/change/2",
                   data: {
                         id: "2",
                         title: "Nieuwe ajax titel",
@@ -199,27 +199,26 @@
                         <div class="col-xs-12">
                             <span style="margin-left:2em">
                             <label class="col-xs-4" for="selectie" control-label>Categorie</label>
-                            <select name="activity.activityCategory" id="selectie" >
+                                <select name="activity.activityCategory" id="selectie" >
                                 <option disabled selected="selected">Selecteer categorie</option>
-                                <option value="Huishouden">Huishouden</option>
-                                <option value="Medisch">Medisch</option>
-                                <option value="Vrije tijd" >Vrije tijd</option>
-                            </select>
+                                    <option value="Vrije tijd" >Vrije tijd</option>
+                                    <option value="Medisch">Medisch</option>
+                                </select>
                             </span>
                         </div>
                     </div>
-                 </div>
-
-                 <!-- event with activity modal input fields -->
-                   <div class="modal-body" id="eventActivity">
-                    <div class="row">
-                        <div class="col-12">
-                            <label class="col-4" for="eventName">Onderwerp</label>
-                            <input type="text" name="eventName" id="eventName" />
-                            <input type="hidden" name="eventId" id="eventId" />
-                            <input type="hidden" name="teamId" id="team.teamId" />
-                        </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <label class="col-4" for="eventName">Onderwerp</label>
+                        <input type="text" name="eventName" id="eventName" />
+                        <input type="hidden" name="eventId" id="eventId" />
+                        <input type="hidden" name="teamId" id="team.teamId" />
                     </div>
+                </div>
+
+                <!-- event with activity modal input fields -->
+                <div class="modal-body" id="eventActivity">
                     <div class="row">
                         <div class="col-12">
                             <label class="col-4" for="eventComment">Beschrijving</label>
@@ -244,27 +243,19 @@
                     </div>
                 </div>
 
-                 <!-- event with MedicationActivity modal input fields -->
-                   <div class="modal-body" id="medicationActivity">
-                    <div class="row">
-                        <div class="col-12">
-                            <label class="col-4" for="eventName">Onderwerp</label>
-                            <input type="text" name="eventName" id="eventName" />
-                            <input type="hidden" name="eventId" id="eventId" />
-                            <input type="hidden" name="teamId" id="team.teamId" />
-                        </div>
-                    </div>
+                <!-- event with MedicationActivity modal input fields -->
+                <div class="modal-body" id="medicationActivity">
                     <div class="row">
                         <div class="col-xs-12" modelAttribute="medicationActivity">
                            <span style="margin-left:2em">
                            <label class="col-xs-4" for="medication" control-label>Medicijn</label>
-                            <select name="medication.medicationId" id="medication.medicationId" >
-                                <option disabled selected="selected">Kies een medicijn</option>
-                        <c:forEach var="medication" items="${medicationList}">
-                            <option value="${medication.medicationId}">${medication.medicationName}</option>
-                        </c:forEach>
-                            </select>
-                            </span>
+                                <select name="medication.medicationId" id="medication.medicationId" >
+                                    <option disabled selected="selected">Kies een medicijn</option>
+                                    <c:forEach var="medication" items="${medicationList}">
+                                        <option value="${medication.medicationId}">${medication.medicationName}</option>
+                                    </c:forEach>
+                                </select>
+                           </span>
                         </div>
                     </div>
                     <div class="row">
