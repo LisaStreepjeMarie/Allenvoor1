@@ -1,6 +1,7 @@
 package com.wemakeitwork.allenvooreen.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.lang.Nullable;
@@ -11,14 +12,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-@JsonIgnoreProperties({ "medication", "takenMedication" })
 public class MedicationActivity extends Activity{
 
     @Nullable
+    @JsonProperty("takenmedication")
     private Integer takenMedication;
 
     @Nullable
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "medicationId", referencedColumnName = "medicationId")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Medication medication;
