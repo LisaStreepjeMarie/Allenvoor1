@@ -1,9 +1,9 @@
 package com.wemakeitwork.allenvooreen.controller;
 
-import com.wemakeitwork.allenvooreen.model.Event;
-import com.wemakeitwork.allenvooreen.model.Team;
+import com.wemakeitwork.allenvooreen.model.*;
 import com.wemakeitwork.allenvooreen.repository.ActivityRepository;
 import com.wemakeitwork.allenvooreen.repository.EventRepository;
+import com.wemakeitwork.allenvooreen.repository.MedicationRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -11,14 +11,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 public class EventController {
+    @Autowired
+    MedicationRepository medicationRepository;
 
     @Autowired
     EventRepository eventRepository;
@@ -44,6 +45,14 @@ public class EventController {
                               @PathVariable("activityId") final Integer activityId) {
         Team team = (Team) httpSession.getAttribute("team");
 
+        Optional<Activity> activity = activityRepository.findById(activityId);
+
+        if (activity.get() instanceof MedicationActivity){
+            Medication medication = ((MedicationActivity) activity.get()).getMedication();
+            assert medication != null;
+            medication.removalActivityAddedAmount(((MedicationActivity) activity.get()).getTakenMedication());
+        }
+
         eventRepository.deleteById(eventId);
         try {
             activityRepository.deleteById(activityId);
@@ -56,33 +65,63 @@ public class EventController {
     }
 
     @PostMapping("/event/new")
-    protected String newEvent(@ModelAttribute("event") Event event, BindingResult result) {
+    protected String saveOrUpdateEvent(@ModelAttribute("event") Event event, @ModelAttribute("medicationActivity")
+            MedicationActivity medicationActivity, BindingResult result) {
         if (result.hasErrors()) {
             return "calendar";
         }
+
         else {
+            System.out.println(event.getEventName());
+            System.out.println(medicationActivity);
             Team team = (Team) httpSession.getAttribute("team");
             event.setTeam(team);
+
+            if (event.getActivity().getActivityCategory().equals("Medisch")){
+                event.setActivity(medicationActivity);
+            }
+
             event.getActivity().setActivityName(event.getEventName());
+
+
+            if(event.getActivity() instanceof MedicationActivity){
+
+                if (medicationActivity.getMedication() == null){
+
+                    //TODO this is not a clean way of solving the medication not null error. It needs to be able to be null for saving superclass
+                    //might be nice to solve this with a custom validator in next sprint
+                    return "redirect:/calendar/" + team.getTeamId();
+                }
+
+                Optional<Medication> medication = medicationRepository.findById(medicationActivity.getMedication().getMedicationId());
+                medication.ifPresent(value -> value.setTakenMedications(medicationActivity));
+            }
             eventRepository.save(event);
             return "redirect:/calendar/" + team.getTeamId();
         }
     }
 
-    @PostMapping("/event/change/{activityId}/{teamId}")
-    protected String changeEvent(@Validated @ModelAttribute("event") Event event,
-                                 @PathVariable("teamId") Integer teamId,
-                                 @PathVariable("activityId") final Integer activityId, BindingResult result) {
+    @PostMapping("/event/change/{activityId}")
+    protected String changeEvent(@ModelAttribute("event") Event event, @ModelAttribute("medicationActivity") MedicationActivity
+                                 medicationActivity, @PathVariable("activityId") final Integer activityId, BindingResult result) {
         if (result.hasErrors()) {
-            System.out.println("Geen goede invoer");
             return "calendar";
         } else {
-            event.getActivity().setActivityName(event.getEventName());
-            event.getActivity().setActivityId(activityId);
-
-            //finding/setting the team corresponding with the event
-            Team team = teamRepository.getOne(teamId);
+            System.out.println(activityId);
+            Team team = (Team) httpSession.getAttribute("team");
             event.setTeam(team);
+
+            if (event.getActivity().getActivityCategory().equals("Medisch")){
+                event.setActivity(medicationActivity);
+            }
+
+            event.getActivity().setActivityId(activityId);
+            event.getActivity().setActivityName(event.getEventName());
+
+            if(event.getActivity() instanceof MedicationActivity){
+                Optional<Medication> medication = medicationRepository.findById(medicationActivity.getMedication().getMedicationId());
+                medication.ifPresent(value -> value.setTakenMedications(medicationActivity));
+            }
             eventRepository.save(event);
             return "redirect:/calendar/" + team.getTeamId();
         }

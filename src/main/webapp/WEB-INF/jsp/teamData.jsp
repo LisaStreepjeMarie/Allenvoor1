@@ -4,20 +4,20 @@
 
 <html xmlns:form="http://www.w3.org/1999/xhtml" xmlns:c="">
 <head>
-    <link href="/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
+    <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
     <title>Wijzig de gegevens van een groep</title>
 </head>
 <body class="webpage">
     <div class="container-fluid">
         <p>
-            <input class="btn btn-primary" type="submit" value="home" onclick="window.location='/';" />
-            <input class="btn btn-primary" type="submit" value="Al je groepen" onclick="window.location='/team/all';" />
-            <input class="btn btn-primary" type="submit" value="Logout" onclick="window.location='/logout';" />
+            <input class="btn btn-primary" type="submit" value="Home" onclick="window.location='${pageContext.request.contextPath}/';" />
+            <input class="btn btn-primary" type="submit" value="Al je groepen" onclick="window.location='${pageContext.request.contextPath}/team/all';" />
+            <input class="btn btn-primary" type="submit" value="Logout" onclick="window.location='${pageContext.request.contextPath}/logout';" />
         </p>
         <h1>Wijzig gegevens groep</h1>
-        <form:form action="/team/change" modelAttribute="team">
+        <form:form action="${pageContext.request.contextPath}/team/change" modelAttribute="team">
         <form:input path="teamId" type="hidden" />
-        <form:input path="membername" type="hidden" />
+        <form:input path="allMembersInThisTeamSet" type="hidden" />
             <table>
                 <tr>
                     <td>Groepsnaam:</td>
@@ -29,14 +29,14 @@
                 <tr>
                      <td>Groepslid:</td>
                      <td>
-                        <c:forEach items="${team.membername}" var="member">
-                             <c:out value="${member.membername}" /><br />
+                        <c:forEach items="${team.allMembersInThisTeamSet}" var="member">
+                             <c:out value="${member.memberName}" /><br />
                          </c:forEach>
                      </td>
                  </tr>
              </table>
          </form:form>
-         <form:form action="/team/addMember" modelAttribute="teamMemberDTO">
+         <form:form action="${pageContext.request.contextPath}/team/addMember" modelAttribute="teamMemberDTO">
              <form:input path="teamId" type="hidden" />
                 <table>
                 <tr>

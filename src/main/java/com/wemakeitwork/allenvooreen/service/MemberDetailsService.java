@@ -17,7 +17,7 @@ public class MemberDetailsService implements UserDetailsService {
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        return (UserDetails) memberRepository.findByMembername(s).orElseThrow(
+        return (UserDetails) memberRepository.findByMemberName(s).orElseThrow(
                 () -> new UsernameNotFoundException("Gebruiker " + s + " niet gevonden")
         );
 

@@ -7,7 +7,6 @@ import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,8 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
@@ -40,7 +37,7 @@ public class TeamController {
     @GetMapping("/team/all")
     protected String showTeamsPerMember(Model model, Principal principal){
         Set<Team> teamList = null;
-        Optional<Member> member = memberRepository.findByMembername(principal.getName());
+        Optional<Member> member = memberRepository.findByMemberName(principal.getName());
         if(member.isPresent()){
             teamList = teamList(member.get().getMemberId());
         }
@@ -56,7 +53,7 @@ public class TeamController {
     private Set<Team> teamList (Integer memberId){
         Set<Team> teamList;
         Member member = memberRepository.getOne(memberId);
-        teamList = member.getTeamName();
+        teamList = member.getAllTeamsOfMemberSet();
         return teamList;
     }
 
@@ -91,7 +88,7 @@ public class TeamController {
 
         Team team = teamRepository.getOne(teamId);
         Set<Member> wegermee = new HashSet<>();
-        wegermee.addAll(team.getMembername());
+        wegermee.addAll(team.getAllMembersInThisTeamSet());
 
         for (Member member : wegermee){
             member.removeTeamFromMember(team);
@@ -107,12 +104,12 @@ public class TeamController {
     @PostMapping("/team/new")
     protected String saveOrUpdateTeam(HttpServletRequest request) {
         String teamName = request.getParameter("teamName");
-        String membername = request.getParameter("membername");
+        String membername = request.getParameter("allMembersInThisTeamSet");
         Team team = new Team();
         team.setTeamName(teamName);
-        Member member = memberRepository.findByMembername(membername).get();
-        member.getTeamName().add(team);
-        team.getMembername().add(member);
+        Member member = memberRepository.findByMemberName(membername).get();
+        member.getAllTeamsOfMemberSet().add(team);
+        team.getAllMembersInThisTeamSet().add(member);
         teamRepository.save(team);
         memberRepository.save(member);
         return "redirect:/team/all";
@@ -129,18 +126,18 @@ public class TeamController {
     }
 
     @PostMapping("team/addMember")
-    protected String addMember(@ModelAttribute("teamMemberDTO")TeamMemberDTO teamMemberDTO, BindingResult result) {
+    protected String addMember(@ModelAttribute("teamMemberDTO") TeamMemberDTO teamMemberDTO, BindingResult result) {
         if (result.hasErrors()) {
             return "teamData";
         } else {
-            Optional<Member> memberOpt = memberRepository.findByMembername(teamMemberDTO.getTeamMemberName());
+            Optional<Member> memberOpt = memberRepository.findByMemberName(teamMemberDTO.getTeamMemberName());
             System.out.println("member uit DTO:   " + teamMemberDTO.getTeamMemberName());
             Team team = teamRepository.getOne(teamMemberDTO.getTeamId());
             System.out.println("teamId uit DTO:   " + teamMemberDTO.getTeamId());
 
             if (memberOpt.isPresent()){
-                memberOpt.get().getTeamName().add(team);
-                team.getMembername().add(memberOpt.get());
+                memberOpt.get().getAllTeamsOfMemberSet().add(team);
+                team.getAllMembersInThisTeamSet().add(memberOpt.get());
                 memberRepository.save(memberOpt.get());
             }
             teamRepository.save(team);

@@ -11,7 +11,7 @@
 </head>
 <body>
 <div class="container">
-    <form class="form-signin" method="get" action="/login">
+    <form class="form-signin" method="get" action="${pageContext.request.contextPath}/login">
         <h2 class="form-signin-heading">Weet je zeker dat je je wilt uitschrijven? </h2>
         <form:input name="_csrf" type="hidden" />
         <button class="btn btn-lg btn-primary btn-block" type="submit">Uitschrijven</button>

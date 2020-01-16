@@ -10,27 +10,34 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
 
-    <link href="/webjars/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet" />
-    <link href="/webjars/fullcalendar/3.9.0/fullcalendar.print.min.css" rel="stylesheet" media='print' />
-    <link href="/webjars/Eonasdan-bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
-    <script src="/webjars/moment/2.24.0/min/moment.min.js"></script>
-    <script src="/webjars/jquery/3.4.1/jquery.slim.min.js"></script>
-    <script src="/webjars/fullcalendar/3.9.0/fullcalendar.min.js"></script>
-    <script src="/webjars/Eonasdan-bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="/webjars/fullcalendar/3.9.0/locale/nl.js"></script>
-    <link href="/webjars/font-awesome/5.0.6/web-fonts-with-css/css/fontawesome-all.min.css" rel='stylesheet'>
-    <link href="/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
-    <script src="/webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <!-- Order is important -->
+    <link href="${pageContext.request.contextPath}/webjars/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet" />
+    <link href="${pageContext.request.contextPath}/webjars/fullcalendar/3.9.0/fullcalendar.print.min.css" rel="stylesheet" media='print' />
+    <link href="${pageContext.request.contextPath}/webjars/Eonasdan-bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <script src="${pageContext.request.contextPath}/webjars/moment/2.24.0/min/moment.min.js"></script>
+    <script src="${pageContext.request.contextPath}/webjars/jquery/3.4.1/jquery.slim.min.js"></script>
+    <script src="${pageContext.request.contextPath}/webjars/fullcalendar/3.9.0/fullcalendar.min.js"></script>
+    <script src="${pageContext.request.contextPath}/webjars/Eonasdan-bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="${pageContext.request.contextPath}/webjars/fullcalendar/3.9.0/locale/nl.js"></script>
+    <link href="${pageContext.request.contextPath}/webjars/font-awesome/5.0.6/web-fonts-with-css/css/fontawesome-all.min.css" rel='stylesheet'>
+    <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
+    <script src="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
+    <!-- this script loads FullCalendar -->
     <script type="text/javascript">
     $(document).ready(function() {
-
+        hideAll();
+        $("#selectie").change(function () {
+            hideAll()
+            activitySelection();
+        });
         $('#calendar').fullCalendar({
             themeSystem: 'bootstrap4',
             timeZone: 'Europe/Amsterdam',
             timeFormat: 'H(:mm)',
             locale: 'nl',
 
+            <!-- The buttons and title that are displayed at the top of the calendar -->
             header: {
                 left: 'prev,next today',
                 center: 'title',
@@ -43,13 +50,11 @@
             selectable: true,
             selectHelper: true,
 
+            <!-- This function is executed when an empty date/time is clicked -->
             select: function(start, end) {
-                $('#modal-form').attr('action',"/event/new");
-                $('#save-change-event').attr('action',"/event/new");
+                $('#modal-form').attr('action',"${pageContext.request.contextPath}/event/new");
+                $('#save-change-event').attr('action',"${pageContext.request.contextPath}/event/new");
 
-                $('.modal').find('#eventName').val("");
-                $('.modal').find('#eventComment').val("");
-                $('.modal').find('#activity.activityCategory').val("Selecteer categorie");
                 $('.modal').find('#eventStartDate').val(start);
                 $('.modal').find('#eventEndDate').val(end);
 
@@ -59,31 +64,39 @@
                 $('.modal').modal('show');
             },
 
+            <!-- This function is executed when an already planned event is clicked -->
             eventClick: function(event, element) {
-                <!--pass eventId to a simple <a href> link: -->
-                <!--$('#deleteEvent').attr('href',"/event/delete/" + event.id);-->
+                <!-- pass eventId to a simple <a href> link: -->
+                <!-- $('#deleteEvent').attr('href',"${pageContext.request.contextPath}/event/delete/" + event.id); -->
 
-                <!--pass eventId to a <button> onclick action: -->
-                $('#delete-event').attr('onclick',"window.location='/event/delete/" + event.id + "/" + event.activity.id + "'");
+                <!-- redefines the onclick action of the delete-event button, so that it will point the browser -->
+                <!-- to the /event/delete/{eventId}/{activityId} mapping -->
+                $('#delete-event').attr('onclick',"window.location='${pageContext.request.contextPath}/event/delete/" + event.id + "/" + event.activity.id + "'");
 
                 $("#eventId").val(event.id);
 
-                $('#modal-form').attr('action',"/event/change/" + event.activity.id + "/" + event.team.id);
-                $('#save-change-event').attr('action',"/event/change");
+                $('#modal-form').attr('action',"${pageContext.request.contextPath}/event/change/" + event.activity.id + "/" + event.team.id);
+                $('#save-change-event').attr('action',"${pageContext.request.contextPath}/event/change");
 
+                <!-- loads the input fields with information of the clicked event -->
                 $('.modal').find('#eventName').val(event.title);
                 $('.modal').find('#eventComment').val(event.description);
-                $('.modal').find('#event.activityCategory').val("Selecteer categorie");
+                $('.modal').find('#event.activityCategory').val(event.activity.category);
                 $('.modal').find('#eventStartDate').val(event.start);
                 $('.modal').find('#eventEndDate').val(event.end);
 
+                <!-- redefines the modal (popup) buttons with the appropriate button text -->
                 document.getElementById("modal-title").innerHTML = "Wijzig of verwijder afspraak";
                 document.getElementById("save-change-event").innerHTML = "Wijzig afspraak";
-                $("#delete-event").show();
-                $('.modal').modal('show');
 
+                <!-- shows the delete button on the (still hidden) modal -->
+                $("#delete-event").show();
+
+                <!-- lastly, the modal (popup) is shown, which by now has been properly configured -->
+                $('.modal').modal('show');
             },
 
+            <!--  This function is executed on drop when an event was dragged. (not yet implemented) -->
             eventDrop: function( event, delta, revertFunc, jsEvent, ui, view ) {
                 console.log(event.title + ' was dragged to ' + event.description);
                 console.log("delta is: " + delta);
@@ -93,7 +106,7 @@
 
                 $.ajax({
                   type: "POST",
-                  url: "/event/change/2",
+                  url: "${pageContext.request.contextPath}/event/change/2",
                   data: {
                         id: "2",
                         title: "Nieuwe ajax titel",
@@ -110,30 +123,10 @@
                      end: "1578441600000"
                   }),
                   success: function(response) {
-                     console.log("Ajax posted succesful!: ");
-                     console.log(response);
-
-                     <!-- if(response.status == "SUCCESS"){
-                         $('#error').hide('slow');
-                         $('#info').show('slow');
-                     } else {
-                         errorInfo = "";
-                         for(i =0 ; i < response.result.length ; i++){
-                             errorInfo += "<br>" + (i + 1) +". " + response.result[i].code;
-                         }
-                         // $('#error').html("Please correct following errors: " + errorInfo);
-                         $('#info').hide('slow');
-                         $('#error').show('slow');
-                     } -->
-
-
+                    console.log("Ajax posted succesful!: ");
+                    console.log(response);
                   },
                   error: function(response) {
-
-
-
-
-
                     console.log("FAIL: ");
                     console.log(response);
                   }
@@ -143,34 +136,52 @@
             eventDragStop: function(info) {
             },
 
+            <!-- This function is executed when an event was resized, not yet implemented -->
             eventResize: function(event, delta, revertFunc) {
                 alert(event.title + " end is now " + event.end.format());
 
                 revertFunc();
             },
 
-            // Remember last view on page reload
+            <!-- Remember last view on page reload. -->
             viewRender: function (view, element) {
                 localStorage.setItem("fcDefaultView", view.name);
             },
             defaultView: (localStorage.getItem("fcDefaultView") !== null ? localStorage.getItem("fcDefaultView") : "month"),
 
             editable: true,
+
+            <!-- calendarData is a JSON string with all calendar events -->
             events: ${calendarData},
             eventLimit: true // allow "more" link when too many events
         });
 
-        // Bind the dates to datetimepicker.
-        // You should pass the options you need
+        <!-- This function loads the start & end date calendars (datetimepickers) in the modal (popup). -->
         $("#eventStartDate, #eventEndDate").datetimepicker({
              format: 'MM/DD/YYYY HH:mm',
         });
     });
-    </script>
+<!-- below function shows the correct modal form based on the activity selection -->
+    function activitySelection() {
+        if ($("#selectie").val() === "Medisch")
+            $("#medicationActivity").show();
+        else
+            $("#eventActivity").show();
+    }
+<!-- below function hides all modal options -->
+    function hideAll() {
+        $("#eventActivity, #medicationActivity ").css("display", "none");
+    }
+
+<!-- below function hides all modal options -->
+    function fillingTheModall() {
+        $("#eventActivity, #medicationActivity ").css("display", "none");
+    }
+     </script>
 </head>
 
 <body>
-<form:form id="modal-form" action="/event/change" modelAttribute="event" method="post">
+<form:form id="modal-form" action="${pageContext.request.contextPath}/event/change" modelAttribute="event" method="post">
     <div class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -178,46 +189,96 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 id="modal-title" class="modal-title col-12">Maak nieuwe afspraak</h4>
                 </div>
+
+                <!-- select below decides the input fields for event -->
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-12">
-                            <label class="col-4" for="eventName">Onderwerp</label>
-                            <input type="text" name="eventName" id="eventName" pattern=".{4,}" required/> ${error}
-                            <input type="hidden" name="eventId" id="eventId" />
-                            <input type="hidden" name="teamId" id="team.teamId" />
+                        <div class="col-xs-12">
+                            <span style="margin-left:2em">
+                            <label class="col-xs-4" for="selectie" control-label>Categorie</label>
+                                <select name="activity.activityCategory" id="selectie" >
+                                <option disabled selected="selected">Selecteer categorie</option>
+                                    <option value="Vrije tijd" >Vrije tijd</option>
+                                    <option value="Medisch">Medisch</option>
+                                </select>
+                            </span>
                         </div>
                     </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <label class="col-4" for="eventName">Onderwerp</label>
+                        <input type="text" name="eventName" id="eventName" />
+                        <input type="hidden" name="eventId" id="eventId" />
+                        <input type="hidden" name="teamId" id="team.teamId" />
+                    </div>
+                </div>
+
+                <!-- event with activity modal input fields -->
+                <div class="modal-body" id="eventActivity">
                     <div class="row">
                         <div class="col-12">
                             <label class="col-4" for="eventComment">Beschrijving</label>
-                            <input type="text" name="eventComment" id="eventComment" required/>
+                            <input type="text" name="eventComment" id="eventComment" />
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-12">
-                            <label class="col-4" for="activity.activityCategory">Categorie</label>
-                            <select name="activity.activityCategory" id="activity.activityCategory" required>
-                                <option disabled selected="selected">Selecteer categorie</option>
-                                <option value="Huishouden">Huishouden</option>
-                                <option value="Medisch">Medisch</option>
-                                <option value="Vrije tijd" >Vrije tijd</option>
-                            </select>
+                        <div class="col-xs-12">
+                        <span style="margin-left:2em">
+                            <label class="col-xs-4" for="eventStartDate">Datum</label>
+                            <input type="text" name="eventStartDate" id="eventStartDate" />
+                        </span>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <span style="margin-left:2em">
+                            <label class="col-xs-4" for="eventEndDate">EindDatum</label>
+                            <input type="text" name="eventEndDate" id="eventEndDate" />
+                            </span>
+                        </div>
+                    </div>
+                </div>
 
+                <!-- event with MedicationActivity modal input fields -->
+                <div class="modal-body" id="medicationActivity">
                     <div class="row">
-                        <div class="col-12">
-                            <label class="col-4" for="eventStartDate">Starttijd</label>
-                            <input type="text" name="eventStartDate" id="eventStartDate" required/>
+                        <div class="col-xs-12" modelAttribute="medicationActivity">
+                           <span style="margin-left:2em">
+                           <label class="col-xs-4" for="medication" control-label>Medicijn</label>
+                                <select name="medication.medicationId" id="medication.medicationId" >
+                                    <option disabled selected="selected">Kies een medicijn</option>
+                                    <c:forEach var="medication" items="${medicationList}">
+                                        <option value="${medication.medicationId}">${medication.medicationName}</option>
+                                    </c:forEach>
+                                </select>
+                           </span>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-12">
-                            <label class="col-4" for="eventEndDate">Eindtijd</label>
-                            <input type="text" name="eventEndDate" id="eventEndDate" required/>
+                        <div class="col-xs-12" modelAttribute="medicationActivity">
+                            <span style="margin-left:2em">
+                            <label class="col-xs-4" for="takenMedication" control-label>Hoeveelheid</label>
+                            <input type="number" name="takenMedication" id="takenMedication" />
+                            </span>
                         </div>
                     </div>
-
+                    <div class="row">
+                        <div class="col-xs-12">
+                        <span style="margin-left:2em">
+                            <label class="col-xs-4" for="eventStartDate">Datum</label>
+                            <input type="text" name="eventStartDate" id="eventStartDate" />
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <span style="margin-left:2em">
+                            <label class="col-xs-4" for="eventEndDate">EindDatum</label>
+                            <input type="text" name="eventEndDate" id="eventEndDate" />
+                            </span>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" id="delete-event" class="btn btn-danger" data-dismiss="modal" >Verwijder Afspraak</button>
@@ -230,5 +291,12 @@
     </div><!-- /.modal -->
 </form:form>
   <jsp:include page="home.jsp" />
+<c:if test="${not empty team.teamName}">
+    <div class="badge badge-primary text-wrap" style="width: 45rem; height: 4rem; margin-left:308px;">
+        <p>
+        <h5>Agenda van de groep: ${team.teamName}</h5>
+        </p>
+    </div>
+</c:if>
 </body>
 </html>
