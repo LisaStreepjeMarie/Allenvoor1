@@ -36,7 +36,6 @@
         <!-- below cleans the modal upon closing -->
         $('#modal-form').on("hide.bs.modal", function() {
             console.log("closingclosing");
-            $("#selectie").val("Selecteer categorie");
             $('#modal-form').trigger("reset");
             hideAll();
         });
@@ -76,10 +75,13 @@
                 $('#save-change-event').attr('action',"/event/change");
                 $('.modal').find('#eventComment').val(event.description);
                 $('.modal').find('#selectie').val(event.activity.category);
+                $('.modal').find('#eventName').val(event.title);
 
                 <!-- below shows the modal based on the event.activity.category -->
                 fillingTheModal();
 
+                $('.modal').find('#selectie2').val(event.activity.medication.medicationName);
+                $('.modal').find('#takenMedication').val(event.activity.takenmedication);
                 $('.modal').find('#eventStartDate').val(event.start);
                 $('.modal').find('#eventEndDate').val(event.end);
                 document.getElementById("modal-title").innerHTML = "Wijzig of verwijder afspraak";
@@ -109,6 +111,7 @@
              format: 'MM/DD/YYYY HH:mm',
         });
     });
+
 <!-- below function shows the correct modal form based on the activity selection -->
     function activitySelection() {
         if ($("#selectie").val() === "Medisch")
@@ -116,6 +119,7 @@
         else
             $("#ShowDates, #ShowEventName, #eventActivity").show();
     }
+
 <!-- below function hides all modal options -->
     function hideAll() {
         $("#ShowDates, #eventActivity, #medicationActivity, #ShowEventName").css("display", "none");
@@ -126,7 +130,7 @@
 <!-- this function doesnt work properly yet. Work in progress -->
     function fillingTheModal() {
         if ($('.modal').find('#selectie').val() == "Medisch")
-            console.log("hallo");
+            $("#ShowDates, #ShowEventName, #medicationActivity").show();
         else
             $("#ShowDates, #ShowEventName, #eventActivity").show();
     }
@@ -182,8 +186,8 @@
                     <div class="row">
                         <div class="col-xs-12" modelAttribute="medicationActivity">
                            <span style="margin-left:2em">
-                           <label class="col-xs-4" for="medication" control-label>Medicijn</label>
-                                <select name="medication.medicationId" id="medication.medicationId" >
+                           <label class="col-xs-4" for="selectie2" control-label>Medicijn</label>
+                                <select name="medication.medicationId" id="selectie2" >
                                 <option disabled selected="selected">Kies een medicijn</option>
                                     <c:forEach var="medication" items="${medicationList}">
                                         <option value="${medication.medicationId}">${medication.medicationName}</option>

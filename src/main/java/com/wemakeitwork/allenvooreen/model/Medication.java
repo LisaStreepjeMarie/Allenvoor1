@@ -1,5 +1,6 @@
 package com.wemakeitwork.allenvooreen.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -8,7 +9,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@JsonIgnoreProperties({ "medicationName", "medicationAmount", "medicationComment", "team", "getTakenMedications" })
+@JsonIgnoreProperties({ "medicationAmount", "medicationComment", "team", "getTakenMedications", "hibernateLazyInitializer", "medicationId" })
 public class Medication {
 
     @Id
@@ -26,6 +27,7 @@ public class Medication {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Team team;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "medication")
     private List<MedicationActivity> takenMedications;
 
