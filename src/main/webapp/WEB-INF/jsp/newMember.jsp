@@ -20,7 +20,7 @@
 
         <form:form action="${pageContext.request.contextPath}/member/new" modelAttribute="member">
             <table>
-                <tr>
+                <!-- <tr>
                     <td>
                         <form:input path="memberName" class="form-control" placeholder= "Gebruikersnaam" />
                     </td>
@@ -31,9 +31,24 @@
                         </br>
                      </div>
                     </td>
-                </tr>
+                </tr> -->
                 <tr>
                     <td>
+                        <spring:bind path="username">
+                            <div class="form-group ${status.error ? 'has-error' : ''}">
+                                <form:input type="text" path="username" class="form-control" placeholder="Username"
+                                            autofocus="true"></form:input>
+                                <form:errors path="username"></form:errors>
+                            </div>
+                        </spring:bind>
+
+                        <spring:bind path="password">
+                            <div class="form-group ${status.error ? 'has-error' : ''}">
+                                <form:input type="password" path="password" class="form-control" placeholder="Password"></form:input>
+                                <form:errors path="password"></form:errors>
+                            </div>
+                        </spring:bind>
+
                         <spring:bind path="passwordConfirm">
                             <div class="form-group ${status.error ? 'has-error' : ''}">
                                 <form:input type="password" path="passwordConfirm" class="form-control"
