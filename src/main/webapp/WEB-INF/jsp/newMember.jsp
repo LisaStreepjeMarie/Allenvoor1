@@ -14,8 +14,8 @@
     </head>
     <body class="webpage">
         <div class="container">
-            <img class="mb-4" src="${pageContext.request.contextPath}/images/LogoAllenVoorEen.png" alt="" width="300" height="228">
             <form class="form-signin" method="post" action="${pageContext.request.contextPath}/member/new">
+            <img class="mb-4" src="${pageContext.request.contextPath}/images/LogoAllenVoorEen.png" alt="" width="300" height="228">
                 <h1 class="h3 mb-3 font-weight-normal">Nieuw? Meld je aan:</h1>
 
         <form:form action="${pageContext.request.contextPath}/member/new" modelAttribute="member">
