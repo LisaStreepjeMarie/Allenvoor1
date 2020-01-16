@@ -19,9 +19,9 @@
                 <h1 class="h3 mb-3 font-weight-normal">Nieuw? Meld je aan:</h1>
 
         <form:form action="${pageContext.request.contextPath}/member/new" modelAttribute="member">
-            <table>
+            <!-- <table>
                 <tr>
-                    <td>
+                    <td> -->
                         <spring:bind path="memberName">
                             <div class="form-group ${status.error ? 'has-error' : ''}">
                                 <form:input type="text" path="memberName" class="form-control" placeholder="Gebruikersnaam"
@@ -46,11 +46,12 @@
                         </spring:bind>
 
                         <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
-                    </td>
-                </tr>
+                    <!-- </td>
+                </tr> -->
             </form:form>
+            <table>
             <tr>
-            <td colspan="2">
+                <td>
                 <form action="${pageContext.request.contextPath}/logout" method="post">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Inloggen</button>
