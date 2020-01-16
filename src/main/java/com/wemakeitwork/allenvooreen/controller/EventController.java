@@ -119,13 +119,13 @@ public class EventController {
 
             if(event.getActivity() instanceof MedicationActivity){
 
-                //TODO this needs to be cleaned up. Horrible coding - LM
-                Optional<Activity> activity = activityRepository.findById(activityId);
-                if(activity.isPresent() && activity.get() instanceof MedicationActivity && ((MedicationActivity) activity.get()).getMedication() == medicationActivity.getMedication()){
-                    Medication medication = ((MedicationActivity) activity.get()).getMedication();
-                    assert medication != null;
-                    medication.removalActivityAddedAmount(((MedicationActivity) activity.get()).getTakenMedication());
-                }
+                //TODO medication amount needs to be done correctly before changing - LM
+//                Optional<Activity> activity = activityRepository.findById(activityId);
+//                if(activity.isPresent() && activity.get() instanceof MedicationActivity && ((MedicationActivity) activity.get()).getMedication() == medicationActivity.getMedication()){
+//                    Medication medication = ((MedicationActivity) activity.get()).getMedication();
+//                    assert medication != null;
+//                    medication.removalActivityAddedAmount(((MedicationActivity) activity.get()).getTakenMedication());
+//                }
 
                 Optional<Medication> medication = medicationRepository.findById(medicationActivity.getMedication().getMedicationId());
                 medication.ifPresent(value -> value.setTakenMedications(medicationActivity));
