@@ -14,24 +14,12 @@
     </head>
     <body class="webpage">
         <div class="container">
+            <img class="mb-4" src="${pageContext.request.contextPath}/images/LogoAllenVoorEen.png" alt="" width="300" height="228">
             <form class="form-signin" method="post" action="${pageContext.request.contextPath}/member/new">
-             <img class="mb-4" src="https://upload.wikimedia.org/wikipedia/commons/a/a4/All_for_One_Midmarket_logo.svg" alt="" width="240" height="50">
                 <h1 class="h3 mb-3 font-weight-normal">Nieuw? Meld je aan:</h1>
 
         <form:form action="${pageContext.request.contextPath}/member/new" modelAttribute="member">
             <table>
-                <!-- <tr>
-                    <td>
-                        <form:input path="memberName" class="form-control" placeholder= "Gebruikersnaam" />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <form:input path="password" class="form-control" placeholder= "Wachtwoord"/>
-                        </br>
-                     </div>
-                    </td>
-                </tr> -->
                 <tr>
                     <td>
                         <spring:bind path="memberName">
@@ -56,24 +44,24 @@
                                 <form:errors path="passwordConfirm"></form:errors>
                             </div>
                         </spring:bind>
+
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
                     </td>
                 </tr>
-                <tr>
-                    <td colspan="2">
-                        <button class="btn btn-lg btn-primary btn-block" type="submit">Registreer</button>
-                    </td>
-                </tr>
-           </form:form>
-           <tr>
+            </form:form>
+            <tr>
             <td colspan="2">
-        <form action="${pageContext.request.contextPath}/logout" method="post">
-              <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-              <button class="btn btn-lg btn-primary btn-block" type="submit">Inloggen</button>
-                <p class="mt-5 mb-3 text-muted">&copy; 2019 Allenvooreen</p>
+                <form action="${pageContext.request.contextPath}/logout" method="post">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Inloggen</button>
+                    <p class="mt-5 mb-3 text-muted">&copy; 2019 Allenvooreen</p>
                 </td>
-               </tr>
+                </tr>
             </form>
-          </table>
+        </table>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script src="${contextPath}/resources/js/bootstrap.min.js"></script>
     </body>
 </html>
 
