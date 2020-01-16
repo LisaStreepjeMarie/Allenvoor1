@@ -85,23 +85,7 @@ public class MemberController {
         return "confirmLogout";
     }
 
-    //@PostMapping("/member/new")
-    /* protected String saveOrUpdateMember(@ModelAttribute("member") @Valid Member member, BindingResult result) {
-        if (result.hasErrors()) {
-            return "newMember";
-        }
-        else {
-            //TODO: check of aan te maken loginnaam al bestaat (gooit nu whitelabel 500 met SQL constraint error)
-            System.out.println(member.getMemberName());
-            member.setPassword(passwordEncoder.encode(member.getPassword()));
-            member.setRol("gebruiker");
-            memberRepository.save(member);
-            return "redirect:/member/new";
-        }
-    } */
-
     @PostMapping("/member/new")
-    // public String saveOrUpdateMember(@ModelAttribute("member") Member member, BindingResult result) {
     protected String saveOrUpdateMember(@ModelAttribute("member") @Valid Member member, BindingResult result) {
         System.out.println("is er output? " + member.getMemberName());
         memberValidator.validate(member, result);
@@ -111,10 +95,8 @@ public class MemberController {
             System.out.println(member.getMemberName());
             member.setPassword(passwordEncoder.encode(member.getPassword()));
             member.setRol("gebruiker");
-            // memberRepository.save(member);
             memberService.save(member);
             securityService.autoLogin(member.getUsername(), member.getPasswordConfirm());
-
             return "redirect:/member/new";
         }
     }
