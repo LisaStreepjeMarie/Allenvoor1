@@ -28,7 +28,7 @@ public class Medication {
     private Team team;
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "medication")
+    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, mappedBy = "medication")
     private List<MedicationActivity> takenMedications;
 
     public Integer getMedicationId() {

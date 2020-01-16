@@ -87,7 +87,6 @@ public class EventController {
             if(event.getActivity() instanceof MedicationActivity){
 
                 if (medicationActivity.getMedication() == null){
-
                     //TODO this is not a clean way of solving the medication not null error. It needs to be able to be null for saving superclass
                     //might be nice to solve this with a custom validator in next sprint
                     return "redirect:/calendar/" + team.getTeamId();
@@ -119,6 +118,15 @@ public class EventController {
             event.getActivity().setActivityName(event.getEventName());
 
             if(event.getActivity() instanceof MedicationActivity){
+
+                //TODO this needs to be cleaned up. Horrible coding - LM
+                Optional<Activity> activity = activityRepository.findById(activityId);
+                if(activity.isPresent() && activity.get() instanceof MedicationActivity && ((MedicationActivity) activity.get()).getMedication() == medicationActivity.getMedication()){
+                    Medication medication = ((MedicationActivity) activity.get()).getMedication();
+                    assert medication != null;
+                    medication.removalActivityAddedAmount(((MedicationActivity) activity.get()).getTakenMedication());
+                }
+
                 Optional<Medication> medication = medicationRepository.findById(medicationActivity.getMedication().getMedicationId());
                 medication.ifPresent(value -> value.setTakenMedications(medicationActivity));
             }
