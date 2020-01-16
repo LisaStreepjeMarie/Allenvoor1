@@ -144,7 +144,7 @@
         });
 
         <!-- This function loads the start & end date calendars (datetimepickers) in the modal (popup). -->
-        $("#eventStartDate, #eventEndDate").datetimepicker({
+        $("#eventStartDate, #eventEndDate, #eventDoneDate").datetimepicker({
              format: 'MM/DD/YYYY HH:mm',
         });
     });
