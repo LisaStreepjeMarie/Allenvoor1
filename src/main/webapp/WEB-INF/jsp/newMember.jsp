@@ -34,11 +34,11 @@
                 </tr> -->
                 <tr>
                     <td>
-                        <spring:bind path="username">
+                        <spring:bind path="memberName">
                             <div class="form-group ${status.error ? 'has-error' : ''}">
-                                <form:input type="text" path="username" class="form-control" placeholder="Username"
+                                <form:input type="text" path="memberName" class="form-control" placeholder="Gebruikersnaam"
                                             autofocus="true"></form:input>
-                                <form:errors path="username"></form:errors>
+                                <form:errors path="memberName"></form:errors>
                             </div>
                         </spring:bind>
 
