@@ -30,7 +30,7 @@
 
             <spring:bind path="password">
                 <!-- <div class="form-group ${status.error ? 'has-error' : ''}"> -->
-                <div class="passwordhaserror">
+                <div class="form-group password.has-error">
                     <form:input type="password" path="password" class="form-control" placeholder="Password"></form:input>
                     <form:errors path="password"></form:errors>
                 </div>
