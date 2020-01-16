@@ -10,19 +10,18 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
 
-    <link href="/webjars/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet" />
-    <link href="/webjars/fullcalendar/3.9.0/fullcalendar.print.min.css" rel="stylesheet" media='print' />
-    <link href="/webjars/Eonasdan-bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
-    <script src="/webjars/moment/2.24.0/min/moment.min.js"></script>
-    <script src="/webjars/jquery/3.4.1/jquery.slim.min.js"></script>
-    <script src="/webjars/fullcalendar/3.9.0/fullcalendar.min.js"></script>
-    <script src="/webjars/Eonasdan-bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="/webjars/fullcalendar/3.9.0/locale/nl.js"></script>
-    <link href="/webjars/font-awesome/5.0.6/web-fonts-with-css/css/fontawesome-all.min.css" rel='stylesheet'>
-    <link href="/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
-    <script src="/webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link href="${pageContext.request.contextPath}/webjars/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet" />
+    <link href="${pageContext.request.contextPath}/webjars/fullcalendar/3.9.0/fullcalendar.print.min.css" rel="stylesheet" media='print' />
+    <link href="${pageContext.request.contextPath}/webjars/Eonasdan-bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <script src="${pageContext.request.contextPath}/webjars/moment/2.24.0/min/moment.min.js"></script>
+    <script src="${pageContext.request.contextPath}/webjars/jquery/3.4.1/jquery.slim.min.js"></script>
+    <script src="${pageContext.request.contextPath}/webjars/fullcalendar/3.9.0/fullcalendar.min.js"></script>
+    <script src="${pageContext.request.contextPath}/webjars/Eonasdan-bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="${pageContext.request.contextPath}/webjars/fullcalendar/3.9.0/locale/nl.js"></script>
+    <link href="${pageContext.request.contextPath}/webjars/font-awesome/5.0.6/web-fonts-with-css/css/fontawesome-all.min.css" rel='stylesheet'>
+    <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
+    <script src="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
-    <!-- this script loads FullCalendar -->
     <script type="text/javascript">
     $(document).ready(function() {
         hideAll();
@@ -35,7 +34,6 @@
 
         <!-- below cleans the modal upon closing -->
         $('#modal-form').on("hide.bs.modal", function() {
-            console.log("closingclosing");
             $('#modal-form').trigger("reset");
             hideAll();
         });
@@ -82,8 +80,8 @@
                 $('#delete-event').attr('onclick',"window.location='${pageContext.request.contextPath}/event/delete/" + event.id + "/" + event.activity.id + "'");
 
                 $("#eventId").val(event.id);
-                $('#modal-form').attr('action',"/event/change/" + event.activity.id);
-                $('#save-change-event').attr('action',"/event/change");
+                $('#modal-form').attr('action',"${pageContext.request.contextPath}/event/change/" + event.activity.id);
+                $('#save-change-event').attr('action',"{pageContext.request.contextPath}/event/change");
                 $('.modal').find('#eventComment').val(event.description);
                 $('.modal').find('#selectie').val(event.activity.category);
                 $('.modal').find('#eventName').val(event.title);
@@ -165,6 +163,7 @@
 </head>
 
 <body>
+
 <form:form id="modal-form" action="${pageContext.request.contextPath}/event/change" modelAttribute="event" method="post">
     <div class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
@@ -188,44 +187,28 @@
                             </span>
                         </div>
                     </div>
-                 </div>
-                   <div class="row" id="ShowEventName">
-                        <div class="col-12">
-                             <label class="col-4" for="eventName">Onderwerp</label>
-                              <input type="text" name="eventName" id="eventName" />
-                              <input type="hidden" name="eventId" id="eventId" />
-                              <input type="hidden" name="teamId" id="team.teamId" />
-                         </div>
-                   </div>
+                </div>
+                <div class="row" id="ShowEventName">
+                    <div class="col-12">
+                        <label class="col-4" for="eventName">Onderwerp</label>
+                        <input type="text" name="eventName" id="eventName" />
+                        <input type="hidden" name="eventId" id="eventId" />
+                        <input type="hidden" name="teamId" id="team.teamId" />
+                    </div>
+                </div>
 
-                 <!-- event with activity modal input fields -->
-                   <div class="modal-body" id="eventActivity">
+                <!-- event with activity modal input fields -->
+                <div class="modal-body" id="eventActivity">
                     <div class="row">
                         <div class="col-12">
                             <label class="col-4" for="eventComment">Beschrijving</label>
                             <input type="text" name="eventComment" id="eventComment" />
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                        <span style="margin-left:2em">
-                            <label class="col-xs-4" for="eventStartDate">Datum</label>
-                            <input type="text" name="eventStartDate" id="eventStartDate" />
-                        </span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <span style="margin-left:2em">
-                            <label class="col-xs-4" for="eventEndDate">EindDatum</label>
-                            <input type="text" name="eventEndDate" id="eventEndDate" />
-                            </span>
-                        </div>
-                    </div>
                 </div>
 
-                 <!-- event with MedicationActivity modal input fields -->
-                   <div class="modal-body" id="medicationActivity">
+                <!-- event with MedicationActivity modal input fields -->
+                <div class="modal-body" id="medicationActivity">
                     <div class="row">
                         <div class="col-xs-12" modelAttribute="medicationActivity">
                            <span style="margin-left:2em">
@@ -247,8 +230,8 @@
                             </span>
                         </div>
                     </div>
-                    </div>
-                    <div class="modal-body" id="ShowDates">
+                </div>
+                <div class="modal-body" id="ShowDates">
                     <div class="row">
                         <div class="col-xs-12">
                         <span style="margin-left:2em">
@@ -265,7 +248,7 @@
                             </span>
                         </div>
                     </div>
-                    </div>
+                </div>
                 <div class="modal-footer">
                     <button type="button" id="delete-event" class="btn btn-danger" data-dismiss="modal" >Verwijder Afspraak</button>
                     <button type="button" class="btn btn-light" data-dismiss="modal">Sluiten</button>
