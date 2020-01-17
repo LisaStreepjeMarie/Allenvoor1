@@ -1,4 +1,6 @@
 package com.wemakeitwork.allenvooreen.model;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,11 +10,14 @@ import javax.persistence.Id;
 public class Activity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("id")
     private Integer activityId;
 
+    @JsonProperty("name")
     private String activityName;
 
+    @JsonProperty("category")
     private String activityCategory;
 
     public Integer getActivityId() {
@@ -38,5 +43,4 @@ public class Activity {
     public void setActivityCategory(String activityCategory) {
         this.activityCategory = activityCategory;
     }
-
 }

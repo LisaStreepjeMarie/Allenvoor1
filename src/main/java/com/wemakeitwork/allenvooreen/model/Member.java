@@ -1,26 +1,45 @@
 package com.wemakeitwork.allenvooreen.model;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "members")
 public class Member implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer memberId;
-    @Column(name = "membername", unique = true)
-    private String membername;
-    @Column(name = "password")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer memberId = 0;
+
+    private String memberName;
+
     private String password;
-    @Column(name = "rol")
+
     private String rol;
+
+    @Transient
+    private String passwordConfirm;
+
+    @ManyToMany
+    @JoinTable(name = "team_membername", joinColumns = @JoinColumn(name = "membername_member_id"), inverseJoinColumns = @JoinColumn(name = "team_team_id"))
+    private Set<Team> allTeamsOfMemberSet = new HashSet<>();
+
+    public Set<Team> getAllTeamsOfMemberSet() {
+        return allTeamsOfMemberSet;
+    }
+
+    public void setAllTeamsOfMemberSet(Set<Team> allTeamsOfMemberSet) {
+        this.allTeamsOfMemberSet = allTeamsOfMemberSet;
+    }
 
     public String getRol() {
         return rol;
@@ -30,17 +49,24 @@ public class Member implements UserDetails {
         this.rol = rol;
     }
 
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
+    }
+
     @Override
     public Collection<GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-        System.out.println(authorities);
         return authorities;
     }
 
     @Override
     public String getUsername() {
-        return this.getMembername();
+        return this.getMemberName();
     }
 
     @Override
@@ -62,24 +88,40 @@ public class Member implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
     public Integer getMemberId() {
         return memberId;
     }
+
     public void setMemberId(Integer memberId) {
         this.memberId = memberId;
     }
+
     public String getPassword() {
         return password;
     }
-    public void setPassword(String password) {
-        this.password = password;
+
+    public String setPassword(String password) {
+        if (password != null && password.isEmpty()) {
+            return null;
+        } else {
+            return this.password = password;
+        }
     }
 
-    public String getMembername() {
-        return membername;
+    public String getMemberName() {
+        return memberName;
     }
 
-    public void setMembername(String membername) {
-        this.membername = membername;
+    public String setMemberName(String memberName) {
+        if (memberName != null && memberName.isEmpty()) {
+            return null;
+        } else {
+            return this.memberName = memberName;
+        }
+    }
+
+    public void removeTeamFromMember(Team team){
+        allTeamsOfMemberSet.remove(team);
     }
 }

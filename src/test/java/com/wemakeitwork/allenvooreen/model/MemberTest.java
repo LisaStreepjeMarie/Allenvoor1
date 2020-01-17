@@ -4,8 +4,6 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class MemberTest {
     Member testMember = new Member();
 
@@ -30,10 +28,10 @@ class MemberTest {
     @Test
     void getUsername() {
         //arrange
-        testMember.setMembername("testmember");
+        testMember.setMemberName("testmember");
 
         //arrange
-        Assertions.assertThat(testMember.getMembername()).isEqualTo("testmember");
+        Assertions.assertThat(testMember.getMemberName()).isEqualTo("testmember");
     }
 
     @Test
@@ -82,19 +80,19 @@ class MemberTest {
     @Test
     void getMembername() {
         //arrange
-        testMember.setMembername("testmember");
+        testMember.setMemberName("testmember");
 
         //arrange
-        Assertions.assertThat(testMember.getMembername()).isEqualTo("testmember");
+        Assertions.assertThat(testMember.getMemberName()).isEqualTo("testmember");
     }
 
     @Test
     void setMembername() {
         //arrange
-        testMember.setMembername("testmember");
+        testMember.setMemberName("testmember");
 
         //arrange
-        Assertions.assertThat(testMember.getMembername()).isEqualTo("testmember");
+        Assertions.assertThat(testMember.getMemberName()).isEqualTo("testmember");
     }
 
 

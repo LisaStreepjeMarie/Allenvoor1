@@ -1,4 +1,5 @@
 package com.wemakeitwork.allenvooreen.controller;
+
 import com.wemakeitwork.allenvooreen.model.Activity;
 import com.wemakeitwork.allenvooreen.repository.ActivityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +15,10 @@ import java.util.Optional;
 
 
 @Controller
-public class NewActivityController {
+public class ActivityController {
 
     @Autowired
     ActivityRepository activityRepository;
-
-    //TODO in this sprint we don't need this form. Remember to link this back to the event
-
 
     @GetMapping("/activity/new")
     protected String showActivityForm(Model model) {
@@ -36,18 +34,21 @@ public class NewActivityController {
     }
 
     @GetMapping("/activity/select/{activityId}")
-    protected String showTeamData(@PathVariable("activityId") final Integer activtyId, Model model) {
-        // extra regel om te testen:
+    protected String showTeamData(@PathVariable("activityId") final Integer activityId, Model model) {
+
         model.addAttribute("activity", new Activity());
-        Optional<Activity> optActivity = activityRepository.findById(activtyId);
+
+        Optional<Activity> optActivity = activityRepository.findById(activityId);
         Activity activity;
-        if (optActivity.isPresent()) {
-            activity = optActivity.get();
-        } else {
-            activity = new Activity();
-        }
+        activity = optActivity.orElseGet(Activity::new);
         model.addAttribute("activity", activity);
         return "activityData";
+    }
+
+    @GetMapping("/activity/delete/{activityId}")
+    public String deleteTeam(@PathVariable("activityId") final Integer activityId) {
+        activityRepository.deleteById(activityId);
+        return "redirect:/activity/all";
     }
 
     @PostMapping("/activity/new")
@@ -56,6 +57,16 @@ public class NewActivityController {
             return "newActivity";
         }
         else {
+            activityRepository.save(activity);
+            return "redirect:/activity/all";
+        }
+    }
+
+    @PostMapping("/activity/change")
+    protected String saveOrUpdateActivity2(@ModelAttribute("activity") Activity activity, BindingResult result) {
+        if (result.hasErrors()) {
+            return "activityData";
+        } else {
             activityRepository.save(activity);
             return "redirect:/activity/all";
         }

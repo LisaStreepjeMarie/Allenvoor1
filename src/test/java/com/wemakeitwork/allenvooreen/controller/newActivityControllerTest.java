@@ -1,7 +1,4 @@
 package com.wemakeitwork.allenvooreen.controller;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import com.wemakeitwork.allenvooreen.model.Activity;
 import com.wemakeitwork.allenvooreen.repository.ActivityRepository;
 import com.wemakeitwork.allenvooreen.service.MemberDetailsService;
@@ -28,7 +25,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(controllers = NewActivityController.class)
+@WebMvcTest(controllers = ActivityController.class)
 class newActivityControllerTest {
 
     @MockBean
@@ -57,11 +54,11 @@ class newActivityControllerTest {
         mockMvc.perform(post("/activity/new")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("activityName", activityname)
-                .param("activityCategory",activitycategory)
+                .param("activityCategory", activitycategory)
                 .flashAttr("activity", new Activity())
                 .with(csrf())
         )
-                .andExpect(status().isMovedTemporarily())
+                .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/activity/all"))
                 .andExpect(redirectedUrl("/activity/all"));
 
@@ -73,7 +70,5 @@ class newActivityControllerTest {
 
         Assertions.assertThat(formObject.getActivityName()).isEqualTo(activityname);
         Assertions.assertThat(formObject.getActivityCategory()).isEqualTo(activitycategory);
-
     }
-
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:form="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -11,10 +11,10 @@
 </head>
 <body>
 <div class="container">
-    <form class="form-signin" method="post" action="/logout">
+    <form class="form-signin" method="post" action="${pageContext.request.contextPath}/logout">
+        <h2 class="form-signin-heading">Weet je zeker dat je uit wil loggen ?</h2>
         <input name="_csrf" type="hidden" value="${_csrf.token}" />
-        <h2 class="form-signin-heading">Are you sure you want to log out?</h2>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Log Out</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Uitloggen</button>
     </form>
 </div>
 </body>
