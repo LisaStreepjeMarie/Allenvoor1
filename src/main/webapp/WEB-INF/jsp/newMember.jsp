@@ -10,9 +10,9 @@
 
         <!-- Custom styles for this template -->
         <link href="https://getbootstrap.com/docs/4.0/examples/sign-in/signin.css" rel="stylesheet">
-
         <link href="${pageContext.request.contextPath}/css/common.css" rel="stylesheet" type="text/css"/>
     </head>
+
     <body class="text-center">
         <div class="container">
             <form class="form-signin" method="post" action="${pageContext.request.contextPath}/member/new">
@@ -38,12 +38,12 @@
             <spring:bind path="passwordConfirm">
                 <div class="form-group ${status.error ? 'has-error' : ''}">
                     <form:input type="password" path="passwordConfirm" class="form-control"
-                                placeholder="Confirm your password"></form:input>
+                                placeholder="Bevestig je wachtwoord"></form:input>
                     <form:errors path="passwordConfirm"></form:errors>
                 </div>
             </spring:bind>
 
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Registreer</button>
             </form:form>
             <form action="${pageContext.request.contextPath}/logout" method="post" class="form-signin" >
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />

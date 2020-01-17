@@ -39,7 +39,6 @@
                             <input type="text" name="eventEndDate" id="eventEndDate" />
                         </div>
                     </div>
-
                 </div>
 
 </body>

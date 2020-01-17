@@ -17,9 +17,9 @@
      <link href="../css/style.css" rel="stylesheet" type="text/css"/>
     </head>
 
+    <body class= "webpage">
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow fixed-top">
-      <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow sticky-top">
         <a class="navbar-brand"</a>
         <img class="mb-4" src='${pageContext.request.contextPath}/images/LogoAllenVoorEen.png' alt="" width="230" height="178"> </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,17 +45,6 @@
         </div>
       </div>
     </nav>
-
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-
 <br>
 <div class= "row">
     <div class= "col-2">

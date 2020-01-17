@@ -4,15 +4,21 @@
 
 <html xmlns:c="">
     <head>
+        <meta charset="utf-8">
         <title>Overzicht groepen</title>
         <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
         <link href="../css/style.css" rel="stylesheet" type="text/css"/>
+
+          <!-- Add icon library -->
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
+             <link href="../css/style.css" rel="stylesheet" type="text/css"/>
+            </head>
     </head>
-    <body>
+    <body class= "webpage">
 
         <!-- Navigation -->
-            <nav class="navbar navbar-expand-lg navbar-light bg-light shadow fixed-top">
-              <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light shadow sticky-top">
                 <a class="navbar-brand"</a>
                 <img class="mb-4" src='${pageContext.request.contextPath}/images/LogoAllenVoorEen.png' alt="" width="230" height="178"> </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,6 +39,7 @@
               </div>
             </nav>
             <p>
+
         <div id="container" class="ml-4 mt-4">
             <h1>Overzicht groepen</h1>
             <table>

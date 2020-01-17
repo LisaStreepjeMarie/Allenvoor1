@@ -6,13 +6,19 @@
     <head>
         <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
         <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
+
+        <!-- Add icon library -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
+        <link href="../css/style.css" rel="stylesheet" type="text/css"/>
+        </head>
+
+
+
         <title>Medicatieoverzicht</title>
-    </head>
-    <body class="webpage">
-    <div id="container">
+
      <!-- Navigation -->
             <nav class="navbar navbar-expand-lg navbar-light bg-light shadow fixed-top">
-              <div class="container">
                 <a class="navbar-brand"</a>
                 <img class="mb-4" src='${pageContext.request.contextPath}/images/LogoAllenVoorEen.png' alt="" width="230" height="178"> </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,7 +39,6 @@
                     </li>
                   </ul>
                 </div>
-              </div>
             </nav>
             <br>
             <br>
@@ -46,11 +51,8 @@
             <br>
             <br>
             <br>
-            <br>
-            <br>
-
-
-
+         <body class="webpage">
+        <div id="container">
         <h1>Voer medicatie voor ${team.teamName} in:</h1>
         <form:form action="${pageContext.request.contextPath}/medication/new" modelAttribute="medication">
             <table>
@@ -79,5 +81,6 @@
                 </tr>
             </table>
         </form:form>
+        </div>
     </body>
 </html>

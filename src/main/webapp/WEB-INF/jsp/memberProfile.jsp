@@ -1,3 +1,4 @@
+
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -5,22 +6,30 @@
 
 <html xmlns:form="http://www.w3.org/1999/xhtml" xmlns:c="">
     <head>
+            <meta charset='utf-8' />
+            <title>Kalender</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta name="mobile-web-app-capable" content="yes">
+            <meta name="apple-mobile-web-app-capable" content="yes">
+
+            <!-- Add icon library -->
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
+             <link href="../css/style.css" rel="stylesheet" type="text/css"/>
+
         <script src="${pageContext.request.contextPath}/webjars/jquery/3.4.1/jquery.slim.min.js"></script>
-
         <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
-        <script src="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-
+        <script src="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script
         <link href="${pageContext.request.contextPath}/webjars/font-awesome/5.0.6/web-fonts-with-css/css/fontawesome-all.min.css" rel='stylesheet'>
         <script src="${pageContext.request.contextPath}/webjars/font-awesome/5.0.6/on-server/js/fontawesome-all.min.js"></script>
         <script src="${pageContext.request.contextPath}/webjars/font-awesome/5.0.6/on-server/js/fa-solid.min.js"></script>
         <link href="/webjars/font-awesome/5.0.6/web-fonts-with-css/css/fontawesome-all.min.css" rel='stylesheet'>
         <script src="/webjars/font-awesome/5.0.6/on-server/js/fontawesome-all.min.js"></script>
         <script src="/webjars/font-awesome/5.0.6/on-server/js/fa-solid.min.js"></script>
-        <link href="../css/style.css" rel="stylesheet" type="text/css"/>
-        <title>Overzicht gebruiker</title>
-    <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow fixed-top">
-          <div class="container">
+        </head>
+
+     <body class= "webpage">
+      <nav class="navbar navbar-expand-lg navbar-light bg-light shadow sticky-top">
             <a class="navbar-brand"</a>
             <img class="mb-4" src='${pageContext.request.contextPath}/images/LogoAllenVoorEen.png' alt="" width="230" height="178"> </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,19 +47,20 @@
                 </li>
               </ul>
             </div>
-          </div>
         </nav>
+        <title>Overzicht gebruiker</title>
+                <div id="container">
                 <div class="mt-3 col-12">
-                    <h1>Hallo ${currentmember.memberName} !</h1>
-                    <h5>Wijzig hieronder je gebruikersnaam of verwijder je profiel</h5>
+                    <h1 class="font-weight-light">Hallo ${currentmember.memberName} !</h1>
+                    <h5 class="font-weight-light">Wijzig hieronder je gebruikersnaam of verwijder je profiel</h5>
                 </div>
-                <div class="mt-3 col-12 form-inline toolbox-top clearfix ">
+                <div class="mt-3 col-12 form-inline toolbox-top clearfix">
                     <form:form action="${pageContext.request.contextPath}/member/change" modelAttribute="currentmember">
                         <form:input path="memberId" type="hidden" />
                         <table>
                             <tr>
                                 <td>
-                                    <h7>Gebruikersnaam:
+                                    <h7 class= "font-weight-light">Gebruikersnaam:
                                         <form:input path="memberName" value="${members.memberName}" /></form> </h7>
                                     <input type="submit" class= "btn btn-primary" value="Wijzigen" />
                                 </td>
