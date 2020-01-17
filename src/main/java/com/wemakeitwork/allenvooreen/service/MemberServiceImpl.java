@@ -17,7 +17,6 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public void save(Member member) {
-        // member.setRoles(new HashSet<>(roleRepository.findAll()));
         memberRepository.save(member);
     }
 
