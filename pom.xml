@@ -131,6 +131,7 @@
             <artifactId>font-awesome</artifactId>
             <version>5.0.6</version>
         </dependency>
+
         <!--- below is for travis.ci testing-->
         <dependency>
             <groupId>org.hsqldb</groupId>
