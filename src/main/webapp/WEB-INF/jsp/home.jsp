@@ -17,7 +17,7 @@
      <link href="../css/style.css" rel="stylesheet" type="text/css"/>
     </head>
 
-    <body class= "webpage">
+
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light shadow sticky-top">
         <a class="navbar-brand"</a>
@@ -45,6 +45,8 @@
         </div>
       </div>
     </nav>
+<header class= "masthead">
+ <body class= "webpage">
 <br>
 <div class= "row">
     <div class= "col-2">

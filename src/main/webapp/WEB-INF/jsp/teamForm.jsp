@@ -41,8 +41,9 @@
             </nav>
 
         <div id="container">
-
+<header class= "masthead">
             <h1>Voeg gegevens groep toe</h1>
+
             <form:form action="${pageContext.request.contextPath}/team/new" modelAttribute="team">
                 <table>
                     <tr>

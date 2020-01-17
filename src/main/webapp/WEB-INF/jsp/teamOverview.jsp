@@ -38,9 +38,8 @@
                 </div>
               </div>
             </nav>
-            <p>
-
-        <div id="container" class="ml-4 mt-4">
+        <div id="container"
+            <header class= "masthead">
             <h1>Overzicht groepen</h1>
             <table>
                 <tr><th>Groep</th><th>Deelnemer</th><th></th></tr>

@@ -32,10 +32,10 @@
                           </a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href='${pageContext.request.contextPath}/logout'><i class="fa fa-sign-out"></i> Logout</a>
+                      <a class="nav-link" href='${pageContext.request.contextPath}/medication/${team.teamId}'> Medicatieoverzicht</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href='${pageContext.request.contextPath}/medication/${team.teamId}'> Medicatieoverzicht</a>
+                      <a class="nav-link" href='${pageContext.request.contextPath}/logout'><i class="fa fa-sign-out"></i> Logout</a>
                     </li>
                   </ul>
                 </div>
@@ -52,24 +52,25 @@
             <br>
             <br>
          <body class="webpage">
+    <header class= "masthead">
         <div id="container">
-        <h1>Voer medicatie voor ${team.teamName} in:</h1>
+        <h2>Voer medicatie voor ${team.teamName} in:</h2>
         <form:form action="${pageContext.request.contextPath}/medication/new" modelAttribute="medication">
             <table>
                 <tr>
-                    <td>Naam medicatie:</td>
+                    <td><h5>Naam medicatie:</h5>
                     <td>
                         <form:input path="medicationName" />
                     </td>
                 </tr>
                 <tr>
-                    <td>Hoeveelheid:</td>
+                    <td><h5>Hoeveelheid:</h5>
                     <td>
                         <form:input path="medicationAmount"/>
                     </td>
                 </tr>
                 <tr>
-                    <td>Beschrijving:</td>
+                    <td><h5>Beschrijving:</h5>
                     <td>
                        <form:input path="medicationComment"/>
                      </td>

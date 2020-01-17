@@ -37,19 +37,20 @@
                     </div>
                   </div>
                 </nav>
-                <br>
+       <header class= "masthead">
     <div id="container">
-        <h1>Overzicht medicatie ${team.teamName}:</h1>
+        <br>
+        <tr><th><h1>Overzicht medicatie ${team.teamName}:</h1></th></tr>
         <table>
-          <tr><th><th>Naam</th><th>Hoeveelheid</th><th>Beschrijving</th></th>
+          <tr><th><th><h5>Naam</h5></th><th><h5>Hoeveelheid</h5></th><th><h5>Beschrijving</h5></th></th>
             <c:forEach items="${medicationList}" var="medication">
-                <tr>
+                <tr><h5>
                     <td><a href="${pageContext.request.contextPath}/medication/select/<c:out value="${medication.medicationId}" />"</a>
                     <td><c:out value="${medication.medicationName}" /></td>
                     <td><c:out value="${medication.medicationAmount}" /></td>
                     <td><c:out value="${medication.medicationComment}" /></td><br>
                     <td><input class="btn btn-primary" type="submit" value="Verwijder medicatie" onclick="window.location='${pageContext.request.contextPath}/medication/delete/${medication.medicationId}';" /></td>
-                </tr>
+                </h5></tr>
             </c:forEach>
         </table>
         <p>
