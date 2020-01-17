@@ -1,0 +1,12 @@
+language: java
+services:
+    - mysql
+before_install:
+    - sudo mysql -e 'CREATE DATABASE allenvooreen;'
+    - sudo mysql -e 'use allenvooreen;'
+    - sudo mysql -e "CREATE USER 'intellij'@'localhost' IDENTIFIED BY 'intellijPW';"
+    - sudo mysql -e "GRANT ALL PRIVILEGES ON allenvooreen.* TO 'intellij'@'localhost';"
+    - sudo mysql -e 'FLUSH PRIVILEGES;'
+install:
+- mvn -N io.takari:maven:wrapper
+- ./mvnw clean install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
