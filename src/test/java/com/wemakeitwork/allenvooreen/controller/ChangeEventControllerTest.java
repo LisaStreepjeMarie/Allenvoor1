@@ -26,66 +26,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(controllers = ChangeEventController.class)
+@WebMvcTest(controllers = EventController.class)
 class ChangeEventControllerTest {
 
-    @MockBean
-    EventRepository eventRepository;
-
-    @Autowired
-    private MockMvc mockMvc;
-
-    @MockBean
-    ActivityRepository activityRepository;
-
-    @MockBean
-    MemberDetailsService memberDetailsService;
-
-    @Test
-    @WithMockUser(roles = "admin")
-    void showTeams() throws Exception {
-        mockMvc.perform(get("/event/all"))
-                .andExpect(status().isOk())
-                .andExpect(forwardedUrl("/WEB-INF/jsp/eventOverview.jsp"));
-    }
-
-    @Test
-    @WithMockUser(roles = "admin")
-    void showChangeEventForm() throws Exception {
-        mockMvc.perform(get("/event/change"))
-                .andExpect(status().isOk())
-                .andExpect(forwardedUrl("/WEB-INF/jsp/changeEvent.jsp"));
-    }
-
-    @Test
-    @WithMockUser(roles = "admin")
-    void changeEvent() throws Exception {
-        String eventName = "test2";
-        String activitycategory = "test4";
-        String eventComment = "testComment";
-
-        mockMvc.perform(post("/event/change")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .param("eventName", eventName)
-                .param("activityCategory", activitycategory)
-                .param("eventComment", eventComment)
-                .flashAttr("event", new Event())
-                .with(csrf())
-        )
-                .andExpect(view().name("redirect:/event/all"))
-                .andExpect(redirectedUrl("/event/all"));
-
-        ArgumentCaptor<Event> formObjectArgument = forClass(Event.class);
-        verify(eventRepository, times(1)).save(formObjectArgument.capture());
-        Mockito.verifyNoMoreInteractions(eventRepository);
-
-        Event formObject = formObjectArgument.getValue();
-
-        Assertions.assertThat(formObject.getEventName()).isEqualTo(eventName);
-        Assertions.assertThat(formObject.getEventComment()).isEqualTo(eventComment);
-    }
-
-    @Test
-    void showEvent() {
-    }
 }

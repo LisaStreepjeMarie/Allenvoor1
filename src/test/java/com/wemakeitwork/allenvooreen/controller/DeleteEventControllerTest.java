@@ -1,6 +1,8 @@
 package com.wemakeitwork.allenvooreen.controller;
 import com.wemakeitwork.allenvooreen.repository.ActivityRepository;
 import com.wemakeitwork.allenvooreen.repository.EventRepository;
+import com.wemakeitwork.allenvooreen.repository.MedicationRepository;
+import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import com.wemakeitwork.allenvooreen.service.MemberDetailsService;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
@@ -18,35 +20,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(controllers = DeleteEventController.class)
+@WebMvcTest(controllers = EventController.class)
 class DeleteEventControllerTest {
 
-    @Autowired
-    private WebApplicationContext webApplicationContext;
-
-    @MockBean
-    EventRepository eventRepository;
-
-    @Autowired
-    private MockMvc mockMvc;
-
-    @MockBean
-    ActivityRepository activityRepository;
-
-    @MockBean
-    MemberDetailsService memberDetailsService;
-
-    @Before
-    void setUp() {
-        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
-                .build();
-    }
-
-    @Test
-    @WithMockUser(roles = "admin")
-    void deleteEvent() throws Exception {
-        mockMvc.perform(get("/event/delete/{eventId}", 11))
-                .andExpect(forwardedUrl("/event/all"));
-    }
 
 }
