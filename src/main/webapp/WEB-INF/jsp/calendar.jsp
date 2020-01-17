@@ -190,9 +190,9 @@
 <!-- below function fills the modal with event info if it exist -->
     function fillingTheModal() {
         if ($('.modal').find('#selectie').val() == "Medisch")
-            $("#ShowDates, #ShowEventName, #medicationActivity").show();
+            $("#ShowDates, #ShowEventName, #medicationActivity, #eventDoneDiv").show();
         else
-            $("#ShowDates, #ShowEventName, #eventActivity").show();
+            $("#ShowDates, #ShowEventName, #eventActivity, #eventDoneDiv").show();
     }
      </script>
 </head>
