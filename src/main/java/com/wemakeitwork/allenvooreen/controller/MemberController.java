@@ -2,13 +2,15 @@ package com.wemakeitwork.allenvooreen.controller;
 
 import com.wemakeitwork.allenvooreen.model.Member;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
+import com.wemakeitwork.allenvooreen.service.MemberServiceInterface;
+import com.wemakeitwork.allenvooreen.service.SecurityServiceInterface;
+import com.wemakeitwork.allenvooreen.validator.MemberValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.Optional;
@@ -22,6 +24,15 @@ public class MemberController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private MemberServiceInterface memberServiceInterface;
+
+    @Autowired
+    private SecurityServiceInterface securityServiceInterface;
+
+    @Autowired
+    private MemberValidator memberValidator;
 
     @GetMapping("member/current")
     protected String showMember(Model model, Principal principal){
@@ -62,15 +73,16 @@ public class MemberController {
 
     @PostMapping("/member/new")
     protected String saveOrUpdateMember(@ModelAttribute("member") @Valid Member member, BindingResult result) {
+        System.out.println("is er output? " + member.getMemberName());
+        memberValidator.validate(member, result);
         if (result.hasErrors()) {
             return "newMember";
-        }
-        else {
-            //TODO: check of aan te maken loginnaam al bestaat (gooit nu whitelabel 500 met SQL constraint error)
+        } else {
             System.out.println(member.getMemberName());
             member.setPassword(passwordEncoder.encode(member.getPassword()));
             member.setRol("gebruiker");
-            memberRepository.save(member);
+            memberServiceInterface.save(member);
+            securityServiceInterface.autoLogin(member.getUsername(), member.getPasswordConfirm());
             return "redirect:/member/new";
         }
     }
@@ -90,6 +102,7 @@ public class MemberController {
             return "redirect:/logout";
         }
     }
+
 }
 
 
