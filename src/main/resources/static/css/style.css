@@ -168,11 +168,27 @@ h1 {
     color: #0e4171;
 }
 
-.btn-primary { border-color: #641F11; background-color: #98639C;
+.btn-primary {
+    border-color: #641F11; background-color: #98639C;
 }
 
-.badge-primary { border-color: #641F11; background-color: #98639C;
+.badge-primary {
+    border-color: #641F11; background-color: #98639C;
 }
 
-.btn-new { border-color: #641F11; background-color: #C8B4CA;
+.btn-new {
+    border-color: #641F11; background-color: #C8B4CA;
 }
+
+.masthead {
+  height: 100vh;
+  min-height: 500px;
+  background-image: url('https://source.unsplash.com/BtbjCFUvBXs/1920x1080');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.navbar {
+        margin-bottom: 50px !important;
+    }
