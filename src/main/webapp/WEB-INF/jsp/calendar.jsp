@@ -178,8 +178,7 @@
 
 <!-- below function hides all modal options -->
     function hideAll() {
-        $("#ShowDates, #eventActivity, #medicationActivity, #ShowEventName, #eventDoneDateDiv, #eventDoneDiv").css("display", "none");
-
+        $("#eventActivity, #medicationActivity ").css("display", "none");
     }
 
     function showMedicationAmount(event, element){

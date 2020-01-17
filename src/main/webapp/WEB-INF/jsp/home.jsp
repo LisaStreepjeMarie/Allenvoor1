@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
+
 <html xmlns:form="http://www.w3.org/1999/xhtml" xmlns:c="">
 <head>
     <meta charset='utf-8' />
@@ -10,47 +11,63 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
 
+    <!-- Add icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
-<body class="webpage">
-<div class="container-fluid" >
-    <div class="row" >
-           <div class="col-12">&nbsp;</div>
-    </div>
-    <div class="row">
-       <div class="col-2">
-            <input class="btn btn-primary" type="submit" value="Logout" onclick="window.location='${pageContext.request.contextPath}/logout';" /><br />
-            <br>
-            <input class="btn btn-primary" type="submit" value="Gebruikersprofiel" onclick="window.location='${pageContext.request.contextPath}/member/current';" /><br />
-           <br>
-           <input class="btn btn-primary" type="submit" value="Toon groepen" onclick="window.location='${pageContext.request.contextPath}/team/all';" />
-           <br>
-           <br>
+     <link href="../css/style.css" rel="stylesheet" type="text/css"/>
+    </head>
 
-            <h5>Mijn groepen: </h5>
-                   <table>
-                       <c:forEach items="${teamList}" var="team">
-                           <tr>
-                               <button type="button" class="btn btn-info"
-                               onclick="window.location='${pageContext.request.contextPath}/calendar/${team.teamId}';">${team.teamName}</button> <br>
-                               <br>
-                           </tr>
-                       </c:forEach>
-                   </table>
-            <h5> Medicatie: </h5>
-             <table>
-               <c:forEach items="${teamList}" var="team">
-                      <tr>
-                         <button type="button" class="btn btn-info"
-                          onclick="window.location='${pageContext.request.contextPath}/medication/${team.teamId}';"> Toon medicatie ${team.teamName}</button> <br>
-                           <br>
-                          </tr>
-                    </c:forEach>
-               </table>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow sticky-top">
+        <a class="navbar-brand"</a>
+        <img class="mb-4" src='${pageContext.request.contextPath}/images/LogoAllenVoorEen.png' alt="" width="230" height="178"> </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+               <a class="nav-link" href='${pageContext.request.contextPath}/home'><i class="fa fa-home"></i> Home</a>
+                    <span class="sr-only">(current)</span>
+                  </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href='${pageContext.request.contextPath}/member/current'><i class="fa fa-user"></i> Mijn profiel</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href='${pageContext.request.contextPath}/team/all'><i class="fa fa-users"></i> Mijn groepen</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href='${pageContext.request.contextPath}/logout'><i class="fa fa-sign-out"></i> Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+<header class= "masthead">
+ <body class= "webpage">
+<br>
+<div class= "row">
+    <div class= "col-2">
+  <h2 class="dropdown-header"><strong>Welkom </strong></h2>
+    <h2 class="dropdown-header"><strong>Kalender</strong> </h2>
+       <c:forEach items="${teamList}" var="team">
+          <tr>
+             <a class="dropdown-header" href='${pageContext.request.contextPath}/calendar/${team.teamId}'> Kalender ${team.teamName} </a>
+           </c:forEach>
+          </tr>
+           <h2 class="dropdown-header"><strong> Medicatie </strong></h2>
+           <c:forEach items="${teamList}" var="team">
+              <tr>
+                 <a class="dropdown-header" href='${pageContext.request.contextPath}/medication/${team.teamId}'> Medicatie ${team.teamName} </a>
+               </c:forEach>
+              </tr>
        </div>
-       <div class="col-10">
+       <br>
+       <div class="col-8">
            <div id="calendar" style="width: 45rem;"></div>
            <div id='datepicker'></div>
-
        </div>
     </div>
 </div>

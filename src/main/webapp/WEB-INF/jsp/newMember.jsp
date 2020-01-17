@@ -10,9 +10,9 @@
 
         <!-- Custom styles for this template -->
         <link href="https://getbootstrap.com/docs/4.0/examples/sign-in/signin.css" rel="stylesheet">
-
         <link href="${pageContext.request.contextPath}/css/common.css" rel="stylesheet" type="text/css"/>
     </head>
+
     <body class="text-center">
         <div class="container">
             <form class="form-signin" method="post" action="${pageContext.request.contextPath}/member/new">
