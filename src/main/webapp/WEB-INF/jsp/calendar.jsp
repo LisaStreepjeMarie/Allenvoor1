@@ -210,34 +210,38 @@
                 <!-- select below decides the input fields for event -->
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-xs-12">
-                            <span style="margin-left:2em">
-                            <label class="col-xs-4" for="selectie" control-label>Categorie</label>
+                        <!-- <div class="col-xs-12"> -->
+                            <!-- <span style="margin-left:2em"> -->
+                            <label class="col-4" for="selectie" control-label>Categorie</label>
                                 <select name="activity.activityCategory" id="selectie" >
                                 <option disabled selected="selected">Selecteer categorie</option>
                                     <option value="Vrije tijd" >Vrije tijd</option>
                                     <option value="Medisch">Medisch</option>
                                 </select>
-                            </span>
-                        </div>
+                            <!-- </span> -->
+                        <!-- </div> -->
                     </div>
                 </div>
-                <div class="row" id="ShowEventName">
-                    <div class="col-12">
-                        <label class="col-4" for="eventName">Onderwerp</label>
-                        <input type="text" name="eventName" id="eventName" />
-                        <input type="hidden" name="eventId" id="eventId" />
-                        <input type="hidden" name="teamId" id="team.teamId" />
+                <!-- extra modal-body-div -->
+                <div class="modal-body" id="ShowEventName">
+                    <!-- <div class="row" id="ShowEventName"> -->
+                    <div class="row">
+                        <!-- <div class="col-12"> -->
+                            <label class="col-4" for="eventName">Onderwerp</label>
+                            <input type="text" name="eventName" id="eventName" />
+                            <input type="hidden" name="eventId" id="eventId" />
+                            <input type="hidden" name="teamId" id="team.teamId" />
+                        <!-- </div> -->
                     </div>
                 </div>
 
                 <!-- event with activity modal input fields -->
                 <div class="modal-body" id="eventActivity">
                     <div class="row">
-                        <div class="col-12">
+                        <!-- <div class="col-12"> -->
                             <label class="col-4" for="eventComment">Beschrijving</label>
                             <input type="text" name="eventComment" id="eventComment" />
-                        </div>
+                        <!-- </div> -->
                     </div>
                 </div>
 
@@ -245,29 +249,29 @@
                 <div class="modal-body" id="medicationActivity">
                     <div class="row">
                         <div class="col-xs-12" modelAttribute="medicationActivity">
-                           <span style="margin-left:2em">
-                           <label class="col-xs-4" for="selectie2" control-label>Medicijn</label>
+                           <!-- <span style="margin-left:2em"> -->
+                           <label class="col-4" for="selectie2" control-label>Medicijn</label>
                                 <select name="medication.medicationId" id="selectie2" >
                                 <option disabled selected="selected">Kies een medicijn</option>
                                     <c:forEach var="medication" items="${medicationList}">
                                         <option value="${medication.medicationId}">${medication.medicationName}</option>
                                     </c:forEach>
                             </select>
-                           </span>
+                           <!-- </span> -->
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-12" modelAttribute="medicationActivity">
-                            <span style="margin-left:2em">
+                            <!-- <span style="margin-left:2em"> -->
                             <label class="col-xs-4" for="takenMedication" control-label>Hoeveelheid</label>
                             <input type="number" name="takenMedication" id="takenMedication" />
-                            </span>
+                            <!-- </span> -->
                         </div>
                     </div>
                 </div>
                 <div class="modal-body" id="ShowDates">
                     <div class="container">
-                        <div class='col-md-10'>
+                        <!-- <div class='col-md-10'> -->
                             <div class="form-group">
                                 <div class="input-group date" id="datetimepickerStart" data-target-input="nearest">
                                     <label class="col-xs-4" for="eventStartDate">Starttijd</label>
@@ -277,8 +281,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class='col-md-10'>
+                        <!-- </div> -->
+                        <!-- <div class='col-md-10'> -->
                             <div class="form-group">
                                 <div class="input-group date" id="datetimepickerEnd" data-target-input="nearest">
                                     <label class="col-xs-4" for="eventEndDate">Eindtijd</label>
@@ -288,19 +292,19 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        <!-- </div> -->
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-12" id="eventDoneDiv">
+                    <!-- <div class="col-xs-12" id="eventDoneDiv"> -->
                             <span style="margin-left:2em">
                                 <label class="col-xs-4" for="eventDone">Afspraak al uitgevoerd?</label>
                                 <input type="checkbox" id="eventDone" name="eventDone"/>
                             </span>
-                    </div>
+                    <!-- </div> -->
                 </div>
                 <div class="row" id="eventDoneDateDiv">
-                    <div class="col-xs-12">
+                    <!-- >div class="col-xs-12"> -->
                             <span style="margin-left:2em">
                                 <div class="form-group">
                                 <div class="input-group date" id="datetimepickerDone" data-target-input="nearest">
@@ -312,7 +316,7 @@
                                 </div>
                             </div>
                             </span>
-                    </div>
+                    <!-- </div> -->
                 </div>
                 <div class="modal-footer">
                     <button type="button" id="delete-event" class="btn btn-danger" data-dismiss="modal" >Verwijder Afspraak</button>
