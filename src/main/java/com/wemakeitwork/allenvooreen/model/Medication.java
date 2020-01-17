@@ -1,6 +1,8 @@
 package com.wemakeitwork.allenvooreen.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -8,13 +10,14 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@JsonIgnoreProperties({ "medicationName", "medicationAmount", "medicationComment", "team", "getTakenMedications" })
+@JsonIgnoreProperties({ "medicationAmount", "medicationComment", "team", "getTakenMedications", "hibernateLazyInitializer", "medicationId" })
 public class Medication {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer medicationId;
 
+    @JsonProperty("medicationname")
     private String medicationName;
 
     private Integer medicationAmount;
@@ -26,7 +29,8 @@ public class Medication {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Team team;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "medication")
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, mappedBy = "medication")
     private List<MedicationActivity> takenMedications;
 
     public Integer getMedicationId() {
