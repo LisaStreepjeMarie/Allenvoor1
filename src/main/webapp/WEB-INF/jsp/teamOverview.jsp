@@ -15,7 +15,7 @@
              <link href="../css/style.css" rel="stylesheet" type="text/css"/>
             </head>
     </head>
-    <body class= "webpage">
+
 
         <!-- Navigation -->
             <nav class="navbar navbar-expand-lg navbar-light bg-light shadow sticky-top">
@@ -38,11 +38,15 @@
                 </div>
               </div>
             </nav>
-        <div id="container"
-            <header class= "masthead">
-            <h1>Overzicht groepen</h1>
+             <div id="container">
+        <title>Overzicht groepen</title>
+      <header class= "masthead">
+   <br>
+    <div class="mt-3 col-12">
+            <h1 class="font-weight-light">Overzicht groepen</h1>
+
             <table>
-                <tr><th>Groep</th><th>Deelnemer</th><th></th></tr>
+                <tr><th><h5 class="font-weight-light">Groep</h5></th><th><h5 class="font-weight-light">Deelnemer</h5></th><th></th></tr>
                 <c:forEach items="${teamList}" var="team">
                     <tr>
                         <td><a href="${pageContext.request.contextPath}/team/select/<c:out value="${team.teamId}" />"><c:out value="${team.teamName}" /></a></td>

@@ -4,17 +4,16 @@
 
 <html xmlns:c="">
     <head>
-        <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
-        <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
+    <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
+    <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
 
-         <!-- Add icon library -->
-         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-         <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
-         <link href="../css/style.css" rel="stylesheet" type="text/css"/>
+    <!-- Add icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
+    <link href="../css/style.css" rel="stylesheet" type="text/css"/>
 
-         </head>
-        <title>Medicatieoverzicht</title>
     </head>
+    <title>Medicatieoverzicht</title>
     <body class="webpage">
     <!-- Navigation -->
                 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow sticky-top">
@@ -35,14 +34,13 @@
                         </li>
                       </ul>
                     </div>
-                  </div>
                 </nav>
-       <header class= "masthead">
     <div id="container">
+    <header class= "masthead">
         <br>
-        <tr><th><h1>Overzicht medicatie ${team.teamName}:</h1></th></tr>
+        <tr><th><h1 class="font-weight-light">Overzicht medicatie ${team.teamName}</h1></th></tr>
         <table>
-          <tr><th><th><h5>Naam</h5></th><th><h5>Hoeveelheid</h5></th><th><h5>Beschrijving</h5></th></th>
+          <tr><th><th><h5 class="font-weight-light">Naam</h5></th><th><h5 class="font-weight-light">Hoeveelheid</h5></th><th><h5 class="font-weight-light">Beschrijving</h5></th></th>
             <c:forEach items="${medicationList}" var="medication">
                 <tr><h5>
                     <td><a href="${pageContext.request.contextPath}/medication/select/<c:out value="${medication.medicationId}" />"</a>
@@ -55,9 +53,9 @@
         </table>
         <p>
         <br>
-            <input class="btn btn-primary" type="submit" value="Voer medicatie in" onclick="window.location='${pageContext.request.contextPath}/medication/new';" />
+        <input class="btn btn-primary" type="submit" value="Voer medicatie in" onclick="window.location='${pageContext.request.contextPath}/medication/new';" />
         </p>
     </div>
-   <body>
+   </body>
 </html>
 

@@ -12,65 +12,56 @@
         <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
         <link href="../css/style.css" rel="stylesheet" type="text/css"/>
         </head>
-
-
-
+        <body class="webpage">
         <title>Medicatieoverzicht</title>
 
-     <!-- Navigation -->
-            <nav class="navbar navbar-expand-lg navbar-light bg-light shadow fixed-top">
-                <a class="navbar-brand"</a>
-                <img class="mb-4" src='${pageContext.request.contextPath}/images/LogoAllenVoorEen.png' alt="" width="230" height="178"> </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                      <span class="navbar-toggler-icon"></span>
-                    </button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                  <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
-                       <a class="nav-link" href='${pageContext.request.contextPath}/home'><i class="fa fa-home"></i> Home</a>
-                            <span class="sr-only">(current)</span>
-                          </a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href='${pageContext.request.contextPath}/medication/${team.teamId}'> Medicatieoverzicht</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href='${pageContext.request.contextPath}/logout'><i class="fa fa-sign-out"></i> Logout</a>
-                    </li>
-                  </ul>
-                </div>
-            </nav>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-         <body class="webpage">
+</head>
+    <title>Medicatieoverzicht</title>
+    <body class="webpage">
+    <!-- Navigation -->
+                <nav class="navbar navbar-expand-lg navbar-light bg-light shadow sticky-top">
+                    <a class="navbar-brand"</a>
+                    <img class="mb-4" src='${pageContext.request.contextPath}/images/LogoAllenVoorEen.png' alt="" width="230" height="178"> </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                          <span class="navbar-toggler-icon"></span>
+                        </button>
+                    <div class="collapse navbar-collapse" id="navbarResponsive">
+                      <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                           <a class="nav-link" href='${pageContext.request.contextPath}/home'><i class="fa fa-home"></i> Home</a>
+                                <span class="sr-only">(current)</span>
+                              </a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" href='${pageContext.request.contextPath}/medication/${team.teamId}'> Medicatieoverzicht</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href='${pageContext.request.contextPath}/logout'><i class="fa fa-sign-out"></i> Logout</a>
+                        </li>
+                      </ul>
+                    </div>
+                </nav>
+
+    <div id="container">
     <header class= "masthead">
-        <div id="container">
-        <h2>Voer medicatie voor ${team.teamName} in:</h2>
+        <h1 class="font-weight-light">Voer medicatie voor ${team.teamName} in</h1>
+        <br>
         <form:form action="${pageContext.request.contextPath}/medication/new" modelAttribute="medication">
             <table>
                 <tr>
-                    <td><h5>Naam medicatie:</h5>
+                    <td><h5 class="font-weight-light">Naam medicatie:</h5>
                     <td>
                         <form:input path="medicationName" />
                     </td>
                 </tr>
                 <tr>
-                    <td><h5>Hoeveelheid:</h5>
+                    <td><h5 class="font-weight-light">Hoeveelheid:</h5>
                     <td>
                         <form:input path="medicationAmount"/>
                     </td>
                 </tr>
                 <tr>
-                    <td><h5>Beschrijving:</h5>
+                    <td><h5 class="font-weight-light">Beschrijving:</h5>
                     <td>
                        <form:input path="medicationComment"/>
                      </td>

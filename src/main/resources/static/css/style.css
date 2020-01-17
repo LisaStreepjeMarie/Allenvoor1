@@ -11,7 +11,7 @@ body {
   background: -o-linear-gradient(right, #76b852, #8DC26F);
   background: linear-gradient(to left, #76b852, #8DC26F); */
     /* font-family: "Roboto", sans-serif; */
-    font-family: "Trebuchet MS", sans-serif;
+    font-family: $navbar-brand-font-family;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -31,7 +31,7 @@ body {
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
 .form input {
-  font-family: "Roboto", sans-serif;
+  font-family: $navbar-brand-font-family;
   outline: 0;
   background: #f2f2f2;
   width: 100%;
@@ -42,7 +42,7 @@ body {
   font-size: 14px;
 }
 .form button {
-  font-family: "Roboto", sans-serif;
+  font-family: $navbar-brand-font-family;
   text-transform: uppercase;
   outline: 0;
   background: #4CAF50;
@@ -114,7 +114,7 @@ body {
 	background-repeat: no-repeat;
 	background-color: #ffffff;
 	text-align: left;
-	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-family: $navbar-brand-font-family;
 	font-size: 12pt;
 	font-weight: normal;
 	color: #333333;
@@ -126,7 +126,7 @@ body {
 }
 
 table tr td, table tr th {
-    font-family: "Open Sans", Arial, Helvetica, sans-serif;
+    font-family: $navbar-brand-font-family;
 	padding: 4px 10px 4px 0px;
 }
 
@@ -160,13 +160,13 @@ a:hover {
 .button {
 	background-color: #777777;
 	vertical-align: middle;
-	font-family: "Open Sans", Arial, Helvetica, sans-serif;
+	font-family: $navbar-brand-font-family;
 	font-weight: normal;
 	color: #0e4171;
 }
 
 h1 {
-    font-family: "Trebuchet MS", sans-serif;
+    font-family: $navbar-brand-font-family;
     font-size: 23pt;
     color: #0e4171;
 }
@@ -186,7 +186,7 @@ h1 {
 .masthead {
   height: 100vh;
   min-height: 500px;
-  background-image: url('https://66.media.tumblr.com/aaa2aa958aba4335e71d6672a67fc070/tumblr_ogis44L0Gj1u6rodso1_1280.png');
+  background-image: url('https://source.unsplash.com/BtbjCFUvBXs/1920x1080');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

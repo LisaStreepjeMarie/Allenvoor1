@@ -14,11 +14,9 @@
      </head>
 
     <title>Wijzig de gegevens van een groep</title>
-</head>
 <body class="webpage">
 <!-- Navigation -->
             <nav class="navbar navbar-expand-lg navbar-light bg-light shadow sticky-top">
-              <div class="container">
                 <a class="navbar-brand"</a>
                 <img class="mb-4" src='${pageContext.request.contextPath}/images/LogoAllenVoorEen.png' alt="" width="230" height="178"> </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,9 +37,12 @@
               </div>
             </nav>
 
-    <div class="container">
+    <div id="container">
+     <header class= "masthead">
         <br>
-        <h1>Wijzig gegevens groep</h1>
+        <div class="mt-3 col-12">
+        <h1 class="font-weight-light">Wijzig gegevens groep</h1>
+
         <form:form action="${pageContext.request.contextPath}/team/change" modelAttribute="team">
         <form:input path="teamId" type="hidden" />
         <form:input path="allMembersInThisTeamSet" type="hidden" />
@@ -79,6 +80,6 @@
                 </tr>
             </table>
         </form:form>
-    </div>
-</body>
+      </div>
+  </body>
 </html>

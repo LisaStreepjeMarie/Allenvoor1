@@ -41,19 +41,20 @@
             </nav>
 
         <div id="container">
-<header class= "masthead">
-            <h1>Voeg gegevens groep toe</h1>
+          <header class= "masthead">
+          <br>
+<h1 class="font-weight-light">Voeg gegevens groep toe</h1>
 
             <form:form action="${pageContext.request.contextPath}/team/new" modelAttribute="team">
                 <table>
                     <tr>
-                        <td>Groepsnaam:</td>
+                        <td><h6 class="font-weight-light">Groepsnaam:</h6></td>
                         <td>
                             <form:input path="teamName" value="" /></form>
                         </td>
                     </tr>
                     <tr>
-                        <td>Groepslid:</td>
+                        <td><h6 class="font-weight-light">Groepslid:</h6></td>
                         <td>
                             <form:input path="allMembersInThisTeamSet" value="${members.membername}" /></form>
                         </td>
