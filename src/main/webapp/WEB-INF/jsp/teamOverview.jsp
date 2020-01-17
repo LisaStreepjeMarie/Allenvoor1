@@ -8,7 +8,7 @@
         <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
         <link href="../css/style.css" rel="stylesheet" type="text/css"/>
     </head>
-    <body class="webpage">
+    <body>
 
         <!-- Navigation -->
             <nav class="navbar navbar-expand-lg navbar-light bg-light shadow fixed-top">
@@ -33,20 +33,7 @@
               </div>
             </nav>
             <p>
-                <input class="btn btn-primary" type="submit" value="Home" onclick="window.location='${pageContext.request.contextPath}/';" />
-                <input class="btn btn-primary" type="submit" value="Logout" onclick="window.location='${pageContext.request.contextPath}/logout';" />
-            </p>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-
         <div id="container" class="ml-4 mt-4">
-
             <h1>Overzicht groepen</h1>
             <table>
                 <tr><th>Groep</th><th>Deelnemer</th><th></th></tr>

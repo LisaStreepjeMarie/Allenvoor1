@@ -3,7 +3,7 @@ body {
 
     margin: 0px 0px 0px 0px;
     padding: 0px 0px 0px 0px;
-    padding-top: 200px;
+    padding-top: 300px;
     background: #ffffff; /* fallback for old browsers */
   /* background: -webkit-linear-gradient(right, #76b852, #8DC26F);
   background: -moz-linear-gradient(right, #76b852, #8DC26F);
@@ -191,6 +191,9 @@ h1 {
   background-repeat: no-repeat;
 }
 
-.navbar {
+.navbar-brand {
+        height: 150px;
         margin-bottom: 50px !important;
+        text-align: left;
+        align-items:center;
     }

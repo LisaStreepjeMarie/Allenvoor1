@@ -40,8 +40,6 @@
             </div>
           </div>
         </nav>
-           <br><br>
-
                 <div class="mt-3 col-12 text-center">
                     <h1>Hallo ${currentmember.memberName} !</h1>
                     <h5>Wijzig hieronder je gebruikersnaam of verwijder je profiel</h5>
@@ -77,9 +75,8 @@
                     </form:form>
                 </div>
             </div>
-        </div>
-        </div>
+          </div>
+       </div>
     </div>
-
-    </body>
+  </body>
 </html>

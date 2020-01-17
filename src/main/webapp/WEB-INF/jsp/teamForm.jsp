@@ -8,13 +8,36 @@
         <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
         <title>Voeg een groep toe</title>
     </head>
-    <body class="webpage">
+    <body>
+        <!-- Navigation -->
+            <body>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light shadow fixed-top">
+              <div class="container">
+                <a class="navbar-brand"</a>
+                <img class="mb-4" src='${pageContext.request.contextPath}/images/LogoAllenVoorEen.png' alt="" width="230" height="178"> </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"></span>
+                    </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                  <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                       <a class="nav-link" href='${pageContext.request.contextPath}/home'><i class="fa fa-home"></i> Home</a>
+                            <span class="sr-only">(current)</span>
+                          </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href='${pageContext.request.contextPath}/team/all'><i class="fa fa-users"></i> Groepsoverzicht</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href='${pageContext.request.contextPath}/logout'><i class="fa fa-sign-out"></i> Logout</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </nav>
+
         <div id="container">
-            <p>
-                <input class="btn btn-primary" type="submit" value="home" onclick="window.location='${pageContext.request.contextPath}/';" />
-                <input class="btn btn-primary" type="submit" value="Al je groepen" onclick="window.location='${pageContext.request.contextPath}/team/all';" />
-                <input class="btn btn-primary" type="submit" value="Logout" onclick="window.location='${pageContext.request.contextPath}/logout';" />
-            </p>
+
             <h1>Voeg gegevens groep toe</h1>
             <form:form action="${pageContext.request.contextPath}/team/new" modelAttribute="team">
                 <table>
