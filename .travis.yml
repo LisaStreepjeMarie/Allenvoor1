@@ -5,4 +5,4 @@ install:
 services:
   - mysql
 before_install:
-  - mysql -u root --password="intellijPW" 
+  - mysql -u intellij --password="intellijPW" 
