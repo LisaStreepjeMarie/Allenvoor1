@@ -2,3 +2,14 @@ language: java
 install:
   - mvn -N io.takari:maven:wrapper
   - ./mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+sudo: enabled
+
+addons:
+  postgresql: "9.5" // change "9.5" for your postgres specific version
+
+before_script:
+  - psql -c "create database aries;" -U allenvooreen // your database name
+  - sudo -u intellij psql -c "ALTER ROLE intellij WITH password 'intellijPW'" // if your password is different from 'postgres` use that one here
+
+services:
+  - postgresql
