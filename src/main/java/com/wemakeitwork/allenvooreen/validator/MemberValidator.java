@@ -1,7 +1,7 @@
 package com.wemakeitwork.allenvooreen.validator;
 
 import com.wemakeitwork.allenvooreen.model.Member;
-import com.wemakeitwork.allenvooreen.service.MemberService;
+import com.wemakeitwork.allenvooreen.service.MemberServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -12,7 +12,7 @@ import org.springframework.validation.Validator;
 public class MemberValidator implements Validator {
 
     @Autowired
-    private MemberService memberService;
+    private MemberServiceInterface memberServiceInterface;
 
     @Override
     public boolean supports(Class<?> aClass) {
@@ -27,7 +27,7 @@ public class MemberValidator implements Validator {
         if (member.getUsername().length() < 3 || member.getUsername().length() > 32) {
             errors.rejectValue("username", "Size.userForm.username");
         }
-        if (memberService.findByMembername(member.getUsername()).isPresent()) {
+        if (memberServiceInterface.findByMembername(member.getUsername()).isPresent()) {
             errors.rejectValue("username", "Duplicate.userForm.username");
         }
 
