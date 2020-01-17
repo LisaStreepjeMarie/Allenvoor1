@@ -2,8 +2,8 @@ package com.wemakeitwork.allenvooreen.controller;
 
 import com.wemakeitwork.allenvooreen.model.Member;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
-import com.wemakeitwork.allenvooreen.service.MemberService;
-import com.wemakeitwork.allenvooreen.service.SecurityService;
+import com.wemakeitwork.allenvooreen.service.MemberServiceInterface;
+import com.wemakeitwork.allenvooreen.service.SecurityServiceInterface;
 import com.wemakeitwork.allenvooreen.validator.MemberValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.Optional;
@@ -27,10 +26,10 @@ public class MemberController {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private MemberService memberService;
+    private MemberServiceInterface memberServiceInterface;
 
     @Autowired
-    private SecurityService securityService;
+    private SecurityServiceInterface securityServiceInterface;
 
     @Autowired
     private MemberValidator memberValidator;
@@ -65,19 +64,6 @@ public class MemberController {
         return "newMember";
     }
 
-    // voorbeeldcode nog toepassen?
-    /* @GetMapping("/login")
-    public String login(Model model, String error, String logout) {
-        if (error != null)
-            model.addAttribute("error", "Your username and password is invalid.");
-
-        if (logout != null)
-            model.addAttribute("message", "You have been logged out successfully.");
-
-        return "login";
-    } */
-
-
     @GetMapping("/member/delete")
     public String deleteMember(Principal principal) {
         Optional<Member> member = memberRepository.findByMemberName(principal.getName());
@@ -95,8 +81,8 @@ public class MemberController {
             System.out.println(member.getMemberName());
             member.setPassword(passwordEncoder.encode(member.getPassword()));
             member.setRol("gebruiker");
-            memberService.save(member);
-            securityService.autoLogin(member.getUsername(), member.getPasswordConfirm());
+            memberServiceInterface.save(member);
+            securityServiceInterface.autoLogin(member.getUsername(), member.getPasswordConfirm());
             return "redirect:/member/new";
         }
     }

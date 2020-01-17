@@ -15,11 +15,7 @@
     <packaging>war</packaging>
     <description>Demo project for Spring Boot</description>
 
-    <!-- <properties>
-        <java.version>11</java.version>
-    </properties> -->
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>11</java.version>
     </properties>
 
@@ -100,22 +96,6 @@
             <artifactId>tomcat-embed-jasper</artifactId>
         </dependency>
 
-        <!-- added for example code user registration validation -->
-        <!-- <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-tomcat</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-jasper</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jstl</artifactId>
-        </dependency> -->
-
         <!-- WEBJARS -->
         <!-- fullcalendar -->
         <dependency>
@@ -153,11 +133,6 @@
         </dependency>
 
         <!-- bootstrap -->
-        <!--<dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>bootstrap</artifactId>
-            <version>3.3.7-1</version>
-        </dependency>-->
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>bootstrap</artifactId>
