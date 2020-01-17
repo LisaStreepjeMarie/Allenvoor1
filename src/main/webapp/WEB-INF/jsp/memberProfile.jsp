@@ -40,7 +40,7 @@
             </div>
           </div>
         </nav>
-                <div class="mt-3 col-12 text-center">
+                <div class="mt-3 col-12">
                     <h1>Hallo ${currentmember.memberName} !</h1>
                     <h5>Wijzig hieronder je gebruikersnaam of verwijder je profiel</h5>
                 </div>

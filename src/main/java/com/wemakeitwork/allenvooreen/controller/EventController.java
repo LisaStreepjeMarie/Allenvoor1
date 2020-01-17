@@ -65,15 +65,13 @@ public class EventController {
     }
 
     @PostMapping("/event/new")
-    protected String saveOrUpdateEvent(@ModelAttribute("event") Event event, @ModelAttribute("medicationActivity")
+    protected String newEvent(@ModelAttribute("event") Event event, @ModelAttribute("medicationActivity")
             MedicationActivity medicationActivity, BindingResult result) {
         if (result.hasErrors()) {
             return "calendar";
         }
 
         else {
-            System.out.println(event.getEventName());
-            System.out.println(medicationActivity);
             Team team = (Team) httpSession.getAttribute("team");
             event.setTeam(team);
 
@@ -85,14 +83,11 @@ public class EventController {
 
 
             if(event.getActivity() instanceof MedicationActivity){
-
                 if (medicationActivity.getMedication() == null){
-
                     //TODO this is not a clean way of solving the medication not null error. It needs to be able to be null for saving superclass
                     //might be nice to solve this with a custom validator in next sprint
                     return "redirect:/calendar/" + team.getTeamId();
                 }
-
                 Optional<Medication> medication = medicationRepository.findById(medicationActivity.getMedication().getMedicationId());
                 medication.ifPresent(value -> value.setTakenMedications(medicationActivity));
             }
@@ -101,27 +96,45 @@ public class EventController {
         }
     }
 
+    //TODO this needs to be cleaned up the code makes me sad but works - LM
     @PostMapping("/event/change/{activityId}")
     protected String changeEvent(@ModelAttribute("event") Event event, @ModelAttribute("medicationActivity") MedicationActivity
                                  medicationActivity, @PathVariable("activityId") final Integer activityId, BindingResult result) {
         if (result.hasErrors()) {
             return "calendar";
         } else {
-            System.out.println(activityId);
+
+            //setting the team to the event
             Team team = (Team) httpSession.getAttribute("team");
             event.setTeam(team);
 
+            //checking if the event is medical to set the subclass
             if (event.getActivity().getActivityCategory().equals("Medisch")){
                 event.setActivity(medicationActivity);
+            }
+
+            //arranging some stuff to adjust the medication amount from the orig activity med amount if available
+            int takenMedication = 0;
+            Optional<Activity> activity = activityRepository.findById(activityId);
+            Medication originalMedication = new Medication();
+
+            if (activity.isPresent() && activity.get() instanceof MedicationActivity){
+                takenMedication = ((MedicationActivity) activity.get()).getTakenMedication();
+                originalMedication = ((MedicationActivity) activity.get()).getMedication();
             }
 
             event.getActivity().setActivityId(activityId);
             event.getActivity().setActivityName(event.getEventName());
 
+            //adjusting the medication amount and setting the right activity on the medication again.
             if(event.getActivity() instanceof MedicationActivity){
                 Optional<Medication> medication = medicationRepository.findById(medicationActivity.getMedication().getMedicationId());
+                if(medication.isPresent() && medication.get() == originalMedication){
+                    medication.get().removalActivityAddedAmount(takenMedication);
+                }
                 medication.ifPresent(value -> value.setTakenMedications(medicationActivity));
             }
+
             eventRepository.save(event);
             return "redirect:/calendar/" + team.getTeamId();
         }
