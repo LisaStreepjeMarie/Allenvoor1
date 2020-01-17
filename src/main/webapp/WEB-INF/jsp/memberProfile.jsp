@@ -42,22 +42,6 @@
         </nav>
            <br><br>
 
-
-            <div class="col pt-2">
-                <div id="container" class="mt-3 col-12 form-inline toolbox-top clearfix">
-                    <p>
-                        <input class="btn btn-primary" type="submit" value="sidebar" data-target="#sidebar" data-toggle="collapse" class="d-*-none" />
-                        <input class="btn btn-primary" type="submit" value="Home" onclick="window.location='${pageContext.request.contextPath}/';" />
-                        <input class="btn btn-primary" type="submit" value="Jouw groepen" onclick="window.location='${pageContext.request.contextPath}/team/all';" />
-                        <input class="btn btn-primary" type="submit" value="Logout" onclick="window.location='${pageContext.request.contextPath}/logout';" />
-                    </p>
-                </div>
-                <br>
-                <br>
-                 <br>
-                  <br>
-                   <br>
-                     <br>
                 <div class="mt-3 col-12 text-center">
                     <h1>Hallo ${currentmember.memberName} !</h1>
                     <h5>Wijzig hieronder je gebruikersnaam of verwijder je profiel</h5>
