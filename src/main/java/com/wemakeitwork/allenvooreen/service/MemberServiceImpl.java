@@ -15,12 +15,8 @@ public class MemberServiceImpl implements MemberService {
     @Autowired
     private MemberRepository memberRepository;
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-
     @Override
     public void save(Member member) {
-        member.setPassword(bCryptPasswordEncoder.encode(member.getPassword()));
         // member.setRoles(new HashSet<>(roleRepository.findAll()));
         memberRepository.save(member);
     }
