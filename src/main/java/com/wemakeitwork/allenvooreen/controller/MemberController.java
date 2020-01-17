@@ -83,7 +83,7 @@ public class MemberController {
             member.setRol("gebruiker");
             memberServiceInterface.save(member);
             securityServiceInterface.autoLogin(member.getUsername(), member.getPasswordConfirm());
-            return "redirect:/member/new";
+            return "redirect:/login";
         }
     }
 

@@ -30,7 +30,7 @@
 
             <spring:bind path="password">
                 <div class="form-group ${status.error ? 'has-error' : ''}">
-                    <form:input type="password" path="password" class="form-control" placeholder="Password"></form:input>
+                    <form:input type="password" path="password" class="form-control" placeholder="Wachtwoord"></form:input>
                     <form:errors path="password"></form:errors>
                 </div>
             </spring:bind>
@@ -38,12 +38,12 @@
             <spring:bind path="passwordConfirm">
                 <div class="form-group ${status.error ? 'has-error' : ''}">
                     <form:input type="password" path="passwordConfirm" class="form-control"
-                                placeholder="Confirm your password"></form:input>
+                                placeholder="Bevestig je wachtwoord"></form:input>
                     <form:errors path="passwordConfirm"></form:errors>
                 </div>
             </spring:bind>
 
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Registreer</button>
             </form:form>
             <form action="${pageContext.request.contextPath}/logout" method="post" class="form-signin" >
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
