@@ -10,9 +10,7 @@
         <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
         <script src="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
-        <link href="${pageContext.request.contextPath}/webjars/font-awesome/5.0.6/web-fonts-with-css/css/fontawesome-all.min.css" rel='stylesheet'>
-        <script src="${pageContext.request.contextPath}/webjars/font-awesome/5.0.6/on-server/js/fontawesome-all.min.js"></script>
-        <script src="${pageContext.request.contextPath}/webjars/font-awesome/5.0.6/on-server/js/fa-solid.min.js"></script>
+        <link href="${pageContext.request.contextPath}/webjars/font-awesome/4.7.0/css/font-awesome.min.css" rel='stylesheet'>
         <title>Overzicht gebruiker</title>
 <body>
     <div class="container-fluid">
