@@ -25,10 +25,10 @@ public class MemberValidator implements Validator {
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "NotEmpty");
         if (member.getUsername().length() < 3 || member.getUsername().length() > 32) {
-            errors.rejectValue("username", "Size.userForm.username");
+            errors.rejectValue("memberName", "Size.userForm.username");
         }
         if (memberServiceInterface.findByMembername(member.getUsername()).isPresent()) {
-            errors.rejectValue("username", "Duplicate.userForm.username");
+            errors.rejectValue("memberName", "Duplicate.userForm.username");
         }
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");

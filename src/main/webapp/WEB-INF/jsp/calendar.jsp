@@ -302,10 +302,9 @@
                 <div class="row" id="eventDoneDateDiv">
                     <div class="col-xs-12">
                             <span style="margin-left:2em">
-                                <label class="col-xs-4" id="eventDone" for="eventDoneDate">Op datum</label>
                                 <div class="form-group">
                                 <div class="input-group date" id="datetimepickerDone" data-target-input="nearest">
-                                    <label class="col-xs-4" for="eventDoneDate">Eindtijd</label>
+                                    <label class="col-xs-4" for="eventDoneDate">Op datum</label>
                                     <input id="eventDoneDate" name="noEventDoneDate" type="text" class="form-control datetimepicker-input" data-target="#datetimepickerDone"/>
                                     <div class="input-group-append" data-target="#datetimepickerDone" data-toggle="datetimepicker">
                                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
