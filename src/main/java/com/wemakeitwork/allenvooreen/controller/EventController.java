@@ -64,6 +64,21 @@ public class EventController {
         return "redirect:/calendar/" + team.getTeamId();
     }
 
+
+    //TODO not sure if the mapping works correctly here
+    protected void newEventWithMedicationActivity(Event event) {
+        //tried out a stream to get the correct medication and set medication activity
+        medicationRepository.findAll().stream()
+                .filter(x -> {
+                    assert ((MedicationActivity) event.getActivity()).getMedication() != null;
+                    return x.getMedicationId() == ((MedicationActivity) event.getActivity()).getMedication().getMedicationId();
+                })
+                .forEach(x -> x.setTakenMedications((MedicationActivity) event.getActivity()));
+        event.getTeam().getTeamId();
+    }
+
+
+
     @PostMapping("/event/new")
     protected String newEvent(@ModelAttribute("event") Event event, @ModelAttribute("medicationActivity")
             MedicationActivity medicationActivity, BindingResult result) {
@@ -74,29 +89,23 @@ public class EventController {
         else {
             Team team = (Team) httpSession.getAttribute("team");
             event.setTeam(team);
-
-            if (event.getActivity().getActivityCategory().equals("Medisch")){
-                event.setActivity(medicationActivity);
-            }
-
             event.getActivity().setActivityName(event.getEventName());
 
-
-            if(event.getActivity() instanceof MedicationActivity){
-                if (medicationActivity.getMedication() == null){
-                    //TODO this is not a clean way of solving the medication not null error. It needs to be able to be null for saving superclass
-                    //might be nice to solve this with a custom validator in next sprint
+            if (event.getActivity().getActivityCategory().equals("Medisch")){
+                if (medicationActivity.getMedication() == null) {
                     return "redirect:/calendar/" + team.getTeamId();
+                }else {
+                    event.setActivity(medicationActivity);
+                    newEventWithMedicationActivity(event);
                 }
-                Optional<Medication> medication = medicationRepository.findById(medicationActivity.getMedication().getMedicationId());
-                medication.ifPresent(value -> value.setTakenMedications(medicationActivity));
             }
+
             eventRepository.save(event);
             return "redirect:/calendar/" + team.getTeamId();
         }
     }
 
-    //TODO this needs to be cleaned up the code makes me sad but works - LM
+    //TODO this doesn't work yet. Look into it lisa!
     @PostMapping("/event/change/{activityId}")
     protected String changeEvent(@ModelAttribute("event") Event event, @ModelAttribute("medicationActivity") MedicationActivity
                                  medicationActivity, @PathVariable("activityId") final Integer activityId, BindingResult result) {
@@ -111,29 +120,26 @@ public class EventController {
             //checking if the event is medical to set the subclass
             if (event.getActivity().getActivityCategory().equals("Medisch")){
                 event.setActivity(medicationActivity);
-            }
+                newEventWithMedicationActivity(event);
 
-            //arranging some stuff to adjust the medication amount from the orig activity med amount if available
-            int takenMedication = 0;
-            Optional<Activity> activity = activityRepository.findById(activityId);
-            Medication originalMedication = new Medication();
+                //removing the taken medication from the origal medication if there was one in the activity
+                //also trying streams
+                activityRepository.findAll().stream()
+                        //finding the right activity
+                        .filter(x -> x.getActivityId() == activityId)
+                        //checking if it's a medical activity
+                        .filter(x -> x instanceof MedicationActivity)
+                        //doing something with the result (in this case removing the medical amount)
+                        .forEach(x ->
+                        {
+                            assert ((MedicationActivity) x).getMedication() != null;
+                            ((MedicationActivity) x).getMedication().removalActivityAddedAmount(((MedicationActivity) x).getTakenMedication());
+                        });
 
-            if (activity.isPresent() && activity.get() instanceof MedicationActivity){
-                takenMedication = ((MedicationActivity) activity.get()).getTakenMedication();
-                originalMedication = ((MedicationActivity) activity.get()).getMedication();
             }
 
             event.getActivity().setActivityId(activityId);
             event.getActivity().setActivityName(event.getEventName());
-
-            //adjusting the medication amount and setting the right activity on the medication again.
-            if(event.getActivity() instanceof MedicationActivity){
-                Optional<Medication> medication = medicationRepository.findById(medicationActivity.getMedication().getMedicationId());
-                if(medication.isPresent() && medication.get() == originalMedication){
-                    medication.get().removalActivityAddedAmount(takenMedication);
-                }
-                medication.ifPresent(value -> value.setTakenMedications(medicationActivity));
-            }
 
             eventRepository.save(event);
             return "redirect:/calendar/" + team.getTeamId();
