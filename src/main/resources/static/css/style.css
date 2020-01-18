@@ -175,6 +175,12 @@ h1 {
     border-color: #641F11; background-color: #98639C;
 }
 
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+    color: #fff;
+    background-color: #C765B9;
+    border-color: #C765B9;
+}
+
 .badge-primary {
     border-color: #641F11; background-color: #98639C;
 }

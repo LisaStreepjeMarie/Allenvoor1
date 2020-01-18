@@ -31,15 +31,9 @@
         $("#eventDone").change(function () {
             if(document.getElementById("eventDone").checked == true) {
                     $("#datetimepickerDone").show()
-                    $('#eventDoneDate').attr('required', "true")
-                    $('#eventDoneDate').attr('name',"eventDoneDate")
             } else {
                     document.getElementById("eventDoneDate").removeAttribute("required");
                     $("#datetimepickerDone").hide()
-
-                    <!-- set name of eventDoneDate to noEventDoneDate -->
-                    <!-- so the controller doesn't pick up the value (and will not write an empty value into java.util.Date) -->
-                    $('#eventDoneDate').attr('name',"noEventDoneDate");
             }
         });
 
@@ -131,6 +125,13 @@
                 revertFunc();
             },
 
+            // Distinct event colors based on activity.category
+            eventRender: function(event, element) {
+                if(event.activity.category == "Medisch") {
+                    element.css('background-color', '#000');
+                }
+            },
+
             <!-- Remember last view on page reload. -->
             viewRender: function (view, element) {
                 localStorage.setItem("fcDefaultView", view.name);
@@ -146,16 +147,13 @@
 
         <!-- These functions load the start, end & done date calendars (datetimepickers) in the modal (popup). -->
         $('#datetimepickerStart').datetimepicker({
-            useCurrent: false,
-            format: 'MM/DD/YYYY HH:mm'
+            format: 'DD/MM/YYYY HH:mm'
         });
         $('#datetimepickerEnd').datetimepicker({
-            useCurrent: false,
-            format: 'MM/DD/YYYY HH:mm'
+            format: 'DD/MM/YYYY HH:mm'
         });
         $('#datetimepickerDone').datetimepicker({
-            useCurrent: false,
-            format: 'MM/DD/YYYY HH:mm'
+            format: 'DD/MM/YYYY HH:mm'
         });
         $("#datetimepickerStart").on("change.datetimepicker", function (e) {
             $('#datetimepickerEnd').datetimepicker('minDate', e.date);
@@ -288,7 +286,7 @@
                             </div>
                             <div class="row input-group date" id="datetimepickerDone" data-target-input="nearest">
                                 <label class="col-xs-4" for="eventDoneDate">Op datum</label>
-                                <input id="eventDoneDate" name="noEventDoneDate" type="text" class="form-control datetimepicker-input" data-target="#datetimepickerDone"/>
+                                <input id="eventDoneDate" name="eventDoneDate" type="text" class="form-control datetimepicker-input" data-target="#datetimepickerDone"/>
                                 <div class="input-group-append" style="width:8.3vw;" data-target="#datetimepickerDone" data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
@@ -308,12 +306,5 @@
     </div><!-- /.modal -->
 </form:form>
   <jsp:include page="home.jsp" />
-<c:if test="${not empty team.teamName}">
-    <div class="badge badge-primary text-wrap" style="width: 45rem; height: 4rem; margin-left:308px;">
-        <p>
-        <h5>Agenda van de groep: ${team.teamName}</h5>
-        </p>
-    </div>
-</c:if>
 </body>
 </html>

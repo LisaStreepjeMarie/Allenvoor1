@@ -53,6 +53,8 @@ public class CalendarController {
         model.addAttribute("medicationList", medicationList);
 
         ObjectMapper mapper = new ObjectMapper();
+        //SimpleDateFormat df = new SimpleDateFormat("dd/MM/YYYY H:m");
+        //mapper.setDateFormat(df);
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         model.addAttribute("calendarData", mapper.writeValueAsString(team.getEventList()));
 

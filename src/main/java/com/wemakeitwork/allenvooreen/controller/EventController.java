@@ -6,14 +6,18 @@ import com.wemakeitwork.allenvooreen.repository.EventRepository;
 import com.wemakeitwork.allenvooreen.repository.MedicationRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
 
 @Controller
@@ -64,14 +68,20 @@ public class EventController {
         return "redirect:/calendar/" + team.getTeamId();
     }
 
+    // Allow empty string in datefield (i.e. write them as NULL to database)
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY H:m");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    }
+
     @PostMapping("/event/new")
     protected String newEvent(@ModelAttribute("event") Event event, @ModelAttribute("medicationActivity")
             MedicationActivity medicationActivity, BindingResult result) {
         if (result.hasErrors()) {
             return "calendar";
-        }
-
-        else {
+        } else {
             Team team = (Team) httpSession.getAttribute("team");
             event.setTeam(team);
 
@@ -80,8 +90,6 @@ public class EventController {
             }
 
             event.getActivity().setActivityName(event.getEventName());
-
-
             if(event.getActivity() instanceof MedicationActivity){
                 if (medicationActivity.getMedication() == null){
                     //TODO this is not a clean way of solving the medication not null error. It needs to be able to be null for saving superclass
