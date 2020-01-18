@@ -74,8 +74,9 @@
 
                 $('#modal-form').attr('action',"${pageContext.request.contextPath}/event/new");
                 $('#save-change-event').attr('action',"${pageContext.request.contextPath}/event/new");
-                $('.modal').find('#eventStartDate').val(start);
-                $('.modal').find('#eventEndDate').val(end);
+
+                $('.modal').find('#eventStartDate').val(start.format('DD-MM-YYYY H:mm'));
+                $('.modal').find('#eventEndDate').val(end.format('DD-MM-YYYY H:mm'));
 
                 document.getElementById("modal-title").innerHTML = "Maak nieuwe afspraak";
                 document.getElementById("save-change-event").innerHTML = "Maak afspraak";
