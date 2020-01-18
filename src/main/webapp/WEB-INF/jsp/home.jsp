@@ -12,20 +12,27 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
 
     <!-- Add icon library -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="${pageContext.request.contextPath}/webjars/font-awesome/4.7.0/css/font-awesome.css" rel='stylesheet'>
     <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
-     <link href="../css/style.css" rel="stylesheet" type="text/css"/>
+     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
     </head>
 
 
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light shadow sticky-top">
-        <a class="navbar-brand"</a>
-        <img class="mb-4" src='${pageContext.request.contextPath}/images/LogoAllenVoorEen.png' alt="" width="230" height="178"> </a>
+        <a class="navbar-brand"> </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item active" >
+                <br>
+                <img class="mb-4" src='${pageContext.request.contextPath}/images/LogoAllenVoorEen.png' alt="" width="83" height="64">
+            </li>
+        </ul>
         <div class="collapse navbar-collapse" id="navbarResponsive">
+
+
           <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
                <a class="nav-link" href='${pageContext.request.contextPath}/home'><i class="fa fa-home"></i> Home</a>
