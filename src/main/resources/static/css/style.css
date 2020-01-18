@@ -204,4 +204,4 @@ background-image: url('https://source.unsplash.com/BtbjCFUvBXs/1920x1080');
 }
 
 .navbar-nav > li > a {padding-top:5px !important; padding-bottom:5px !important;}
-.navbar {max-height:64px !important}
+.navbar {max-height:75px !important}
