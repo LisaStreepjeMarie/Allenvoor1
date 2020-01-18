@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -53,8 +54,6 @@ public class CalendarController {
         model.addAttribute("medicationList", medicationList);
 
         ObjectMapper mapper = new ObjectMapper();
-        //SimpleDateFormat df = new SimpleDateFormat("dd/MM/YYYY H:m");
-        //mapper.setDateFormat(df);
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         model.addAttribute("calendarData", mapper.writeValueAsString(team.getEventList()));
 

@@ -10,13 +10,13 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
 
-    <link href="${pageContext.request.contextPath}/webjars/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet" />
-    <link href="${pageContext.request.contextPath}/webjars/fullcalendar/3.9.0/fullcalendar.print.min.css" rel="stylesheet" media='print' />
     <script src="${pageContext.request.contextPath}/webjars/moment/2.24.0/min/moment.min.js"></script>
     <script src="${pageContext.request.contextPath}/webjars/jquery/3.4.1/jquery.slim.min.js"></script>
+
+    <link href="${pageContext.request.contextPath}/webjars/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet" />
+    <link href="${pageContext.request.contextPath}/webjars/fullcalendar/3.9.0/fullcalendar.print.min.css" rel="stylesheet" media='print' />
     <script src="${pageContext.request.contextPath}/webjars/fullcalendar/3.9.0/fullcalendar.min.js"></script>
     <script src="${pageContext.request.contextPath}/webjars/fullcalendar/3.9.0/locale/nl.js"></script>
-    <link href="${pageContext.request.contextPath}/webjars/font-awesome/4.7.0/css/font-awesome.css" rel='stylesheet'>
     <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
     <script src="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
@@ -70,6 +70,8 @@
 
             <!-- This function is executed when an empty date/time is clicked -->
             select: function(start, end) {
+                $(".fc-highlight").css("background", "purple");
+
                 $('#modal-form').attr('action',"${pageContext.request.contextPath}/event/new");
                 $('#save-change-event').attr('action',"${pageContext.request.contextPath}/event/new");
                 $('.modal').find('#eventStartDate').val(start);
@@ -147,13 +149,13 @@
 
         <!-- These functions load the start, end & done date calendars (datetimepickers) in the modal (popup). -->
         $('#datetimepickerStart').datetimepicker({
-            format: 'DD/MM/YYYY HH:mm'
+            format: 'DD-MM-YYYY HH:mm'
         });
         $('#datetimepickerEnd').datetimepicker({
-            format: 'DD/MM/YYYY HH:mm'
+            format: 'DD-MM-YYYY HH:mm'
         });
         $('#datetimepickerDone').datetimepicker({
-            format: 'DD/MM/YYYY HH:mm'
+            format: 'DD-MM-YYYY HH:mm'
         });
         $("#datetimepickerStart").on("change.datetimepicker", function (e) {
             $('#datetimepickerEnd').datetimepicker('minDate', e.date);
