@@ -105,7 +105,6 @@ public class EventController {
         }
     }
 
-    //TODO this doesn't work yet. Look into it lisa!
     @PostMapping("/event/change/{activityId}")
     protected String changeEvent(@ModelAttribute("event") Event event, @ModelAttribute("medicationActivity") MedicationActivity
                                  medicationActivity, @PathVariable("activityId") final Integer activityId, BindingResult result) {
