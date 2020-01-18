@@ -116,8 +116,9 @@ public class EventController {
     }
 
     @PostMapping("/event/change/{activityId}")
-    protected String changeEvent(@ModelAttribute("event") Event event, @ModelAttribute("medicationActivity") MedicationActivity
-                                 medicationActivity, @PathVariable("activityId") final Integer activityId, BindingResult result) {
+    protected String changeEvent(@ModelAttribute("event") Event event, BindingResult result,
+                                 @ModelAttribute("medicationActivity") MedicationActivity medicationActivity,
+                                 @PathVariable("activityId") final Integer activityId) {
         if (result.hasErrors()) {
             return "calendar";
         } else {
@@ -144,12 +145,10 @@ public class EventController {
                             assert ((MedicationActivity) x).getMedication() != null;
                             ((MedicationActivity) x).getMedication().removalActivityAddedAmount(((MedicationActivity) x).getTakenMedication());
                         });
-
             }
 
             event.getActivity().setActivityId(activityId);
             event.getActivity().setActivityName(event.getEventName());
-
             eventRepository.save(event);
             return "redirect:/calendar/" + team.getTeamId();
         }

@@ -104,8 +104,8 @@
                 fillingTheModal();
                 showMedicationAmount(event, element);
 
-                $('.modal').find('#eventStartDate').val(event.start);
-                $('.modal').find('#eventEndDate').val(event.end);
+                $('.modal').find('#eventStartDate').val(event.start.format('DD-MM-YYYY H:mm'));
+                $('.modal').find('#eventEndDate').val(event.end.format('DD-MM-YYYY H:mm'));
 
                 <!-- redefines the modal (popup) buttons with the appropriate button text -->
                 document.getElementById("modal-title").innerHTML = "Wijzig of verwijder afspraak";

@@ -10,18 +10,15 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <link rel="shortcut icon" href="${pageContext.request.contextPath}/images/favicon.ico" type="image/x-icon" />
-
         <title>Allenvooréén - Login pagina</title>
 
         <!-- Bootstrap core CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
+        <script src="${pageContext.request.contextPath}/webjars/jquery/3.4.1/jquery.slim.min.js"></script>
+        <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
+        <script src="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
         <!-- Custom styles for this template -->
-        <link href="/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
-        <link href="../css/style.css" rel="stylesheet" type="text/css"/>
-        <link href="https://getbootstrap.com/docs/4.0/examples/sign-in/signin.css" rel="stylesheet">
-
+        <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
     </head>
 
     <body class="text-center">
@@ -31,13 +28,18 @@
             <h1 class="h3 mb-3 font-weight-normal">Log in:</h1>
 
             <c:if test="${param.error}">
-            <div class="alert alert-danger" role="alert">
-                Foute inloggegevens
-            </div>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Foute inloggegevens</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
             </c:if>
+
 
             <label for="username" class="sr-only">Gebruikersnaam</label>
             <input type="text" id="username" name="username" class="form-control" placeholder="Gebruikersnaam" required autofocus>
+            <br>
             <label for="password" class="sr-only">Wachtwoord</label>
             <input type="password" id="password" name="password" class="form-control" placeholder="Wachtwoord" required>
             <div class="checkbox mb-3">
