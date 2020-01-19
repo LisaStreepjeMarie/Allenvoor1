@@ -120,17 +120,35 @@ $(document).ready(function() {
             <!-- calendarData is a JSON string with all calendar events -->
             events: function(start, end, timezone, callback) {
                     $.ajax({
-                        type: "POST",
+                        type: "GET",
                         contentType: "application/json; charset=utf-8",
-                        url: encodeURI("../calendar/1"), // adjust your path
+                        url: "json",
                         async: true,
-                        data: "JSON.stringify",
                         dataType: "json",
+                        data: {
+                          id: 1,
+                          title: "asdji",
+                          description: "asdasd",
+                          start: 1579734000000,
+                          end: 1579820400000
+                        },
                         success: function (data) {
                             console.log(data);
+                            var events = [];
+                            $(data).find('event').each(function() {
+                              events.push({
+                                id: $(this).attr('id'),
+                                title: $(this).attr('title'),
+                                description: $(this).attr('description'),
+                                start: $(this).attr('start'), // will be parsed
+                                end: $(this).attr('end')
+                              });
+                            });
+                            callback(events);
                         },
                         error: function (data) {
                             console.log(data);
+
                         }
                     });
              },
