@@ -8,7 +8,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-public class CustomizedErrorController implements ErrorController {
+public class CustomErrorController implements ErrorController {
 
     @GetMapping("/error")
     public String handleError(HttpServletRequest request, Model model) {

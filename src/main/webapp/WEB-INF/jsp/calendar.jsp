@@ -10,20 +10,20 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
 
+    <script src="${pageContext.request.contextPath}/webjars/moment/2.24.0/min/moment.min.js"></script>
+    <script src="${pageContext.request.contextPath}/webjars/jquery/3.4.1/jquery.min.js"></script>
+
     <link href="${pageContext.request.contextPath}/webjars/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet" />
     <link href="${pageContext.request.contextPath}/webjars/fullcalendar/3.9.0/fullcalendar.print.min.css" rel="stylesheet" media='print' />
-    <script src="${pageContext.request.contextPath}/webjars/moment/2.24.0/min/moment.min.js"></script>
-    <script src="${pageContext.request.contextPath}/webjars/jquery/3.4.1/jquery.slim.min.js"></script>
     <script src="${pageContext.request.contextPath}/webjars/fullcalendar/3.9.0/fullcalendar.min.js"></script>
     <script src="${pageContext.request.contextPath}/webjars/fullcalendar/3.9.0/locale/nl.js"></script>
-    <link href="${pageContext.request.contextPath}/webjars/font-awesome/5.0.6/web-fonts-with-css/css/fontawesome-all.min.css" rel='stylesheet'>
     <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
     <script src="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
     <script src="${pageContext.request.contextPath}/webjars/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.js"></script>
     <link href="${pageContext.request.contextPath}/webjars/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.css" rel='stylesheet'>
 
-    <script src="${pageContext.request.contextPath}/js/calendar.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/calendar.js"></script>
 </head>
 
 <body>
@@ -37,113 +37,91 @@
                 </div>
 
                 <!-- select below decides the input fields for event -->
+                <span>
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <span style="margin-left:2em">
-                            <label class="col-xs-4" for="selectie" control-label>Categorie</label>
-                                <select name="activity.activityCategory" id="selectie" >
-                                <option disabled selected="selected">Selecteer categorie</option>
-                                    <option value="Vrije tijd" >Vrije tijd</option>
-                                    <option value="Medisch">Medisch</option>
-                                </select>
-                            </span>
+                    <div class="modal-body ">
+                        <div class="row">
+                            <label class="col-4" for="selectie" control-label>Categorie</label>
+                            <select name="activity.activityCategory" id="selectie" style="width:13.2em;" >
+                            <option disabled selected="selected">Selecteer categorie</option>
+                                <option value="Vrije tijd" >Vrije tijd</option>
+                                <option value="Medisch">Medisch</option>
+                            </select>
                         </div>
                     </div>
-                </div>
-                <div class="row" id="ShowEventName">
-                    <div class="col-12">
-                        <label class="col-4" for="eventName">Onderwerp</label>
-                        <input type="text" name="eventName" id="eventName" />
-                        <input type="hidden" name="eventId" id="eventId" />
-                        <input type="hidden" name="teamId" id="team.teamId" />
+                    <div class="modal-body" id="eventNameDiv">
+                        <div class="row">
+                            <label class="col-4" for="eventName">Onderwerp</label>
+                            <input type="text" name="eventName" id="eventName" />
+                            <input type="hidden" name="eventId" id="eventId" />
+                            <input type="hidden" name="teamId" id="team.teamId" />
+                        </div>
                     </div>
-                </div>
 
-                <!-- event with activity modal input fields -->
-                <div class="modal-body" id="eventActivity">
-                    <div class="row">
-                        <div class="col-12">
+                    <!-- event with activity modal input fields -->
+                    <div class="modal-body" id="eventCommentDiv">
+                        <div class="row">
                             <label class="col-4" for="eventComment">Beschrijving</label>
                             <input type="text" name="eventComment" id="eventComment" />
                         </div>
                     </div>
+
+                    <!-- event with MedicationActivity modal input fields -->
+                    <div class="modal-body" id="medicationChoiceDiv">
+                        <div class="row">
+                           <label class="col-4" for="selectie2" control-label>Medicijn</label>
+                           <select name="medication.medicationId" id="selectie2" >
+                               <option disabled selected="selected">Kies een medicijn</option>
+                               <c:forEach var="medication" items="${medicationList}">
+                                   <option value="${medication.medicationId}">${medication.medicationName}</option>
+                               </c:forEach>
+                           </select>
+                        </div>
+                    </div>
+                    <div class="modal-body" id="takenMedicationDiv">
+                        <div class="row">
+                            <label class="col-4" for="takenMedication" control-label>Hoeveelheid</label>
+                            <input type="number" name="takenMedication" id="takenMedication" />
+                        </div>
+                    </div>
                 </div>
 
-                <!-- event with MedicationActivity modal input fields -->
-                <div class="modal-body" id="medicationActivity">
-                    <div class="row">
-                        <div class="col-xs-12" modelAttribute="medicationActivity">
-                           <span style="margin-left:2em">
-                           <label class="col-xs-4" for="selectie2" control-label>Medicijn</label>
-                                <select name="medication.medicationId" id="selectie2" >
-                                <option disabled selected="selected">Kies een medicijn</option>
-                                    <c:forEach var="medication" items="${medicationList}">
-                                        <option value="${medication.medicationId}">${medication.medicationName}</option>
-                                    </c:forEach>
-                            </select>
-                           </span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12" modelAttribute="medicationActivity">
-                            <span style="margin-left:2em">
-                            <label class="col-xs-4" for="takenMedication" control-label>Hoeveelheid</label>
-                            <input type="number" name="takenMedication" id="takenMedication" />
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-body" id="ShowDates">
-                    <div class="container">
-                        <div class='col-md-10'>
-                            <div class="form-group">
-                                <div class="input-group date" id="datetimepickerStart" data-target-input="nearest">
-                                    <label class="col-xs-4" for="eventStartDate">Starttijd</label>
-                                    <input id="eventStartDate" name="eventStartDate" type="text" class="form-control datetimepicker-input" data-target="#datetimepickerStart"/>
-                                    <div class="input-group-append" data-target="#datetimepickerStart" data-toggle="datetimepicker">
-                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class='col-md-10'>
-                            <div class="form-group">
-                                <div class="input-group date" id="datetimepickerEnd" data-target-input="nearest">
-                                    <label class="col-xs-4" for="eventEndDate">Eindtijd</label>
-                                    <input id="eventEndDate" name="eventEndDate" type="text" class="form-control datetimepicker-input" data-target="#datetimepickerEnd"/>
-                                    <div class="input-group-append" data-target="#datetimepickerEnd" data-toggle="datetimepicker">
-                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                    </div>
-                                </div>
+                <div class="modal-body" id="eventDatesDiv">
+                    <div class="form-group">
+                        <div class="input-group date" id="datetimepickerStart" data-target-input="nearest">
+                            <label class="col-4" for="eventStartDate">Starttijd </label>
+                            <input id="eventStartDate" name="eventStartDate" type="text" class="form-control datetimepicker-input" data-target="#datetimepickerStart"/>
+                            <div class="input-group-append" style="width:8.3vw;" data-target="#datetimepickerStart" data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-12" id="eventDoneDiv">
-                            <span style="margin-left:2em">
-                                <label class="col-xs-4" for="eventDone">Afspraak al uitgevoerd?</label>
+                    <div class="form-group">
+                        <div class="input-group date" id="datetimepickerEnd" data-target-input="nearest">
+                            <label class="col-4" for="eventEndDate">Eindtijd </label>
+                            <input id="eventEndDate" name="eventEndDate" type="text" class="form-control datetimepicker-input" data-target="#datetimepickerEnd"/>
+                            <div class="input-group-append" style="width:8.3vw;"  data-target="#datetimepickerEnd" data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-body" >
+                        <div class="modal-body" >
+                            <div class="row" id="eventDoneDiv">
+                                <label class="col-xs-4" for="eventDone">Afspraak al uitgevoerd?&nbsp;</label>
                                 <input type="checkbox" id="eventDone" name="eventDone"/>
-                            </span>
-                    </div>
-                </div>
-                <div class="row" id="eventDoneDateDiv">
-                    <div class="col-xs-12">
-                            <span style="margin-left:2em">
-                                <label class="col-xs-4" id="eventDone" for="eventDoneDate">Op datum</label>
-                                <div class="form-group">
-                                <div class="input-group date" id="datetimepickerDone" data-target-input="nearest">
-                                    <label class="col-xs-4" for="eventDoneDate">Eindtijd</label>
-                                    <input id="eventDoneDate" name="noEventDoneDate" type="text" class="form-control datetimepicker-input" data-target="#datetimepickerDone"/>
-                                    <div class="input-group-append" data-target="#datetimepickerDone" data-toggle="datetimepicker">
-                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                    </div>
+                            </div>
+                            <div class="row input-group date" id="datetimepickerDone" data-target-input="nearest">
+                                <label class="col-xs-4" for="eventDoneDate">Op datum</label>
+                                <input id="eventDoneDate" name="eventDoneDate" type="text" class="form-control datetimepicker-input" data-target="#datetimepickerDone"/>
+                                <div class="input-group-append" style="width:8.3vw;" data-target="#datetimepickerDone" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
                             </div>
-                            </span>
+                        </div>
                     </div>
                 </div>
+                    </span>
                 <div class="modal-footer">
                     <button type="button" id="delete-event" class="btn btn-danger" data-dismiss="modal" >Verwijder Afspraak</button>
                     <button type="button" class="btn btn-light" data-dismiss="modal">Sluiten</button>
@@ -155,12 +133,5 @@
     </div><!-- /.modal -->
 </form:form>
   <jsp:include page="home.jsp" />
-<c:if test="${not empty team.teamName}">
-    <div class="badge badge-primary text-wrap" style="width: 45rem; height: 4rem; margin-left:308px;">
-        <p>
-        <h5>Agenda van de groep: ${team.teamName}</h5>
-        </p>
-    </div>
-</c:if>
 </body>
 </html>

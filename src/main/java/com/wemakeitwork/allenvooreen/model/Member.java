@@ -1,5 +1,7 @@
 package com.wemakeitwork.allenvooreen.model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,6 +26,9 @@ public class Member implements UserDetails {
 
     private String rol;
 
+    @Transient
+    private String passwordConfirm;
+
     @ManyToMany
     @JoinTable(name = "team_membername", joinColumns = @JoinColumn(name = "membername_member_id"), inverseJoinColumns = @JoinColumn(name = "team_team_id"))
     private Set<Team> allTeamsOfMemberSet = new HashSet<>();
@@ -42,6 +47,14 @@ public class Member implements UserDetails {
 
     public void setRol(String rol) {
         this.rol = rol;
+    }
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
     }
 
     @Override

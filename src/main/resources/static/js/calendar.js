@@ -1,5 +1,28 @@
 $(document).ready(function() {
-        <!-- loads the calendar (without data) -->
+        hideAll();
+
+        <!-- this shows/hides the eventDone input field when the checkbox is toggled -->
+        $("#eventDone").change(function () {
+            if(document.getElementById("eventDone").checked == true) {
+                    $("#datetimepickerDone").show()
+            } else {
+                    document.getElementById("eventDoneDate").removeAttribute("required");
+                    $("#datetimepickerDone").hide()
+            }
+        });
+
+        <!-- below makes sure that the unwanted fields in the modal are hidden and calls the selection upon change -->
+        $("#selectie").change(function () {
+            hideAll();
+            activitySelection();
+        });
+
+        <!-- below cleans the modal upon closing -->
+        $('#modal-form').on("hide.bs.modal", function() {
+            $('#modal-form').trigger("reset");
+            hideAll();
+        });
+
         $('#calendar').fullCalendar({
             themeSystem: 'bootstrap4',
             timeZone: 'Europe/Amsterdam',
@@ -21,10 +44,13 @@ $(document).ready(function() {
 
             <!-- This function is executed when an empty date/time is clicked -->
             select: function(start, end) {
-                $('#modal-form').attr('action',"${pageContext.request.contextPath}/event/new");
-                $('#save-change-event').attr('action',"${pageContext.request.contextPath}/event/new");
-                $('.modal').find('#eventStartDate').val(start);
-                $('.modal').find('#eventEndDate').val(end);
+                $(".fc-highlight").css("background", "purple");
+
+                $('#modal-form').attr('action',"../event/new");
+                $('#save-change-event').attr('action',"../event/new");
+
+                $('.modal').find('#eventStartDate').val(start.format('DD-MM-YYYY H:mm'));
+                $('.modal').find('#eventEndDate').val(end.format('DD-MM-YYYY H:mm'));
 
                 document.getElementById("modal-title").innerHTML = "Maak nieuwe afspraak";
                 document.getElementById("save-change-event").innerHTML = "Maak afspraak";
@@ -35,15 +61,15 @@ $(document).ready(function() {
             <!-- This function is executed when an already planned event is clicked -->
             eventClick: function(event, element) {
                 <!-- pass eventId to a simple <a href> link: -->
-                <!-- $('#deleteEvent').attr('href',"${pageContext.request.contextPath}/event/delete/" + event.id); -->
+                <!-- $('#deleteEvent').attr('href',"../event/delete/" + event.id); -->
 
                 <!-- redefines the onclick action of the delete-event button, so that it will point the browser -->
                 <!-- to the /event/delete/{eventId}/{activityId} mapping -->
-                $('#delete-event').attr('onclick',"window.location='${pageContext.request.contextPath}/event/delete/" + event.id + "/" + event.activity.id + "'");
+                $('#delete-event').attr('onclick',"window.location='../event/delete/" + event.id + "/" + event.activity.id + "'");
 
                 $("#eventId").val(event.id);
-                $('#modal-form').attr('action',"${pageContext.request.contextPath}/event/change/" + event.activity.id);
-                $('#save-change-event').attr('action',"{pageContext.request.contextPath}/event/change");
+                $('#modal-form').attr('action',"../event/change/" + event.activity.id);
+                $('#save-change-event').attr('action',"../event/change");
                 $('.modal').find('#eventComment').val(event.description);
                 $('.modal').find('#selectie').val(event.activity.category);
                 $('.modal').find('#eventName').val(event.title);
@@ -52,8 +78,8 @@ $(document).ready(function() {
                 fillingTheModal();
                 showMedicationAmount(event, element);
 
-                $('.modal').find('#eventStartDate').val(event.start);
-                $('.modal').find('#eventEndDate').val(event.end);
+                $('.modal').find('#eventStartDate').val(event.start.format('DD-MM-YYYY H:mm'));
+                $('.modal').find('#eventEndDate').val(event.end.format('DD-MM-YYYY H:mm'));
 
                 <!-- redefines the modal (popup) buttons with the appropriate button text -->
                 document.getElementById("modal-title").innerHTML = "Wijzig of verwijder afspraak";
@@ -76,6 +102,13 @@ $(document).ready(function() {
                 revertFunc();
             },
 
+            // Distinct event colors based on activity.category
+            eventRender: function(event, element) {
+                if(event.activity.category == "Medisch") {
+                    element.css('background-color', '#000');
+                }
+            },
+
             <!-- Remember last view on page reload. -->
             viewRender: function (view, element) {
                 localStorage.setItem("fcDefaultView", view.name);
@@ -85,64 +118,92 @@ $(document).ready(function() {
             editable: true,
 
             <!-- calendarData is a JSON string with all calendar events -->
+            events: function(start, end, timezone, callback) {
+                    $.ajax({
+                        type: "GET",
+                        contentType: "application/json; charset=utf-8",
+                        url: "json",
+                        async: true,
+                        dataType: "json",
+                        data: {
+                          id: 1,
+                          title: "asdji",
+                          description: "asdasd",
+                          start: 1579734000000,
+                          end: 1579820400000
+                        },
+                        success: function (data) {
+                            console.log(data);
+                            var events = [];
+                            $(data).find('event').each(function() {
+                              events.push({
+                                id: $(this).attr('id'),
+                                title: $(this).attr('title'),
+                                description: $(this).attr('description'),
+                                start: $(this).attr('start'), // will be parsed
+                                end: $(this).attr('end')
+                              });
+                            });
+                            callback(events);
+                        },
+                        error: function (data) {
+                            console.log(data);
+
+                        }
+                    });
+             },
+
             eventLimit: true // allow "more" link when too many events
         });
 
-
-        <!-- this shows/hides the eventDone input field when the checkbox is toggled -->
-        $("#eventDone").change(function () {
-            if(document.getElementById("eventDone").checked == true) {
-                    $("#eventDoneDateDiv").show()
-                    $('#eventDoneDate').attr('required', "true")
-                    $('#eventDoneDate').attr('name',"eventDoneDate")
-            } else {
-                    document.getElementById("eventDoneDate").removeAttribute("required");
-                    $("#eventDoneDateDiv").hide()
-
-                    <!-- set name of eventDoneDate to noEventDoneDate -->
-                    <!-- so the controller doesn't pick up the value (and will not write an empty value into java.util.Date) -->
-                    $('#eventDoneDate').attr('name',"noEventDoneDate");
-            }
+        <!-- These functions load the start, end & done date calendars (datetimepickers) in the modal (popup). -->
+        $('#datetimepickerStart').datetimepicker({
+            format: 'DD-MM-YYYY HH:mm'
         });
-
-        <!-- Makes unwanted fields in the modal hidden and calls the selection upon change -->
-        $("#selectie").change(function () {
-            hideAll();
-            activitySelection();
+        $('#datetimepickerEnd').datetimepicker({
+            format: 'DD-MM-YYYY HH:mm'
         });
-
-        <!-- Cleans the modal upon closing -->
-        $('#modal-form').on("hide.bs.modal", function() {
-            $('#modal-form').trigger("reset");
-            hideAll();
+        $('#datetimepickerDone').datetimepicker({
+            format: 'DD-MM-YYYY HH:mm'
         });
+        $("#datetimepickerStart").on("change.datetimepicker", function (e) {
+            $('#datetimepickerEnd').datetimepicker('minDate', e.date);
+        });
+        $("#datetimepickerEnd").on("change.datetimepicker", function (e) {
+            $('#datetimepickerStart').datetimepicker('maxDate', e.date);
+        });
+        $('#datetimepickerDone').datetimepicker();
 
-        <!-- Shows correct modal form based on the activity selection -->
-            function activitySelection() {
-                if ($("#selectie").val() === "Medisch") {
-                    $("#ShowDates, #ShowEventName, #medicationActivity").show();
-                } else {
-                    $("#ShowDates, #ShowEventName, #eventActivity").show();
-                }
-                $("#eventDoneDiv").css("display", "");
-            };
+    });
 
-        <!-- Hides all modal options -->
-        function hideAll() {
-            $("#ShowDates, #eventActivity, #medicationActivity, #ShowEventName, #eventDoneDateDiv, #eventDoneDiv").css("display", "none");
+<!-- below function shows the correct modal form based on the activity selection -->
+    function activitySelection() {
+        if ($("#selectie").val() === "Medisch") {
+            $("#eventNameDiv, #eventDateStartEndDiv, #medicationChoiceDiv, #takenMedicationDiv, #eventDatesDiv").show();
+        } else {
+            $("#eventNameDiv, #eventDateStartEndDiv, #eventDatesDiv, #eventCommentDiv").show();
         }
-        hideAll();
+        $("#datetimepickerDone").hide();
+        $("#eventDoneDiv").css("display", "");
+    }
 
-        function showMedicationAmount(event, element){
-            if ($('.modal').find('#selectie').val() == "Medisch")
-              $('.modal').find('#takenMedication').val(event.activity.takenmedication);
-        }
+<!-- below function hides all modal options -->
+    function hideAll() {
+        $("#eventNameDiv, #eventCommentDiv, #medicationChoiceDiv, #eventDatesDiv, #takenMedicationDiv").css("display", "none");
+    }
 
-        <!-- below function fills the modal with event info if it exist -->
-        function fillingTheModal() {
-            if ($('.modal').find('#selectie').val() == "Medisch")
-                $("#ShowDates, #ShowEventName, #medicationActivity").show();
-            else
-                $("#ShowDates, #ShowEventName, #eventActivity").show();
+    function showMedicationAmount(event, element){
+        if ($('.modal').find('#selectie').val() == "Medisch")
+          $('.modal').find('#takenMedication').val(event.activity.takenmedication);
+    }
+
+<!-- below function fills the modal with event info if it exist -->
+    function fillingTheModal() {
+        if ($('.modal').find('#selectie').val() == "Medisch") {
+            $("#eventNameDiv, #eventDateStartEndDiv, #medicationChoiceDiv, #takenMedicationDiv, #eventDatesDiv").show();
+        } else {
+            $("#eventNameDiv, #eventDateStartEndDiv, #eventDatesDiv, #eventCommentDiv").show();
         }
-})
+        $("#datetimepickerDone").hide();
+        $("#eventDoneDiv").css("display", "");
+    }

@@ -5,6 +5,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @Entity
@@ -17,6 +18,8 @@ public class Event {
     private Integer eventId;
 
     @JsonProperty("title")
+    // @NotBlank(message = "{org.hibernate.validator.constraints.NotBlank.message}")
+    @NotBlank(message = "veld mag niet blank zijn")
     private String eventName;
 
     @Basic
