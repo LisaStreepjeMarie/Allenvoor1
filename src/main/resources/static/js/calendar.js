@@ -114,7 +114,7 @@ $(document).ready(function() {
             events: function(start, end, timezone, callback) {
                 $.ajax({
                     type:'GET',
-                    url: 'json',
+                    url: 'json/1/' + start + '/' + end + '/',
                     dataType: 'json',
                     error: function (xhr, type, exception) { alert("Error: " + exception); },
                     success: function (response) {
