@@ -131,7 +131,7 @@ table tr td, table tr th {
 }
 
 table tr th {
-    font-size: 16pt;
+    font-size: 12pt;
     color: #0e4171;
 }
 
@@ -202,3 +202,6 @@ background-image: url('https://source.unsplash.com/BtbjCFUvBXs/1920x1080');
   text-align: left;
   align-items: left;
 }
+
+.navbar-nav > li > a {padding-top:5px !important; padding-bottom:5px !important;}
+.navbar {max-height:75px !important}
