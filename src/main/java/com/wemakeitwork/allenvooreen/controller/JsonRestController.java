@@ -1,7 +1,5 @@
 package com.wemakeitwork.allenvooreen.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.wemakeitwork.allenvooreen.model.Event;
 import com.wemakeitwork.allenvooreen.model.Team;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
@@ -19,9 +17,8 @@ public class JsonRestController {
     TeamRepository teamRepository;
 
     @GetMapping(value = "/calendar/json", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Event getEvent(){
+    public List<Event> getEvent(){
         Team team = teamRepository.getOne(1);
-        List<Event> eventList = team.getEventList();
-        return eventList.get(1);
+        return team.getEventList();
     }
 }
