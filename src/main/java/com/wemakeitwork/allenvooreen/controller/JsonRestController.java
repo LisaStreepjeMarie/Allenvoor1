@@ -31,11 +31,14 @@ public class JsonRestController {
         List<Event> fullEventList = team.getEventList();
 
         // Fill eventListPeriod with events in the timeperiod fullcalendar is asking for
-        for (Event event : fullEventList) {
-            if (event.getEventStartDate().after(startDate) && event.getEventEndDate().before(endDate)) {
-                eventListPeriod.add(event);
-            }
-        }
+        // Add the filtered events to eventListPeriod
+        fullEventList.stream()
+                // Filter events that occur after the startdate (of fullcalendars view)
+                .filter(x -> x.getEventStartDate().after(startDate))
+                // Filter events that occur before the enddate (of fullcalendars view)
+                .filter(x -> x.getEventEndDate().before(endDate))
+                // Add the filtered events to the eventListPeriod
+                .forEach(eventListPeriod::add);
 
         return eventListPeriod;
     }
