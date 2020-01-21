@@ -42,6 +42,7 @@
         <div id="container">
           <header class= "masthead">
           <br>
+          <div class="mt-3 col-12">
 <h1 class="font-weight-light">Voeg gegevens groep toe</h1>
 
             <form:form action="${pageContext.request.contextPath}/team/new" modelAttribute="team">

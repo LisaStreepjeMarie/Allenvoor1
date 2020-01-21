@@ -39,6 +39,7 @@
     <div id="container">
     <header class= "masthead">
         <br>
+        <div class="mt-3 col-12">
         <tr><th><h1 class="font-weight-light">Overzicht medicatie ${team.teamName}</h1></th></tr>
         <table>
           <tr><th><th><h5 class="font-weight-light">Naam</h5></th><th><h5 class="font-weight-light">Hoeveelheid</h5></th><th><h5 class="font-weight-light">Beschrijving</h5></th></th>

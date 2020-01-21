@@ -15,7 +15,7 @@
     <link href="${pageContext.request.contextPath}/webjars/font-awesome/4.7.0/css/font-awesome.css" rel='stylesheet'>
     <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
-</head>
+    </head>
 
     <body class= "webpage">
     <!-- Navigation -->
@@ -50,7 +50,6 @@
       </div>
     </nav>
 <header class= "masthead">
-
 <br>
 <div class= "row">
     <div class= "col-2">

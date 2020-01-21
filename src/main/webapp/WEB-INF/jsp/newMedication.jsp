@@ -39,9 +39,9 @@
                       </ul>
                     </div>
                 </nav>
-
     <div id="container">
     <header class= "masthead">
+    <div class="mt-3 col-12">
         <h1 class="font-weight-light">Voer medicatie voor ${team.teamName} in</h1>
         <br>
         <form:form action="${pageContext.request.contextPath}/medication/new" modelAttribute="medication">

@@ -15,7 +15,7 @@
         <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
     </head>
 
-
+        <body class= "webpage">
         <!-- Navigation -->
             <nav class="navbar navbar-expand-lg navbar-light bg-light shadow sticky-top">
                 <a class="navbar-brand"</a><br><br><br>
