@@ -102,13 +102,6 @@ $(document).ready(function() {
                 revertFunc();
             },
 
-            // Distinct event colors based on activity.category
-            eventRender: function(event, element) {
-                if(event.activity.category == "Medisch") {
-                    element.css('background-color', '#000');
-                }
-            },
-
             <!-- Remember last view on page reload. -->
             viewRender: function (view, element) {
                 localStorage.setItem("fcDefaultView", view.name);
@@ -119,38 +112,23 @@ $(document).ready(function() {
 
             <!-- calendarData is a JSON string with all calendar events -->
             events: function(start, end, timezone, callback) {
-                    $.ajax({
-                        type: "GET",
-                        contentType: "application/json; charset=utf-8",
-                        url: "json",
-                        async: true,
-                        dataType: "json",
-                        data: {
-                          id: 1,
-                          title: "asdji",
-                          description: "asdasd",
-                          start: 1579734000000,
-                          end: 1579820400000
-                        },
-                        success: function (data) {
-                            console.log(data);
-                            var events = [];
-                            $(data).find('event').each(function() {
-                              events.push({
-                                id: $(this).attr('id'),
-                                title: $(this).attr('title'),
-                                description: $(this).attr('description'),
-                                start: $(this).attr('start'), // will be parsed
-                                end: $(this).attr('end')
-                              });
-                            });
-                            callback(events);
-                        },
-                        error: function (data) {
-                            console.log(data);
-
-                        }
-                    });
+                $.ajax({
+                    type:'GET',
+                    url: 'json',
+                    dataType: 'json',
+                    error: function (xhr, type, exception) { alert("Error: " + exception); },
+                    success: function (response) {
+                        console.log(response);
+                        var events = [];
+                        events.push({
+                            id: response.id,
+                            title: response.title,
+                            start: response.start,
+                            end: response.end,
+                        });
+                        callback(events);
+                    }
+                });
              },
 
             eventLimit: true // allow "more" link when too many events
