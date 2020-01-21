@@ -1,4 +1,5 @@
 $(document).ready(function() {
+        var contextPath = $('#contextPathHolder').attr('data-contextPath');
         hideAll();
 
         <!-- this shows/hides the eventDone input field when the checkbox is toggled -->
@@ -123,7 +124,7 @@ $(document).ready(function() {
             events: function(start, end, timezone, callback) {
                 $.ajax({
                     type:'GET',
-                    url: 'json/1/' + start + '/' + end + '/',
+                    url: contextPath + '/calendar/json/1/' + start + '/' + end + '/',
                     dataType: 'json',
                     error: function (xhr, type, exception) { alert("Error: " + exception); },
                     success: function (response) {
