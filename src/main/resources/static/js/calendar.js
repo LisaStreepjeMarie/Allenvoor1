@@ -125,6 +125,9 @@ $(document).ready(function() {
                                 title: response[i].title,
                                 start: response[i].start,
                                 end: response[i].end,
+                                activity: response[i].activity,
+                                //team: response[i].team, // Do we need the team object? team is already known,
+                                                          // It's what we queried the controller with...
                             });
                         }
                         callback(events);

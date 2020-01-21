@@ -17,8 +17,8 @@ public class JsonRestController {
     @Autowired
     TeamRepository teamRepository;
 
-    @GetMapping("/calendar/json/{team}/{startdate}/{enddate}")
-    public List<Event> getJsonEventListPeriod(@PathVariable("team") final Integer teamId,
+    @GetMapping("/calendar/json/{teamid}/{startdate}/{enddate}")
+    public List<Event> getJsonEventListPeriod(@PathVariable("teamid") final Integer teamId,
                                               @PathVariable("startdate") final long startDateEpoch,
                                               @PathVariable("enddate") final long endDateEpoch){
 
