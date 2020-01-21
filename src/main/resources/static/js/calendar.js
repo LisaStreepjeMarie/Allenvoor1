@@ -104,8 +104,10 @@ $(document).ready(function() {
 
             // Distinct event colors based on activity.category
             eventRender: function(event, element) {
-                if(event.activity.category == "Medisch") {
-                    element.css('background-color', '#000');
+                if (typeof event.activity !== 'undefined') {
+                    if( event.activity.category == "Medisch") {
+                        element.css('background-color', '#000');
+                    }
                 }
             },
 
