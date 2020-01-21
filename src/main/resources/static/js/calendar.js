@@ -102,6 +102,13 @@ $(document).ready(function() {
                 revertFunc();
             },
 
+            // Distinct event colors based on activity.category
+            eventRender: function(event, element) {
+                if(event.activity.category == "Medisch") {
+                    element.css('background-color', '#000');
+                }
+            },
+
             <!-- Remember last view on page reload. -->
             viewRender: function (view, element) {
                 localStorage.setItem("fcDefaultView", view.name);
