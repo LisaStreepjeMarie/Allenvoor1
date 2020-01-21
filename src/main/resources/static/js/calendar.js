@@ -118,14 +118,15 @@ $(document).ready(function() {
                     dataType: 'json',
                     error: function (xhr, type, exception) { alert("Error: " + exception); },
                     success: function (response) {
-                        console.log(response);
                         var events = [];
-                        events.push({
-                            id: response.id,
-                            title: response.title,
-                            start: response.start,
-                            end: response.end,
-                        });
+                        for (i in response) {
+                            events.push({
+                                id: response[i].id,
+                                title: response[i].title,
+                                start: response[i].start,
+                                end: response[i].end,
+                            });
+                        }
                         callback(events);
                     }
                 });
