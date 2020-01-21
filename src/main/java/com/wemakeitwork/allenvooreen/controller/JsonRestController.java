@@ -3,7 +3,6 @@ package com.wemakeitwork.allenvooreen.controller;
 import com.wemakeitwork.allenvooreen.model.Event;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +17,7 @@ public class JsonRestController {
     @Autowired
     TeamRepository teamRepository;
 
-    @GetMapping(value = "/calendar/json/{team}/{startdate}/{enddate}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/calendar/json/{team}/{startdate}/{enddate}")
     public List<Event> getJsonEventListPeriod(@PathVariable("team") final Integer teamId,
                                               @PathVariable("startdate") final long startDateEpoch,
                                               @PathVariable("enddate") final long endDateEpoch){
