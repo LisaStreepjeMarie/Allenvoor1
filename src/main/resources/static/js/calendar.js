@@ -1,5 +1,9 @@
 $(document).ready(function() {
+        /* variables passed from jsp */
         var contextPath = $('#contextPathHolder').attr('data-contextPath');
+        var teamId = $('#teamId').attr('data-teamId');
+
+        console.log(teamId);
         hideAll();
 
         <!-- this shows/hides the eventDone input field when the checkbox is toggled -->
@@ -124,7 +128,7 @@ $(document).ready(function() {
             events: function(start, end, timezone, callback) {
                 $.ajax({
                     type:'GET',
-                    url: contextPath + '/calendar/json/1/' + start + '/' + end + '/',
+                    url: contextPath + '/calendar/json/' + teamId + '/' + start + '/' + end + '/',
                     dataType: 'json',
                     error: function (xhr, type, exception) { alert("Error: " + exception); },
                     success: function (response) {

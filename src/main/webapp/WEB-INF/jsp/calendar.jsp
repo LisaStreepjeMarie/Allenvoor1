@@ -23,7 +23,10 @@
     <script src="${pageContext.request.contextPath}/webjars/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.js"></script>
     <link href="${pageContext.request.contextPath}/webjars/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.css" rel='stylesheet'>
 
+    <!-- variables passed to calendar.js -->
     <link id="contextPathHolder" data-contextPath="${pageContext.request.contextPath}"/>
+    <link id="teamId" data-teamId="${team.teamId}"/>
+
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/calendar.js"></script>
 </head>
 
@@ -55,7 +58,7 @@
                             <label class="col-4" for="eventName">Onderwerp</label>
                             <input type="text" name="eventName" id="eventName" />
                             <input type="hidden" name="eventId" id="eventId" />
-                            <input type="hidden" name="teamId" id="team.teamId" />
+                            <input type="hidden" name="teamId" id="team.teamId"/>
                         </div>
                     </div>
 
