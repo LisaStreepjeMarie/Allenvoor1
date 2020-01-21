@@ -12,15 +12,13 @@
         <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
         <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
         </head>
-        <body class="webpage">
-        <title>Medicatieoverzicht</title>
 
-</head>
     <title>Medicatieoverzicht</title>
     <body class="webpage">
     <!-- Navigation -->
                 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow sticky-top">
                     <a class="navbar-brand"</a><br><br><br>
+                    <a href="${pageContext.request.contextPath}/home">
                     <img class="mb-4" src='${pageContext.request.contextPath}/images/LogoAllenVoorEen.png' alt="" width="83" height="64"> </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                           <span class="navbar-toggler-icon"></span>

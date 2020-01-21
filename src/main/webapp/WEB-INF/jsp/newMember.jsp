@@ -24,6 +24,7 @@
     <body class="text-center">
         <div class="container">
             <form class="form-signin" method="post" action="${pageContext.request.contextPath}/member/new">
+            <a href="${pageContext.request.contextPath}/home">
             <img class="mb-4" src="${pageContext.request.contextPath}/images/LogoAllenVoorEen.png" alt="" width="300" height="228">
                 <h1 class="h3 mb-3 font-weight-normal">Nieuw? Meld je aan:</h1>
 
