@@ -3,12 +3,16 @@ package com.wemakeitwork.allenvooreen.controller;
 import com.wemakeitwork.allenvooreen.model.Event;
 import com.wemakeitwork.allenvooreen.model.Team;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
+import com.wemakeitwork.allenvooreen.service.ServiceResponse;
+import org.aspectj.weaver.ast.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,4 +43,15 @@ public class JsonRestController {
 
         return eventListPeriod;
     }
+
+    //TODO this doesn't work yet!
+    @RequestMapping(value = "/calendar/saveEventFromPost", headers ="content-type=application/json", method = RequestMethod.POST)
+    public List<Event> updatedList(@RequestBody String json) {
+        System.out.println("werkt dit zo?");
+        Team team = teamRepository.getOne(1);
+
+        return team.getEventList();
+    }
+
+
 }

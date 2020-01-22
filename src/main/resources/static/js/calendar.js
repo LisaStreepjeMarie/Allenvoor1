@@ -1,5 +1,50 @@
 $(document).ready(function() {
         hideAll();
+        function ajaxPost() {
+
+
+
+        				// Manier om een object te maken en door te geven
+//        				var event = {
+//         					name : $("#eventName").val(),
+//         					title : $("#eventComment").val(),
+//         					start : $("#eventStartDate").val()
+//        				}
+
+                        var token = document.getElementsByName("csrfToken").value;
+
+        				// DO POST
+        				$.ajax({
+        				    url : "saveEventFromPost",
+        					method : "POST",
+        					cache : false,
+                            async : true,
+                            contentType : "application/json; charset=UTF-8",
+        					data : JSON.stringify({
+                                               "title" : "myname",
+                                               "name" : "sup"
+                                           }),
+        					dataType : 'json',
+        					success : function(result) {
+        						if (result.status == "success") {
+        							$("#postResultDiv").html(
+        									"" + result.data.bookName
+        											+ "Post Successfully! <br>"
+        											+ "---> Congrats !!" + "</p>");
+        						} else {
+        							$("#postResultDiv").html("<strong>Error</strong>");
+        						}
+        						console.log(result);
+        					},
+        					error : function(e) {
+        						alert("Error!")
+        						console.log(event)
+        						console.log("ERROR: ", e);
+        					}
+        				});
+
+        			}
+
 
         <!-- this shows/hides the eventDone input field when the checkbox is toggled -->
         $("#eventDone").change(function () {
@@ -44,18 +89,7 @@ $(document).ready(function() {
 
             <!-- This function is executed when an empty date/time is clicked -->
             select: function(start, end) {
-                $(".fc-highlight").css("background", "purple");
-
-                $('#modal-form').attr('action',"../event/new");
-                $('#save-change-event').attr('action',"../event/new");
-
-                $('.modal').find('#eventStartDate').val(start.format('DD-MM-YYYY H:mm'));
-                $('.modal').find('#eventEndDate').val(end.format('DD-MM-YYYY H:mm'));
-
-                document.getElementById("modal-title").innerHTML = "Maak nieuwe afspraak";
-                document.getElementById("save-change-event").innerHTML = "Maak afspraak";
-                $("#delete-event").hide();
-                $('.modal').modal('show');
+                ajaxPost();
             },
 
             <!-- This function is executed when an already planned event is clicked -->
@@ -186,3 +220,17 @@ $(document).ready(function() {
         $("#datetimepickerDone").hide();
         $("#eventDoneDiv").css("display", "");
     }
+
+    function getCookie(c_name) {
+        if(document.cookie.length > 0) {
+            c_start = document.cookie.indexOf(c_name + "=");
+            if(c_start != -1) {
+                c_start = c_start + c_name.length + 1;
+                c_end = document.cookie.indexOf(";", c_start);
+                if(c_end == -1) c_end = document.cookie.length;
+                return unescape(document.cookie.substring(c_start,c_end));
+            }
+        }
+        return "";
+    }
+
