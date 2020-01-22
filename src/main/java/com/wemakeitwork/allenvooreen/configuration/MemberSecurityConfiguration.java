@@ -50,7 +50,6 @@ public class MemberSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf().ignoringAntMatchers("/calendar/saveEventFromPost").and()
                 .authorizeRequests()
                 .antMatchers("/member/new/**", "/images/**", "/css/**",
                         "/webjars/bootstrap/**", "/webjars/jquery/**").permitAll()

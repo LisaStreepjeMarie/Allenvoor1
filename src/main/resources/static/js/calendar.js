@@ -2,8 +2,8 @@ $(document).ready(function() {
         /* variables passed from jsp */
         var contextPath = $('#contextPathHolder').attr('data-contextPath');
         var teamId = $('#teamId').attr('data-teamId');
+        var token = $('#csrfToken').attr('data-csrfToken');
 
-        console.log(teamId);
         hideAll();
         function ajaxPost() {
 
@@ -14,6 +14,11 @@ $(document).ready(function() {
 //         					start : $("#eventStartDate").val()
 //        				}
         				// DO POST
+        				$.ajaxSetup({
+                            beforeSend: function(xhr) {
+                                xhr.setRequestHeader('X-CSRF-TOKEN', token);
+                            }
+                        });
         				$.ajax({
         				    url : "saveEventFromPost",
         					method : "POST",
