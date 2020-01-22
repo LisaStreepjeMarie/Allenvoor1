@@ -1,7 +1,9 @@
 package com.wemakeitwork.allenvooreen.controller;
 
 import com.wemakeitwork.allenvooreen.model.Member;
+import com.wemakeitwork.allenvooreen.model.Team;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
+import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import com.wemakeitwork.allenvooreen.service.MemberServiceInterface;
 import com.wemakeitwork.allenvooreen.service.SecurityServiceInterface;
 import com.wemakeitwork.allenvooreen.validator.MemberValidator;
@@ -21,6 +23,9 @@ public class MemberController {
 
     @Autowired
     private MemberRepository memberRepository;
+
+    @Autowired
+    private TeamRepository teamRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -69,6 +74,24 @@ public class MemberController {
         Optional<Member> member = memberRepository.findByMemberName(principal.getName());
         member.ifPresent(value -> memberRepository.delete(value));
         return "confirmLogout";
+    }
+
+    @GetMapping("/member/delete/{teamId}+{memberId}")
+    public String deleteMemberFromTeam(@PathVariable("teamId") final Integer teamId,
+                                       @PathVariable("memberId") final Integer memberId) {
+        Team team = teamRepository.getOne(teamId);
+        Member member = memberRepository.getOne(memberId);
+        System.out.println("memberID: "+ memberRepository.getOne(memberId));
+        // Set<Member> wegermee = new HashSet<>();
+        // wegermee.addAll(team.getAllMembersInThisTeamSet());
+
+        // Optional<Member> RemoveMember = memberRepository.findById(memberId);
+        // for (Member member : wegermee){
+        member.removeTeamFromMember(team);
+        team.removeTeamMember(member);
+        // }
+        teamRepository.save(team);
+        return "redirect:/team/select/{teamId}";
     }
 
     @PostMapping("/member/new")
