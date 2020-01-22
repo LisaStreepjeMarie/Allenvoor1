@@ -17,14 +17,13 @@ $(document).ready(function() {
         				$.ajax({
         				    url : "saveEventFromPost",
         					method : "POST",
-        					cache : false,
-                            async : true,
                             contentType : "application/json; charset=UTF-8",
         					data : JSON.stringify({
                                                "title" : "myname",
-                                               "name" : "sup"
+                                               "description" : "sup"
                                            }),
         					dataType : 'json',
+        					async : true,
         					success : function(result) {
         						if (result.status == "success") {
         							$("#postResultDiv").html(

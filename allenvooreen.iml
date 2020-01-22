@@ -23,7 +23,7 @@
     <orderEntry type="library" name="Maven: net.bytebuddy:byte-buddy:1.10.4" level="project" />
     <orderEntry type="library" name="Maven: net.bytebuddy:byte-buddy-agent:1.10.4" level="project" />
     <orderEntry type="library" name="Maven: org.objenesis:objenesis:2.6" level="project" />
-    <orderEntry type="library" name="Maven: com.h2database:h2:1.4.200" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: com.h2database:h2:1.4.194" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-data-jpa:2.2.2.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-aop:2.2.2.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.aspectj:aspectjweaver:1.9.5" level="project" />
@@ -120,7 +120,6 @@
     <orderEntry type="library" name="Maven: org.webjars:momentjs:2.5.0" level="project" />
     <orderEntry type="library" name="Maven: org.webjars:tempusdominus-bootstrap-4:5.1.2" level="project" />
     <orderEntry type="library" name="Maven: org.webjars.bower:moment:2.24.0" level="project" />
-    <orderEntry type="library" name="Maven: org.projectlombok:lombok:1.18.10" level="project" />
     <orderEntry type="library" name="Maven: org.webjars:jquery:3.4.1" level="project" />
     <orderEntry type="library" name="Maven: org.webjars:font-awesome:4.7.0" level="project" />
     <orderEntry type="library" name="Maven: org.webjars:bootstrap:4.4.1" level="project" />

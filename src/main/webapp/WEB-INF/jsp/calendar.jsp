@@ -137,5 +137,6 @@
     </div><!-- /.modal -->
 </form:form>
   <jsp:include page="home.jsp" />
+
 </body>
 </html>

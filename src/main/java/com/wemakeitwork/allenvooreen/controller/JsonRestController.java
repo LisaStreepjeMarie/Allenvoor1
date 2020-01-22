@@ -1,9 +1,14 @@
 package com.wemakeitwork.allenvooreen.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wemakeitwork.allenvooreen.model.Event;
 import com.wemakeitwork.allenvooreen.model.Team;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
+import com.wemakeitwork.allenvooreen.service.ServiceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 import java.util.List;
@@ -12,13 +17,14 @@ import java.util.stream.Collectors;
 @RestController
 public class JsonRestController {
 
+
     @Autowired
     TeamRepository teamRepository;
 
     @GetMapping("/calendar/json/{teamid}/{startdate}/{enddate}")
     public List<Event> getJsonEventListPeriod(@PathVariable("teamid") final Integer teamId,
                                               @PathVariable("startdate") final long startDateEpoch,
-                                              @PathVariable("enddate") final long endDateEpoch){
+                                              @PathVariable("enddate") final long endDateEpoch) {
 
         // Return events that occur in the timeperiod the fullcalendar view is currently watching (from one team)
         return teamRepository.getOne(teamId).getEventList().stream()
@@ -31,12 +37,13 @@ public class JsonRestController {
     }
 
     //TODO this doesn't work yet!
-    @RequestMapping(value = "/calendar/saveEventFromPost", headers ="content-type=application/json", method = RequestMethod.POST)
-    public List<Event> updatedList(@RequestBody String json) {
-        System.out.println("werkt dit zo?");
-        Team team = teamRepository.getOne(1);
-        return team.getEventList();
+    @PostMapping(value = "/calendar/saveEventFromPost", headers = "content-type=application/json")
+    public ResponseEntity<Object> addBook(@RequestBody String json) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        Event event = mapper.readValue(json, Event.class);
+        System.out.println(event.getEventComment());
+        ServiceResponse<Event> response = new ServiceResponse<Event>("success", event);
+        return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
-
 
 }
