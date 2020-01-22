@@ -26,12 +26,9 @@ $(document).ready(function() {
         					async : true,
         					success : function(result) {
         						if (result.status == "success") {
-        							$("#postResultDiv").html(
-        									"" + result.data.bookName
-        											+ "Post Successfully! <br>"
-        											+ "---> Congrats !!" + "</p>");
+        						console.log("woop woop")
         						} else {
-        							$("#postResultDiv").html("<strong>Error</strong>");
+        							console.log("aw");
         						}
         						console.log(result);
         					},
