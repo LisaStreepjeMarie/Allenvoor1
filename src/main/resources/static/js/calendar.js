@@ -7,17 +7,12 @@ $(document).ready(function() {
         hideAll();
         function ajaxPost() {
 
-
-
         				// Manier om een object te maken en door te geven
 //        				var event = {
 //         					name : $("#eventName").val(),
 //         					title : $("#eventComment").val(),
 //         					start : $("#eventStartDate").val()
 //        				}
-
-                        var token = document.getElementsByName("csrfToken").value;
-
         				// DO POST
         				$.ajax({
         				    url : "saveEventFromPost",

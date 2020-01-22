@@ -35,7 +35,6 @@ public class JsonRestController {
     public List<Event> updatedList(@RequestBody String json) {
         System.out.println("werkt dit zo?");
         Team team = teamRepository.getOne(1);
-
         return team.getEventList();
     }
 
