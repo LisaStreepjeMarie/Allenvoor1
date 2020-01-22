@@ -5,46 +5,7 @@ $(document).ready(function() {
         var token = $('#csrfToken').attr('data-csrfToken');
 
         hideAll();
-        function ajaxPost() {
 
-        				// Manier om een object te maken en door te geven
-//        				var event = {
-//         					name : $("#eventName").val(),
-//         					title : $("#eventComment").val(),
-//         					start : $("#eventStartDate").val()
-//        				}
-        				// DO POST
-        				$.ajaxSetup({
-                            beforeSend: function(xhr) {
-                                xhr.setRequestHeader('X-CSRF-TOKEN', token);
-                            }
-                        });
-        				$.ajax({
-        				    url : "saveEventFromPost",
-        					method : "POST",
-                            contentType : "application/json; charset=UTF-8",
-        					data : JSON.stringify({
-                                               "title" : "myname",
-                                               "description" : "sup"
-                                           }),
-        					dataType : 'json',
-        					async : true,
-        					success : function(result) {
-        						if (result.status == "success") {
-        						console.log("woop woop")
-        						} else {
-        							console.log("aw");
-        						}
-        						console.log(result);
-        					},
-        					error : function(e) {
-        						alert("Error!")
-        						console.log(event)
-        						console.log("ERROR: ", e);
-        					}
-        				});
-
-        			}
 
 
         <!-- this shows/hides the eventDone input field when the checkbox is toggled -->
@@ -90,7 +51,17 @@ $(document).ready(function() {
 
             <!-- This function is executed when an empty date/time is clicked -->
             select: function(start, end) {
-                ajaxPost();
+                $(".fc-highlight").css("background", "purple");
+                $('#modal-form').attr('action',"../event/new");
+                $('#save-change-event').attr('action',"../event/new");
+
+                $('.modal').find('#eventStartDate').val(start.format('DD-MM-YYYY H:mm'));
+                $('.modal').find('#eventEndDate').val(end.format('DD-MM-YYYY H:mm'));
+
+                document.getElementById("modal-title").innerHTML = "Maak nieuwe afspraak";
+                document.getElementById("save-change-event").innerHTML = "Maak afspraak";
+                $("#delete-event").hide();
+                $('.modal').modal('show');
             },
 
             <!-- This function is executed when an already planned event is clicked -->
@@ -248,3 +219,38 @@ $(document).ready(function() {
         return "";
     }
 
+    /* This function is not available from jsp if within $(document).ready(function() */
+    function saveEvent() {
+        $.ajaxSetup({
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('X-CSRF-TOKEN', $('#csrfToken').attr('data-csrfToken'));
+            }
+        });
+        $.ajax({
+            url : "saveEventFromPost",
+            method : "POST",
+            contentType : "application/json; charset=UTF-8",
+            data : JSON.stringify({
+                /* TODO: variable 'datedone', 'activity' (and maybe others) not available to write values into */
+               title: document.getElementById("eventName").value,
+               start: moment(document.getElementById("eventStartDate").value, "DD-MM-YYYY H:mm").toDate(),
+               end: moment(document.getElementById("eventEndDate").value, "DD-MM-YYYY H:mm").toDate(),
+               description: document.getElementById("eventComment").value,
+            }),
+            dataType : 'json',
+            async : true,
+            success : function(result) {
+                if (result.status == "success") {
+                console.log("woop woop")
+                } else {
+                    console.log("aw");
+                }
+                console.log(result);
+            },
+            error : function(e) {
+                alert("Error!")
+                console.log(event)
+                console.log("ERROR: ", e);
+            }
+        });
+    }

@@ -41,7 +41,10 @@ public class JsonRestController {
     public ResponseEntity<Object> addBook(@RequestBody String json) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         Event event = mapper.readValue(json, Event.class);
+        System.out.println(event.getEventName());
         System.out.println(event.getEventComment());
+        System.out.println(event.getEventStartDate());
+        System.out.println(event.getEventEndDate());
         ServiceResponse<Event> response = new ServiceResponse<Event>("success", event);
         return new ResponseEntity<Object>(response, HttpStatus.OK);
     }

@@ -32,7 +32,7 @@
 </head>
 
 <body>
-<form:form id="modal-form" action="${pageContext.request.contextPath}/event/change" modelAttribute="event" method="post">
+<form:form id="modal-form" modelAttribute="event" onclick="saveEvent()" method="post">
     <div class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
