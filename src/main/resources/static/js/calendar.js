@@ -1,4 +1,9 @@
 $(document).ready(function() {
+        /* variables passed from jsp */
+        var contextPath = $('#contextPathHolder').attr('data-contextPath');
+        var teamId = $('#teamId').attr('data-teamId');
+
+        console.log(teamId);
         hideAll();
         function ajaxPost() {
 
@@ -136,6 +141,15 @@ $(document).ready(function() {
                 revertFunc();
             },
 
+            // Distinct event colors based on activity.category
+            eventRender: function(event, element) {
+                if (typeof event.activity !== 'undefined') {
+                    if( event.activity.category == "Medisch") {
+                        element.css('background-color', '#000');
+                    }
+                }
+            },
+
             <!-- Remember last view on page reload. -->
             viewRender: function (view, element) {
                 localStorage.setItem("fcDefaultView", view.name);
@@ -148,7 +162,7 @@ $(document).ready(function() {
             events: function(start, end, timezone, callback) {
                 $.ajax({
                     type:'GET',
-                    url: 'json/1/' + start + '/' + end + '/',
+                    url: contextPath + '/calendar/json/' + teamId + '/' + start + '/' + end + '/',
                     dataType: 'json',
                     error: function (xhr, type, exception) { alert("Error: " + exception); },
                     success: function (response) {
@@ -159,6 +173,9 @@ $(document).ready(function() {
                                 title: response[i].title,
                                 start: response[i].start,
                                 end: response[i].end,
+                                activity: response[i].activity,
+                                //team: response[i].team, // Do we need the team object? team is already known,
+                                                          // It's what we queried the controller with...
                             });
                         }
                         callback(events);

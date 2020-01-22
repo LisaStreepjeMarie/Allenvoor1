@@ -3,19 +3,14 @@ package com.wemakeitwork.allenvooreen.controller;
 import com.wemakeitwork.allenvooreen.model.Event;
 import com.wemakeitwork.allenvooreen.model.Team;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
-import com.wemakeitwork.allenvooreen.service.ServiceResponse;
-import org.aspectj.weaver.ast.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class JsonRestController {
@@ -23,25 +18,19 @@ public class JsonRestController {
     @Autowired
     TeamRepository teamRepository;
 
-    @GetMapping(value = "/calendar/json/{team}/{startdate}/{enddate}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Event> getJsonEventListPeriod(@PathVariable("team") final Integer teamId,
+    @GetMapping("/calendar/json/{teamid}/{startdate}/{enddate}")
+    public List<Event> getJsonEventListPeriod(@PathVariable("teamid") final Integer teamId,
                                               @PathVariable("startdate") final long startDateEpoch,
                                               @PathVariable("enddate") final long endDateEpoch){
-        Team team = teamRepository.getOne(teamId);
 
-        Date startDate = new Date(startDateEpoch);
-        Date endDate = new Date(endDateEpoch);
-        List<Event> eventListPeriod = new ArrayList<>();
-        List<Event> fullEventList = team.getEventList();
-
-        // Fill eventListPeriod with events in the timeperiod fullcalendar is asking for
-        for (Event event : fullEventList) {
-            if (event.getEventStartDate().after(startDate) && event.getEventEndDate().before(endDate)) {
-                eventListPeriod.add(event);
-            }
-        }
-
-        return eventListPeriod;
+        // Return events that occur in the timeperiod the fullcalendar view is currently watching (from one team)
+        return teamRepository.getOne(teamId).getEventList().stream()
+                // Filter events that occur after the startdate (of fullcalendars view)
+                .filter(x -> x.getEventStartDate().after(new Date(startDateEpoch)))
+                // Filter events that occur before the enddate (of fullcalendars view)
+                .filter(x -> x.getEventEndDate().before(new Date(endDateEpoch)))
+                // Return the filtered events
+                .collect(Collectors.toList());
     }
 
     //TODO this doesn't work yet!
