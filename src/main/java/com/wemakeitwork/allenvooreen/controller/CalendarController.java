@@ -44,14 +44,10 @@ public class CalendarController {
             teamList = member.get().getAllTeamsOfMemberSet();
         }
 
-        List<Medication> medicationList = team.getMedicationList();
-
         Event event = new Event();
         event.setActivity(new Activity());
         model.addAttribute("teamList", teamList);
         model.addAttribute("event", event);
-        model.addAttribute("medicationList", medicationList);
-
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         model.addAttribute("calendarData", mapper.writeValueAsString(team.getEventList()));
