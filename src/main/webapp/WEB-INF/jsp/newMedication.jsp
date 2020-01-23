@@ -8,20 +8,18 @@
         <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
 
         <!-- Add icon library -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="${pageContext.request.contextPath}/webjars/font-awesome/4.7.0/css/font-awesome.css" rel='stylesheet'>
         <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
-        <link href="../css/style.css" rel="stylesheet" type="text/css"/>
+        <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
         </head>
-        <body class="webpage">
-        <title>Medicatieoverzicht</title>
 
-</head>
     <title>Medicatieoverzicht</title>
-    <body class="webpage">
+        <body class="webpage">
     <!-- Navigation -->
                 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow sticky-top">
-                    <a class="navbar-brand"</a>
-                    <img class="mb-4" src='${pageContext.request.contextPath}/images/LogoAllenVoorEen.png' alt="" width="230" height="178"> </a>
+                    <a class="navbar-brand"</a><br><br><br>
+                    <a href="${pageContext.request.contextPath}/home">
+                    <img class="mb-4" src='${pageContext.request.contextPath}/images/LogoAllenVoorEen.png' alt="" width="133" height="114"> </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                           <span class="navbar-toggler-icon"></span>
                         </button>
@@ -33,7 +31,7 @@
                               </a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link" href='${pageContext.request.contextPath}/medication/${team.teamId}'> Medicatieoverzicht</a>
+                        <a class="nav-link" href='${pageContext.request.contextPath}/medication/${team.teamId}'><i class=" fa fa-medkit"></i> Medicatieoverzicht</a>
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" href='${pageContext.request.contextPath}/logout'><i class="fa fa-sign-out"></i> Logout</a>
@@ -41,9 +39,10 @@
                       </ul>
                     </div>
                 </nav>
-
     <div id="container">
     <header class= "masthead">
+    <br>
+    <div class="mt-3 col-12">
         <h1 class="font-weight-light">Voer medicatie voor ${team.teamName} in</h1>
         <br>
         <form:form action="${pageContext.request.contextPath}/medication/new" modelAttribute="medication">

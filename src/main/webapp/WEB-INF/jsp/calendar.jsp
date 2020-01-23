@@ -10,13 +10,13 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
 
-    <link href="${pageContext.request.contextPath}/webjars/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet" />
-    <link href="${pageContext.request.contextPath}/webjars/fullcalendar/3.9.0/fullcalendar.print.min.css" rel="stylesheet" media='print' />
     <script src="${pageContext.request.contextPath}/webjars/moment/2.24.0/min/moment.min.js"></script>
     <script src="${pageContext.request.contextPath}/webjars/jquery/3.4.1/jquery.slim.min.js"></script>
+
+    <link href="${pageContext.request.contextPath}/webjars/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet" />
+    <link href="${pageContext.request.contextPath}/webjars/fullcalendar/3.9.0/fullcalendar.print.min.css" rel="stylesheet" media='print' />
     <script src="${pageContext.request.contextPath}/webjars/fullcalendar/3.9.0/fullcalendar.min.js"></script>
     <script src="${pageContext.request.contextPath}/webjars/fullcalendar/3.9.0/locale/nl.js"></script>
-    <link href="${pageContext.request.contextPath}/webjars/font-awesome/4.7.0/css/font-awesome.css" rel='stylesheet'>
     <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
     <script src="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
@@ -30,16 +30,10 @@
         <!-- this shows/hides the eventDone input field when the checkbox is toggled -->
         $("#eventDone").change(function () {
             if(document.getElementById("eventDone").checked == true) {
-                    $("#eventDoneDateDiv").show()
-                    $('#eventDoneDate').attr('required', "true")
-                    $('#eventDoneDate').attr('name',"eventDoneDate")
+                    $("#datetimepickerDone").show()
             } else {
                     document.getElementById("eventDoneDate").removeAttribute("required");
-                    $("#eventDoneDateDiv").hide()
-
-                    <!-- set name of eventDoneDate to noEventDoneDate -->
-                    <!-- so the controller doesn't pick up the value (and will not write an empty value into java.util.Date) -->
-                    $('#eventDoneDate').attr('name',"noEventDoneDate");
+                    $("#datetimepickerDone").hide()
             }
         });
 
@@ -76,10 +70,13 @@
 
             <!-- This function is executed when an empty date/time is clicked -->
             select: function(start, end) {
+                $(".fc-highlight").css("background", "purple");
+
                 $('#modal-form').attr('action',"${pageContext.request.contextPath}/event/new");
                 $('#save-change-event').attr('action',"${pageContext.request.contextPath}/event/new");
-                $('.modal').find('#eventStartDate').val(start);
-                $('.modal').find('#eventEndDate').val(end);
+
+                $('.modal').find('#eventStartDate').val(start.format('DD-MM-YYYY H:mm'));
+                $('.modal').find('#eventEndDate').val(end.format('DD-MM-YYYY H:mm'));
 
                 document.getElementById("modal-title").innerHTML = "Maak nieuwe afspraak";
                 document.getElementById("save-change-event").innerHTML = "Maak afspraak";
@@ -107,8 +104,8 @@
                 fillingTheModal();
                 showMedicationAmount(event, element);
 
-                $('.modal').find('#eventStartDate').val(event.start);
-                $('.modal').find('#eventEndDate').val(event.end);
+                $('.modal').find('#eventStartDate').val(event.start.format('DD-MM-YYYY H:mm'));
+                $('.modal').find('#eventEndDate').val(event.end.format('DD-MM-YYYY H:mm'));
 
                 <!-- redefines the modal (popup) buttons with the appropriate button text -->
                 document.getElementById("modal-title").innerHTML = "Wijzig of verwijder afspraak";
@@ -131,6 +128,13 @@
                 revertFunc();
             },
 
+            // Distinct event colors based on activity.category
+            eventRender: function(event, element) {
+                if(event.activity.category == "Medisch") {
+                    element.css('background-color', '#000');
+                }
+            },
+
             <!-- Remember last view on page reload. -->
             viewRender: function (view, element) {
                 localStorage.setItem("fcDefaultView", view.name);
@@ -146,16 +150,13 @@
 
         <!-- These functions load the start, end & done date calendars (datetimepickers) in the modal (popup). -->
         $('#datetimepickerStart').datetimepicker({
-            useCurrent: false,
-            format: 'MM/DD/YYYY HH:mm'
+            format: 'DD-MM-YYYY HH:mm'
         });
         $('#datetimepickerEnd').datetimepicker({
-            useCurrent: false,
-            format: 'MM/DD/YYYY HH:mm'
+            format: 'DD-MM-YYYY HH:mm'
         });
         $('#datetimepickerDone').datetimepicker({
-            useCurrent: false,
-            format: 'MM/DD/YYYY HH:mm'
+            format: 'DD-MM-YYYY HH:mm'
         });
         $("#datetimepickerStart").on("change.datetimepicker", function (e) {
             $('#datetimepickerEnd').datetimepicker('minDate', e.date);
@@ -164,21 +165,23 @@
             $('#datetimepickerStart').datetimepicker('maxDate', e.date);
         });
         $('#datetimepickerDone').datetimepicker();
+
     });
 
 <!-- below function shows the correct modal form based on the activity selection -->
     function activitySelection() {
         if ($("#selectie").val() === "Medisch") {
-            $("#ShowDates, #ShowEventName, #medicationActivity").show();
+            $("#eventNameDiv, #eventDateStartEndDiv, #medicationChoiceDiv, #takenMedicationDiv, #eventDatesDiv").show();
         } else {
-            $("#ShowDates, #ShowEventName, #eventActivity").show();
+            $("#eventNameDiv, #eventDateStartEndDiv, #eventDatesDiv, #eventCommentDiv").show();
         }
+        $("#datetimepickerDone").hide();
         $("#eventDoneDiv").css("display", "");
     }
 
 <!-- below function hides all modal options -->
     function hideAll() {
-        $("#eventActivity, #medicationActivity ").css("display", "none");
+        $("#eventNameDiv, #eventCommentDiv, #medicationChoiceDiv, #eventDatesDiv, #takenMedicationDiv").css("display", "none");
     }
 
     function showMedicationAmount(event, element){
@@ -188,10 +191,13 @@
 
 <!-- below function fills the modal with event info if it exist -->
     function fillingTheModal() {
-        if ($('.modal').find('#selectie').val() == "Medisch")
-            $("#ShowDates, #ShowEventName, #medicationActivity, #eventDoneDiv").show();
-        else
-            $("#ShowDates, #ShowEventName, #eventActivity, #eventDoneDiv").show();
+        if ($('.modal').find('#selectie').val() == "Medisch") {
+            $("#eventNameDiv, #eventDateStartEndDiv, #medicationChoiceDiv, #takenMedicationDiv, #eventDatesDiv").show();
+        } else {
+            $("#eventNameDiv, #eventDateStartEndDiv, #eventDatesDiv, #eventCommentDiv").show();
+        }
+        $("#datetimepickerDone").hide();
+        $("#eventDoneDiv").css("display", "");
     }
      </script>
 </head>
@@ -207,18 +213,19 @@
                 </div>
 
                 <!-- select below decides the input fields for event -->
+                <span>
                 <div class="modal-body">
-                    <div class="modal-body">
+                    <div class="modal-body ">
                         <div class="row">
                             <label class="col-4" for="selectie" control-label>Categorie</label>
-                            <select name="activity.activityCategory" id="selectie" >
+                            <select name="activity.activityCategory" id="selectie" style="width:13.2em;" >
                             <option disabled selected="selected">Selecteer categorie</option>
                                 <option value="Vrije tijd" >Vrije tijd</option>
                                 <option value="Medisch">Medisch</option>
                             </select>
                         </div>
                     </div>
-                    <div class="modal-body" id="ShowEventName">
+                    <div class="modal-body" id="eventNameDiv">
                         <div class="row">
                             <label class="col-4" for="eventName">Onderwerp</label>
                             <input type="text" name="eventName" id="eventName" />
@@ -228,7 +235,7 @@
                     </div>
 
                     <!-- event with activity modal input fields -->
-                    <div class="modal-body" id="eventActivity">
+                    <div class="modal-body" id="eventCommentDiv">
                         <div class="row">
                             <label class="col-4" for="eventComment">Beschrijving</label>
                             <input type="text" name="eventComment" id="eventComment" />
@@ -236,7 +243,7 @@
                     </div>
 
                     <!-- event with MedicationActivity modal input fields -->
-                    <div class="modal-body" id="medicationActivity">
+                    <div class="modal-body" id="medicationChoiceDiv">
                         <div class="row">
                            <label class="col-4" for="selectie2" control-label>Medicijn</label>
                            <select name="medication.medicationId" id="selectie2" >
@@ -247,7 +254,7 @@
                            </select>
                         </div>
                     </div>
-                    <div class="modal-body" id="medicationActivity">
+                    <div class="modal-body" id="takenMedicationDiv">
                         <div class="row">
                             <label class="col-4" for="takenMedication" control-label>Hoeveelheid</label>
                             <input type="number" name="takenMedication" id="takenMedication" />
@@ -255,12 +262,12 @@
                     </div>
                 </div>
 
-                <div class="modal-body" id="ShowDates">
+                <div class="modal-body" id="eventDatesDiv">
                     <div class="form-group">
                         <div class="input-group date" id="datetimepickerStart" data-target-input="nearest">
                             <label class="col-4" for="eventStartDate">Starttijd </label>
                             <input id="eventStartDate" name="eventStartDate" type="text" class="form-control datetimepicker-input" data-target="#datetimepickerStart"/>
-                            <div class="input-group-append" data-target="#datetimepickerStart" data-toggle="datetimepicker">
+                            <div class="input-group-append" style="width:8.3vw;" data-target="#datetimepickerStart" data-toggle="datetimepicker">
                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                             </div>
                         </div>
@@ -269,35 +276,28 @@
                         <div class="input-group date" id="datetimepickerEnd" data-target-input="nearest">
                             <label class="col-4" for="eventEndDate">Eindtijd </label>
                             <input id="eventEndDate" name="eventEndDate" type="text" class="form-control datetimepicker-input" data-target="#datetimepickerEnd"/>
-                            <div class="input-group-append" data-target="#datetimepickerEnd" data-toggle="datetimepicker">
+                            <div class="input-group-append" style="width:8.3vw;"  data-target="#datetimepickerEnd" data-toggle="datetimepicker">
                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-body" >
                         <div class="modal-body" >
-                            <div class="row">
+                            <div class="row" id="eventDoneDiv">
                                 <label class="col-xs-4" for="eventDone">Afspraak al uitgevoerd?&nbsp;</label>
                                 <input type="checkbox" id="eventDone" name="eventDone"/>
                             </div>
-                            <div class="row" id="eventDoneDateDiv">
-                                <!-- >div class="col-xs-12"> -->
-                                        <!-- <span style="margin-left:2em"> -->
-                                            <div class="form-group">
-                                            <div class="input-group date" id="datetimepickerDone" data-target-input="nearest">
-                                                <label class="col-xs-4" for="eventDoneDate">Op datum</label>
-                                                <input id="eventDoneDate" name="noEventDoneDate" type="text" class="form-control datetimepicker-input" data-target="#datetimepickerDone"/>
-                                                <div class="input-group-append" data-target="#datetimepickerDone" data-toggle="datetimepicker">
-                                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- </span> -->
-                                <!-- </div> -->
+                            <div class="row input-group date" id="datetimepickerDone" data-target-input="nearest">
+                                <label class="col-xs-4" for="eventDoneDate">Op datum</label>
+                                <input id="eventDoneDate" name="eventDoneDate" type="text" class="form-control datetimepicker-input" data-target="#datetimepickerDone"/>
+                                <div class="input-group-append" style="width:8.3vw;" data-target="#datetimepickerDone" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                    </span>
                 <div class="modal-footer">
                     <button type="button" id="delete-event" class="btn btn-danger" data-dismiss="modal" >Verwijder Afspraak</button>
                     <button type="button" class="btn btn-light" data-dismiss="modal">Sluiten</button>
@@ -309,12 +309,5 @@
     </div><!-- /.modal -->
 </form:form>
   <jsp:include page="home.jsp" />
-<c:if test="${not empty team.teamName}">
-    <div class="badge badge-primary text-wrap" style="width: 45rem; height: 4rem; margin-left:308px;">
-        <p>
-        <h5>Agenda van de groep: ${team.teamName}</h5>
-        </p>
-    </div>
-</c:if>
 </body>
 </html>

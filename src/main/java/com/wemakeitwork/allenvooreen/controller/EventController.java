@@ -6,14 +6,18 @@ import com.wemakeitwork.allenvooreen.repository.EventRepository;
 import com.wemakeitwork.allenvooreen.repository.MedicationRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
 
 @Controller
@@ -79,14 +83,20 @@ public class EventController {
 
 
 
+    // Allow empty string in datefield (i.e. write them as NULL to database)
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+    }
+
     @PostMapping("/event/new")
     protected String newEvent(@ModelAttribute("event") Event event, @ModelAttribute("medicationActivity")
             MedicationActivity medicationActivity, BindingResult result) {
         if (result.hasErrors()) {
             return "calendar";
-        }
-
-        else {
+        } else {
             Team team = (Team) httpSession.getAttribute("team");
             event.setTeam(team);
             event.getActivity().setActivityName(event.getEventName());
@@ -106,8 +116,9 @@ public class EventController {
     }
 
     @PostMapping("/event/change/{activityId}")
-    protected String changeEvent(@ModelAttribute("event") Event event, @ModelAttribute("medicationActivity") MedicationActivity
-                                 medicationActivity, @PathVariable("activityId") final Integer activityId, BindingResult result) {
+    protected String changeEvent(@ModelAttribute("event") Event event, BindingResult result,
+                                 @ModelAttribute("medicationActivity") MedicationActivity medicationActivity,
+                                 @PathVariable("activityId") final Integer activityId) {
         if (result.hasErrors()) {
             return "calendar";
         } else {
@@ -134,12 +145,10 @@ public class EventController {
                             assert ((MedicationActivity) x).getMedication() != null;
                             ((MedicationActivity) x).getMedication().removalActivityAddedAmount(((MedicationActivity) x).getTakenMedication());
                         });
-
             }
 
             event.getActivity().setActivityId(activityId);
             event.getActivity().setActivityName(event.getEventName());
-
             eventRepository.save(event);
             return "redirect:/calendar/" + team.getTeamId();
         }

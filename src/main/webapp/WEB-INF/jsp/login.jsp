@@ -10,34 +10,34 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <link rel="shortcut icon" href="${pageContext.request.contextPath}/images/favicon.ico" type="image/x-icon" />
-
         <title>Allenvooréén - Login pagina</title>
 
         <!-- Bootstrap core CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
+        <script src="${pageContext.request.contextPath}/webjars/jquery/3.4.1/jquery.slim.min.js"></script>
+        <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
+        <script src="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
         <!-- Custom styles for this template -->
-        <link href="/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
-        <link href="../css/style.css" rel="stylesheet" type="text/css"/>
-        <link href="https://getbootstrap.com/docs/4.0/examples/sign-in/signin.css" rel="stylesheet">
-
+        <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
     </head>
 
     <body class="text-center">
     <div class="container">
         <form class="form-signin" method="post" action="${pageContext.request.contextPath}/login">
             <img class="mb-4" src="${pageContext.request.contextPath}/images/LogoAllenVoorEen.png" alt="" width="300" height="228">
-            <h1 class="h3 mb-3 font-weight-normal">Log in:</h1>
+            <h1 class="h3 mb-3 font-weight-light">Log in:</h1>
 
             <c:if test="${param.error}">
-            <div class="alert alert-danger" role="alert">
-                Foute inloggegevens
-            </div>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Foute inloggegevens</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
             </c:if>
-
             <label for="username" class="sr-only">Gebruikersnaam</label>
             <input type="text" id="username" name="username" class="form-control" placeholder="Gebruikersnaam" required autofocus>
+            <br>
             <label for="password" class="sr-only">Wachtwoord</label>
             <input type="password" id="password" name="password" class="form-control" placeholder="Wachtwoord" required>
             <div class="checkbox mb-3">
@@ -50,12 +50,11 @@
         </form>
 
         <form class="form-signin" action="${pageContext.request.contextPath}/member/new">
-            <h1 class="h3 mb-3 font-weight-normal">Of registreer:</h1>
+            <h1 class="h3 mb-3 font-weight-light">Of registreer:</h1>
             <input name="_csrf" type="hidden" value="${_csrf.token}" />
             <button class="btn btn-lg btn-primary btn-block" type="submit">Registreer</button>
             <p class="mt-5 mb-3 text-muted">&copy; 2019 Allenvooreen</p>
         </form>
-    </div >
-
+      </div>
     </body>
 </html>
