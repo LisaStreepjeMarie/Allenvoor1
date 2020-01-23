@@ -48,5 +48,4 @@ public class JsonRestController {
         ServiceResponse<Event> response = new ServiceResponse<Event>("success", event);
         return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
-
 }

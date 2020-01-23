@@ -48,7 +48,6 @@ $(document).ready(function() {
             select: function(start, end) {
                 $(".fc-highlight").css("background", "purple");
 
-                $('#formDiv').attr('onclick', "updateEventInfo()");
                 $('#save-change-event').attr('onclick', "saveEvent()");
 
                 $('.modal').find('#eventStartDate').val(start.format('DD-MM-YYYY H:mm'));
@@ -198,9 +197,16 @@ $(document).ready(function() {
         $("#eventDoneDiv").css("display", "");
     }
 
-    var currentEvent;
-    function updateEventInfo(){
-         currentEvent = {
+
+    /* This function is not available from jsp if within $(document).ready(function() */
+    function saveEvent() {
+        $.ajaxSetup({
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('X-CSRF-TOKEN', $('#csrfToken').attr('data-csrfToken'));
+            }
+        });
+
+        currentEvent = {
             title: document.getElementById("eventName").value,
             start: moment(document.getElementById("eventStartDate").value, "DD-MM-YYYY H:mm").toDate(),
             end: moment(document.getElementById("eventEndDate").value, "DD-MM-YYYY H:mm").toDate(),
@@ -213,18 +219,6 @@ $(document).ready(function() {
                 id: $('#teamId').attr('data-teamId'),
             }
         }
-        console.log(currentEvent);
-        var token = $('#csrfToken').attr('data-csrfToken');
-        console.log(token);
-    }
-
-    /* This function is not available from jsp if within $(document).ready(function() */
-    function saveEvent() {
-        $.ajaxSetup({
-            beforeSend: function(xhr) {
-                xhr.setRequestHeader('X-CSRF-TOKEN', $('#csrfToken').attr('data-csrfToken'));
-            }
-        });
 
         $.ajax({
             url : "/allenvooreen/calendar/saveEventFromPost",
@@ -237,7 +231,7 @@ $(document).ready(function() {
                 console.log(result);
             },
             error : function(e) {
-                alert("Errorjisdoajasiodjsaio!")
+                alert("Error sending new event with AJAX!")
                 console.log(currentEvent)
                 console.log("ERROR: ", e);
             }
