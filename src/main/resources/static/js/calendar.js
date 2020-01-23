@@ -4,9 +4,7 @@ $(document).ready(function() {
         var teamId = $('#teamId').attr('data-teamId');
         var token = $('#csrfToken').attr('data-csrfToken');
 
-        hideAll();
-
-
+        hideAllModalInputFields();
 
         <!-- this shows/hides the eventDone input field when the checkbox is toggled -->
         $("#eventDone").change(function () {
@@ -20,14 +18,14 @@ $(document).ready(function() {
 
         <!-- below makes sure that the unwanted fields in the modal are hidden and calls the selection upon change -->
         $("#selectie").change(function () {
-            hideAll();
+            hideAllModalInputFields();
             activitySelection();
         });
 
         <!-- below cleans the modal upon closing -->
         $('#modal-form').on("hide.bs.modal", function() {
             $('#modal-form').trigger("reset");
-            hideAll();
+            hideAllModalInputFields();
         });
 
         $('#calendar').fullCalendar({
@@ -98,14 +96,12 @@ $(document).ready(function() {
                 $('.modal').modal('show');
             },
 
-            eventDragStop: function(info) {
+            eventDragStop: function(event, info) {
+                console.log(event.title + " was dragged to start: " + event.start.format() + " and end: " + event.end.format());
             },
 
-            <!-- This function is executed when an event was resized, not yet implemented -->
-            eventResize: function(event, delta, revertFunc) {
-                alert(event.title + " end is now " + event.end.format());
-
-                revertFunc();
+            eventResize: function(event, delta) {
+                console.log(event.title + " was resized to start: " + event.start.format() + " and end: " + event.end.format());
             },
 
             // Distinct event colors based on activity.category
@@ -186,7 +182,7 @@ $(document).ready(function() {
     }
 
 <!-- below function hides all modal options -->
-    function hideAll() {
+    function hideAllModalInputFields() {
         $("#eventNameDiv, #eventCommentDiv, #medicationChoiceDiv, #eventDatesDiv, #takenMedicationDiv").css("display", "none");
     }
 
@@ -204,19 +200,6 @@ $(document).ready(function() {
         }
         $("#datetimepickerDone").hide();
         $("#eventDoneDiv").css("display", "");
-    }
-
-    function getCookie(c_name) {
-        if(document.cookie.length > 0) {
-            c_start = document.cookie.indexOf(c_name + "=");
-            if(c_start != -1) {
-                c_start = c_start + c_name.length + 1;
-                c_end = document.cookie.indexOf(";", c_start);
-                if(c_end == -1) c_end = document.cookie.length;
-                return unescape(document.cookie.substring(c_start,c_end));
-            }
-        }
-        return "";
     }
 
     /* This function is not available from jsp if within $(document).ready(function() */
@@ -240,11 +223,6 @@ $(document).ready(function() {
             dataType : 'json',
             async : true,
             success : function(result) {
-                if (result.status == "success") {
-                console.log("woop woop")
-                } else {
-                    console.log("aw");
-                }
                 console.log(result);
             },
             error : function(e) {
