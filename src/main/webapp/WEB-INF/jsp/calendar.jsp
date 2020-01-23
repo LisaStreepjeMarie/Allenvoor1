@@ -32,8 +32,7 @@
 </head>
 
 <body>
-<form:form id="modal-form" modelAttribute="event" onclick="saveEvent()" method="post">
-    <div class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal fade" tabindex="-1" role="dialog" id="formDiv">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -44,7 +43,7 @@
                 <!-- select below decides the input fields for event -->
                 <span>
                 <div class="modal-body">
-                    <div class="modal-body ">
+                    <div class="modal-body">
                         <div class="row">
                             <label class="col-4" for="activityCategory" control-label>Categorie</label>
                             <select name="activity.activityCategory" id="activityCategory" style="width:13.2em;" >
@@ -130,13 +129,11 @@
                 <div class="modal-footer">
                     <button type="button" id="delete-event" class="btn btn-danger" data-dismiss="modal" >Verwijder Afspraak</button>
                     <button type="button" class="btn btn-light" data-dismiss="modal">Sluiten</button>
-                    <form:errors path="eventName" cssClass="error" />
-                    <button type="submit" class="btn btn-primary" id="save-change-event">Maak afspraak</button>
+                    <button type="submit" class="btn btn-primary" onaction="" id="save-change-event">Maak afspraak</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-</form:form>
   <jsp:include page="home.jsp" />
 
 </body>

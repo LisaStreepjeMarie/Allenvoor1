@@ -47,8 +47,9 @@ $(document).ready(function() {
             <!-- This function is executed when an empty date/time is clicked -->
             select: function(start, end) {
                 $(".fc-highlight").css("background", "purple");
-                $('#modal-form').attr('action', ctx + "/calendar/saveEventFromPost");
-                $('#save-change-event').attr('action', ctx + "/calendar/saveEventFromPost");
+
+                $('#formDiv').attr('onclick', "updateEventInfo()");
+                $('#save-change-event').attr('onclick', "saveEvent()");
 
                 $('.modal').find('#eventStartDate').val(start.format('DD-MM-YYYY H:mm'));
                 $('.modal').find('#eventEndDate').val(end.format('DD-MM-YYYY H:mm'));
@@ -197,14 +198,9 @@ $(document).ready(function() {
         $("#eventDoneDiv").css("display", "");
     }
 
-    /* This function is not available from jsp if within $(document).ready(function() */
-    function saveEvent() {
-        $.ajaxSetup({
-            beforeSend: function(xhr) {
-                xhr.setRequestHeader('X-CSRF-TOKEN', $('#csrfToken').attr('data-csrfToken'));
-            }
-        });
-         var event = {
+    var currentEvent;
+    function updateEventInfo(){
+         currentEvent = {
             title: document.getElementById("eventName").value,
             start: moment(document.getElementById("eventStartDate").value, "DD-MM-YYYY H:mm").toDate(),
             end: moment(document.getElementById("eventEndDate").value, "DD-MM-YYYY H:mm").toDate(),
@@ -217,19 +213,32 @@ $(document).ready(function() {
                 id: $('#teamId').attr('data-teamId'),
             }
         }
+        console.log(currentEvent);
+        var token = $('#csrfToken').attr('data-csrfToken');
+        console.log(token);
+    }
+
+    /* This function is not available from jsp if within $(document).ready(function() */
+    function saveEvent() {
+        $.ajaxSetup({
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('X-CSRF-TOKEN', $('#csrfToken').attr('data-csrfToken'));
+            }
+        });
+
         $.ajax({
-            url : "saveEventFromPost",
+            url : "/allenvooreen/calendar/saveEventFromPost",
             method : "POST",
             contentType : "application/json; charset=UTF-8",
-            data : JSON.stringify(event),
+            data : JSON.stringify(currentEvent),
             dataType : 'json',
             async : true,
             success : function(result) {
                 console.log(result);
             },
             error : function(e) {
-                alert("Error!")
-                console.log(event)
+                alert("Errorjisdoajasiodjsaio!")
+                console.log(currentEvent)
                 console.log("ERROR: ", e);
             }
         });
