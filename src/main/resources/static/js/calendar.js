@@ -46,6 +46,10 @@ $(document).ready(function() {
 
             <!-- This function is executed when an empty date/time is clicked -->
             select: function(start, end) {
+
+                <!-- placeholder positie voor getMedication functie, moet in de modal gevuld worden denk ik -->
+                getMedication();
+
                 $(".fc-highlight").css("background", "purple");
 
                 $('#save-change-event').attr('onclick', "saveEvent()");
@@ -236,4 +240,25 @@ $(document).ready(function() {
                 console.log("ERROR: ", e);
             }
         });
+    }
+
+<!-- functie om de lijst te vullen met specifieke medicaties, moet nog aangepast worden voor med.id ipv med naam -->
+    function getMedication(){
+            $.ajax({
+                 type:'GET',
+                 url: '/allenvooreen/calendar/json/medications',
+                 dataType: 'json',
+                 success : function(result) {
+                         List = result
+                         $('#selectie2').empty();
+                         $('#selectie2').append('<option value="">Kies een medicatie</option>');
+                              for (i in List ) {
+                              $('#selectie2').append('<option value="' + List[i].medicationname + '">' + List[i].medicationname + '</option>');
+                     }
+                 },
+                 error : function(e) {
+                 alert("error Error ERROR!")
+                 console.log("ERROR: ", e);
+                  }
+          });
     }

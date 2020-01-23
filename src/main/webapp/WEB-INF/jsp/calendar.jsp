@@ -76,9 +76,6 @@
                            <label class="col-4" for="selectie2" control-label>Medicijn</label>
                            <select name="medication.medicationId" id="selectie2" >
                                <option disabled selected="selected">Kies een medicijn</option>
-                               <c:forEach var="medication" items="${medicationList}">
-                                   <option value="${medication.medicationId}">${medication.medicationName}</option>
-                               </c:forEach>
                            </select>
                         </div>
                     </div>

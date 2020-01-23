@@ -7,6 +7,7 @@ import com.wemakeitwork.allenvooreen.model.Activity;
 import com.wemakeitwork.allenvooreen.model.Event;
 import com.wemakeitwork.allenvooreen.model.Team;
 import com.wemakeitwork.allenvooreen.repository.EventRepository;
+import com.wemakeitwork.allenvooreen.model.Medication;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import com.wemakeitwork.allenvooreen.service.ServiceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,4 +63,11 @@ public class JsonRestController {
         ServiceResponse<Event> response = new ServiceResponse<Event>("success", event);
         return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
+
+    @GetMapping("/calendar/json/medications")
+    public List<Medication> getMedications() {
+        System.out.println("hello!!");
+        return teamRepository.getOne(1).getMedicationList();
+    }
+
 }
