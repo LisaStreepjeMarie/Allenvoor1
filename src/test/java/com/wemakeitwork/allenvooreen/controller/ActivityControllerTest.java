@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = ActivityController.class)
-class newActivityControllerTest {
+class ActivityControllerTest {
 
     @MockBean
     ActivityRepository activityRepository;
@@ -43,6 +43,14 @@ class newActivityControllerTest {
         mockMvc.perform(get("/activity/new"))
                 .andExpect(status().isOk())
                 .andExpect(forwardedUrl("/WEB-INF/jsp/newActivity.jsp"));
+    }
+
+    @Test
+    @WithMockUser(roles = "admin")
+    public void showTeams() throws Exception {
+        mockMvc.perform(get("/activity/all"))
+                .andExpect(status().isOk())
+                .andExpect(forwardedUrl("/WEB-INF/jsp/activityOverview.jsp"));
     }
 
     @Test

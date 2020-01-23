@@ -94,8 +94,7 @@ class MemberTest {
         //arrange
         Assertions.assertThat(testMember.getMemberName()).isEqualTo("testmember");
     }
-
-
+    
     @AfterEach
     void cleanUp(){
         testMember = null;
