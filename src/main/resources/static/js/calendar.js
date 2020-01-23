@@ -1,8 +1,5 @@
 $(document).ready(function() {
-        /* variables passed from jsp */
         var ctx = $('#contextPathHolder').attr('data-contextPath');
-        var teamId = $('#teamId').attr('data-teamId');
-        var token = $('#csrfToken').attr('data-csrfToken');
 
         hideAllModalInputFields();
 
@@ -125,7 +122,7 @@ $(document).ready(function() {
             events: function(start, end, timezone, callback) {
                 $.ajax({
                     type:'GET',
-                    url: ctx + '/calendar/json/' + teamId + '/' + start + '/' + end + '/',
+                    url: ctx + '/calendar/json/' + $('#teamId').attr('data-teamId') + '/' + start + '/' + end + '/',
                     dataType: 'json',
                     error: function (xhr, type, exception) { alert("Error: " + exception); },
                     success: function (response) {

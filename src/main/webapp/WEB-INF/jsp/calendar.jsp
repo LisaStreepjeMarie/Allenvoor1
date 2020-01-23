@@ -23,7 +23,7 @@
     <script src="${pageContext.request.contextPath}/webjars/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.js"></script>
     <link href="${pageContext.request.contextPath}/webjars/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.css" rel='stylesheet'>
 
-    <!-- variables passed to calendar.js -->
+    <!-- data attributes which calendar.js uses -->
     <link id="contextPathHolder" data-contextPath="${pageContext.request.contextPath}"/>
     <link id="teamId" data-teamId="${team.teamId}"/>
     <link id="csrfToken" data-csrfToken="${_csrf.token}"/>
