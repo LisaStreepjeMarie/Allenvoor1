@@ -14,6 +14,9 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
@@ -52,6 +55,16 @@ class ActivityControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(forwardedUrl("/WEB-INF/jsp/activityOverview.jsp"));
     }
+
+    @Test
+    @WithMockUser(roles = "admin")
+    public void deleteTeam() throws Exception {
+        mockMvc.perform(get("/activity/delete/{activityId}",1)
+                .contentType("text/plain"))
+                .andExpect(view().name("redirect:/activity/all"))
+                .andExpect(redirectedUrl("/activity/all"));
+    }
+
 
     @Test
     @WithMockUser(roles = "admin")
