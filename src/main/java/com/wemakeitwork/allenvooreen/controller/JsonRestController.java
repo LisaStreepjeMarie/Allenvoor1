@@ -1,9 +1,12 @@
 package com.wemakeitwork.allenvooreen.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wemakeitwork.allenvooreen.model.Activity;
 import com.wemakeitwork.allenvooreen.model.Event;
 import com.wemakeitwork.allenvooreen.model.Team;
+import com.wemakeitwork.allenvooreen.repository.EventRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import com.wemakeitwork.allenvooreen.service.ServiceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +20,11 @@ import java.util.stream.Collectors;
 @RestController
 public class JsonRestController {
 
-
     @Autowired
     TeamRepository teamRepository;
+
+    @Autowired
+    EventRepository eventRepository;
 
     @GetMapping("/calendar/json/{teamid}/{startdate}/{enddate}")
     public List<Event> getJsonEventListPeriod(@PathVariable("teamid") final Integer teamId,
@@ -40,11 +45,20 @@ public class JsonRestController {
     @PostMapping("/calendar/saveEventFromPost")
     public ResponseEntity<Object> addEvent(@RequestBody String json) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
+        JsonNode jsonNode = new ObjectMapper().readTree(json);
+
+        Activity activity = new Activity();
+        activity.setActivityName(jsonNode.get("activity").get("name").textValue());
+        activity.setActivityCategory(jsonNode.get("activity").get("category").textValue());
+        Team team = new Team();
+        team.setTeamId(jsonNode.get("team").get("id").intValue());
+
         Event event = mapper.readValue(json, Event.class);
-        System.out.println(event.getEventName());
-        System.out.println(event.getEventComment());
-        System.out.println(event.getEventStartDate());
-        System.out.println(event.getEventEndDate());
+        event.setActivity(activity);
+        event.setTeam(team);
+
+        eventRepository.save(event);
+
         ServiceResponse<Event> response = new ServiceResponse<Event>("success", event);
         return new ResponseEntity<Object>(response, HttpStatus.OK);
     }

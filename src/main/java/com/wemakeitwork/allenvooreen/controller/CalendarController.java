@@ -2,9 +2,7 @@ package com.wemakeitwork.allenvooreen.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.wemakeitwork.allenvooreen.model.*;
-import com.wemakeitwork.allenvooreen.repository.MedicationRepository;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +20,6 @@ import java.util.Set;
 public class CalendarController {
     @Autowired
     private HttpSession httpSession;
-
-    @Autowired
-    MedicationRepository medicationRepository;
 
     @Autowired
     MemberRepository memberRepository;
@@ -53,7 +48,6 @@ public class CalendarController {
         model.addAttribute("medicationList", medicationList);
 
         ObjectMapper mapper = new ObjectMapper();
-        mapper.enable(SerializationFeature.INDENT_OUTPUT);
         model.addAttribute("calendarData", mapper.writeValueAsString(team.getEventList()));
 
         return "calendar";

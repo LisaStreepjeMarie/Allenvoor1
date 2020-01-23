@@ -216,7 +216,7 @@ $(document).ready(function() {
                 category: document.getElementById("activityCategory").value,
             },
             team: {
-                id: $('#teamId').attr('data-teamId'),
+                id: parseInt($('#teamId').attr('data-teamId'), 10),
             }
         }
 
