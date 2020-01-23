@@ -14,7 +14,7 @@ $(document).ready(function() {
         });
 
         <!-- below makes sure that the unwanted fields in the modal are hidden and calls the selection upon change -->
-        $("#selectie").change(function () {
+        $("#activityCategory").change(function () {
             hideAllModalInputFields();
             activitySelection();
         });
@@ -47,8 +47,8 @@ $(document).ready(function() {
             <!-- This function is executed when an empty date/time is clicked -->
             select: function(start, end) {
                 $(".fc-highlight").css("background", "purple");
-                $('#modal-form').attr('action', ctx + "/event/new");
-                $('#save-change-event').attr('action', ctx + "/event/new");
+                $('#modal-form').attr('action', ctx + "/calendar/saveEventFromPost");
+                $('#save-change-event').attr('action', ctx + "/calendar/saveEventFromPost");
 
                 $('.modal').find('#eventStartDate').val(start.format('DD-MM-YYYY H:mm'));
                 $('.modal').find('#eventEndDate').val(end.format('DD-MM-YYYY H:mm'));
@@ -72,7 +72,7 @@ $(document).ready(function() {
                 $('#modal-form').attr('action', ctx + "/event/change/" + event.activity.id);
                 $('#save-change-event').attr('action', ctx + "/event/change");
                 $('.modal').find('#eventComment').val(event.description);
-                $('.modal').find('#selectie').val(event.activity.category);
+                $('.modal').find('#activityCategory').val(event.activity.category);
                 $('.modal').find('#eventName').val(event.title);
 
                 <!-- below shows the modal based on the event.activity.category -->
@@ -135,8 +135,6 @@ $(document).ready(function() {
                                 end: response[i].end,
                                 description: response[i].description,
                                 activity: response[i].activity,
-                                //team: response[i].team, // Do we need the team object? team is already known,
-                                                          // It's what we queried the controller with...
                             });
                         }
                         callback(events);
@@ -169,7 +167,7 @@ $(document).ready(function() {
 
 <!-- below function shows the correct modal form based on the activity selection -->
     function activitySelection() {
-        if ($("#selectie").val() === "Medisch") {
+        if ($("#activityCategory").val() === "Medisch") {
             $("#eventNameDiv, #eventDateStartEndDiv, #medicationChoiceDiv, #takenMedicationDiv, #eventDatesDiv").show();
         } else {
             $("#eventNameDiv, #eventDateStartEndDiv, #eventDatesDiv, #eventCommentDiv").show();
@@ -184,13 +182,13 @@ $(document).ready(function() {
     }
 
     function showMedicationAmount(event, element){
-        if ($('.modal').find('#selectie').val() == "Medisch")
+        if ($('.modal').find('#activityCategory').val() == "Medisch")
           $('.modal').find('#takenMedication').val(event.activity.takenmedication);
     }
 
 <!-- below function fills the modal with event info if it exist -->
     function fillingTheModal() {
-        if ($('.modal').find('#selectie').val() == "Medisch") {
+        if ($('.modal').find('#activityCategory').val() == "Medisch") {
             $("#eventNameDiv, #eventDateStartEndDiv, #medicationChoiceDiv, #takenMedicationDiv, #eventDatesDiv").show();
         } else {
             $("#eventNameDiv, #eventDateStartEndDiv, #eventDatesDiv, #eventCommentDiv").show();
@@ -206,17 +204,24 @@ $(document).ready(function() {
                 xhr.setRequestHeader('X-CSRF-TOKEN', $('#csrfToken').attr('data-csrfToken'));
             }
         });
+         var event = {
+            title: document.getElementById("eventName").value,
+            start: moment(document.getElementById("eventStartDate").value, "DD-MM-YYYY H:mm").toDate(),
+            end: moment(document.getElementById("eventEndDate").value, "DD-MM-YYYY H:mm").toDate(),
+            description: document.getElementById("eventComment").value,
+            activity: {
+                name: document.getElementById("eventName").value,
+                category: document.getElementById("activityCategory").value,
+            },
+            team: {
+                id: $('#teamId').attr('data-teamId'),
+            }
+        }
         $.ajax({
             url : "saveEventFromPost",
             method : "POST",
             contentType : "application/json; charset=UTF-8",
-            data : JSON.stringify({
-                /* TODO: variable 'datedone', 'activity' (and maybe others) not available to write values into */
-               title: document.getElementById("eventName").value,
-               start: moment(document.getElementById("eventStartDate").value, "DD-MM-YYYY H:mm").toDate(),
-               end: moment(document.getElementById("eventEndDate").value, "DD-MM-YYYY H:mm").toDate(),
-               description: document.getElementById("eventComment").value,
-            }),
+            data : JSON.stringify(event),
             dataType : 'json',
             async : true,
             success : function(result) {

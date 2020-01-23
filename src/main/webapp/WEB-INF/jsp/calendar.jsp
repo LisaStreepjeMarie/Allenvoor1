@@ -46,9 +46,9 @@
                 <div class="modal-body">
                     <div class="modal-body ">
                         <div class="row">
-                            <label class="col-4" for="selectie" control-label>Categorie</label>
-                            <select name="activity.activityCategory" id="selectie" style="width:13.2em;" >
-                            <option disabled selected="selected">Selecteer categorie</option>
+                            <label class="col-4" for="activityCategory" control-label>Categorie</label>
+                            <select name="activity.activityCategory" id="activityCategory" style="width:13.2em;" >
+                            <option disabled selected="activityCategory">Selecteer categorie</option>
                                 <option value="Vrije tijd" >Vrije tijd</option>
                                 <option value="Medisch">Medisch</option>
                             </select>
