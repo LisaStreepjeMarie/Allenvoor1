@@ -18,7 +18,7 @@
                 <input class="btn btn-primary" type="submit" value="Al je groepen" onclick="window.location='${pageContext.request.contextPath}/team/all';" />
                 <input class="btn btn-primary" type="submit" value="Logout" onclick="window.location='${pageContext.request.contextPath}/logout';" />
             </p>
-            <h1 class="font-weight-light">Overzicht groepen</h1>
+            <h1 class="font-weight-light">Mijn groepen</h1>
             <table>
                 <tr>
                     <td><h2 class="font-weight-light">Groep</h2></td>

@@ -37,7 +37,7 @@
                         <tr>
                             <td><c:out value="${member.memberName}" /></td>
                             <td><input class="btn btn-primary" type="submit" value="Verwijder"
-                                 onclick="window.location='${pageContext.request.contextPath}/member/delete/${teamId}+${member.memberId}'" /></td>
+                                 onclick="window.location='${pageContext.request.contextPath}/team${team.teamId}/deleteMember/${member.memberId}'" /></td>
                         </tr>
                         </c:forEach>
                     </td>

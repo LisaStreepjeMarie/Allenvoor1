@@ -101,21 +101,17 @@ public class TeamController {
         return "redirect:/team/all";
     }
 
-    @GetMapping("/member/deleteMember/{teamId}+{memberId}")
-    public String deleteMemberFromTeam(@PathVariable("teamId") final Integer teamId,
-                                       @PathVariable("memberId") final Integer memberId) {
-        Team team = teamRepository.getOne(teamId);
-        Member member = memberRepository.getOne(memberId);
-        System.out.println("memberID: "+ memberRepository.getOne(memberId));
-        // Set<Member> wegermee = new HashSet<>();
-        // wegermee.addAll(team.getAllMembersInThisTeamSet());
+    @GetMapping("/team{teamId}/deleteMember/{memberId}")
+    public String deleteMemberFromTeam(@PathVariable("teamId") final Integer teamId, Model model) {
+        /* System.out.println("Niets geprint?");
+        model.addAttribute("team", new Team());
+        Optional<Team> teamOpt = teamRepository.findById(teamId);
+        Team team;
+        team = teamOpt.orElseGet(Team::new);
+        model.addAttribute("team", team);
+        System.out.println("teamId: " + team);
 
-        // Optional<Member> RemoveMember = memberRepository.findById(memberId);
-        // for (Member member : wegermee){
-        member.removeTeamFromMember(team);
-        team.removeTeamMember(member);
-        // }
-        teamRepository.save(team);
+        teamRepository.save(team); */
         return "redirect:/team/select/{teamId}";
     }
 
