@@ -24,9 +24,6 @@ public class CalendarController {
     private HttpSession httpSession;
 
     @Autowired
-    MedicationRepository medicationRepository;
-
-    @Autowired
     MemberRepository memberRepository;
 
     @Autowired
@@ -43,6 +40,7 @@ public class CalendarController {
         if(member.isPresent()){
             teamList = member.get().getAllTeamsOfMemberSet();
         }
+
 
         List<Medication> medicationList = team.getMedicationList();
 
