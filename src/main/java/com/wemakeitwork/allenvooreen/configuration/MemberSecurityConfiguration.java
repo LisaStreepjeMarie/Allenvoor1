@@ -45,7 +45,6 @@ public class MemberSecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    //TODO csrf has been disabled for post ajax, maybe
     //Override default login page
     @Override
     protected void configure(HttpSecurity http) throws Exception {
