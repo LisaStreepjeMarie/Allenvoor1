@@ -31,7 +31,7 @@
                               </a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link" href='${pageContext.request.contextPath}/medication/${team.teamId}'> Medicatieoverzicht</a>
+                        <a class="nav-link" href='${pageContext.request.contextPath}/medication/${team.teamId}'><i class=" fa fa-medkit"></i> Medicatieoverzicht</a>
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" href='${pageContext.request.contextPath}/logout'><i class="fa fa-sign-out"></i> Logout</a>
