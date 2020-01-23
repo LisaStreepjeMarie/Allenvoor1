@@ -100,4 +100,31 @@ class ActivityControllerTest {
         Assertions.assertThat(formObject.getActivityName()).isEqualTo(activityname);
         Assertions.assertThat(formObject.getActivityCategory()).isEqualTo(activitycategory);
     }
+
+    @Test
+    @WithMockUser(roles = "admin")
+    public void saveOrUpdateActivity2() throws Exception {
+        String activityname = "test2";
+        String activitycategory = "test4";
+
+        mockMvc.perform(post("/activity/change")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                .param("activityName", activityname)
+                .param("activityCategory", activitycategory)
+                .flashAttr("activity", new Activity())
+                .with(csrf())
+        )
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/activity/all"))
+                .andExpect(redirectedUrl("/activity/all"));
+
+        ArgumentCaptor<Activity> formObjectArgument = forClass(Activity.class);
+        verify(activityRepository, times(1)).save(formObjectArgument.capture());
+        Mockito.verifyNoMoreInteractions(activityRepository);
+
+        Activity formObject = formObjectArgument.getValue();
+
+        Assertions.assertThat(formObject.getActivityName()).isEqualTo(activityname);
+        Assertions.assertThat(formObject.getActivityCategory()).isEqualTo(activitycategory);
+    }
 }
