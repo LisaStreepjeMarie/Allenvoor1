@@ -101,6 +101,24 @@ public class TeamController {
         return "redirect:/team/all";
     }
 
+    @GetMapping("/member/deleteMember/{teamId}+{memberId}")
+    public String deleteMemberFromTeam(@PathVariable("teamId") final Integer teamId,
+                                       @PathVariable("memberId") final Integer memberId) {
+        Team team = teamRepository.getOne(teamId);
+        Member member = memberRepository.getOne(memberId);
+        System.out.println("memberID: "+ memberRepository.getOne(memberId));
+        // Set<Member> wegermee = new HashSet<>();
+        // wegermee.addAll(team.getAllMembersInThisTeamSet());
+
+        // Optional<Member> RemoveMember = memberRepository.findById(memberId);
+        // for (Member member : wegermee){
+        member.removeTeamFromMember(team);
+        team.removeTeamMember(member);
+        // }
+        teamRepository.save(team);
+        return "redirect:/team/select/{teamId}";
+    }
+
     @PostMapping("/team/new")
     protected String saveOrUpdateTeam(HttpServletRequest request) {
         String teamName = request.getParameter("teamName");
@@ -144,4 +162,9 @@ public class TeamController {
             return "redirect:/team/select/" + teamMemberDTO.getTeamId();
         }
     }
+
+
+
+
+
 }

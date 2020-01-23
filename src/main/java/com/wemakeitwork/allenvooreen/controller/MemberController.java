@@ -76,24 +76,6 @@ public class MemberController {
         return "confirmLogout";
     }
 
-    @GetMapping("/member/delete/{teamId}+{memberId}")
-    public String deleteMemberFromTeam(@PathVariable("teamId") final Integer teamId,
-                                       @PathVariable("memberId") final Integer memberId) {
-        Team team = teamRepository.getOne(teamId);
-        Member member = memberRepository.getOne(memberId);
-        System.out.println("memberID: "+ memberRepository.getOne(memberId));
-        // Set<Member> wegermee = new HashSet<>();
-        // wegermee.addAll(team.getAllMembersInThisTeamSet());
-
-        // Optional<Member> RemoveMember = memberRepository.findById(memberId);
-        // for (Member member : wegermee){
-        member.removeTeamFromMember(team);
-        team.removeTeamMember(member);
-        // }
-        teamRepository.save(team);
-        return "redirect:/team/select/{teamId}";
-    }
-
     @PostMapping("/member/new")
     protected String saveOrUpdateMember(@ModelAttribute("member") @Valid Member member, BindingResult result) {
         System.out.println("is er output? " + member.getMemberName());
