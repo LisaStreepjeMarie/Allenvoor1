@@ -1,6 +1,6 @@
 $(document).ready(function() {
         /* variables passed from jsp */
-        var contextPath = $('#contextPathHolder').attr('data-contextPath');
+        var ctx = $('#contextPathHolder').attr('data-contextPath');
         var teamId = $('#teamId').attr('data-teamId');
         var token = $('#csrfToken').attr('data-csrfToken');
 
@@ -50,8 +50,8 @@ $(document).ready(function() {
             <!-- This function is executed when an empty date/time is clicked -->
             select: function(start, end) {
                 $(".fc-highlight").css("background", "purple");
-                $('#modal-form').attr('action',"../event/new");
-                $('#save-change-event').attr('action',"../event/new");
+                $('#modal-form').attr('action', ctx + "/event/new");
+                $('#save-change-event').attr('action', ctx + "/event/new");
 
                 $('.modal').find('#eventStartDate').val(start.format('DD-MM-YYYY H:mm'));
                 $('.modal').find('#eventEndDate').val(end.format('DD-MM-YYYY H:mm'));
@@ -65,15 +65,15 @@ $(document).ready(function() {
             <!-- This function is executed when an already planned event is clicked -->
             eventClick: function(event, element) {
                 <!-- pass eventId to a simple <a href> link: -->
-                <!-- $('#deleteEvent').attr('href',"../event/delete/" + event.id); -->
+                <!-- $('#deleteEvent').attr('href', ctx + "/event/delete/" + event.id); -->
 
                 <!-- redefines the onclick action of the delete-event button, so that it will point the browser -->
                 <!-- to the /event/delete/{eventId}/{activityId} mapping -->
-                $('#delete-event').attr('onclick',"window.location='../event/delete/" + event.id + "/" + event.activity.id + "'");
+                $('#delete-event').attr('onclick',"window.location='" + ctx + "/event/delete/" + event.id + "/" + event.activity.id + "'");
 
                 $("#eventId").val(event.id);
-                $('#modal-form').attr('action',"../event/change/" + event.activity.id);
-                $('#save-change-event').attr('action',"../event/change");
+                $('#modal-form').attr('action', ctx + "/event/change/" + event.activity.id);
+                $('#save-change-event').attr('action', ctx + "/event/change");
                 $('.modal').find('#eventComment').val(event.description);
                 $('.modal').find('#selectie').val(event.activity.category);
                 $('.modal').find('#eventName').val(event.title);
@@ -125,7 +125,7 @@ $(document).ready(function() {
             events: function(start, end, timezone, callback) {
                 $.ajax({
                     type:'GET',
-                    url: contextPath + '/calendar/json/' + teamId + '/' + start + '/' + end + '/',
+                    url: ctx + '/calendar/json/' + teamId + '/' + start + '/' + end + '/',
                     dataType: 'json',
                     error: function (xhr, type, exception) { alert("Error: " + exception); },
                     success: function (response) {
