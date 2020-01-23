@@ -65,6 +65,14 @@ class ActivityControllerTest {
                 .andExpect(redirectedUrl("/activity/all"));
     }
 
+    @Test
+    @WithMockUser(roles = "admin")
+    public void showTeamData() throws Exception {
+        mockMvc.perform(get("/activity/select/{activityId}",1)
+                .contentType("text/plain"))
+                .andExpect(view().name("redirect:/activity/all"))
+                .andExpect(redirectedUrl("/activity/all"));
+    }
 
     @Test
     @WithMockUser(roles = "admin")
