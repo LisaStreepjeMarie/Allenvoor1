@@ -53,17 +53,18 @@
 <br>
 <div class= "row">
     <div class= "col-2">
-  <h2 class="dropdown-header"><strong>Welkom </strong></h2>
+  <h2 class="dropdown-header"><strong>Welkom</h2>
+  <br>
     <h2 class="dropdown-header"><strong>Kalender</strong> </h2>
        <c:forEach items="${teamList}" var="team">
           <tr>
-             <a class="dropdown-header" href='${pageContext.request.contextPath}/calendar/${team.teamId}'> Kalender ${team.teamName} </a>
+             <a class="dropdown-item" href='${pageContext.request.contextPath}/calendar/${team.teamId}'> Kalender ${team.teamName} </a>
            </c:forEach>
           </tr>
            <h2 class="dropdown-header"><strong> Medicatie </strong></h2>
            <c:forEach items="${teamList}" var="team">
               <tr>
-                 <a class="dropdown-header" href='${pageContext.request.contextPath}/medication/${team.teamId}'> Medicatie ${team.teamName} </a>
+                 <a class="dropdown-item" href='${pageContext.request.contextPath}/medication/${team.teamId}'> Medicatie ${team.teamName} </a>
                </c:forEach>
               </tr>
        </div>
