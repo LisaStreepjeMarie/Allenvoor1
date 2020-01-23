@@ -232,7 +232,7 @@ $(document).ready(function() {
             dataType : 'json',
             async : true,
             success : function(result) {
-                console.log(result);
+                $('#calendar').fullCalendar('refetchEvents');
             },
             error : function(e) {
                 alert("Error sending new event with AJAX!")
@@ -250,10 +250,10 @@ $(document).ready(function() {
                  dataType: 'json',
                  success : function(result) {
                          List = result
-                         $('#selectie2').empty();
-                         $('#selectie2').append('<option value="">Kies een medicatie</option>');
+                         $('#medicationChoice').empty();
+                         $('#medicationChoice').append('<option value="">Kies een medicatie</option>');
                               for (i in List ) {
-                              $('#selectie2').append('<option value="' + List[i].medicationname + '">' + List[i].medicationname + '</option>');
+                              $('#medicationChoice').append('<option value="' + List[i].medicationname + '">' + List[i].medicationname + '</option>');
                      }
                  },
                  error : function(e) {

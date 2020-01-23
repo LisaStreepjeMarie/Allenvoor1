@@ -73,8 +73,8 @@
                     <!-- event with MedicationActivity modal input fields -->
                     <div class="modal-body" id="medicationChoiceDiv">
                         <div class="row">
-                           <label class="col-4" for="selectie2" control-label>Medicijn</label>
-                           <select name="medication.medicationId" id="selectie2" >
+                           <label class="col-4" for="medicationChoice" control-label>Medicijn</label>
+                           <select name="medication.medicationId" id="medicationChoice" >
                                <option disabled selected="selected">Kies een medicijn</option>
                            </select>
                         </div>
