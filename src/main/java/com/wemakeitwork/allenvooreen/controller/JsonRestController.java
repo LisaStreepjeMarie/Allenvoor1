@@ -36,9 +36,9 @@ public class JsonRestController {
                 .collect(Collectors.toList());
     }
 
-    //TODO this doesn't work yet!
-    @PostMapping(value = "/calendar/saveEventFromPost", headers = "content-type=application/json")
-    public ResponseEntity<Object> addBook(@RequestBody String json) throws JsonProcessingException {
+    //TODO works but the event isn't saved
+    @PostMapping("/calendar/saveEventFromPost")
+    public ResponseEntity<Object> addEvent(@RequestBody String json) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         Event event = mapper.readValue(json, Event.class);
         System.out.println(event.getEventName());
