@@ -31,8 +31,9 @@ $(document).ready(function() {
         });
 
         // Cleans the modal upon closing
-        $('#modal-form').on("hide.bs.modal", function() {
-            $('#modal-form').trigger("reset");
+        $('.modal').on("hide.bs.modal", function() {
+            console.log("hij ziet deze functie")
+            $('#formID').trigger("reset");
             hideAllModalInputFields();
         });
 
@@ -240,6 +241,7 @@ function hideAllModalInputFields() {
     $("#eventNameDiv, #eventCommentDiv, #medicationChoiceDiv, #eventDatesDiv, #takenMedicationDiv").css("display", "none");
 }
 
+//this shows the medication amount when an excisting event is chosen
 function showMedicationAmount(event, element){
     if ($('.modal').find('#activityCategory').val() == "Medisch")
       $('.modal').find('#takenMedication').val(event.activity.takenmedication);
