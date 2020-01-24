@@ -136,7 +136,7 @@ table tr th {
 
 th, td {
 	font-size: 12pt;
-	vertical-align: middle;
+	vertical-align: top;
 	text-align: left;
 	line-height:135%;
 }
