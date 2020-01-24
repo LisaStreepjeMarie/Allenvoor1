@@ -227,8 +227,11 @@ function activitySelection() {
     if ($("#activityCategory").val() === "Medisch") {
     <!-- below function makes sure the medication is only loaded when the medical activity is chosen -->
         getMedication()
+        $('#eventComment').val("")
         $("#eventNameDiv, #eventDateStartEndDiv, #medicationChoiceDiv, #takenMedicationDiv, #eventDatesDiv").show();
     } else {
+        $('#takenMedication').val("")
+        $('#medicationChoice').empty()
         $("#eventNameDiv, #eventDateStartEndDiv, #eventDatesDiv, #eventCommentDiv").show();
     }
     $("#datetimepickerDone").hide();
