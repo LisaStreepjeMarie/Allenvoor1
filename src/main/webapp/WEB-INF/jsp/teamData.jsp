@@ -29,18 +29,24 @@
                         <input class="btn btn-primary" type="submit" value="Wijzig" />
                     </td>
                 </tr>
-                <tr>
-                     <td colspan="2">Groepsleden:</td>
-                </tr>
-                 <c:forEach items="${team.allMembersInThisTeamSet}" var="member">
-                 <tr>
-                     <td><c:out value="${member.memberName}" /></td>
-                     <td><input class="btn btn-primary" type="submit" value="Verwijder"
-                          onclick="window.location='${pageContext.request.contextPath}/team${team.teamId}/deleteMember/${member.memberId}'" /></td>
-                 </tr>
-                </c:forEach>
-             </table>
+            </table>
          </form:form>
+
+        <table>
+            <tr>
+                 <td colspan="2">Groepsleden:</td>
+            </tr>
+             <c:forEach items="${team.allMembersInThisTeamSet}" var="member">
+             <tr>
+                 <td><c:out value="${member.memberName}" />
+                    memberId: <c:out value="${member.memberId}" />
+                    teamId: <c:out value="${team.teamId}" /></td>
+                 <td><input class="btn btn-primary" type="submit" value="Verwijder"
+                      onclick="window.location='${pageContext.request.contextPath}/team${team.teamId}/deleteMember/${member.memberId}'" /></td>
+             </tr>
+            </c:forEach>
+         </table>
+
          <form:form action="${pageContext.request.contextPath}/team/addMember" modelAttribute="teamMemberDTO">
              <form:input path="teamId" type="hidden" />
                 <table>

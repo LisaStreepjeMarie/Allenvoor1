@@ -118,6 +118,7 @@ public class TeamController {
     @GetMapping("/team{teamId}/deleteMember/{memberId}")
     public String deleteMemberFromTeam(@PathVariable("teamId") final Integer teamId,
                                        @PathVariable("memberId") final Integer memberId) {
+        System.out.println("Niets geprint?");
         Team team = teamRepository.getOne(teamId);
         Member member = memberRepository.getOne(memberId);
         member.removeTeamFromMember(team);
@@ -146,6 +147,7 @@ public class TeamController {
         if (result.hasErrors()) {
             return "teamData";
         } else {
+            System.out.println("Dit geprint?");
             teamRepository.save(team);
             return "redirect:/team/all";
         }
