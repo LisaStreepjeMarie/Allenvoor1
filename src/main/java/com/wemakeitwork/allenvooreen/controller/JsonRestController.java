@@ -3,11 +3,8 @@ package com.wemakeitwork.allenvooreen.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wemakeitwork.allenvooreen.model.Activity;
-import com.wemakeitwork.allenvooreen.model.Event;
-import com.wemakeitwork.allenvooreen.model.Team;
+import com.wemakeitwork.allenvooreen.model.*;
 import com.wemakeitwork.allenvooreen.repository.EventRepository;
-import com.wemakeitwork.allenvooreen.model.Medication;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import com.wemakeitwork.allenvooreen.service.ServiceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +17,7 @@ import java.util.stream.Collectors;
 
 @RestController
 public class JsonRestController {
+    ObjectMapper mapper = new ObjectMapper();
 
     @Autowired
     TeamRepository teamRepository;
@@ -44,19 +42,10 @@ public class JsonRestController {
 
     @PostMapping("/calendar/new/event")
     public ResponseEntity<Object> addEvent(@RequestBody String json) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode jsonNode = new ObjectMapper().readTree(json);
 
-        Activity activity = new Activity();
-        activity.setActivityName(jsonNode.get("activity").get("name").textValue());
-        activity.setActivityCategory(jsonNode.get("activity").get("category").textValue());
-        Team team = new Team();
-        team.setTeamId(jsonNode.get("team").get("id").intValue());
+        System.out.println(json);
 
         Event event = mapper.readValue(json, Event.class);
-        event.setActivity(activity);
-        event.setTeam(team);
-
         eventRepository.save(event);
 
         ServiceResponse<Event> response = new ServiceResponse<Event>("success", event);
@@ -65,7 +54,6 @@ public class JsonRestController {
 
     @PostMapping("/calendar/change/eventdate")
     public ResponseEntity<Object> changeEventDate(@RequestBody String json) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
         Event newDates = mapper.readValue(json, Event.class);
 
         Event event = eventRepository.getOne(newDates.getEventId());

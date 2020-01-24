@@ -48,14 +48,14 @@ public class EventController {
                               @PathVariable("activityId") final Integer activityId) {
         Team team = (Team) httpSession.getAttribute("team");
 
-        Optional<Activity> activity = activityRepository.findById(activityId);
-
-        // If (a medical) event is deleted, takenMedication needs to be readded to amount of available medication. - HK
-        if (activity.get() instanceof MedicationActivity){
-            Medication medication = ((MedicationActivity) activity.get()).getMedication();
-            assert medication != null;
-            medication.removalActivityAddedAmount(((MedicationActivity) activity.get()).getTakenMedication());
-        }
+        // Stream to remove the taken amount from the medication if the event is deleted
+        activityRepository.findAll().stream()
+                .filter(x -> x.getActivityId() == activityId)
+                .filter(x -> x instanceof MedicationActivity)
+                .forEach(x -> {
+                    assert ((MedicationActivity) x).getMedication() != null;
+                    ((MedicationActivity) x).getMedication().removalActivityAddedAmount(((MedicationActivity) x).getTakenMedication());
+                });
 
         eventRepository.deleteById(eventId);
 
@@ -92,7 +92,7 @@ public class EventController {
             return "calendar";
         } else {
             Team team = (Team) httpSession.getAttribute("team");
-            event.setTeam(team);
+            event.setTeam((Team) httpSession.getAttribute("team"));
             event.getActivity().setActivityName(event.getEventName());
 
             if (event.getActivity().getActivityCategory().equals("Medisch")){

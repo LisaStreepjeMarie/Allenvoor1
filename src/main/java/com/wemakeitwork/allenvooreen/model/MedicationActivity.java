@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.math.BigDecimal;
 
 @Entity
 public class MedicationActivity extends Activity{
@@ -22,6 +23,7 @@ public class MedicationActivity extends Activity{
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "medicationId", referencedColumnName = "medicationId")
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonProperty("medication")
     private Medication medication;
 
     public MedicationActivity() {

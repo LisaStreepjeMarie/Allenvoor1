@@ -268,9 +268,13 @@ function saveNewEvent() {
         end: moment(document.getElementById("eventEndDate").value, "DD-MM-YYYY H:mm").toDate(),
         description: document.getElementById("eventComment").value,
         activity: {
+            medication: {
+                    medicationname: "paracetamol",
+                },
             name: document.getElementById("eventName").value,
             category: document.getElementById("activityCategory").value,
-        },
+            takenmedication: document.getElementById("takenMedication").value,
+            },
         team: {
             id: parseInt($('#teamId').attr('data-teamId'), 10),
         }
@@ -307,7 +311,7 @@ function getMedication(){
                      $('#medicationChoice').empty();
                      $('#medicationChoice').append('<option value="">Kies een medicatie</option>');
                      for (i in List ) {
-                        $('#medicationChoice').append('<option value="' + List[i].medicationname + '">' + List[i].medicationname + '</option>');
+                        $('#medicationChoice').append('<option value="' + List[i].id + '">' + List[i].medicationname + '</option>');
                      }
                  },
                  error : function(e) {
