@@ -23,7 +23,9 @@
 
     <body class="text-center">
         <div class="container">
-            <img class="mb-4" src="${pageContext.request.contextPath}/images/LogoAllenVoorEen.png" alt="" width="300" height="228">
+            <form class="form-signin" method="post" action="${pageContext.request.contextPath}/member/new">
+            <a href="${pageContext.request.contextPath}/home">
+            <img class="mb-4" src="${pageContext.request.contextPath}/images/LogoAllenVoorEen.png" alt="" width="300" height="228"></a>
                 <h1 class="h3 mb-3 font-weight-light"><strong>Nieuw?</strong><br> Maak een account:</h1>
 
         <form:form action="${pageContext.request.contextPath}/member/new" modelAttribute="member">
