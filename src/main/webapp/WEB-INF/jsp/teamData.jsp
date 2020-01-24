@@ -32,25 +32,21 @@
                                   onclick="window.location='${pageContext.request.contextPath}/team${team.teamId}/deleteMember/${member.memberId}'" /></td>
                          </tr>
                         </c:forEach>
-                     </table>
 
-                     <form:form action="${pageContext.request.contextPath}/team/addMember" modelAttribute="teamMemberDTO">
-                         <form:input path="teamId" type="hidden" />
-                            <table>
+                        <form:form action="${pageContext.request.contextPath}/team/addMember" modelAttribute="teamMemberDTO">
+                            <form:input path="teamId" type="hidden" />
                             <tr>
                                 <td>Nieuw groepslid:</td>
                                 <td>
-                                   <form:input path="teamMemberName" /></form>
+                                   <form:input size="30" path="teamMemberName" /></form>
                                    <input class="btn btn-primary" type="submit" value="Wijzig" />
                                 </td>
                             </tr>
-                        </table>
-                    </form:form>
+                        </form:form>
 
-                    <form:form action="${pageContext.request.contextPath}/team/change" modelAttribute="team">
-                    <form:input path="teamId" type="hidden" />
-                    <form:input path="allMembersInThisTeamSet" type="hidden" />
-                        <table>
+                        <form:form action="${pageContext.request.contextPath}/team/change" modelAttribute="team">
+                        <form:input path="teamId" type="hidden" />
+                        <form:input path="allMembersInThisTeamSet" type="hidden" />
                             <tr>
                                 <td>Groepsnaam:</td>
                                 <td>
@@ -58,8 +54,8 @@
                                     <input class="btn btn-primary" type="submit" value="Wijzig" />
                                 </td>
                             </tr>
-                        </table>
-                     </form:form>
+                        </form:form>
+                     </table>
                 </div>
             </div>
         </div>
