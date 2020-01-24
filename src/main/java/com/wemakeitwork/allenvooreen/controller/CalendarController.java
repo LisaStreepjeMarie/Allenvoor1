@@ -32,19 +32,8 @@ public class CalendarController {
             throws JsonProcessingException {
         Team team = teamRepository.getOne(teamId);
         httpSession.setAttribute("team", team);
-
-        Set<Team> teamList = null;
-        Optional<Member> member = memberRepository.findByMemberName(principal.getName());
-        if(member.isPresent()){
-            teamList = member.get().getAllTeamsOfMemberSet();
-        }
-
-        Event event = new Event();
-        event.setActivity(new Activity());
+        Set<Team> teamList = memberRepository.findByMemberName(principal.getName()).get().getAllTeamsOfMemberSet();
         model.addAttribute("teamList", teamList);
-        model.addAttribute("event", event);
-        ObjectMapper mapper = new ObjectMapper();
-        model.addAttribute("calendarData", mapper.writeValueAsString(team.getEventList()));
 
         return "calendar";
     }

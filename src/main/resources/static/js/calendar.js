@@ -258,7 +258,8 @@ $(document).ready(function() {
                  },
                  error : function(e) {
                  alert("error Error ERROR!")
-                 console.log("ERROR: ", e);
+                 con
+                 sole.log("ERROR: ", e);
                   }
           });
     }
