@@ -312,6 +312,6 @@ function saveNewEvent() {
                  alert("error Error ERROR!")
                  con
                  sole.log("ERROR: ", e);
-                  }
-          });
+              }
+        });
     }
