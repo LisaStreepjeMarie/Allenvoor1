@@ -6,73 +6,44 @@
 <html xmlns:form="http://www.w3.org/1999/xhtml" xmlns:c="">
 <head>
     <meta charset='utf-8' />
-    <title>Kalender</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Kalender</title>
 
     <!-- Add icon library -->
     <link href="${pageContext.request.contextPath}/webjars/font-awesome/4.7.0/css/font-awesome.css" rel='stylesheet'>
     <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
+
+    <%@ taglib prefix="mytags" tagdir="/WEB-INF/tags" %>
     </head>
 
     <body class= "webpage">
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow sticky-top">
-        <a class="navbar-brand"</a>
-        <br>
-        <br>
-        <br>
-        <a href="${pageContext.request.contextPath}/home">
-        <img class="mb-4" src='${pageContext.request.contextPath}/images/LogoAllenVoorEen.png' alt="" width="133" height="114"> </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-               <a class="nav-link" href='${pageContext.request.contextPath}/home'><i class="fa fa-home"></i> Home</a>
-                    <span class="sr-only">(current)</span>
-                  </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href='${pageContext.request.contextPath}/member/current'><i class="fa fa-user"></i> Mijn profiel</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href='${pageContext.request.contextPath}/team/all'><i class="fa fa-users"></i> Mijn groepen</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href='${pageContext.request.contextPath}/logout'><i class="fa fa-sign-out"></i> Logout</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-<header class= "masthead">
-<br>
-<div class= "row">
-    <div class= "col-2">
-  <h2 class="dropdown-header"><strong>Welkom</h2>
-  <br>
-    <h2 class="dropdown-header"><strong>Kalender</strong> </h2>
-       <c:forEach items="${teamList}" var="team">
-          <tr>
-             <a class="dropdown-item" href='${pageContext.request.contextPath}/calendar/${team.teamId}'> Kalender ${team.teamName} </a>
-           </c:forEach>
-          </tr>
-           <h2 class="dropdown-header"><strong> Medicatie </strong></h2>
-           <c:forEach items="${teamList}" var="team">
+        <mytags:navbar/>
+<div class= "masthead">
+    <div class= "row">
+        <div class= "col-2">
+            <h2 class="dropdown-header"><strong>Welkom</h2>
+            <br />
+            <h2 class="dropdown-header"><strong>Kalender</strong> </h2>
+            <c:forEach items="${teamList}" var="team">
               <tr>
-                 <a class="dropdown-item" href='${pageContext.request.contextPath}/medication/${team.teamId}'> Medicatie ${team.teamName} </a>
-               </c:forEach>
+                 <a class="dropdown-item" href='${pageContext.request.contextPath}/calendar/${team.teamId}'> Kalender ${team.teamName} </a>
               </tr>
-       </div>
-       <br>
-       <div class="col-8">
+            </c:forEach>
+            <h2 class="dropdown-header"><strong> Medicatie </strong></h2>
+            <c:forEach items="${teamList}" var="team">
+               <tr>
+                  <a class="dropdown-item" href='${pageContext.request.contextPath}/medication/${team.teamId}'> Medicatie ${team.teamName} </a>
+               </tr>
+            </c:forEach>
+        </div>
+        <br />
+        <div class="col-8">
            <div id="calendar" style="width: 45rem;"></div>
            <div id='datepicker'></div>
-       </div>
+        </div>
     </div>
 </div>
 </body>
