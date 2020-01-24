@@ -18,9 +18,9 @@
             <input class="btn btn-primary" type="submit" value="Logout" onclick="window.location='${pageContext.request.contextPath}/logout';" />
         </p>
         <h1 class="font-weight-light">Wijzig gegevens groep</h1>
-        <form:form action="${pageContext.request.contextPath}/team/change" modelAttribute="team">
+        <!-- <form:form action="${pageContext.request.contextPath}/team/change" modelAttribute="team">
         <form:input path="teamId" type="hidden" />
-        <form:input path="allMembersInThisTeamSet" type="hidden" />
+        <form:input path="allMembersInThisTeamSet" type="hidden" /> -->
             <table>
                 <tr>
                     <td>Groepsnaam:</td>
@@ -30,7 +30,7 @@
                     </td>
                 </tr>
             </table>
-         </form:form>
+         <!-- </form:form> -->
 
         <table>
             <tr>
