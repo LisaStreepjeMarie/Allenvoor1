@@ -25,7 +25,7 @@
     <div class="container">
         <form class="form-signin" method="post" action="${pageContext.request.contextPath}/login">
             <img class="mb-4" src="${pageContext.request.contextPath}/images/LogoAllenVoorEen.png" alt="" width="300" height="228">
-            <h1 class="h3 mb-3 font-weight-normal">Log in:</h1>
+
 
             <c:if test="${param.error}">
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -35,8 +35,6 @@
                     </button>
                 </div>
             </c:if>
-
-
             <label for="username" class="sr-only">Gebruikersnaam</label>
             <input type="text" id="username" name="username" class="form-control" placeholder="Gebruikersnaam" required autofocus>
             <br>
@@ -52,12 +50,10 @@
         </form>
 
         <form class="form-signin" action="${pageContext.request.contextPath}/member/new">
-            <h1 class="h3 mb-3 font-weight-normal">Of registreer:</h1>
             <input name="_csrf" type="hidden" value="${_csrf.token}" />
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Registreer</button>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Maak een account</button>
             <p class="mt-5 mb-3 text-muted">&copy; 2019 Allenvooreen</p>
         </form>
-    </div >
-
+      </div>
     </body>
 </html>

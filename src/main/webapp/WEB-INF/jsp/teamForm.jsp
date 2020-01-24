@@ -16,7 +16,8 @@
             <body>
             <nav class="navbar navbar-expand-lg navbar-light bg-light shadow sticky-top">
                 <a class="navbar-brand"</a><br><br><br>
-                <img class="mb-4" src='${pageContext.request.contextPath}/images/LogoAllenVoorEen.png' alt="" width="83" height="64"> </a>
+                <a href="${pageContext.request.contextPath}/home">
+                <img class="mb-4" src='${pageContext.request.contextPath}/images/LogoAllenVoorEen.png' alt="" width="133" height="114"> </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                       <span class="navbar-toggler-icon"></span>
                     </button>
@@ -41,6 +42,7 @@
         <div id="container">
           <header class= "masthead">
           <br>
+          <div class="mt-3 col-12">
 <h1 class="font-weight-light">Voeg gegevens groep toe</h1>
 
             <form:form action="${pageContext.request.contextPath}/team/new" modelAttribute="team">

@@ -15,7 +15,7 @@
     <link href="${pageContext.request.contextPath}/webjars/font-awesome/4.7.0/css/font-awesome.css" rel='stylesheet'>
     <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
-</head>
+    </head>
 
     <body class= "webpage">
     <!-- Navigation -->
@@ -24,7 +24,8 @@
         <br>
         <br>
         <br>
-        <img class="mb-4" src='${pageContext.request.contextPath}/images/LogoAllenVoorEen.png' alt="" width="83" height="64"> </a>
+        <a href="${pageContext.request.contextPath}/home">
+        <img class="mb-4" src='${pageContext.request.contextPath}/images/LogoAllenVoorEen.png' alt="" width="133" height="114"> </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
@@ -49,21 +50,21 @@
       </div>
     </nav>
 <header class= "masthead">
-
 <br>
 <div class= "row">
     <div class= "col-2">
-  <h2 class="dropdown-header"><strong>Welkom </strong></h2>
+  <h2 class="dropdown-header "><strong>Welkom</h2>
+  <br>
     <h2 class="dropdown-header"><strong>Kalender</strong> </h2>
        <c:forEach items="${teamList}" var="team">
           <tr>
-             <a class="dropdown-header" href='${pageContext.request.contextPath}/calendar/${team.teamId}'> Kalender ${team.teamName} </a>
+             <a class="dropdown-item" href='${pageContext.request.contextPath}/calendar/${team.teamId}'> Kalender ${team.teamName} </a>
            </c:forEach>
           </tr>
            <h2 class="dropdown-header"><strong> Medicatie </strong></h2>
            <c:forEach items="${teamList}" var="team">
               <tr>
-                 <a class="dropdown-header" href='${pageContext.request.contextPath}/medication/${team.teamId}'> Medicatie ${team.teamName} </a>
+                 <a class="dropdown-item" href='${pageContext.request.contextPath}/medication/${team.teamId}'> Medicatie ${team.teamName} </a>
                </c:forEach>
               </tr>
        </div>

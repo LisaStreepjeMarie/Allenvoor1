@@ -122,7 +122,6 @@ body {
 }
 
 #container {
-
 }
 
 table tr td, table tr th {
@@ -211,3 +210,23 @@ background-image: url('/allenvooreen/images/background.jpg');
 
 .navbar-nav > li > a {padding-top:5px !important; padding-bottom:5px !important;}
 .navbar {max-height:75px !important}
+
+
+.dropdown-header {
+    -webkit-font-smoothing: antialiased;
+    font-size: 12pt;
+    font-weight: normal;
+    color: #686666;
+    line-height: 135%;
+}
+
+
+.dropdown-item {
+    -webkit-font-smoothing: antialiased;
+    font-size: 11pt;
+    font-weight: normal;
+    color: #686666;
+    line-height: 135%;
+
+}
+
