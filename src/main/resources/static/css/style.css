@@ -170,6 +170,12 @@ h1 {
     color: #0e4171;
 }
 
+h2 {
+    font-family: $navbar-brand-font-family;
+    font-size: 16pt;
+    color: #0e4171;
+}
+
 .btn-primary {
     border-color: #641F11; background-color: #98639C;
 }
