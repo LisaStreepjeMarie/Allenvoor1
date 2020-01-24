@@ -262,22 +262,25 @@ function fillingTheModal() {
 
 function saveNewEvent() {
     // Fill the object currentEvent with values from input fields in the modal
-    currentEvent = {
+    event = {
         title: document.getElementById("eventName").value,
         start: moment(document.getElementById("eventStartDate").value, "DD-MM-YYYY H:mm").toDate(),
         end: moment(document.getElementById("eventEndDate").value, "DD-MM-YYYY H:mm").toDate(),
         description: document.getElementById("eventComment").value,
         activity: {
-            medication: {
-                    medicationname: "paracetamol",
-                },
             name: document.getElementById("eventName").value,
             category: document.getElementById("activityCategory").value,
-            takenmedication: document.getElementById("takenMedication").value,
             },
         team: {
             id: parseInt($('#teamId').attr('data-teamId'), 10),
         }
+    }
+
+    medicalActivity = {
+        medication: {
+            medicationname: document.getElementById("medicationChoice").value,
+            },
+        takenmedication: 2,
     }
 
     // Send the currentEvent object to the controller with an AJAX post
@@ -285,7 +288,7 @@ function saveNewEvent() {
         url: ctx + "/calendar/new/event",
         method: "POST",
         contentType: "application/json; charset=UTF-8",
-        data: JSON.stringify(currentEvent),
+        data: JSON.stringify(event, medicalActivity),
         dataType : 'json',
         async: true,
         success: function(result) {
