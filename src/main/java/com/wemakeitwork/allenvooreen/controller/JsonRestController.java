@@ -60,14 +60,15 @@ public class JsonRestController {
 
         eventRepository.save(event);
 
-        ServiceResponse<Event> response = new ServiceResponse<Event>("success", event);
+        ServiceResponse<Event> response = new ServiceResponse<>("success", event);
         return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/calendar/json/medications")
-    public List<Medication> getMedications() {
+    @GetMapping("/calendar/{teamid}/medications")
+    public ResponseEntity<Object> getMedications(@PathVariable("teamid") final Integer teamId) {
         System.out.println("hello!!");
-        return teamRepository.getOne(1).getMedicationList();
+        ServiceResponse<List<Medication>> response = new ServiceResponse<>("success", teamRepository.getOne(teamId).getMedicationList());
+        return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
 
 }

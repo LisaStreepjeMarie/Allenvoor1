@@ -47,9 +47,6 @@ $(document).ready(function() {
             <!-- This function is executed when an empty date/time is clicked -->
             select: function(start, end) {
 
-                <!-- placeholder positie voor getMedication functie, moet in de modal gevuld worden denk ik -->
-                getMedication();
-
                 $(".fc-highlight").css("background", "purple");
 
                 $('#save-change-event').attr('onclick', "saveEvent()");
@@ -172,6 +169,8 @@ $(document).ready(function() {
 <!-- below function shows the correct modal form based on the activity selection -->
     function activitySelection() {
         if ($("#activityCategory").val() === "Medisch") {
+        <!-- below function makes sure the medication is only loaded when the medical activity is chosen -->
+            getMedication()
             $("#eventNameDiv, #eventDateStartEndDiv, #medicationChoiceDiv, #takenMedicationDiv, #eventDatesDiv").show();
         } else {
             $("#eventNameDiv, #eventDateStartEndDiv, #eventDatesDiv, #eventCommentDiv").show();
@@ -246,10 +245,10 @@ $(document).ready(function() {
     function getMedication(){
             $.ajax({
                  type:'GET',
-                 url: '/allenvooreen/calendar/json/medications',
+                 url: '/allenvooreen/calendar/' + $('#teamId').attr('data-teamId') + '/medications',
                  dataType: 'json',
                  success : function(result) {
-                         List = result
+                         List = result.data
                          $('#medicationChoice').empty();
                          $('#medicationChoice').append('<option value="">Kies een medicatie</option>');
                               for (i in List ) {
