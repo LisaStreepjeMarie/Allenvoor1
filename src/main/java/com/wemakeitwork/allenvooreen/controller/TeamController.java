@@ -101,9 +101,9 @@ public class TeamController {
         return "redirect:/team/all";
     }
 
-    @GetMapping("/team{teamId}/deleteMember/{memberId}")
+    /* @GetMapping("/team{teamId}/deleteMember/{memberId}")
     public String deleteMemberFromTeam(@PathVariable("teamId") final Integer teamId, Model model) {
-        /* System.out.println("Niets geprint?");
+        System.out.println("Niets geprint?");
         model.addAttribute("team", new Team());
         Optional<Team> teamOpt = teamRepository.findById(teamId);
         Team team;
@@ -111,7 +111,19 @@ public class TeamController {
         model.addAttribute("team", team);
         System.out.println("teamId: " + team);
 
-        teamRepository.save(team); */
+        teamRepository.save(team);
+        return "redirect:/team/select/{teamId}";
+    } */
+
+    @GetMapping("/team{teamId}/deleteMember/{memberId}")
+    public String deleteMemberFromTeam(@PathVariable("teamId") final Integer teamId,
+                                       @PathVariable("memberId") final Integer memberId) {
+        Team team = teamRepository.getOne(teamId);
+        Member member = memberRepository.getOne(memberId);
+        member.removeTeamFromMember(team);
+        team.removeTeamMember(member);
+        teamRepository.save(team);
+        memberRepository.save(member);
         return "redirect:/team/select/{teamId}";
     }
 
