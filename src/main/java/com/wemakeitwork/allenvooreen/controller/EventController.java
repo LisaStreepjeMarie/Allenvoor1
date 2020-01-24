@@ -7,8 +7,6 @@ import com.wemakeitwork.allenvooreen.repository.MedicationRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,7 +16,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Controller
 public class EventController {
@@ -44,13 +44,13 @@ public class EventController {
     }
 
     @GetMapping("/event/delete/{eventId}/{activityId}")
-    @ResponseStatus(HttpStatus.PERMANENT_REDIRECT)
     public String deleteEvent(@PathVariable("eventId") final Integer eventId,
                               @PathVariable("activityId") final Integer activityId) {
         Team team = (Team) httpSession.getAttribute("team");
 
         Optional<Activity> activity = activityRepository.findById(activityId);
 
+        // If (a medical) event is deleted, takenMedication needs to be readded to amount of available medication. - HK
         if (activity.get() instanceof MedicationActivity){
             Medication medication = ((MedicationActivity) activity.get()).getMedication();
             assert medication != null;
@@ -58,13 +58,7 @@ public class EventController {
         }
 
         eventRepository.deleteById(eventId);
-        try {
-            activityRepository.deleteById(activityId);
-        } catch (EmptyResultDataAccessException ex) {
-            return "redirect:/calendar/" + team.getTeamId();
-        }
 
-        // The responsestatus that is preceding this method is necessary to prevent a 500 error.
         return "redirect:/calendar/" + team.getTeamId();
     }
 
