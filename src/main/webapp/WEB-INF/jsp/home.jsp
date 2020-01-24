@@ -53,7 +53,7 @@
 <br>
 <div class= "row">
     <div class= "col-2">
-  <h2 class="dropdown-header "><strong>Welkom</h2>
+  <h2 class="dropdown-header"><strong>Welkom</h2>
   <br>
     <h2 class="dropdown-header"><strong>Kalender</strong> </h2>
        <c:forEach items="${teamList}" var="team">
