@@ -107,7 +107,6 @@ public class MemberController {
             return "redirect:/logout";
         }
     }
-
 }
 
 
