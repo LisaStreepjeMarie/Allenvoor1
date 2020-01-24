@@ -27,7 +27,7 @@ public class JsonRestController {
     @Autowired
     EventRepository eventRepository;
 
-    @GetMapping("/calendar/json/{teamid}/{startdate}/{enddate}")
+    @GetMapping("/calendar/get/{teamid}/{startdate}/{enddate}")
     public List<Event> getJsonEventListPeriod(@PathVariable("teamid") final Integer teamId,
                                               @PathVariable("startdate") final long startDateEpoch,
                                               @PathVariable("enddate") final long endDateEpoch) {
@@ -42,8 +42,7 @@ public class JsonRestController {
                 .collect(Collectors.toList());
     }
 
-    //TODO works but the event isn't saved
-    @PostMapping("/calendar/saveEventFromPost")
+    @PostMapping("/calendar/new/event")
     public ResponseEntity<Object> addEvent(@RequestBody String json) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode jsonNode = new ObjectMapper().readTree(json);
@@ -64,10 +63,23 @@ public class JsonRestController {
         return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/calendar/json/medications")
-    public List<Medication> getMedications() {
-        System.out.println("hello!!");
-        return teamRepository.getOne(1).getMedicationList();
+    @PostMapping("/calendar/change/eventdate")
+    public ResponseEntity<Object> changeEventDate(@RequestBody String json) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        Event newDates = mapper.readValue(json, Event.class);
+
+        Event event = eventRepository.getOne(newDates.getEventId());
+        event.setEventStartDate(newDates.getEventStartDate());
+        event.setEventEndDate(newDates.getEventEndDate());
+        eventRepository.save(event);
+
+        ServiceResponse<Event> response = new ServiceResponse<Event>("success", newDates);
+        return new ResponseEntity<Object>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/calendar/get/medicationlist/{teamid}")
+    public List<Medication> getMedications(@PathVariable("teamid") final Integer teamId) {
+        return teamRepository.getOne(teamId).getMedicationList();
     }
 
 }
