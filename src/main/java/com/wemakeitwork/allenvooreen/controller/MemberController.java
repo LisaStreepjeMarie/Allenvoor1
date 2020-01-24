@@ -1,7 +1,9 @@
 package com.wemakeitwork.allenvooreen.controller;
 
 import com.wemakeitwork.allenvooreen.model.Member;
+import com.wemakeitwork.allenvooreen.model.Team;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
+import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import com.wemakeitwork.allenvooreen.service.MemberServiceInterface;
 import com.wemakeitwork.allenvooreen.service.SecurityServiceInterface;
 import com.wemakeitwork.allenvooreen.validator.MemberValidator;
@@ -21,6 +23,9 @@ public class MemberController {
 
     @Autowired
     private MemberRepository memberRepository;
+
+    @Autowired
+    private TeamRepository teamRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -102,7 +107,6 @@ public class MemberController {
             return "redirect:/logout";
         }
     }
-
 }
 
 

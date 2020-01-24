@@ -87,10 +87,10 @@ public class TeamController {
     public String deleteTeam(@PathVariable("teamId") final Integer teamId) {
 
         Team team = teamRepository.getOne(teamId);
-        Set<Member> wegermee = new HashSet<>();
-        wegermee.addAll(team.getAllMembersInThisTeamSet());
+        Set<Member> membersToRemoveSet = new HashSet<>();
+        membersToRemoveSet.addAll(team.getAllMembersInThisTeamSet());
 
-        for (Member member : wegermee){
+        for (Member member : membersToRemoveSet){
             member.removeTeamFromMember(team);
             team.removeTeamMember(member);
         }
@@ -99,6 +99,18 @@ public class TeamController {
         teamRepository.delete(team);
 
         return "redirect:/team/all";
+    }
+
+    @GetMapping("/team{teamId}/deleteMember/{memberId}")
+    public String deleteMemberFromTeam(@PathVariable("teamId") final Integer teamId,
+                                       @PathVariable("memberId") final Integer memberId) {
+        Team team = teamRepository.getOne(teamId);
+        Member member = memberRepository.getOne(memberId);
+        member.removeTeamFromMember(team);
+        team.removeTeamMember(member);
+        teamRepository.save(team);
+        memberRepository.save(member);
+        return "redirect:/team/select/{teamId}";
     }
 
     @PostMapping("/team/new")
