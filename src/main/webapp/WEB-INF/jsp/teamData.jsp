@@ -17,7 +17,7 @@
             <input class="btn btn-primary" type="submit" value="Al je groepen" onclick="window.location='${pageContext.request.contextPath}/team/all';" />
             <input class="btn btn-primary" type="submit" value="Logout" onclick="window.location='${pageContext.request.contextPath}/logout';" />
         </p>
-        <h1 class="font-weight-light">Wijzig gegevens groep</h1>
+        <h1 class="font-weight-light">Wijzig gegevens groep ${team.teamName}</h1>
         <table>
             <tr>
                  <td colspan="2">Groepsleden:</td>
