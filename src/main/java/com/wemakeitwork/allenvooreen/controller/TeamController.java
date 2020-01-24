@@ -101,6 +101,18 @@ public class TeamController {
         return "redirect:/team/all";
     }
 
+    @GetMapping("/team{teamId}/deleteMember/{memberId}")
+    public String deleteMemberFromTeam(@PathVariable("teamId") final Integer teamId,
+                                       @PathVariable("memberId") final Integer memberId) {
+        Team team = teamRepository.getOne(teamId);
+        Member member = memberRepository.getOne(memberId);
+        member.removeTeamFromMember(team);
+        team.removeTeamMember(member);
+        teamRepository.save(team);
+        memberRepository.save(member);
+        return "redirect:/team/select/{teamId}";
+    }
+
     @PostMapping("/team/new")
     protected String saveOrUpdateTeam(HttpServletRequest request) {
         String teamName = request.getParameter("teamName");

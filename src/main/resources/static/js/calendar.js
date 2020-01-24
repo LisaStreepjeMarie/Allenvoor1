@@ -62,9 +62,9 @@ $(document).ready(function() {
                 $(".fc-highlight").css("background", "purple");
 
                 $('#save-change-event').attr('onclick', "saveNewEvent()");
-
-                $('.modal').find('#eventStartDate').val(start.format('DD-MM-YYYY H:mm'));
-                $('.modal').find('#eventEndDate').val(end.format('DD-MM-YYYY H:mm'));
+                
+                $('.modal').find('#eventStartDate').val(moment(start).add(61, "minutes").format('DD-MM-YYYY H:mm Z'));
+                $('.modal').find('#eventEndDate').val(moment(end).subtract(1, "minutes").format('DD-MM-YYYY H:mm Z'));
 
                 document.getElementById("modal-title").innerHTML = "Maak nieuwe afspraak";
                 document.getElementById("save-change-event").innerHTML = "Maak afspraak";
