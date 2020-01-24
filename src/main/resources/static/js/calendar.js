@@ -32,7 +32,6 @@ $(document).ready(function() {
 
         // Cleans the modal upon closing
         $('.modal').on("hide.bs.modal", function() {
-            console.log("hij ziet deze functie")
             $('#formID').trigger("reset");
             hideAllModalInputFields();
         });

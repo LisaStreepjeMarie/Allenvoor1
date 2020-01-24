@@ -34,7 +34,6 @@
 <body>
 <form role="form" id="formID" >
     <div class="modal fade" tabindex="-1" role="dialog" id="formDiv">
-
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -132,7 +131,6 @@
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-
     </div><!-- /.modal -->
 </form>
   <jsp:include page="home.jsp" />
