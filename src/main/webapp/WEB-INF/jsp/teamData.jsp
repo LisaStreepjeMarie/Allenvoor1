@@ -18,20 +18,6 @@
             <input class="btn btn-primary" type="submit" value="Logout" onclick="window.location='${pageContext.request.contextPath}/logout';" />
         </p>
         <h1 class="font-weight-light">Wijzig gegevens groep</h1>
-        <!-- <form:form action="${pageContext.request.contextPath}/team/change" modelAttribute="team">
-        <form:input path="teamId" type="hidden" />
-        <form:input path="allMembersInThisTeamSet" type="hidden" /> -->
-            <table>
-                <tr>
-                    <td>Groepsnaam:</td>
-                    <td>
-                        <form:input size="30" path="teamName" value="${team.teamName}" /></form>
-                        <input class="btn btn-primary" type="submit" value="Wijzig" />
-                    </td>
-                </tr>
-            </table>
-         <!-- </form:form> -->
-
         <table>
             <tr>
                  <td colspan="2">Groepsleden:</td>
@@ -54,15 +40,25 @@
                     <td>Nieuw groepslid:</td>
                     <td>
                        <form:input path="teamMemberName" /></form>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                         <input class="btn btn-primary" type="submit" value="Wijzig" />
+                       <input class="btn btn-primary" type="submit" value="Wijzig" />
                     </td>
                 </tr>
             </table>
         </form:form>
+
+        <form:form action="${pageContext.request.contextPath}/team/change" modelAttribute="team">
+        <form:input path="teamId" type="hidden" />
+        <form:input path="allMembersInThisTeamSet" type="hidden" />
+            <table>
+                <tr>
+                    <td>Groepsnaam:</td>
+                    <td>
+                        <form:input size="30" path="teamName" value="${team.teamName}" /></form>
+                        <input class="btn btn-primary" type="submit" value="Wijzig" />
+                    </td>
+                </tr>
+            </table>
+         </form:form>
     </div>
 </body>
 </html>
