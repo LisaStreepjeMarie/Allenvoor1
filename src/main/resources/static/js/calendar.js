@@ -1,7 +1,7 @@
 // Define contextpath
 var ctx = $('#contextPathHolder').attr('data-contextPath');
 
-// Get csrf token (needed to post a json through spring boot security
+// Get csrf token (needed to post a json through spring boot security)
 $.ajaxSetup({
     beforeSend: function(xhr) {
         xhr.setRequestHeader('X-CSRF-TOKEN', $('#csrfToken').attr('data-csrfToken'));
@@ -24,7 +24,7 @@ $(document).ready(function() {
             }
         });
 
-        <!-- below makes sure that the unwanted fields in the modal are hidden and calls the selection upon change -->
+        // This makes sure that the unwanted fields in the modal are hidden and calls the selection upon change
         $("#activityCategory").change(function () {
             hideAllModalInputFields();
             activitySelection();
@@ -43,7 +43,7 @@ $(document).ready(function() {
             timeFormat: 'H(:mm)',
             locale: 'nl',
 
-            <!-- The buttons and title that are displayed at the top of the calendar -->
+            // The buttons and title that are displayed at the top of the calendar
             header: {
                 left: 'prev,next today',
                 center: 'title',
@@ -72,7 +72,7 @@ $(document).ready(function() {
                 $('.modal').modal('show');
             },
 
-            <!-- This function is executed when an already planned event is clicked -->
+            // This function is executed when an already planned event is clicked
             eventClick: function(event, element) {
                 // redefines the onclick action of the delete-event button, so that it will point the browser -->
                 // to the /event/delete/{eventId}/{activityId} mapping
@@ -222,20 +222,18 @@ $(document).ready(function() {
         $('#datetimepickerDone').datetimepicker();
     }); // End of $(document).ready(function)
 
-    //});
-
-<!-- below function shows the correct modal form based on the activity selection -->
-    function activitySelection() {
-        if ($("#activityCategory").val() === "Medisch") {
-        <!-- below function makes sure the medication is only loaded when the medical activity is chosen -->
-            getMedication()
-            $("#eventNameDiv, #eventDateStartEndDiv, #medicationChoiceDiv, #takenMedicationDiv, #eventDatesDiv").show();
-        } else {
-            $("#eventNameDiv, #eventDateStartEndDiv, #eventDatesDiv, #eventCommentDiv").show();
-        }
-        $("#datetimepickerDone").hide();
-        $("#eventDoneDiv").css("display", "");
+// This function shows the correct modal form based on the activity selection
+function activitySelection() {
+    if ($("#activityCategory").val() === "Medisch") {
+    <!-- below function makes sure the medication is only loaded when the medical activity is chosen -->
+        getMedication()
+        $("#eventNameDiv, #eventDateStartEndDiv, #medicationChoiceDiv, #takenMedicationDiv, #eventDatesDiv").show();
+    } else {
+        $("#eventNameDiv, #eventDateStartEndDiv, #eventDatesDiv, #eventCommentDiv").show();
     }
+    $("#datetimepickerDone").hide();
+    $("#eventDoneDiv").css("display", "");
+}
 
 // This function hides all modal options
 function hideAllModalInputFields() {
@@ -294,24 +292,24 @@ function saveNewEvent() {
     });
 }
 
-<!-- functie om de lijst te vullen met specifieke medicaties, moet nog aangepast worden voor med.id ipv med naam -->
-    function getMedication(){
-            $.ajax({
-                 type:'GET',
-                 url: '/allenvooreen/calendar/' + $('#teamId').attr('data-teamId') + '/medications',
-                 dataType: 'json',
-                 success : function(result) {
-                         List = result.data
-                         $('#medicationChoice').empty();
-                         $('#medicationChoice').append('<option value="">Kies een medicatie</option>');
-                              for (i in List ) {
-                              $('#medicationChoice').append('<option value="' + List[i].medicationname + '">' + List[i].medicationname + '</option>');
+// This function gets a medicationlist.
+function getMedication(){
+        $.ajax({
+             type:'GET',
+             url: ctx + "/calendar/" + $('#teamId').attr('data-teamId') + '/medications',
+             dataType: 'json',
+             success : function(result) {
+                     List = result.data
+                     $('#medicationChoice').empty();
+                     $('#medicationChoice').append('<option value="">Kies een medicatie</option>');
+                     for (i in List ) {
+                        $('#medicationChoice').append('<option value="' + List[i].medicationname + '">' + List[i].medicationname + '</option>');
                      }
                  },
                  error : function(e) {
                  alert("error Error ERROR!")
                  con
                  sole.log("ERROR: ", e);
-              }
-        });
+                  }
+          });
     }
