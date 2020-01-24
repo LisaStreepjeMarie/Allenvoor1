@@ -5,12 +5,12 @@
 
     <html lang="en" xmlns:c="http://www.w3.org/1999/XSL/Transform" xmlns:fmt="" xmlns:spring="" xmlns:beans="">
         <head>
+            <title>Allenvooréén - Login pagina</title>
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
             <meta name="description" content="">
             <meta name="author" content="">
             <link rel="shortcut icon" href="${pageContext.request.contextPath}/images/favicon.ico" type="image/x-icon" />
-            <title>Allenvooréén - Login pagina</title>
 
             <!-- Bootstrap core CSS -->
             <script src="${pageContext.request.contextPath}/webjars/jquery/3.4.1/jquery.slim.min.js"></script>

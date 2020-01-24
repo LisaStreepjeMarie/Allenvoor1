@@ -5,11 +5,11 @@
 
 <html xmlns:form="http://www.w3.org/1999/xhtml" xmlns:c="">
     <head>
+        <title>Kalender</title>
         <meta charset='utf-8' />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-capable" content="yes">
-        <title>Kalender</title>
 
         <!-- Add icon library -->
         <link href="${pageContext.request.contextPath}/webjars/font-awesome/4.7.0/css/font-awesome.css" rel='stylesheet'>
