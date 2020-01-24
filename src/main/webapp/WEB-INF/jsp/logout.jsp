@@ -35,7 +35,6 @@
         <h2 class="form-signin-heading">Weet je zeker dat je uit wil loggen ?</h2>
         <input name="_csrf" type="hidden" value="${_csrf.token}" />
         <button class="btn btn-lg btn-primary btn-block" type="submit">Uitloggen</button>
-       <p class="mt-5 mb-3 text-muted">&copy; 2019 Allenvooreen</p>
     </form>
 </div>
 </body>

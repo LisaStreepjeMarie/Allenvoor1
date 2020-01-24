@@ -87,10 +87,10 @@ public class TeamController {
     public String deleteTeam(@PathVariable("teamId") final Integer teamId) {
 
         Team team = teamRepository.getOne(teamId);
-        Set<Member> wegermee = new HashSet<>();
-        wegermee.addAll(team.getAllMembersInThisTeamSet());
+        Set<Member> membersToRemoveSet = new HashSet<>();
+        membersToRemoveSet.addAll(team.getAllMembersInThisTeamSet());
 
-        for (Member member : wegermee){
+        for (Member member : membersToRemoveSet){
             member.removeTeamFromMember(team);
             team.removeTeamMember(member);
         }
