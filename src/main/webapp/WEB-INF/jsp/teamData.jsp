@@ -24,7 +24,9 @@
             </tr>
              <c:forEach items="${team.allMembersInThisTeamSet}" var="member">
              <tr>
-                 <td><c:out value="${member.memberName}" /></td>
+                 <td><c:out value="${member.memberName}" />
+                    memberId: <c:out value="${member.memberId}" />
+                    teamId: <c:out value="${team.teamId}" /></td>
                  <td><input class="btn btn-primary" type="submit" value="Verwijder"
                       onclick="window.location='${pageContext.request.contextPath}/team${team.teamId}/deleteMember/${member.memberId}'" /></td>
              </tr>

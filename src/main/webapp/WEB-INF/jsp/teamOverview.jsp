@@ -5,8 +5,11 @@
 <html xmlns:c="">
     <head>
         <title>Overzicht groepen</title>
-        <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
-    </head>
+        <!-- Add icon library -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+                <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
+                <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
+            </head>
     <body class="webpage">
 
         <div id="container" class="ml-4 mt-4">
@@ -15,9 +18,12 @@
                 <input class="btn btn-primary" type="submit" value="Al je groepen" onclick="window.location='${pageContext.request.contextPath}/team/all';" />
                 <input class="btn btn-primary" type="submit" value="Logout" onclick="window.location='${pageContext.request.contextPath}/logout';" />
             </p>
-            <h1>Overzicht groepen</h1>
+            <h1 class="font-weight-light">Mijn groepen</h1>
             <table>
-                <tr><th>Groep</th><th>Deelnemer</th><th></th></tr>
+                <tr>
+                    <td><h2 class="font-weight-light">Groep</h2></td>
+                    <td colspan="2"><h2 class="font-weight-light">Groepslid</h2></td>
+                </tr>
                 <c:forEach items="${teamList}" var="team">
                     <tr>
                         <td><a href="${pageContext.request.contextPath}/team/select/<c:out value="${team.teamId}" />"><c:out value="${team.teamName}" /></a></td>
