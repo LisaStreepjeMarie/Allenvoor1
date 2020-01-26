@@ -15,13 +15,16 @@ public class Medication {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonProperty("id")
     private Integer medicationId;
 
-    @JsonProperty("medicationname")
+    @JsonProperty("name")
     private String medicationName;
 
+    @JsonProperty("amount")
     private Integer medicationAmount;
 
+    @JsonProperty("description")
     private String medicationComment;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

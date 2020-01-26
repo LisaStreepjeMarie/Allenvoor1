@@ -1,12 +1,22 @@
 package com.wemakeitwork.allenvooreen.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        //include = JsonTypeInfo.As.WRAPPER_OBJECT,
+        property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = MedicationActivity.class, name = "MedicationActivity")
+})
 public class Activity {
 
     @Id
@@ -19,6 +29,15 @@ public class Activity {
 
     @JsonProperty("category")
     private String activityCategory;
+
+    public Activity(Integer activityId, String activityName, String activityCategory) {
+        this.activityId = activityId;
+        this.activityName = activityName;
+        this.activityCategory = activityCategory;
+    }
+
+    public Activity() {
+    }
 
     public Integer getActivityId() {
         return activityId;

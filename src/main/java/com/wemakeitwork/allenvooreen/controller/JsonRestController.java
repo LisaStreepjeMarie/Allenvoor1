@@ -1,7 +1,6 @@
 package com.wemakeitwork.allenvooreen.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wemakeitwork.allenvooreen.model.*;
 import com.wemakeitwork.allenvooreen.repository.EventRepository;
@@ -42,11 +41,15 @@ public class JsonRestController {
 
     @PostMapping("/calendar/new/event")
     public ResponseEntity<Object> addEvent(@RequestBody String json) throws JsonProcessingException {
-
-        System.out.println(json);
-
         Event event = mapper.readValue(json, Event.class);
-        eventRepository.save(event);
+        System.out.println("Eventname: " + event.getEventName());
+        System.out.println("Activityname: " + event.getActivity().getActivityName());
+        if (event.getActivity() instanceof MedicationActivity){
+            System.out.println("Activiteitstype is: MedicationActivity");
+        } else {
+            System.out.println("Activiteitstype is: Vrije tijd");
+        }
+        /*eventRepository.save(event);*/
 
         ServiceResponse<Event> response = new ServiceResponse<Event>("success", event);
         return new ResponseEntity<Object>(response, HttpStatus.OK);

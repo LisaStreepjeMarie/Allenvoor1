@@ -10,6 +10,12 @@ import java.util.Date;
 
 @Entity
 @JsonPropertyOrder(value = {"id", "title", "description", "start", "end", "donedate"}, alphabetic = true)
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = Activity.class, name = "activity"),
+})
 public class Event {
 
     @Id
@@ -37,6 +43,20 @@ public class Event {
     @JsonProperty("donedate")
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private java.util.Date eventDoneDate;
+
+    public Event() {
+    }
+
+    public Event(Integer eventId, @NotBlank(message = "veld mag niet blank zijn") String eventName, Date eventStartDate, Date eventEndDate, String eventComment, Date eventDoneDate, Activity activity, Team team) {
+        this.eventId = eventId;
+        this.eventName = eventName;
+        this.eventStartDate = eventStartDate;
+        this.eventEndDate = eventEndDate;
+        this.eventComment = eventComment;
+        this.eventDoneDate = eventDoneDate;
+        this.activity = activity;
+        this.team = team;
+    }
 
     public Date getEventDoneDate() {
         return eventDoneDate;

@@ -1,4 +1,4 @@
-// Define contextpath
+    // Define contextpath
 var ctx = $('#contextPathHolder').attr('data-contextPath');
 
 // Get csrf token (needed to post a json through spring boot security)
@@ -62,7 +62,7 @@ $(document).ready(function() {
                 $(".fc-highlight").css("background", "purple");
 
                 $('#save-change-event').attr('onclick', "saveNewEvent()");
-                
+
                 $('.modal').find('#eventStartDate').val(moment(start).add(61, "minutes").format('DD-MM-YYYY H:mm Z'));
                 $('.modal').find('#eventEndDate').val(moment(end).subtract(1, "minutes").format('DD-MM-YYYY H:mm Z'));
 
@@ -263,24 +263,26 @@ function fillingTheModal() {
 function saveNewEvent() {
     // Fill the object currentEvent with values from input fields in the modal
     event = {
+        type: "Event",
+        id: 0,
         title: document.getElementById("eventName").value,
         start: moment(document.getElementById("eventStartDate").value, "DD-MM-YYYY H:mm").toDate(),
         end: moment(document.getElementById("eventEndDate").value, "DD-MM-YYYY H:mm").toDate(),
         description: document.getElementById("eventComment").value,
         activity: {
+            type: "MedicationActivity",
+            id: 9,
             name: document.getElementById("eventName").value,
             category: document.getElementById("activityCategory").value,
+            medication: {
+                name: "drugs",
+                amount: 0,
+                description: "description for drugs",
             },
+        },
         team: {
             id: parseInt($('#teamId').attr('data-teamId'), 10),
         }
-    }
-
-    medicalActivity = {
-        medication: {
-            medicationname: document.getElementById("medicationChoice").value,
-            },
-        takenmedication: 2,
     }
 
     // Send the currentEvent object to the controller with an AJAX post
@@ -288,7 +290,7 @@ function saveNewEvent() {
         url: ctx + "/calendar/new/event",
         method: "POST",
         contentType: "application/json; charset=UTF-8",
-        data: JSON.stringify(event, medicalActivity),
+        data: JSON.stringify(event),
         dataType : 'json',
         async: true,
         success: function(result) {
@@ -297,7 +299,7 @@ function saveNewEvent() {
         },
         error : function(e) {
             alert("Error sending new event with AJAX!")
-            console.log(currentEvent)
+            console.log(event)
             console.log("ERROR: ", e);
         }
     });
