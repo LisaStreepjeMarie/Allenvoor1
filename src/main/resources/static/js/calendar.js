@@ -1,4 +1,5 @@
-            // Define contextpath
+
+                    // Define contextpath
 var ctx = $('#contextPathHolder').attr('data-contextPath');
 
 // Get csrf token (needed to post a json through spring boot security)
@@ -58,11 +59,9 @@ $(document).ready(function() {
 
             // This function is executed when an empty date/time is clicked
             select: function(start, end) {
+                $("#eventId").val("");
 
                 $(".fc-highlight").css("background", "purple");
-
-                $('#save-change-event').attr('onclick', "saveNewEvent()");
-
                 $('.modal').find('#eventStartDate').val(moment(start).add(61, "minutes").format('DD-MM-YYYY H:mm Z'));
                 $('.modal').find('#eventEndDate').val(moment(end).subtract(1, "minutes").format('DD-MM-YYYY H:mm Z'));
 
@@ -79,8 +78,7 @@ $(document).ready(function() {
                 $('#delete-event').attr('onclick',"window.location='" + ctx + "/event/delete/" + event.id + "/" + event.activity.id + "'");
 
                 $("#eventId").val(event.id);
-                $('#modal-form').attr('action', ctx + "/event/change/" + event.activity.id);
-                $('#save-change-event').attr('action', ctx + "/event/change");
+
                 $('.modal').find('#eventComment').val(event.activity.comment);
                 $('.modal').find('#activityCategory').val(event.activity.type); //TODO: doesn't show correct value because activityCategory is not an attribute anymore, it's the actual subclass itself
                 $('.modal').find('#eventName').val(event.title);
@@ -89,8 +87,8 @@ $(document).ready(function() {
                 fillingTheModal();
                 showMedicationAmount(event, element);
 
-                $('.modal').find('#eventStartDate').val(event.start.format('DD-MM-YYYY H:mm'));
-                $('.modal').find('#eventEndDate').val(event.end.format('DD-MM-YYYY H:mm'));
+                $('.modal').find('#eventStartDate').val(moment(event.start).add(61, "minutes").format('DD-MM-YYYY H:mm Z'));
+                $('.modal').find('#eventEndDate').val(moment(event.end).subtract(1, "minutes").format('DD-MM-YYYY H:mm Z'));
 
                 // Redefines the modal (popup) buttons with the appropriate button text
                 document.getElementById("modal-title").innerHTML = "Wijzig of verwijder afspraak";
@@ -262,10 +260,18 @@ function fillingTheModal() {
     $("#eventDoneDiv").css("display", "");
 }
 
-function saveNewEvent() {
+function saveEvent() {
+    // If eventId is null, make a new event. Otherwise change it
+    console.log(document.getElementById("eventId").value);
+    if ( document.getElementById("eventId").value === "" ) {
+        url2 = ctx + "/calendar/new/event"
+    } else {
+        url2 = ctx + "/calendar/change/event/" + document.getElementById("eventId").value
+    }
+
     // Fill the object currentEvent with values from input fields in the modal
     if ($("#activityCategory").val() === "Medisch") {  // TODO: needs to be fetched using instanceof
-        newEvent = {
+        eventToSave = {
             type: "Event",
             title: document.getElementById("eventName").value,
             start: moment(document.getElementById("eventStartDate").value, "DD-MM-YYYY H:mm").toDate(),
@@ -284,7 +290,7 @@ function saveNewEvent() {
             }
         }
     } else if ($("#activityCategory").val() === "Vrije tijd") {
-            newEvent = {
+            eventToSave = {
             type: "Event",
             title: document.getElementById("eventName").value,
             start: moment(document.getElementById("eventStartDate").value, "DD-MM-YYYY H:mm").toDate(),
@@ -303,10 +309,10 @@ function saveNewEvent() {
 
     // Send the currentEvent object to the controller with an AJAX post
     $.ajax({
-        url: ctx + "/calendar/new/event",
+        url: url2,
         method: "POST",
         contentType: "application/json; charset=UTF-8",
-        data: JSON.stringify(newEvent),
+        data: JSON.stringify(eventToSave),
         dataType : 'json',
         async: true,
         success: function(result) {
@@ -315,7 +321,7 @@ function saveNewEvent() {
         },
         error : function(e) {
             alert("Error sending new event with AJAX!")
-            console.log(event)
+            console.log(eventToSave)
             console.log("ERROR: ", e);
         }
     });

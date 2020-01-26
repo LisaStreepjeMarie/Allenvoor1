@@ -49,8 +49,8 @@ public class CalendarController {
     }
 
     @PostMapping("/calendar/change/eventdate")
-    public ResponseEntity<Object> changeEventDate(@RequestBody String json) throws JsonProcessingException {
-        Event newDates = mapper.readValue(json, Event.class);
+    public ResponseEntity<Object> changeEventDate(@RequestBody String newDatesJson) throws JsonProcessingException {
+        Event newDates = mapper.readValue(newDatesJson, Event.class);
 
         Event event = eventRepository.getOne(newDates.getEventId());
         event.setEventStartDate(newDates.getEventStartDate());
@@ -59,6 +59,15 @@ public class CalendarController {
 
         ServiceResponse<Event> response = new ServiceResponse<Event>("success", newDates);
         return new ResponseEntity<Object>(response, HttpStatus.OK);
+    }
+
+    @PostMapping("/calendar/change/event/{eventId}")
+    protected ResponseEntity<Object> changeEvent(@RequestBody String changedEventJson,
+                                                 @PathVariable("eventId") final Integer eventId) throws JsonProcessingException {
+        Event changeEvent = mapper.readValue(changedEventJson, Event.class);
+        changeEvent.setEventId(eventId);
+        return new ResponseEntity<Object>(new ServiceResponse<Event>("success",
+                eventRepository.save(changeEvent)), HttpStatus.OK);
     }
 
     @GetMapping("/calendar/{teamid}/medications")
