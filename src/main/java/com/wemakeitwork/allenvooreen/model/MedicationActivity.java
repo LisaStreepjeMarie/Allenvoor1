@@ -1,12 +1,17 @@
 package com.wemakeitwork.allenvooreen.model;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.lang.Nullable;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -16,12 +21,13 @@ import javax.persistence.ManyToOne;
         //include = JsonTypeInfo.As.WRAPPER_OBJECT,
         property = "type")
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = MedicationActivity.class, name = "medication")
+        @JsonSubTypes.Type(value = Medication.class, name = "medication")
 })
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public class MedicationActivity extends Activity{
 
-    @Nullable
     @JsonProperty("takenmedication")
+    @Column(nullable = false)
     private Integer takenMedication;
 
     @Nullable
@@ -31,8 +37,8 @@ public class MedicationActivity extends Activity{
     @JsonProperty("medication")
     private Medication medication;
 
-    public MedicationActivity(Integer activityId, String activityName, String activityCategory, @Nullable Integer takenMedication, @Nullable Medication medication) {
-        super(activityId, activityName, activityCategory);
+    public MedicationActivity(Integer activityId, String activityName, @Nullable Integer takenMedication, @Nullable Medication medication) {
+        super(activityId, activityName);
         this.takenMedication = takenMedication;
         this.medication = medication;
     }

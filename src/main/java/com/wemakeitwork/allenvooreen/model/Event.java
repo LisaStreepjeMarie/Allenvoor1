@@ -1,10 +1,26 @@
 package com.wemakeitwork.allenvooreen.model;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
@@ -44,6 +60,15 @@ public class Event {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private java.util.Date eventDoneDate;
 
+    @OneToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "activityId", referencedColumnName = "activityId", nullable = false)
+    private Activity activity;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "teamId", referencedColumnName = "teamId", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Team team;
+
     public Event() {
     }
 
@@ -65,15 +90,6 @@ public class Event {
     public void setEventDoneDate(Date eventDoneDate) {
         this.eventDoneDate = eventDoneDate;
     }
-
-    @OneToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "activityId", referencedColumnName = "activityId", nullable = false)
-    private Activity activity;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "teamId", referencedColumnName = "teamId", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Team team;
 
     @JsonGetter
     public String getEventName() {

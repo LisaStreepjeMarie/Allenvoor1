@@ -1,4 +1,4 @@
-    // Define contextpath
+            // Define contextpath
 var ctx = $('#contextPathHolder').attr('data-contextPath');
 
 // Get csrf token (needed to post a json through spring boot security)
@@ -180,7 +180,7 @@ $(document).ready(function() {
                     type:'GET',
                     url: ctx + '/calendar/get/' + $('#teamId').attr('data-teamId') + '/' + start + '/' + end + '/',
                     dataType: 'json',
-                    error: function (xhr, type, exception) { alert("Error: " + exception); },
+                    error: function (xhr, type, exception) { alert("Error fetching calendar data: " + exception); },
                     success: function (response) {
                         var events = [];
                         for (i in response) {
@@ -262,26 +262,40 @@ function fillingTheModal() {
 
 function saveNewEvent() {
     // Fill the object currentEvent with values from input fields in the modal
-    event = {
-        type: "Event",
-        id: 0,
-        title: document.getElementById("eventName").value,
-        start: moment(document.getElementById("eventStartDate").value, "DD-MM-YYYY H:mm").toDate(),
-        end: moment(document.getElementById("eventEndDate").value, "DD-MM-YYYY H:mm").toDate(),
-        description: document.getElementById("eventComment").value,
-        activity: {
-            type: "MedicationActivity",
-            id: 9,
-            name: document.getElementById("eventName").value,
-            category: document.getElementById("activityCategory").value,
-            medication: {
-                name: "drugs",
-                amount: 0,
-                description: "description for drugs",
+    if ($("#activityCategory").val() === "Medisch") {  // TODO: needs to be fetched using instanceof
+        newEvent = {
+            type: "Event",
+            title: document.getElementById("eventName").value,
+            start: moment(document.getElementById("eventStartDate").value, "DD-MM-YYYY H:mm").toDate(),
+            end: moment(document.getElementById("eventEndDate").value, "DD-MM-YYYY H:mm").toDate(),
+            activity: {
+                type: "MedicationActivity",
+                name: document.getElementById("eventName").value,
+                takenmedication: document.getElementById("takenMedication").value,
+                medication: {
+                    id: document.getElementById("medicationChoice").value,
+                    amount: document.getElementById("takenMedication").value,
+                },
             },
-        },
-        team: {
-            id: parseInt($('#teamId').attr('data-teamId'), 10),
+            team: {
+                id: parseInt($('#teamId').attr('data-teamId'), 10),
+            }
+        }
+    } else if ($("#activityCategory").val() === "Vrije tijd") {
+            newEvent = {
+            type: "Event",
+            title: document.getElementById("eventName").value,
+            start: moment(document.getElementById("eventStartDate").value, "DD-MM-YYYY H:mm").toDate(),
+            end: moment(document.getElementById("eventEndDate").value, "DD-MM-YYYY H:mm").toDate(),
+            activity: {
+                comment: document.getElementById("eventComment").value,
+                type: "LeisureActivity",
+                name: document.getElementById("eventName").value,
+
+            },
+            team: {
+                id: parseInt($('#teamId').attr('data-teamId'), 10),
+            }
         }
     }
 
@@ -290,7 +304,7 @@ function saveNewEvent() {
         url: ctx + "/calendar/new/event",
         method: "POST",
         contentType: "application/json; charset=UTF-8",
-        data: JSON.stringify(event),
+        data: JSON.stringify(newEvent),
         dataType : 'json',
         async: true,
         success: function(result) {
@@ -316,13 +330,12 @@ function getMedication(){
                      $('#medicationChoice').empty();
                      $('#medicationChoice').append('<option value="">Kies een medicatie</option>');
                      for (i in List ) {
-                        $('#medicationChoice').append('<option value="' + List[i].id + '">' + List[i].medicationname + '</option>');
+                        $('#medicationChoice').append('<option value="' + List[i].id + '">' + List[i].name + '</option>');
                      }
                  },
                  error : function(e) {
                  alert("error Error ERROR!")
-                 con
-                 sole.log("ERROR: ", e);
+                 console.log("ERROR: ", e);
                   }
           });
     }

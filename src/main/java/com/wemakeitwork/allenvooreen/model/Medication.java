@@ -6,11 +6,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import java.util.List;
 
 @Entity
-@JsonIgnoreProperties({ "medicationAmount", "medicationComment", "team", "getTakenMedications", "hibernateLazyInitializer", "medicationId" })
+@JsonIgnoreProperties({ "medicationAmount", "medicationComment", "team", "getTakenMedications", "hibernateLazyInitializer"})
 public class Medication {
 
     @Id
@@ -24,7 +32,6 @@ public class Medication {
     @JsonProperty("amount")
     private Integer medicationAmount;
 
-    @JsonProperty("description")
     private String medicationComment;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

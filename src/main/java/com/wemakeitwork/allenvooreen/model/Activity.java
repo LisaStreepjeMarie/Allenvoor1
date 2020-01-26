@@ -8,32 +8,31 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
 @Entity
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
-        //include = JsonTypeInfo.As.WRAPPER_OBJECT,
         property = "type")
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = MedicationActivity.class, name = "MedicationActivity")
+        @JsonSubTypes.Type(value = MedicationActivity.class, name = "MedicationActivity"),
+        @JsonSubTypes.Type(value = LeisureActivity.class, name = "LeisureActivity")
 })
-public class Activity {
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class Activity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     @JsonProperty("id")
     private Integer activityId;
 
     @JsonProperty("name")
     private String activityName;
 
-    @JsonProperty("category")
-    private String activityCategory;
-
-    public Activity(Integer activityId, String activityName, String activityCategory) {
+    public Activity(Integer activityId, String activityName) {
         this.activityId = activityId;
         this.activityName = activityName;
-        this.activityCategory = activityCategory;
     }
 
     public Activity() {
@@ -53,13 +52,5 @@ public class Activity {
 
     public void setActivityName(String activityName) {
         this.activityName = activityName;
-    }
-
-    public String getActivityCategory() {
-        return activityCategory;
-    }
-
-    public void setActivityCategory(String activityCategory) {
-        this.activityCategory = activityCategory;
     }
 }

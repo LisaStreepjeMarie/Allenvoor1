@@ -43,9 +43,6 @@ public class TeamController {
         }
         if (teamList != null) {
             model.addAttribute("teamList", teamList);
-        } else {
-            //Temporary sysout to see if there are cases where this happens, if so: fix it.
-            System.out.println("!!!     teamList is null        !!!");
         }
         return "teamOverview";
     }

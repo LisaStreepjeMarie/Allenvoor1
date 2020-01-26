@@ -1,6 +1,8 @@
 package com.wemakeitwork.allenvooreen.controller;
 
-import com.wemakeitwork.allenvooreen.model.*;
+import com.wemakeitwork.allenvooreen.model.Event;
+import com.wemakeitwork.allenvooreen.model.MedicationActivity;
+import com.wemakeitwork.allenvooreen.model.Team;
 import com.wemakeitwork.allenvooreen.repository.ActivityRepository;
 import com.wemakeitwork.allenvooreen.repository.EventRepository;
 import com.wemakeitwork.allenvooreen.repository.MedicationRepository;
@@ -11,14 +13,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
 
 @Controller
 public class EventController {
@@ -62,7 +65,6 @@ public class EventController {
         return "redirect:/calendar/" + team.getTeamId();
     }
 
-
     //TODO not sure if the mapping works correctly here
     protected void newEventWithMedicationActivity(Event event) {
         //tried out a stream to get the correct medication and set medication activity
@@ -74,8 +76,6 @@ public class EventController {
                 .forEach(x -> x.setTakenMedications((MedicationActivity) event.getActivity()));
         event.getTeam().getTeamId();
     }
-
-
 
     // Allow empty string in datefield (i.e. write them as NULL to database)
     @InitBinder
@@ -95,7 +95,7 @@ public class EventController {
             event.setTeam((Team) httpSession.getAttribute("team"));
             event.getActivity().setActivityName(event.getEventName());
 
-            if (event.getActivity().getActivityCategory().equals("Medisch")){
+            if (event.getActivity() instanceof MedicationActivity){
                 if (medicationActivity.getMedication() == null) {
                     return "redirect:/calendar/" + team.getTeamId();
                 }else {
@@ -122,7 +122,7 @@ public class EventController {
             event.setTeam(team);
 
             //checking if the event is medical to set the subclass
-            if (event.getActivity().getActivityCategory().equals("Medisch")){
+            if (event.getActivity() instanceof MedicationActivity){
                 event.setActivity(medicationActivity);
                 newEventWithMedicationActivity(event);
 
