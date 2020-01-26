@@ -53,7 +53,7 @@ public class Event {
     @JsonProperty("end")
     private java.util.Date eventEndDate;
 
-    @JsonProperty("description")
+    @JsonProperty("comment")
     private String eventComment;
 
     @JsonProperty("donedate")

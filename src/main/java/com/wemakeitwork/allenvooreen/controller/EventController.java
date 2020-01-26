@@ -109,6 +109,8 @@ public class EventController {
         }
     }
 
+    // TODO: Since 'Activity' was changed to abstract this function creates a new event and activity (instead of modifying the existing event).
+    //  It may be easier to rewrite the whole function from scratch.
     @PostMapping("/event/change/{activityId}")
     protected String changeEvent(@ModelAttribute("event") Event event, BindingResult result,
                                  @ModelAttribute("medicationActivity") MedicationActivity medicationActivity,

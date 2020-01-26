@@ -81,8 +81,8 @@ $(document).ready(function() {
                 $("#eventId").val(event.id);
                 $('#modal-form').attr('action', ctx + "/event/change/" + event.activity.id);
                 $('#save-change-event').attr('action', ctx + "/event/change");
-                $('.modal').find('#eventComment').val(event.description);
-                $('.modal').find('#activityCategory').val(event.activity.category);
+                $('.modal').find('#eventComment').val(event.activity.comment);
+                $('.modal').find('#activityCategory').val(event.activity.type); //TODO: doesn't show correct value because activityCategory is not an attribute anymore, it's the actual subclass itself
                 $('.modal').find('#eventName').val(event.title);
 
                 // Shows modal fields based on the event.activity.category
@@ -108,6 +108,7 @@ $(document).ready(function() {
                 // Puts needed fullcalendar event.data attributes into an object to pass to the REST api
                 // (for resizing and dragging an event we only need to know: a. which event, and b. what are the new dates.
                 currentEvent = {
+                    type: "Event",
                     id: event.id,
                     start: event.start,
                     end: event.end,
@@ -135,6 +136,7 @@ $(document).ready(function() {
             // TODO: this code (along with eventDrop) is a prime candidate for refactoring as they are duplicates
             eventResize: function(event, delta) {
                 currentEvent = {
+                    type: "Event",
                     id: event.id,
                     start: event.start,
                     end: event.end,
@@ -287,11 +289,11 @@ function saveNewEvent() {
             title: document.getElementById("eventName").value,
             start: moment(document.getElementById("eventStartDate").value, "DD-MM-YYYY H:mm").toDate(),
             end: moment(document.getElementById("eventEndDate").value, "DD-MM-YYYY H:mm").toDate(),
+            comment: document.getElementById("eventComment").value,
             activity: {
-                comment: document.getElementById("eventComment").value,
                 type: "LeisureActivity",
-                name: document.getElementById("eventName").value,
-
+                name: document.getElementById("eventName").value, //TODO: duplicate data; same as eventName
+                comment: document.getElementById("eventComment").value, // TODO: duplicate data; same as eventComment
             },
             team: {
                 id: parseInt($('#teamId').attr('data-teamId'), 10),
