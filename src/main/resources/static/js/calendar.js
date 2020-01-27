@@ -62,8 +62,8 @@ $(document).ready(function() {
                 $("#eventId").val("");
 
                 $(".fc-highlight").css("background", "purple");
-                $('.modal').find('#eventStartDate').val(moment(start).add(61, "minutes").format('DD-MM-YYYY H:mm Z'));
-                $('.modal').find('#eventEndDate').val(moment(end).subtract(1, "minutes").format('DD-MM-YYYY H:mm Z'));
+                $('.modal').find('#eventStartDate').val(moment(start).add(1, "hours").format('DD-MM-YYYY H:mm'));
+                $('.modal').find('#eventEndDate').val(moment(end).add(1, "hours").format('DD-MM-YYYY H:mm'));
 
                 document.getElementById("modal-title").innerHTML = "Maak nieuwe afspraak";
                 document.getElementById("save-change-event").innerHTML = "Maak afspraak";
@@ -87,8 +87,8 @@ $(document).ready(function() {
                 fillingTheModal();
                 showMedicationAmount(event, element);
 
-                $('.modal').find('#eventStartDate').val(moment(event.start).add(61, "minutes").format('DD-MM-YYYY H:mm Z'));
-                $('.modal').find('#eventEndDate').val(moment(event.end).subtract(1, "minutes").format('DD-MM-YYYY H:mm Z'));
+                $('.modal').find('#eventStartDate').val(moment(event.start).add(1, "hours").format('DD-MM-YYYY H:mm'));
+                $('.modal').find('#eventEndDate').val(moment(event.end).add(1, "hours").format('DD-MM-YYYY H:mm'));
 
                 // Redefines the modal (popup) buttons with the appropriate button text
                 document.getElementById("modal-title").innerHTML = "Wijzig of verwijder afspraak";
