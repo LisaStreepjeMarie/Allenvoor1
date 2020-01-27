@@ -21,7 +21,7 @@
                 <br />
                 <div class="ml-4 mt-4">
                 <!-- <div class="mt-3 col-12"> -->
-                    <h1 class="font-weight-light">Voeg gegevens groep toe</h1>
+                    <h3 class="font-weight-light">Voeg gegevens groep toe</h3>
 
                     <form:form action="${pageContext.request.contextPath}/team/new" modelAttribute="team">
                         <table>
