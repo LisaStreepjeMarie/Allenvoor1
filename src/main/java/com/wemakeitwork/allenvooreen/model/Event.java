@@ -60,8 +60,7 @@ public class Event {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private java.util.Date eventDoneDate;
 
-    @OneToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "activityId", referencedColumnName = "activityId", nullable = false)
+    @OneToOne(mappedBy = "event", cascade={CascadeType.ALL, CascadeType.PERSIST})
     private Activity activity;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

@@ -2,14 +2,13 @@ package com.wemakeitwork.allenvooreen.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wemakeitwork.allenvooreen.model.*;
-import com.wemakeitwork.allenvooreen.repository.ActivityRepository;
-import com.wemakeitwork.allenvooreen.repository.EventRepository;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.wemakeitwork.allenvooreen.model.Event;
 import com.wemakeitwork.allenvooreen.model.Medication;
 import com.wemakeitwork.allenvooreen.model.MedicationActivity;
 import com.wemakeitwork.allenvooreen.model.Team;
+import com.wemakeitwork.allenvooreen.repository.ActivityRepository;
+import com.wemakeitwork.allenvooreen.repository.EventRepository;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import com.wemakeitwork.allenvooreen.service.ServiceResponse;
@@ -26,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Controller
@@ -50,8 +48,9 @@ public class CalendarController {
 
     @PostMapping("/calendar/new/event")
     public ResponseEntity<Object> newEvent(@RequestBody String newEventJson) throws JsonProcessingException {
+        Event event = mapper.readValue(newEventJson, Event.class);
         return new ResponseEntity<Object>(new ServiceResponse<Event>("success",
-                eventRepository.save(mapper.readValue(newEventJson, Event.class))), HttpStatus.OK);
+                eventRepository.save(event)), HttpStatus.OK);
     }
 
     @PostMapping("/calendar/change/eventdate")
@@ -68,14 +67,23 @@ public class CalendarController {
     }
 
     @PostMapping("/calendar/change/event/{eventId}")
-    protected ResponseEntity<Object> changeEvent(@RequestBody String changedEventJson,
+    protected ResponseEntity<Object> changeEvent(@RequestBody String changeEventJson,
                                                  @PathVariable("eventId") final Integer eventId) throws JsonProcessingException {
-        Event changeEvent = mapper.readValue(changedEventJson, Event.class);
-        changeEvent.setEventId(eventId);
-        return new ResponseEntity<Object>(new ServiceResponse<Event>("success",
-                eventRepository.save(changeEvent)), HttpStatus.OK);
-    }
+        System.out.println("json activityid: " + changeEventJson);
+        Event event = mapper.readValue(changeEventJson, Event.class);
+        System.out.println(eventId);
+        System.out.println(activityRepository.getOne(eventRepository.getOne(eventId).getActivity().getActivityId()).getActivityId());
+        event.setEventId(eventId);
+        event.getActivity().setActivityId(activityRepository.getOne(eventRepository.getOne(eventId).getActivity().getActivityId()).getActivityId());
 
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        System.out.println(mapper.writeValueAsString(event));
+        eventRepository.save(event);
+        /*if (oldActivity instanceof MedicationActivity) {
+            ((MedicationActivity) oldActivity).getMedication().removalActivityAddedAmount(((MedicationActivity) oldActivity).getTakenMedication());
+        }*/
+        return new ResponseEntity<Object>(new ServiceResponse<Event>("success", event), HttpStatus.OK);
+    }
 
     @PostMapping("/event/delete")
     public ResponseEntity<Object> deleteEvent(@RequestBody String deleteEventJson) throws JsonProcessingException {
@@ -95,7 +103,6 @@ public class CalendarController {
         eventRepository.deleteById(eventToDelete.getEventId());
         return new ResponseEntity<Object>(eventToDelete, HttpStatus.OK);
     }
-
 
     @GetMapping("/calendar/{teamid}/medications")
     public ResponseEntity<Object> getMedications(@PathVariable("teamid") final Integer teamId) {
@@ -117,19 +124,5 @@ public class CalendarController {
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         model.addAttribute("calendarData", mapper.writeValueAsString(team.getEventList()));
         return "calendar";
-    }
-
-
-    @GetMapping("/home")
-    public String calendar(Model model, Principal principal){
-        Set<Team> teamList = null;
-        Optional<Member> member = memberRepository.findByMemberName(principal.getName());
-        if(member.isPresent()){
-            teamList = member.get().getAllTeamsOfMemberSet();
-        }
-        if (teamList != null) {
-            model.addAttribute("teamList", teamList);
-        }
-        return "home";
     }
 }

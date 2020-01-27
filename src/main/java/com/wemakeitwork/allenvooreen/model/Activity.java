@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 @Entity
 @JsonTypeInfo(
@@ -23,12 +25,16 @@ import javax.persistence.InheritanceType;
 public abstract class Activity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonProperty("id")
     private Integer activityId;
 
     @JsonProperty("name")
     private String activityName;
+
+    @OneToOne
+    @JoinColumn(name = "activity_id")
+    private Event event;
 
     public Activity(Integer activityId, String activityName) {
         this.activityId = activityId;
