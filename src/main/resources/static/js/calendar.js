@@ -156,12 +156,16 @@ $(document).ready(function() {
                 });
             },
 
-            // Distinct event colors based on activity.category
+            // Distinct event colors based on event.activity.type
             eventRender: function(event, element) {
-                if (typeof event.activity !== 'undefined') {
-                    if( event.activity.category == "Medisch") {
-                        element.css('background-color', 'green');
+                /*if (event.activity != null) {
+                    if (event.activity.type == "LeisureActivity") {
+                        element.css('background-color', 'lightblue');
                     }
+                } Somehow event.activity is null for MedicationActivity,
+                for demo purposes use this hack to make MedicationActivity lightblue: */
+                if (event.activity == null) {
+                    element.css('background-color', 'lightblue' /*(I still like green better, but I guess majority rule is a thing now...)*/ );
                 }
             },
 
