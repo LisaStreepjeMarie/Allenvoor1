@@ -136,7 +136,7 @@ table tr th {
 
 th, td {
 	font-size: 12pt;
-	vertical-align: middle;
+	vertical-align: top;
 	text-align: left;
 	line-height:135%;
 }
@@ -167,6 +167,12 @@ a:hover {
 h1 {
     font-family: $navbar-brand-font-family;
     font-size: 23pt;
+    color: #0e4171;
+}
+
+h2 {
+    font-family: $navbar-brand-font-family;
+    font-size: 16pt;
     color: #0e4171;
 }
 
