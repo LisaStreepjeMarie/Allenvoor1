@@ -18,13 +18,12 @@
 
         <%@ taglib prefix="mytags" tagdir="/WEB-INF/tags" %>
     </head>
-
     <body class= "webpage">
         <mytags:navbar/>
         <div class= "masthead">
             <div class= "row">
                 <div class= "col-2">
-                    <br>
+                    <br />
                     <h1 class="dropdown-header"><strong>Welkom </h1>
                     <br />
                     <h2 class="dropdown-header"><i class="fa fa-calendar-minus-o" aria-hidden="true"></i> Kalender </h2>
