@@ -34,7 +34,7 @@
                         </c:forEach>
 
                         <form:form action="${pageContext.request.contextPath}/team/addMember" modelAttribute="teamMemberDTO">
-                            <form:input path="teamId" type="hidden" />
+                        <form:input size="30" path="teamId" type="hidden" />
                             <tr>
                                 <td><h5 class="font-weight-light">Nieuw groepslid:</h5></td>
                                 <td>
@@ -55,7 +55,7 @@
                                 </td>
                             </tr>
                         </form:form>
-                     </table>
+                    </table>
                 </div>
             </div>
         </div>
