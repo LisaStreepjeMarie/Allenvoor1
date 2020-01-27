@@ -24,15 +24,16 @@
         <div class= "masthead">
             <div class= "row">
                 <div class= "col-2">
-                    <h2 class="dropdown-header"><strong>Welkom</h2>
+                    <br>
+                    <h1 class="dropdown-header"><strong>Welkom </h1>
                     <br />
-                    <h2 class="dropdown-header"><strong>Kalender</strong> </h2>
+                    <h2 class="dropdown-header"><i class="fa fa-calendar-minus-o" aria-hidden="true"></i> Kalender </h2>
                     <c:forEach items="${teamList}" var="team">
                       <tr>
                          <a class="dropdown-item" href='${pageContext.request.contextPath}/calendar/${team.teamId}'> Kalender ${team.teamName} </a>
                       </tr>
                     </c:forEach>
-                    <h2 class="dropdown-header"><strong> Medicatie </strong></h2>
+                    <h2 class="dropdown-header"><i class=" fa fa-medkit"></i> Medicatie </h2>
                     <c:forEach items="${teamList}" var="team">
                        <tr>
                           <a class="dropdown-item" href='${pageContext.request.contextPath}/medication/${team.teamId}'> Medicatie ${team.teamName} </a>
@@ -40,6 +41,7 @@
                     </c:forEach>
                 </div>
                 <br />
+                <br>
                 <div class="col-8">
                    <div id="calendar" style="width: 45rem;"></div>
                    <div id='datepicker'></div>

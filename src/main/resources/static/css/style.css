@@ -218,16 +218,15 @@ background-image: url('/allenvooreen/images/background.jpg');
 
 .dropdown-header {
     -webkit-font-smoothing: antialiased;
-    font-size: 12pt;
+    font-size: 13pt;
     font-weight: normal;
-    color: #686666;
+    color: #333333;
     line-height: 135%;
 }
 
 .dropdown-item {
     -webkit-font-smoothing: antialiased;
     font-size: 11pt;
-    font-weight: normal;
     color: #686666;
     line-height: 135%;
 }
