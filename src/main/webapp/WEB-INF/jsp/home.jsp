@@ -26,7 +26,7 @@
                     <br />
                     <h1 class="dropdown-header"><strong>Welkom </h1>
                     <br />
-                    <h2 class="dropdown-header"><i class="fa fa-calendar-minus-o" aria-hidden="true"></i> Kalender </h2>
+                    <h2 class="dropdown-header"><i class="fa fa-calendar" aria-hidden="true"></i> Kalender </h2>
                     <c:forEach items="${teamList}" var="team">
                       <tr>
                          <a class="dropdown-item" href='${pageContext.request.contextPath}/calendar/${team.teamId}'> Kalender ${team.teamName} </a>

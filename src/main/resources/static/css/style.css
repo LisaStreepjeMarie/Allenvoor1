@@ -3,7 +3,7 @@ body {
 
     margin: 0px 0px 0px 0px;
     padding: 0px 0px 0px 0px;
-    /*background-image: url("wallpaper.jpg");*/
+    background-image: url("wallpaper.jpg");
     background-repeat: no-repeat;
     background-color: #ffffff; /* fallback for old browsers */
   /* background: -webkit-linear-gradient(right, #76b852, #8DC26F);
