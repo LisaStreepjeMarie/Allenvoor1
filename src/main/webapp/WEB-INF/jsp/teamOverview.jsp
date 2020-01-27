@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
         <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
+
         <%@ taglib prefix="mytags" tagdir="/WEB-INF/tags" %>
     </head>
 
@@ -18,20 +19,19 @@
             <div id="container">
                 <br />
                 <div class="ml-4 mt-4">
-                    <h3 class="font-weight-light">Mijn groepen</h3>
+                    <h1 class="font-weight-light">Mijn groepen</h1>
                     <table>
                         <tr>
-                            <td><h5 class="font-weight-light">Groep</h5></td>
-                            <td colspan="2"><h5 class="font-weight-light">Groepslid</h5></td>
+                            <td><h2 class="font-weight-light">Groep</h2></td>
+                            <td colspan="2"><h2 class="font-weight-light">Groepslid</h2></td>
                         </tr>
                         <c:forEach items="${teamList}" var="team">
                             <tr>
-                                <td><h6 class="font-weight-light"><a href="${pageContext.request.contextPath}/team/select/<c:out value="${team.teamId}" />"><c:out value="${team.teamName}" /></a></h6></td>
-                                <td><h6 class="font-weight-light">
+                                <td><a href="${pageContext.request.contextPath}/team/select/<c:out value="${team.teamId}" />"><c:out value="${team.teamName}" /></a></td>
+                                <td>
                                 <c:forEach items="${team.allMembersInThisTeamSet}" var="member">
                                     <c:out value="${member.memberName}" /><br />
                                 </c:forEach>
-                                </h6>
                                 </td>
                                 <td><input class="btn btn-primary" type="submit" value="Verwijder groep" onclick="window.location='${pageContext.request.contextPath}/team/delete/${team.teamId}'" /></td>
                             </tr>

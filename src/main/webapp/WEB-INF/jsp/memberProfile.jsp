@@ -25,11 +25,11 @@
         <div class= "masthead">
             <div id="container">
                 <br />
-                <div class="mt-4 col-12">
+                <div class="mt-3 col-12">
                     <h3 class="font-weight-light">Hallo ${currentmember.memberName}!</h3>
                     <p class= "font-weight-light">Wijzig hieronder je gebruikersnaam of verwijder je profiel</p>
                 </div>
-                <div class="mt-4 col-12 form-inline toolbox-top clearfix">
+                <div class="mt-3 col-12 form-inline toolbox-top clearfix">
                     <form:form action="${pageContext.request.contextPath}/member/change" modelAttribute="currentmember">
                         <form:input path="memberId" type="hidden" />
                         <table>
