@@ -3,7 +3,7 @@ body {
 
     margin: 0px 0px 0px 0px;
     padding: 0px 0px 0px 0px;
-    /*background-image: url("wallpaper.jpg");*/
+    background-image: url("wallpaper.jpg");
     background-repeat: no-repeat;
     background-color: #ffffff; /* fallback for old browsers */
   /* background: -webkit-linear-gradient(right, #76b852, #8DC26F);
@@ -167,7 +167,6 @@ a:hover {
 h1 {
     font-family: $navbar-brand-font-family;
     font-size: 23pt;
-    color: #0e4171;
 }
 
 h2 {
@@ -217,22 +216,19 @@ background-image: url('/allenvooreen/images/background.jpg');
 .navbar-nav > li > a {padding-top:5px !important; padding-bottom:5px !important;}
 .navbar {max-height:75px !important}
 
-
 .dropdown-header {
     -webkit-font-smoothing: antialiased;
-    font-size: 12pt;
+    font-size: 13pt;
     font-weight: normal;
-    color: #686666;
+    color: #333333;
     line-height: 135%;
 }
-
 
 .dropdown-item {
     -webkit-font-smoothing: antialiased;
     font-size: 11pt;
-    font-weight: normal;
     color: #686666;
     line-height: 135%;
-
 }
+
 

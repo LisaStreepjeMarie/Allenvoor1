@@ -23,9 +23,9 @@
             <div id="container">
                 <br>
                 <div class="mt-3 col-12">
-                    <h1 class="font-weight-light">Overzicht medicatie ${team.teamName}</h1>
+                   <h3 class="font-weight-light"> Overzicht medicatie ${team.teamName}</h3>
                     <table>
-                      <tr><th><th><h5 class="font-weight-light">Naam</h5></th><th><h5 class="font-weight-light">Hoeveelheid</h5></th><th><h5 class="font-weight-light">Beschrijving</h5></th></th>
+                      <th><th><h5 class="font-weight-light">Naam</h5></th><th><h5 class="font-weight-light">Hoeveelheid</h5></th><th><h5 class="font-weight-light">Beschrijving</h5></th></th>
                         <c:forEach items="${medicationList}" var="medication">
                             <tr><h5>
                                 <td><a href="${pageContext.request.contextPath}/medication/select/<c:out value="${medication.medicationId}" />"</a>

@@ -3,9 +3,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <html xmlns:form="http://www.w3.org/1999/xhtml" xmlns:c="">
-    <head>
-        <title>Wijzig de gegevens van een groep</title>
-
+<head>
+    <title>Wijzig de gegevens van een groep</title>
         <!-- Add icon library -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
@@ -20,10 +19,10 @@
             <div id="container">
                 <br />
                 <div class="ml-4 mt-4">
-                    <h1 class="font-weight-light">Wijzig gegevens groep ${team.teamName}</h1>
+                    <h3 class="font-weight-light">Wijzig gegevens groep ${team.teamName}</h3>
                     <table>
                         <tr>
-                             <td colspan="2">Groepsleden:</td>
+                             <td colspan="2"><h5 class="font-weight-light">Groepsleden:</h5></td>
                         </tr>
                          <c:forEach items="${team.allMembersInThisTeamSet}" var="member">
                          <tr>
@@ -32,30 +31,34 @@
                                   onclick="window.location='${pageContext.request.contextPath}/team${team.teamId}/deleteMember/${member.memberId}'" /></td>
                          </tr>
                         </c:forEach>
+                     </table>
 
-                        <form:form action="${pageContext.request.contextPath}/team/addMember" modelAttribute="teamMemberDTO">
-                        <form:input size="30" path="teamId" type="hidden" />
+                     <form:form action="${pageContext.request.contextPath}/team/addMember" modelAttribute="teamMemberDTO">
+                         <form:input path="teamId" type="hidden" />
+                            <table>
                             <tr>
-                                <td>Nieuw groepslid:</td>
+                                <td><h5 class="font-weight-light">Nieuw groepslid:</h5></td>
                                 <td>
-                                   <form:input size="30" path="teamMemberName" /></form>
+                                   <form:input path="teamMemberName" /></form>
                                    <input class="btn btn-primary" type="submit" value="Wijzig" />
                                 </td>
                             </tr>
-                        </form:form>
+                        </table>
+                    </form:form>
 
-                        <form:form action="${pageContext.request.contextPath}/team/change" modelAttribute="team">
-                        <form:input path="teamId" type="hidden" />
-                        <form:input path="allMembersInThisTeamSet" type="hidden" />
+                    <form:form action="${pageContext.request.contextPath}/team/change" modelAttribute="team">
+                    <form:input path="teamId" type="hidden" />
+                    <form:input path="allMembersInThisTeamSet" type="hidden" />
+                        <table>
                             <tr>
-                                <td>Groepsnaam:</td>
+                                <td><h5 class="font-weight-light">Groepsnaam:</h5></td>
                                 <td>
                                     <form:input size="30" path="teamName" value="${team.teamName}" /></form>
                                     <input class="btn btn-primary" type="submit" value="Wijzig" />
                                 </td>
                             </tr>
-                        </form:form>
-                    </table>
+                        </table>
+                     </form:form>
                 </div>
             </div>
         </div>

@@ -26,8 +26,8 @@
             <div id="container">
                 <br />
                 <div class="mt-3 col-12">
-                    <h3 class="font-weight-light">Hallo ${currentmember.memberName}!</h3>
-                    <p class= "font-weight-light">Wijzig hieronder je gebruikersnaam of verwijder je profiel</p>
+                    <h3 class="font-weight-light">Hallo ${currentmember.memberName}!</h3><br>
+                    <h5 class= "font-weight-light">Wijzig hieronder je gebruikersnaam of verwijder je profiel</h5>
                 </div>
                 <div class="mt-3 col-12 form-inline toolbox-top clearfix">
                     <form:form action="${pageContext.request.contextPath}/member/change" modelAttribute="currentmember">
@@ -35,8 +35,8 @@
                         <table>
                             <tr>
                                 <td>
-                                    <h7 class= "font-weight-light">Gebruikersnaam:
-                                        <form:input path="memberName" value="${members.memberName}" /></form> </h7>
+                                    <h7 class= "font-weight-light">Gebruikersnaam:</h7>
+                                        <form:input path="memberName" value="${members.memberName}" /></form>
                                     <input type="submit" class= "btn btn-primary" value="Wijzigen" />
                                 </td>
                             </tr>

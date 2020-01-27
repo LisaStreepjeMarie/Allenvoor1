@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
         <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
+
         <%@ taglib prefix="mytags" tagdir="/WEB-INF/tags" %>
     </head>
 
@@ -17,12 +18,12 @@
         <div class= "masthead">
             <div id="container">
                 <br />
-                <div class="ml-4 mt-4">
-                    <h1 class="font-weight-light">Mijn groepen</h1>
+                <div class="ml-3 mt-3">
+                    <h3 class="font-weight-light">Mijn groepen</h3><br>
                     <table>
                         <tr>
-                            <td><h2 class="font-weight-light">Groep</h2></td>
-                            <td colspan="2"><h2 class="font-weight-light">Groepslid</h2></td>
+                            <td><h5 class="font-weight-light">Groep</h5></td>
+                            <td colspan="2"><h5 class="font-weight-light">Groepslid</h5></td>
                         </tr>
                         <c:forEach items="${teamList}" var="team">
                             <tr>

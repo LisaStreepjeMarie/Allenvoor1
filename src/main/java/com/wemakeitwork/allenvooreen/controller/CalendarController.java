@@ -2,13 +2,14 @@ package com.wemakeitwork.allenvooreen.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wemakeitwork.allenvooreen.model.*;
+import com.wemakeitwork.allenvooreen.repository.ActivityRepository;
+import com.wemakeitwork.allenvooreen.repository.EventRepository;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.wemakeitwork.allenvooreen.model.Event;
 import com.wemakeitwork.allenvooreen.model.Medication;
 import com.wemakeitwork.allenvooreen.model.MedicationActivity;
 import com.wemakeitwork.allenvooreen.model.Team;
-import com.wemakeitwork.allenvooreen.repository.ActivityRepository;
-import com.wemakeitwork.allenvooreen.repository.EventRepository;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import com.wemakeitwork.allenvooreen.service.ServiceResponse;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Controller
@@ -115,5 +117,19 @@ public class CalendarController {
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         model.addAttribute("calendarData", mapper.writeValueAsString(team.getEventList()));
         return "calendar";
+    }
+
+
+    @GetMapping("/home")
+    public String calendar(Model model, Principal principal){
+        Set<Team> teamList = null;
+        Optional<Member> member = memberRepository.findByMemberName(principal.getName());
+        if(member.isPresent()){
+            teamList = member.get().getAllTeamsOfMemberSet();
+        }
+        if (teamList != null) {
+            model.addAttribute("teamList", teamList);
+        }
+        return "home";
     }
 }

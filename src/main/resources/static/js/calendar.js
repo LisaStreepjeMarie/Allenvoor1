@@ -1,5 +1,4 @@
-
-                    // Define contextpath
+// Define contextpath
 var ctx = $('#contextPathHolder').attr('data-contextPath');
 
 // Get csrf token (needed to post a json through spring boot security)
