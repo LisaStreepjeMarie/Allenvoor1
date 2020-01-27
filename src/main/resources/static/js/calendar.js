@@ -75,7 +75,7 @@ $(document).ready(function() {
             eventClick: function(event, element) {
                 // redefines the onclick action of the delete-event button, so that it will point the browser -->
                 // to the /event/delete/{eventId}/{activityId} mapping
-                $('#delete-event').attr('onclick',"window.location='" + ctx + "/event/delete/" + event.id + "/" + event.activity.id + "'");
+                $('#delete-event').attr('onclick',"deleteEvent(" + event.id + ")");
 
                 $("#eventId").val(event.id);
 
@@ -260,13 +260,40 @@ function fillingTheModal() {
     $("#eventDoneDiv").css("display", "");
 }
 
+function deleteEvent(eventId) {
+    urlDeleteEvent = ctx + "/event/delete/";
+
+    eventToDelete = {
+        type: "Event",
+        id: eventId,
+    }
+
+    $.ajax({
+            url: urlDeleteEvent,
+            method: "POST",
+            contentType: "application/json; charset=UTF-8",
+            data: JSON.stringify(eventToDelete),
+            dataType : 'json',
+            async: true,
+            success: function(result) {
+                // Reload events on calendar if new event is written to the database successfully
+                $('#calendar').fullCalendar('refetchEvents');
+            },
+            error : function(e) {
+                alert("Error sending new event with AJAX!")
+                console.log(eventToDelete)
+                console.log("ERROR: ", e);
+            }
+        });
+}
+
 function saveEvent() {
     // If eventId is null, make a new event. Otherwise change it
     console.log(document.getElementById("eventId").value);
     if ( document.getElementById("eventId").value === "" ) {
-        url2 = ctx + "/calendar/new/event"
+        urlVariable = ctx + "/calendar/new/event"
     } else {
-        url2 = ctx + "/calendar/change/event/" + document.getElementById("eventId").value
+        urlVariable = ctx + "/calendar/change/event/" + document.getElementById("eventId").value
     }
 
     // Fill the object currentEvent with values from input fields in the modal
@@ -309,7 +336,7 @@ function saveEvent() {
 
     // Send the currentEvent object to the controller with an AJAX post
     $.ajax({
-        url: url2,
+        url: urlVariable,
         method: "POST",
         contentType: "application/json; charset=UTF-8",
         data: JSON.stringify(eventToSave),
@@ -329,21 +356,21 @@ function saveEvent() {
 
 // This function gets a medicationlist.
 function getMedication(){
-        $.ajax({
-             type:'GET',
-             url: ctx + "/calendar/" + $('#teamId').attr('data-teamId') + '/medications',
-             dataType: 'json',
-             success : function(result) {
-                     List = result.data
-                     $('#medicationChoice').empty();
-                     $('#medicationChoice').append('<option value="">Kies een medicatie</option>');
-                     for (i in List ) {
-                        $('#medicationChoice').append('<option value="' + List[i].id + '">' + List[i].name + '</option>');
-                     }
-                 },
-                 error : function(e) {
-                 alert("error Error ERROR!")
-                 console.log("ERROR: ", e);
-                  }
-          });
-    }
+    $.ajax({
+         type:'GET',
+         url: ctx + "/calendar/" + $('#teamId').attr('data-teamId') + '/medications',
+         dataType: 'json',
+         success : function(result) {
+                 List = result.data
+                 $('#medicationChoice').empty();
+                 $('#medicationChoice').append('<option value="">Kies een medicatie</option>');
+                 for (i in List ) {
+                    $('#medicationChoice').append('<option value="' + List[i].id + '">' + List[i].name + '</option>');
+                 }
+             },
+             error : function(e) {
+             alert("error Error ERROR!")
+             console.log("ERROR: ", e);
+              }
+    });
+}

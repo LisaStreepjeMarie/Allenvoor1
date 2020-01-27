@@ -16,7 +16,6 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
@@ -44,25 +43,6 @@ public class EventController {
     protected String showEventForm(Model model) {
         model.addAttribute("event", new Event());
         return "newEvent";
-    }
-
-    @GetMapping("/event/delete/{eventId}/{activityId}")
-    public String deleteEvent(@PathVariable("eventId") final Integer eventId,
-                              @PathVariable("activityId") final Integer activityId) {
-        Team team = (Team) httpSession.getAttribute("team");
-
-        // Stream to remove the taken amount from the medication if the event is deleted
-        activityRepository.findAll().stream()
-                .filter(x -> x.getActivityId() == activityId)
-                .filter(x -> x instanceof MedicationActivity)
-                .forEach(x -> {
-                    assert ((MedicationActivity) x).getMedication() != null;
-                    ((MedicationActivity) x).getMedication().removalActivityAddedAmount(((MedicationActivity) x).getTakenMedication());
-                });
-
-        eventRepository.deleteById(eventId);
-
-        return "redirect:/calendar/" + team.getTeamId();
     }
 
     //TODO not sure if the mapping works correctly here

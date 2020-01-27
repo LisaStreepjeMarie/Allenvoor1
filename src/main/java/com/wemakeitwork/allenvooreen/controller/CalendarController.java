@@ -5,7 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.wemakeitwork.allenvooreen.model.Event;
 import com.wemakeitwork.allenvooreen.model.Medication;
+import com.wemakeitwork.allenvooreen.model.MedicationActivity;
 import com.wemakeitwork.allenvooreen.model.Team;
+import com.wemakeitwork.allenvooreen.repository.ActivityRepository;
 import com.wemakeitwork.allenvooreen.repository.EventRepository;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
@@ -41,6 +43,8 @@ public class CalendarController {
     @Autowired
     EventRepository eventRepository;
 
+    @Autowired
+    ActivityRepository activityRepository;
 
     @PostMapping("/calendar/new/event")
     public ResponseEntity<Object> newEvent(@RequestBody String newEventJson) throws JsonProcessingException {
@@ -69,6 +73,27 @@ public class CalendarController {
         return new ResponseEntity<Object>(new ServiceResponse<Event>("success",
                 eventRepository.save(changeEvent)), HttpStatus.OK);
     }
+
+
+    @PostMapping("/event/delete")
+    public ResponseEntity<Object> deleteEvent(@RequestBody String deleteEventJson) throws JsonProcessingException {
+        Team team = (Team) httpSession.getAttribute("team");
+
+        Event eventToDelete = mapper.readValue(deleteEventJson, Event.class);
+
+        // Stream to remove the taken amount from the medication if the event is deleted
+        activityRepository.findAll().stream()
+                .filter(x -> x.getActivityId() == eventRepository.getOne(eventToDelete.getEventId()).getActivity().getActivityId())
+                .filter(x -> x instanceof MedicationActivity)
+                .forEach(x -> {
+                    assert ((MedicationActivity) x).getMedication() != null;
+                    ((MedicationActivity) x).getMedication().removalActivityAddedAmount(((MedicationActivity) x).getTakenMedication());
+                });
+
+        eventRepository.deleteById(eventToDelete.getEventId());
+        return new ResponseEntity<Object>(eventToDelete, HttpStatus.OK);
+    }
+
 
     @GetMapping("/calendar/{teamid}/medications")
     public ResponseEntity<Object> getMedications(@PathVariable("teamid") final Integer teamId) {
