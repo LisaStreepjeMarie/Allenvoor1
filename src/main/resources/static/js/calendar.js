@@ -76,7 +76,7 @@ $(document).ready(function() {
             eventClick: function(event, element) {
                 // redefines the onclick action of the delete-event button, so that it will point the browser -->
                 // to the /event/delete/{eventId}/{activityId} mapping
-                $('#delete-event').attr('onclick',"window.location='" + ctx + "/event/delete/" + event.id + "/" + event.activity.id + "'");
+                $('#delete-event').attr('onclick',"deleteEvent(" + event.id + ")");
 
                 $("#eventId").val(event.id);
                 $('#modal-form').attr('action', ctx + "/event/change/" + event.activity.id);
@@ -258,6 +258,32 @@ function fillingTheModal() {
     }
     $("#datetimepickerDone").hide();
     $("#eventDoneDiv").css("display", "");
+}
+
+function deleteEvent(eventId) {
+    urlDeleteEvent = ctx + "/event/delete/";
+
+    eventToDelete = {
+        id: eventId,
+    }
+
+    $.ajax({
+            url: urlDeleteEvent,
+            method: "POST",
+            contentType: "application/json; charset=UTF-8",
+            data: JSON.stringify(eventToDelete),
+            dataType : 'json',
+            async: true,
+            success: function(result) {
+                // Reload events on calendar if new event is written to the database successfully
+                $('#calendar').fullCalendar('refetchEvents');
+            },
+            error : function(e) {
+                alert("Error sending new event with AJAX!")
+                console.log(eventToDelete)
+                console.log("ERROR: ", e);
+            }
+        });
 }
 
 function saveNewEvent() {

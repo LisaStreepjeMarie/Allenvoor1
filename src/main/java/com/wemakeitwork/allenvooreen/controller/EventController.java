@@ -16,9 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
 
 @Controller
 public class EventController {
@@ -43,26 +40,6 @@ public class EventController {
         return "newEvent";
     }
 
-    @GetMapping("/event/delete/{eventId}/{activityId}")
-    public String deleteEvent(@PathVariable("eventId") final Integer eventId,
-                              @PathVariable("activityId") final Integer activityId) {
-        Team team = (Team) httpSession.getAttribute("team");
-
-        Optional<Activity> activity = activityRepository.findById(activityId);
-
-        // If (a medical) event is deleted, takenMedication needs to be readded to amount of available medication. - HK
-        if (activity.get() instanceof MedicationActivity){
-            Medication medication = ((MedicationActivity) activity.get()).getMedication();
-            assert medication != null;
-            medication.removalActivityAddedAmount(((MedicationActivity) activity.get()).getTakenMedication());
-        }
-
-        eventRepository.deleteById(eventId);
-
-        return "redirect:/calendar/" + team.getTeamId();
-    }
-
-
     //TODO not sure if the mapping works correctly here
     protected void newEventWithMedicationActivity(Event event) {
         //tried out a stream to get the correct medication and set medication activity
@@ -74,8 +51,6 @@ public class EventController {
                 .forEach(x -> x.setTakenMedications((MedicationActivity) event.getActivity()));
         event.getTeam().getTeamId();
     }
-
-
 
     // Allow empty string in datefield (i.e. write them as NULL to database)
     @InitBinder

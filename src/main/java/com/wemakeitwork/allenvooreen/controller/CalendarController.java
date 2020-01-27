@@ -3,9 +3,13 @@ package com.wemakeitwork.allenvooreen.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wemakeitwork.allenvooreen.model.*;
+import com.wemakeitwork.allenvooreen.repository.ActivityRepository;
+import com.wemakeitwork.allenvooreen.repository.EventRepository;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +21,8 @@ import java.util.Set;
 
 @Controller
 public class CalendarController {
+    ObjectMapper mapper = new ObjectMapper();
+
     @Autowired
     private HttpSession httpSession;
 
@@ -25,6 +31,12 @@ public class CalendarController {
 
     @Autowired
     TeamRepository teamRepository;
+
+    @Autowired
+    EventRepository eventRepository;
+
+    @Autowired
+    ActivityRepository activityRepository;
 
     @GetMapping("/calendar/{teamId}")
     public String showmyCalender(@PathVariable("teamId") final Integer teamId, Model model, Principal principal)
@@ -37,6 +49,24 @@ public class CalendarController {
         return "calendar";
     }
 
+    @PostMapping("/event/delete")
+    public ResponseEntity<Object> deleteEvent(@RequestBody String deleteEventJson) throws JsonProcessingException {
+        Team team = (Team) httpSession.getAttribute("team");
+
+        Event eventToDelete = mapper.readValue(deleteEventJson, Event.class);
+
+        // Stream to remove the taken amount from the medication if the event is deleted
+        activityRepository.findAll().stream()
+                .filter(x -> x.getActivityId() == eventRepository.getOne(eventToDelete.getEventId()).getActivity().getActivityId())
+                .filter(x -> x instanceof MedicationActivity)
+                .forEach(x -> {
+                    assert ((MedicationActivity) x).getMedication() != null;
+                    ((MedicationActivity) x).getMedication().removalActivityAddedAmount(((MedicationActivity) x).getTakenMedication());
+                });
+
+        eventRepository.deleteById(eventToDelete.getEventId());
+        return new ResponseEntity<Object>(eventToDelete, HttpStatus.OK);
+    }
 
     @GetMapping("/home")
     public String calendar(Model model, Principal principal){
