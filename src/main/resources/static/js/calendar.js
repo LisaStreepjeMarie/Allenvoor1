@@ -80,7 +80,7 @@ $(document).ready(function() {
 
                 $("#eventId").val(event.id);
                 $('#modal-form').attr('action', ctx + "/event/change/" + event.activity.id);
-                $('#save-change-event').attr('action', ctx + "/event/change");
+                $('#save-change-event').attr('onclick', "saveNewEvent()");
                 $('.modal').find('#eventComment').val(event.description);
                 $('.modal').find('#activityCategory').val(event.activity.category);
                 $('.modal').find('#eventName').val(event.title);
@@ -288,8 +288,7 @@ function deleteEvent(eventId) {
 }
 
 function saveNewEvent() {
-    // Fill the object currentEvent with values from input fields in the modal
-    currentEvent = {
+    event = {
         title: document.getElementById("eventName").value,
         start: moment(document.getElementById("eventStartDate").value, "DD-MM-YYYY H:mm").toDate(),
         end: moment(document.getElementById("eventEndDate").value, "DD-MM-YYYY H:mm").toDate(),
@@ -297,10 +296,19 @@ function saveNewEvent() {
         activity: {
             name: document.getElementById("eventName").value,
             category: document.getElementById("activityCategory").value,
-        },
+            },
         team: {
             id: parseInt($('#teamId').attr('data-teamId'), 10),
         }
+    }
+
+    //creating a medicalActivity to ass along
+    medicalActivity = {
+        name: document.getElementById("eventName").value,
+        medication: {
+            medicationname: document.getElementById("medicationChoice").value,
+            },
+        takenmedication: document.getElementById("takenMedication").value,
     }
 
     // Send the currentEvent object to the controller with an AJAX post
@@ -308,7 +316,7 @@ function saveNewEvent() {
         url: ctx + "/calendar/new/event",
         method: "POST",
         contentType: "application/json; charset=UTF-8",
-        data: JSON.stringify(currentEvent),
+        data:  JSON.stringify(event) + "SPLIT" + JSON.stringify(medicalActivity),
         dataType : 'json',
         async: true,
         success: function(result) {
@@ -317,11 +325,12 @@ function saveNewEvent() {
         },
         error : function(e) {
             alert("Error sending new event with AJAX!")
-            console.log(currentEvent)
+            console.log(medicalActivity)
             console.log("ERROR: ", e);
         }
     });
 }
+
 
 // This function gets a medicationlist.
 function getMedication(){

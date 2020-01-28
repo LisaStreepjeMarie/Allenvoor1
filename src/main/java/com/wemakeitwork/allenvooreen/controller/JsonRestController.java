@@ -3,11 +3,9 @@ package com.wemakeitwork.allenvooreen.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wemakeitwork.allenvooreen.model.Activity;
-import com.wemakeitwork.allenvooreen.model.Event;
-import com.wemakeitwork.allenvooreen.model.Team;
+import com.wemakeitwork.allenvooreen.model.*;
 import com.wemakeitwork.allenvooreen.repository.EventRepository;
-import com.wemakeitwork.allenvooreen.model.Medication;
+import com.wemakeitwork.allenvooreen.repository.MedicationRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import com.wemakeitwork.allenvooreen.service.ServiceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +18,11 @@ import java.util.stream.Collectors;
 
 @RestController
 public class JsonRestController {
+
+    ObjectMapper mapper = new ObjectMapper();
+
+    @Autowired
+    MedicationRepository medicationRepository;
 
     @Autowired
     TeamRepository teamRepository;
@@ -42,38 +45,28 @@ public class JsonRestController {
                 .collect(Collectors.toList());
     }
 
+
     @PostMapping("/calendar/new/event")
     public ResponseEntity<Object> addEvent(@RequestBody String json) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode jsonNode = new ObjectMapper().readTree(json);
+        //splitting the json between objects
+        String[] jsonSplit = json.split("SPLIT",2);
 
-        Activity activity = new Activity();
-        activity.setActivityName(jsonNode.get("activity").get("name").textValue());
-        activity.setActivityCategory(jsonNode.get("activity").get("category").textValue());
-        Team team = new Team();
-        team.setTeamId(jsonNode.get("team").get("id").intValue());
+        //creating an event from the first part of the json string
+        Event event = mapper.readValue(jsonSplit[0], Event.class);
 
-        Event event = mapper.readValue(json, Event.class);
-        event.setActivity(activity);
-        event.setTeam(team);
+        //creating a medicationActivity if it's needed from the second part
+        // will look into setting takenmedication in the event model to be triggered when a medicationActivity is being added to an event
+        if(event.getActivity().getActivityCategory().equals("Medisch")){
+            MedicationActivity medicationActivity = mapper.readValue(jsonSplit[1], MedicationActivity.class);
+            medicationRepository.findAll().stream()
+                    .filter(x -> x.getMedicationName().equals(medicationActivity.getMedication().getMedicationName()))
+                    .forEach(x -> medicationActivity.setMedication(x));
+            medicationActivity.getMedication().setTakenMedications(medicationActivity);
+            event.setActivity(medicationActivity);
+        }
 
         eventRepository.save(event);
-
         ServiceResponse<Event> response = new ServiceResponse<Event>("success", event);
-        return new ResponseEntity<Object>(response, HttpStatus.OK);
-    }
-
-    @PostMapping("/calendar/change/eventdate")
-    public ResponseEntity<Object> changeEventDate(@RequestBody String json) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        Event newDates = mapper.readValue(json, Event.class);
-
-        Event event = eventRepository.getOne(newDates.getEventId());
-        event.setEventStartDate(newDates.getEventStartDate());
-        event.setEventEndDate(newDates.getEventEndDate());
-        eventRepository.save(event);
-
-        ServiceResponse<Event> response = new ServiceResponse<Event>("success", newDates);
         return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
 
