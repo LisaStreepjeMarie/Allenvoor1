@@ -39,7 +39,7 @@ $(document).ready(function() {
         // Loads fullcalendar
         $('#calendar').fullCalendar({
             themeSystem: 'bootstrap4',
-            timeZone: 'Europe/Amsterdam',
+            timezone: 'local',
             timeFormat: 'H(:mm)',
             locale: 'nl',
 
@@ -62,9 +62,9 @@ $(document).ready(function() {
                 $(".fc-highlight").css("background", "purple");
 
                 $('#save-change-event').attr('onclick', "saveNewEvent()");
-                
-                $('.modal').find('#eventStartDate').val(moment(start).add(1, "hours").format('DD-MM-YYYY H:mm Z'));
-                $('.modal').find('#eventEndDate').val(moment(end).add(1, "hours").format('DD-MM-YYYY H:mm Z'));
+
+                $('.modal').find('#eventStartDate').val(moment(start).format('DD-MM-YYYY H:mm'));
+                $('.modal').find('#eventEndDate').val(moment(end).format('DD-MM-YYYY H:mm'));
 
                 document.getElementById("modal-title").innerHTML = "Maak nieuwe afspraak";
                 document.getElementById("save-change-event").innerHTML = "Maak afspraak";
@@ -89,8 +89,8 @@ $(document).ready(function() {
                 fillingTheModal();
                 showMedicationAmount(event, element);
 
-                $('.modal').find('#eventStartDate').val(moment(event.start).add(1, "hours").format('DD-MM-YYYY H:mm Z'));
-                $('.modal').find('#eventEndDate').val(moment(event.end).add(1, "hours").format('DD-MM-YYYY H:mm Z'));
+                $('.modal').find('#eventStartDate').val(moment(event.start).format('DD-MM-YYYY H:mm'));
+                $('.modal').find('#eventEndDate').val(moment(event.end).format('DD-MM-YYYY H:mm'));
 
                 // Redefines the modal (popup) buttons with the appropriate button text
                 document.getElementById("modal-title").innerHTML = "Wijzig of verwijder afspraak";
@@ -381,22 +381,22 @@ function saveChangedEvent(eventId) {
 
 // This function gets a medicationlist.
 function getMedication(){
-        $.ajax({
-             type:'GET',
-             url: ctx + "/calendar/" + $('#teamId').attr('data-teamId') + '/medications',
-             dataType: 'json',
-             success : function(result) {
-                     List = result.data
-                     $('#medicationChoice').empty();
-                     $('#medicationChoice').append('<option value="">Kies een medicatie</option>');
-                     for (i in List ) {
-                        $('#medicationChoice').append('<option value="' + List[i].medicationname + '">' + List[i].medicationname + '</option>');
-                     }
-                 },
-                 error : function(e) {
-                 alert("error Error ERROR!")
-                 con
-                 sole.log("ERROR: ", e);
-                  }
-          });
-    }
+    $.ajax({
+         type:'GET',
+         url: ctx + "/calendar/" + $('#teamId').attr('data-teamId') + '/medications',
+         dataType: 'json',
+         success : function(result) {
+                 List = result.data
+                 $('#medicationChoice').empty();
+                 $('#medicationChoice').append('<option value="">Kies een medicatie</option>');
+                 for (i in List ) {
+                    $('#medicationChoice').append('<option value="' + List[i].medicationname + '">' + List[i].medicationname + '</option>');
+                 }
+             },
+             error : function(e) {
+             alert("error Error ERROR!")
+             con
+             sole.log("ERROR: ", e);
+              }
+    });
+}
