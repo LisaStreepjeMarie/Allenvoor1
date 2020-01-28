@@ -293,6 +293,7 @@ function saveNewEvent() {
         title: document.getElementById("eventName").value,
         start: moment(document.getElementById("eventStartDate").value, "DD-MM-YYYY H:mm").toDate(),
         end: moment(document.getElementById("eventEndDate").value, "DD-MM-YYYY H:mm").toDate(),
+        donedate: moment(document.getElementById("eventDoneDate").value, "DD-MM-YYYY H:mm").toDate(),
         description: document.getElementById("eventComment").value,
         activity: {
             name: document.getElementById("eventName").value,
@@ -339,6 +340,7 @@ function saveChangedEvent(eventId) {
         title: document.getElementById("eventName").value,
         start: moment(document.getElementById("eventStartDate").value, "DD-MM-YYYY H:mm").toDate(),
         end: moment(document.getElementById("eventEndDate").value, "DD-MM-YYYY H:mm").toDate(),
+        donedate: moment(document.getElementById("eventDoneDate").value, "DD-MM-YYYY H:mm").toDate(),
         description: document.getElementById("eventComment").value,
         activity: {
             name: document.getElementById("eventName").value,

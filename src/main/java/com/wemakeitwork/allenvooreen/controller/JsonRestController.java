@@ -54,7 +54,7 @@ public class JsonRestController {
     public ResponseEntity<Object> addEvent(@RequestBody String json) throws JsonProcessingException {
         //splitting the json between objects
         String[] jsonSplit = json.split("SPLIT",2);
-
+        System.out.println(json);
         //creating an event from the first part of the json string
         Event event = mapper.readValue(jsonSplit[0], Event.class);
 
