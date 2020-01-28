@@ -76,4 +76,18 @@ public class JsonRestController {
         return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
 
+    @PostMapping("/calendar/change/eventdate")
+    public ResponseEntity<Object> changeEventDate(@RequestBody String json) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        Event newDates = mapper.readValue(json, Event.class);
+        Event event = eventRepository.getOne(newDates.getEventId());
+        event.setEventStartDate(newDates.getEventStartDate());
+        event.setEventEndDate(newDates.getEventEndDate());
+        eventRepository.save(event);
+        ServiceResponse<Event> response = new ServiceResponse<Event>("success", newDates);
+        return new ResponseEntity<Object>(response, HttpStatus.OK);
+    }
+
+
+
 }
