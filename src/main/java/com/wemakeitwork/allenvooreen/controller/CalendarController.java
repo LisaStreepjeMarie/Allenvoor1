@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.wemakeitwork.allenvooreen.model.Event;
+import com.wemakeitwork.allenvooreen.model.LeisureActivity;
 import com.wemakeitwork.allenvooreen.model.Medication;
 import com.wemakeitwork.allenvooreen.model.MedicationActivity;
 import com.wemakeitwork.allenvooreen.model.Team;
@@ -71,13 +72,7 @@ public class CalendarController {
                                                  @PathVariable("eventId") final Integer eventId) throws JsonProcessingException {
         System.out.println("json activityid: " + changeEventJson);
         Event event = mapper.readValue(changeEventJson, Event.class);
-        System.out.println(eventId);
-        System.out.println(activityRepository.getOne(eventRepository.getOne(eventId).getActivity().getActivityId()).getActivityId());
-        event.setEventId(eventId);
-        event.getActivity().setActivityId(activityRepository.getOne(eventRepository.getOne(eventId).getActivity().getActivityId()).getActivityId());
 
-        mapper.enable(SerializationFeature.INDENT_OUTPUT);
-        System.out.println(mapper.writeValueAsString(event));
         eventRepository.save(event);
         /*if (oldActivity instanceof MedicationActivity) {
             ((MedicationActivity) oldActivity).getMedication().removalActivityAddedAmount(((MedicationActivity) oldActivity).getTakenMedication());
@@ -92,13 +87,13 @@ public class CalendarController {
         Event eventToDelete = mapper.readValue(deleteEventJson, Event.class);
 
         // Stream to remove the taken amount from the medication if the event is deleted
-        activityRepository.findAll().stream()
+/*        activityRepository.findAll().stream()
                 .filter(x -> x.getActivityId() == eventRepository.getOne(eventToDelete.getEventId()).getActivity().getActivityId())
                 .filter(x -> x instanceof MedicationActivity)
                 .forEach(x -> {
                     assert ((MedicationActivity) x).getMedication() != null;
                     ((MedicationActivity) x).getMedication().removalActivityAddedAmount(((MedicationActivity) x).getTakenMedication());
-                });
+                });*/
 
         eventRepository.deleteById(eventToDelete.getEventId());
         return new ResponseEntity<Object>(eventToDelete, HttpStatus.OK);
@@ -117,12 +112,14 @@ public class CalendarController {
         httpSession.setAttribute("team", team);
         Set<Team> teamList = memberRepository.findByMemberName(principal.getName()).get().getAllTeamsOfMemberSet();
         model.addAttribute("teamList", teamList);
-        for (Medication medication : team.getMedicationList()) {
-            System.out.println("MEDICATIE: " + medication.getMedicationName());
-        }
+
+        List<Event> sourceCalendarData = team.getEventList();
+
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
-        model.addAttribute("calendarData", mapper.writeValueAsString(team.getEventList()));
+        String calendarData = mapper.writeValueAsString(sourceCalendarData);
+
+        model.addAttribute("calendarData", calendarData);
         return "calendar";
     }
 }

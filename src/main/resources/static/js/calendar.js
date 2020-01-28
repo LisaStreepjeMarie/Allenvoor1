@@ -78,11 +78,11 @@ $(document).ready(function() {
                 // to the /event/delete/{eventId}/{activityId} mapping
                 $('#delete-event').attr('onclick',"deleteEvent(" + event.id + ")");
 
-                $("#eventId").val(event.id);
-                $('#modal-form').attr('action', ctx + "/event/change/" + event.activity.id);
+                $("#eventId").val(event.id);/*
+                $('#modal-form').attr('action', ctx + "/event/change/" + event.activity.id);*/
                 $('#save-change-event').attr('onclick', "saveChangedEvent(" + event.id + ")");
                 $('.modal').find('#eventComment').val(event.description);
-                $('.modal').find('#activityCategory').val(event.activity.category);
+/*                $('.modal').find('#activityCategory').val(event.activity.category);*/
                 $('.modal').find('#eventName').val(event.title);
 
                 // Shows modal fields based on the event.activity.category
@@ -249,7 +249,7 @@ function hideAllModalInputFields() {
 function showMedicationAmount(event, element){
     if ($('.modal').find('#activityCategory').val() == "Medisch")
       getMedication()
-      $('.modal').find('#takenMedication').val(event.activity.takenmedication);
+      /*$('.modal').find('#takenMedication').val(event.activity.takenmedication);*/
 }
 
 // This function fills the modal with event info if it exist
