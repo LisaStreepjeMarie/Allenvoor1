@@ -246,6 +246,7 @@ function hideAllModalInputFields() {
 //this shows the medication amount when an excisting event is chosen
 function showMedicationAmount(event, element){
     if ($('.modal').find('#activityCategory').val() == "Medisch")
+      getMedication()
       $('.modal').find('#takenMedication').val(event.activity.takenmedication);
 }
 
