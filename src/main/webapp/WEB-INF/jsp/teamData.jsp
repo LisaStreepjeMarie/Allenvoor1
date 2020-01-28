@@ -40,7 +40,7 @@
                                 <td><h5 class="font-weight-light">Nieuw groepslid:</h5></td>
                                 <td>
                                    <form:input path="teamMemberName" /></form>
-                                   <input class="btn btn-primary" type="submit" value="Wijzig" />
+                                   <input class="btn btn-primary" type="submit" value="Voeg toe" />
                                 </td>
                             </tr>
                         </table>
