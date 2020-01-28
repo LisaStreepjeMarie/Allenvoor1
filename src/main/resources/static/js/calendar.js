@@ -300,50 +300,33 @@ function saveNewEvent() {
     }
 
     // Fill the object currentEvent with values from input fields in the modal
-    if ($("#activityCategory").val() === "Medisch") {  // TODO: needs to be fetched using instanceof
-        eventToSave = {
-            type: "Event",
-            title: document.getElementById("eventName").value,
-            start: moment(document.getElementById("eventStartDate").value, "DD-MM-YYYY H:mm").toDate(),
-            end: moment(document.getElementById("eventEndDate").value, "DD-MM-YYYY H:mm").toDate(),
-            activity: {
-                type: "MedicationActivity",
-                name: document.getElementById("eventName").value,
-                takenmedication: document.getElementById("takenMedication").value,
-                medication: {
-                    id: document.getElementById("medicationChoice").value,
-                    amount: document.getElementById("takenMedication").value,
-                },
-            },
-            team: {
-                id: parseInt($('#teamId').attr('data-teamId'), 10),
-            }
-        }
+
+    if ($("#activityCategory").val() === "Medisch") {
+        activityType = "MedicationActivity"
     } else if ($("#activityCategory").val() === "Vrije tijd") {
-            eventToSave = {
-            type: "Event",
-            title: document.getElementById("eventName").value,
-            start: moment(document.getElementById("eventStartDate").value, "DD-MM-YYYY H:mm").toDate(),
-            end: moment(document.getElementById("eventEndDate").value, "DD-MM-YYYY H:mm").toDate(),
-            comment: document.getElementById("eventComment").value,
-            activity: {
-                type: "LeisureActivity",
-                name: document.getElementById("eventName").value, //TODO: duplicate data; same as eventName
-                comment: document.getElementById("eventComment").value, // TODO: duplicate data; same as eventComment
-            },
-            team: {
-                id: parseInt($('#teamId').attr('data-teamId'), 10),
-            }
-        }
+        activityType = "LeisureActivity"
     }
 
-    //creating a medicalActivity to ass along
-    medicalActivity = {
-        name: document.getElementById("eventName").value,
-        medication: {
-            medicationname: document.getElementById("medicationChoice").value,
+    console.log(activityType);
+    eventToSave = {
+        type: "Event",
+        title: document.getElementById("eventName").value,
+        start: moment(document.getElementById("eventStartDate").value, "DD-MM-YYYY H:mm").toDate(),
+        end: moment(document.getElementById("eventEndDate").value, "DD-MM-YYYY H:mm").toDate(),
+        comment: document.getElementById("eventComment").value,
+        activity: {
+            type: activityType,
+            name: document.getElementById("eventName").value,
+            takenmedication: document.getElementById("takenMedication").value,
+            comment: document.getElementById("eventComment").value,
+            medication: {
+                id: document.getElementById("medicationChoice").value,
+                amount: document.getElementById("takenMedication").value,
             },
-        takenmedication: document.getElementById("takenMedication").value,
+        },
+        team: {
+            id: parseInt($('#teamId').attr('data-teamId'), 10),
+        }
     }
 
     // Send the currentEvent object to the controller with an AJAX post
@@ -351,7 +334,7 @@ function saveNewEvent() {
         url: urlVariable,
         method: "POST",
         contentType: "application/json; charset=UTF-8",
-        data:  JSON.stringify(eventToSave) + "SPLIT" + JSON.stringify(medicalActivity),
+        data:  JSON.stringify(eventToSave),
         dataType : 'json',
         async: true,
         success: function(result) {

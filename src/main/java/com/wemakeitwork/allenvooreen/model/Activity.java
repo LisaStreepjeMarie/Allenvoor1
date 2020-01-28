@@ -25,7 +25,7 @@ import javax.persistence.OneToOne;
 public abstract class Activity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     @JsonProperty("id")
     private Integer activityId;
 
