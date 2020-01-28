@@ -80,7 +80,7 @@ $(document).ready(function() {
 
                 $("#eventId").val(event.id);
                 $('#modal-form').attr('action', ctx + "/event/change/" + event.activity.id);
-                $('#save-change-event').attr('action', ctx + "/event/change");
+                $('#save-change-event').attr('onclick', "saveChangedEvent(" + event.id + ")");
                 $('.modal').find('#eventComment').val(event.description);
                 $('.modal').find('#activityCategory').val(event.activity.category);
                 $('.modal').find('#eventName').val(event.title);
@@ -289,6 +289,44 @@ function deleteEvent(eventId) {
 function saveNewEvent() {
     // Fill the object currentEvent with values from input fields in the modal
     currentEvent = {
+        id: event.id,
+        title: document.getElementById("eventName").value,
+        start: moment(document.getElementById("eventStartDate").value, "DD-MM-YYYY H:mm").toDate(),
+        end: moment(document.getElementById("eventEndDate").value, "DD-MM-YYYY H:mm").toDate(),
+        description: document.getElementById("eventComment").value,
+        activity: {
+            name: document.getElementById("eventName").value,
+            category: document.getElementById("activityCategory").value,
+        },
+        team: {
+            id: parseInt($('#teamId').attr('data-teamId'), 10),
+        }
+    }
+
+    // Send the currentEvent object to the controller with an AJAX post
+    $.ajax({
+        url: ctx + "/calendar/new/event",
+        method: "POST",
+        contentType: "application/json; charset=UTF-8",
+        data: JSON.stringify(currentEvent),
+        dataType : 'json',
+        async: true,
+        success: function(result) {
+            // Reload events on calendar if new event is written to the database successfully
+            $('#calendar').fullCalendar('refetchEvents');
+        },
+        error : function(e) {
+            alert("Error sending new event with AJAX!")
+            console.log(currentEvent)
+            console.log("ERROR: ", e);
+        }
+    });
+}
+
+function saveChangedEvent(eventId) {
+    // Fill the object currentEvent with values from input fields in the modal
+    currentEvent = {
+        id: eventId,
         title: document.getElementById("eventName").value,
         start: moment(document.getElementById("eventStartDate").value, "DD-MM-YYYY H:mm").toDate(),
         end: moment(document.getElementById("eventEndDate").value, "DD-MM-YYYY H:mm").toDate(),
