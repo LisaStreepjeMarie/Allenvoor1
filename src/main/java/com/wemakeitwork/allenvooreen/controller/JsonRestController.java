@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wemakeitwork.allenvooreen.model.*;
+import com.wemakeitwork.allenvooreen.repository.ActivityRepository;
 import com.wemakeitwork.allenvooreen.repository.EventRepository;
 import com.wemakeitwork.allenvooreen.repository.MedicationRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
@@ -20,6 +21,9 @@ import java.util.stream.Collectors;
 public class JsonRestController {
 
     ObjectMapper mapper = new ObjectMapper();
+
+    @Autowired
+    ActivityRepository activityRepository;
 
     @Autowired
     MedicationRepository medicationRepository;
@@ -53,6 +57,13 @@ public class JsonRestController {
 
         //creating an event from the first part of the json string
         Event event = mapper.readValue(jsonSplit[0], Event.class);
+
+        if (event.getEventId() != null){
+            eventRepository.findById(event.getEventId()).stream()
+                    .filter(x -> x.getActivity() instanceof MedicationActivity)
+                    .forEach(x -> ((MedicationActivity) x.getActivity()).getMedication().removalActivityAddedAmount(
+                            ((MedicationActivity) x.getActivity()).getTakenMedication()));
+        }
 
         //creating a medicationActivity if it's needed from the second part
         // will look into setting takenmedication in the event model to be triggered when a medicationActivity is being added to an event
