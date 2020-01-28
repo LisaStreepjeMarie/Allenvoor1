@@ -12,6 +12,8 @@
         <link rel="shortcut icon" href="${pageContext.request.contextPath}/images/favicon.ico" type="image/x-icon" />
         <title>Maak een nieuwe gebruiker aan</title>
 
+        <script src="${pageContext.request.contextPath}/webjars/jquery/3.4.1/jquery.min.js"></script>
+
         <!-- Bootstrap core CSS -->
         <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
         <script src="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>
@@ -59,9 +61,6 @@
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Inloggen</button>
                 <p class="mt-5 mb-3 text-muted">&copy; 2019 Allenvooreen</p>
             </form>
-
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-        <script src="${contextPath}/resources/js/bootstrap.min.js"></script>
     </body>
 </html>
 
