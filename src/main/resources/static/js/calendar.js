@@ -39,7 +39,7 @@ $(document).ready(function() {
         // Loads fullcalendar
         $('#calendar').fullCalendar({
             themeSystem: 'bootstrap4',
-            timeZone: 'Europe/Amsterdam',
+            timezone: 'local',
             timeFormat: 'H(:mm)',
             locale: 'nl',
 
@@ -58,11 +58,13 @@ $(document).ready(function() {
 
             // This function is executed when an empty date/time is clicked
             select: function(start, end) {
-                $("#eventId").val("");
 
                 $(".fc-highlight").css("background", "purple");
-                $('.modal').find('#eventStartDate').val(moment(start).add(1, "hours").format('DD-MM-YYYY H:mm'));
-                $('.modal').find('#eventEndDate').val(moment(end).add(1, "hours").format('DD-MM-YYYY H:mm'));
+
+                $('#save-change-event').attr('onclick', "saveNewEvent()");
+
+                $('.modal').find('#eventStartDate').val(moment(start).format('DD-MM-YYYY H:mm'));
+                $('.modal').find('#eventEndDate').val(moment(end).format('DD-MM-YYYY H:mm'));
 
                 document.getElementById("modal-title").innerHTML = "Maak nieuwe afspraak";
                 document.getElementById("save-change-event").innerHTML = "Maak afspraak";
@@ -77,17 +79,18 @@ $(document).ready(function() {
                 $('#delete-event').attr('onclick',"deleteEvent(" + event.id + ")");
 
                 $("#eventId").val(event.id);
-
-                $('.modal').find('#eventComment').val(event.activity.comment);
-                $('.modal').find('#activityCategory').val(event.activity.type); //TODO: doesn't show correct value because activityCategory is not an attribute anymore, it's the actual subclass itself
+                $('#modal-form').attr('action', ctx + "/event/change/" + event.activity.id);
+                $('#save-change-event').attr('onclick', "saveChangedEvent(" + event.id + ")");
+                $('.modal').find('#eventComment').val(event.description);
+                $('.modal').find('#activityCategory').val(event.activity.category);
                 $('.modal').find('#eventName').val(event.title);
 
                 // Shows modal fields based on the event.activity.category
                 fillingTheModal();
                 showMedicationAmount(event, element);
 
-                $('.modal').find('#eventStartDate').val(moment(event.start).add(1, "hours").format('DD-MM-YYYY H:mm'));
-                $('.modal').find('#eventEndDate').val(moment(event.end).add(1, "hours").format('DD-MM-YYYY H:mm'));
+                $('.modal').find('#eventStartDate').val(moment(event.start).format('DD-MM-YYYY H:mm'));
+                $('.modal').find('#eventEndDate').val(moment(event.end).format('DD-MM-YYYY H:mm'));
 
                 // Redefines the modal (popup) buttons with the appropriate button text
                 document.getElementById("modal-title").innerHTML = "Wijzig of verwijder afspraak";
@@ -105,7 +108,6 @@ $(document).ready(function() {
                 // Puts needed fullcalendar event.data attributes into an object to pass to the REST api
                 // (for resizing and dragging an event we only need to know: a. which event, and b. what are the new dates.
                 currentEvent = {
-                    type: "Event",
                     id: event.id,
                     start: event.start,
                     end: event.end,
@@ -133,7 +135,6 @@ $(document).ready(function() {
             // TODO: this code (along with eventDrop) is a prime candidate for refactoring as they are duplicates
             eventResize: function(event, delta) {
                 currentEvent = {
-                    type: "Event",
                     id: event.id,
                     start: event.start,
                     end: event.end,
@@ -156,16 +157,12 @@ $(document).ready(function() {
                 });
             },
 
-            // Distinct event colors based on event.activity.type
+            // Distinct event colors based on activity.category
             eventRender: function(event, element) {
-                /*if (event.activity != null) {
-                    if (event.activity.type == "LeisureActivity") {
-                        element.css('background-color', 'lightblue');
+                if (typeof event.activity !== 'undefined') {
+                    if( event.activity.category == "Medisch") {
+                        element.css('background-color', '#98639C');
                     }
-                } Somehow event.activity is null for MedicationActivity,
-                for demo purposes use this hack to make MedicationActivity lightblue: */
-                if (event.activity == null) {
-                    element.css('background-color', 'lightblue' /*(I still like green better, but I guess majority rule is a thing now...)*/ );
                 }
             },
 
@@ -249,6 +246,7 @@ function hideAllModalInputFields() {
 //this shows the medication amount when an excisting event is chosen
 function showMedicationAmount(event, element){
     if ($('.modal').find('#activityCategory').val() == "Medisch")
+      getMedication()
       $('.modal').find('#takenMedication').val(event.activity.takenmedication);
 }
 
@@ -337,12 +335,67 @@ function saveEvent() {
         }
     }
 
+    //creating a medicalActivity to ass along
+    medicalActivity = {
+        name: document.getElementById("eventName").value,
+        medication: {
+            medicationname: document.getElementById("medicationChoice").value,
+            },
+        takenmedication: document.getElementById("takenMedication").value,
+    }
+
     // Send the currentEvent object to the controller with an AJAX post
     $.ajax({
         url: urlVariable,
         method: "POST",
         contentType: "application/json; charset=UTF-8",
-        data: JSON.stringify(eventToSave),
+        data:  JSON.stringify(eventToSave) + "SPLIT" + JSON.stringify(medicalActivity),
+        dataType : 'json',
+        async: true,
+        success: function(result) {
+            // Reload events on calendar if new event is written to the database successfully
+            $('#calendar').fullCalendar('refetchEvents');
+        },
+        error : function(e) {
+            alert("Error sending new event with AJAX!")
+            console.log(currentEvent)
+            console.log("ERROR: ", e);
+        }
+    });
+}
+
+function saveChangedEvent(eventId) {
+    // Fill the object currentEvent with values from input fields in the modal
+    currentEvent = {
+        id: eventId,
+        title: document.getElementById("eventName").value,
+        start: moment(document.getElementById("eventStartDate").value, "DD-MM-YYYY H:mm").toDate(),
+        end: moment(document.getElementById("eventEndDate").value, "DD-MM-YYYY H:mm").toDate(),
+        donedate: moment(document.getElementById("eventDoneDate").value, "DD-MM-YYYY H:mm").toDate(),
+        description: document.getElementById("eventComment").value,
+        activity: {
+            name: document.getElementById("eventName").value,
+            category: document.getElementById("activityCategory").value,
+        },
+        team: {
+            id: parseInt($('#teamId').attr('data-teamId'), 10),
+        }
+    }
+
+    //creating a medicalActivity to ass along
+    medicalActivity = {
+        name: document.getElementById("eventName").value,
+        medication: {
+            medicationname: document.getElementById("medicationChoice").value,
+            },
+        takenmedication: document.getElementById("takenMedication").value,
+    }
+    // Send the currentEvent object to the controller with an AJAX post
+    $.ajax({
+        url: ctx + "/calendar/new/event",
+        method: "POST",
+        contentType: "application/json; charset=UTF-8",
+        data:  JSON.stringify(currentEvent) + "SPLIT" + JSON.stringify(medicalActivity),
         dataType : 'json',
         async: true,
         success: function(result) {
@@ -368,12 +421,13 @@ function getMedication(){
                  $('#medicationChoice').empty();
                  $('#medicationChoice').append('<option value="">Kies een medicatie</option>');
                  for (i in List ) {
-                    $('#medicationChoice').append('<option value="' + List[i].id + '">' + List[i].name + '</option>');
+                    $('#medicationChoice').append('<option value="' + List[i].medicationname + '">' + List[i].medicationname + '</option>');
                  }
              },
              error : function(e) {
              alert("error Error ERROR!")
-             console.log("ERROR: ", e);
+             con
+             sole.log("ERROR: ", e);
               }
     });
 }
