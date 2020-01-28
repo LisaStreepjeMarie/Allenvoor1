@@ -86,6 +86,11 @@ public class CalendarController {
             teamList = member.get().getAllTeamsOfMemberSet();
         }
         if (teamList != null) {
+            ArrayList<Team> sortedList = (ArrayList<Team>) teamList.stream()
+                    .sorted(Comparator.comparing(Team::getTeamName))
+                    .collect(Collectors.toList());
+
+            sortedList.forEach(x -> System.out.println(x.getTeamName()));
             model.addAttribute("teamList", teamList);
         }
         return "home";
