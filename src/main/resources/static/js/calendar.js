@@ -80,7 +80,7 @@ $(document).ready(function() {
 
                 $("#eventId").val(event.id);
                 $('#modal-form').attr('action', ctx + "/event/change/" + event.activity.id);
-                $('#save-change-event').attr('onclick', "saveNewEvent()");
+                $('#save-change-event').attr('onclick', "saveChangedEvent(" + event.id + ")");
                 $('.modal').find('#eventComment').val(event.description);
                 $('.modal').find('#activityCategory').val(event.activity.category);
                 $('.modal').find('#eventName').val(event.title);
@@ -246,7 +246,6 @@ function hideAllModalInputFields() {
 //this shows the medication amount when an excisting event is chosen
 function showMedicationAmount(event, element){
     if ($('.modal').find('#activityCategory').val() == "Medisch")
-      getMedication()
       $('.modal').find('#takenMedication').val(event.activity.takenmedication);
 }
 
@@ -288,7 +287,8 @@ function deleteEvent(eventId) {
 }
 
 function saveNewEvent() {
-    event = {
+    // Fill the object currentEvent with values from input fields in the modal
+    currentEvent = {
         title: document.getElementById("eventName").value,
         start: moment(document.getElementById("eventStartDate").value, "DD-MM-YYYY H:mm").toDate(),
         end: moment(document.getElementById("eventEndDate").value, "DD-MM-YYYY H:mm").toDate(),
@@ -296,7 +296,7 @@ function saveNewEvent() {
         activity: {
             name: document.getElementById("eventName").value,
             category: document.getElementById("activityCategory").value,
-            },
+        },
         team: {
             id: parseInt($('#teamId').attr('data-teamId'), 10),
         }
@@ -325,12 +325,11 @@ function saveNewEvent() {
         },
         error : function(e) {
             alert("Error sending new event with AJAX!")
-            console.log(medicalActivity)
+            console.log(currentEvent)
             console.log("ERROR: ", e);
         }
     });
 }
-
 
 // This function gets a medicationlist.
 function getMedication(){
