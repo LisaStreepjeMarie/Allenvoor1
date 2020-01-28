@@ -161,7 +161,7 @@ $(document).ready(function() {
             eventRender: function(event, element) {
                 if (typeof event.activity !== 'undefined') {
                     if( event.activity.category == "Medisch") {
-                        element.css('background-color', 'purple');
+                        element.css('background-color', '#98639C');
                     }
                 }
             },
