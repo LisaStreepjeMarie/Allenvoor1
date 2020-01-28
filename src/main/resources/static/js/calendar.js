@@ -108,6 +108,7 @@ $(document).ready(function() {
                 // Puts needed fullcalendar event.data attributes into an object to pass to the REST api
                 // (for resizing and dragging an event we only need to know: a. which event, and b. what are the new dates.
                 currentEvent = {
+                    type: "Event",
                     id: event.id,
                     start: event.start,
                     end: event.end,
@@ -135,6 +136,7 @@ $(document).ready(function() {
             // TODO: this code (along with eventDrop) is a prime candidate for refactoring as they are duplicates
             eventResize: function(event, delta) {
                 currentEvent = {
+                    type: "Event",
                     id: event.id,
                     start: event.start,
                     end: event.end,
@@ -159,11 +161,11 @@ $(document).ready(function() {
 
             // Distinct event colors based on activity.category
             eventRender: function(event, element) {
-                if (typeof event.activity !== 'undefined') {
+                /*if (typeof event.activity !== 'undefined') {
                     if( event.activity.category == "Medisch") {
                         element.css('background-color', '#98639C');
                     }
-                }
+                }*/
             },
 
             // This function makes the browser remember the last view on a page reload. -->
@@ -288,7 +290,7 @@ function deleteEvent(eventId) {
         });
 }
 
-function saveEvent() {
+function saveNewEvent() {
     // If eventId is null, make a new event. Otherwise change it
     console.log(document.getElementById("eventId").value);
     if ( document.getElementById("eventId").value === "" ) {
@@ -358,7 +360,7 @@ function saveEvent() {
         },
         error : function(e) {
             alert("Error sending new event with AJAX!")
-            console.log(currentEvent)
+            console.log(eventToSave)
             console.log("ERROR: ", e);
         }
     });
@@ -421,7 +423,7 @@ function getMedication(){
                  $('#medicationChoice').empty();
                  $('#medicationChoice').append('<option value="">Kies een medicatie</option>');
                  for (i in List ) {
-                    $('#medicationChoice').append('<option value="' + List[i].medicationname + '">' + List[i].medicationname + '</option>');
+                    $('#medicationChoice').append('<option value="' + List[i].id + '">' + List[i].name + '</option>');
                  }
              },
              error : function(e) {
