@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.wemakeitwork.allenvooreen.model.Event;
 import com.wemakeitwork.allenvooreen.model.Medication;
+import com.wemakeitwork.allenvooreen.model.MedicationActivity;
 import com.wemakeitwork.allenvooreen.model.Team;
 import com.wemakeitwork.allenvooreen.repository.ActivityRepository;
 import com.wemakeitwork.allenvooreen.repository.EventRepository;
@@ -49,35 +50,28 @@ public class CalendarController {
     @PostMapping("/calendar/new/event")
     public ResponseEntity<Object> newEvent(@RequestBody String newEventJson) throws JsonProcessingException {
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        Event event = mapper.readValue(newEventJson, Event.class);
         return new ResponseEntity<Object>(new ServiceResponse<Event>("success",
-                eventRepository.save(event)), HttpStatus.OK);
+                eventRepository.save(mapper.readValue(newEventJson, Event.class))), HttpStatus.OK);
     }
 
     @PostMapping("/calendar/change/eventdate")
     public ResponseEntity<Object> changeEventDate(@RequestBody String newDatesJson) throws JsonProcessingException {
-        Event newDates = mapper.readValue(newDatesJson, Event.class);
+        Event newDatesEvent = mapper.readValue(newDatesJson, Event.class);
 
-        Event event = eventRepository.getOne(newDates.getEventId());
-        event.setEventStartDate(newDates.getEventStartDate());
-        event.setEventEndDate(newDates.getEventEndDate());
-        eventRepository.save(event);
+        // Get the existing event from database, and set the new dates on it
+        Event existingEvent = eventRepository.getOne(newDatesEvent.getEventId());
+        existingEvent.setEventStartDate(newDatesEvent.getEventStartDate());
+        existingEvent.setEventEndDate(newDatesEvent.getEventEndDate());
 
-        ServiceResponse<Event> response = new ServiceResponse<Event>("success", newDates);
+        ServiceResponse<Event> response = new ServiceResponse<Event>("success", eventRepository.save(existingEvent));
         return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
 
     @PostMapping("/calendar/change/event/{eventId}")
     protected ResponseEntity<Object> changeEvent(@RequestBody String changeEventJson,
                                                  @PathVariable("eventId") final Integer eventId) throws JsonProcessingException {
-        System.out.println("json activityid: " + changeEventJson);
-        Event event = mapper.readValue(changeEventJson, Event.class);
-
-        eventRepository.save(event);
-        /*if (oldActivity instanceof MedicationActivity) {
-            ((MedicationActivity) oldActivity).getMedication().removalActivityAddedAmount(((MedicationActivity) oldActivity).getTakenMedication());
-        }*/
-        return new ResponseEntity<Object>(new ServiceResponse<Event>("success", event), HttpStatus.OK);
+        return new ResponseEntity<Object>(new ServiceResponse<Event>("success",
+                eventRepository.save(mapper.readValue(changeEventJson, Event.class))), HttpStatus.OK);
     }
 
     @PostMapping("/event/delete")
@@ -87,13 +81,13 @@ public class CalendarController {
         Event eventToDelete = mapper.readValue(deleteEventJson, Event.class);
 
         // Stream to remove the taken amount from the medication if the event is deleted
-/*        activityRepository.findAll().stream()
+        activityRepository.findAll().stream()
                 .filter(x -> x.getActivityId() == eventRepository.getOne(eventToDelete.getEventId()).getActivity().getActivityId())
                 .filter(x -> x instanceof MedicationActivity)
                 .forEach(x -> {
                     assert ((MedicationActivity) x).getMedication() != null;
                     ((MedicationActivity) x).getMedication().removalActivityAddedAmount(((MedicationActivity) x).getTakenMedication());
-                });*/
+                });
 
         eventRepository.deleteById(eventToDelete.getEventId());
         return new ResponseEntity<Object>(eventToDelete, HttpStatus.OK);

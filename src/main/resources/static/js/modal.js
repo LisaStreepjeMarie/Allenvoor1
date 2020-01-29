@@ -23,14 +23,12 @@ function hideAllModalInputFields() {
 
 // This function fills the modal with event info if it exist
 function showModalInputFields() {
+    hideAllModalInputFields();
     if ($('.modal').find('#activityCategory').val() == "Medisch") {
-        hideAllModalInputFields();
         $("#eventNameDiv, #eventDateStartEndDiv, #medicationChoiceDiv, #takenMedicationDiv, #eventDatesDiv, #modal-footer").show();
     } else {
-        hideAllModalInputFields();
         $("#eventNameDiv, #eventDateStartEndDiv, #eventDatesDiv, #eventCommentDiv, #modal-footer").show();
     }
-
     $("#eventDoneDiv").css("display", "");
 }
 
@@ -43,12 +41,12 @@ function fillModal(event) {
         $("#delete-event").show();
         $('.modal').find('#eventName').val(event.title);
         $('.modal').find('#eventComment').val(event.comment);
-        getMedication(event);
     } else {
         document.getElementById("modal-title").innerHTML = "Maak nieuwe afspraak";
         document.getElementById("save-change-event").innerHTML = "Maak afspraak";
         $("#delete-event").hide();
     }
+    getMedication(event);
 
     // this shows/hides the eventDone input field when the checkbox is toggled
     $("#eventDone").change(function () {
