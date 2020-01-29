@@ -41,7 +41,7 @@ function showModalInputFields() {
     $("#eventDoneDiv").css("display", "");
 }
 
-function toggleModalNewOrExistingEvent(start, end, newOrExisting) {
+function fillModal(start, end, newOrExisting) {
     if (newOrExisting === "existing") {
         showModalInputFields();
         document.getElementById("modal-title").innerHTML = "Wijzig of verwijder afspraak";
@@ -66,4 +66,5 @@ function toggleModalNewOrExistingEvent(start, end, newOrExisting) {
 
     $('.modal').find('#eventStartDate').val(moment(start).format('DD-MM-YYYY H:mm'));
     $('.modal').find('#eventEndDate').val(moment(end).format('DD-MM-YYYY H:mm'));
+    $('.modal').modal('show');
 }

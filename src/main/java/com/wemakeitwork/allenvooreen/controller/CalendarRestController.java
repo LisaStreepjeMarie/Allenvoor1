@@ -20,7 +20,7 @@ public class CalendarRestController {
     TeamRepository teamRepository;
 
     @GetMapping("/calendar/get/{teamid}/{startdate}/{enddate}")
-    public ResponseEntity<Object> getCalendarViewData(@PathVariable("teamid") final Integer teamId,
+    public ResponseEntity<Object> getEvents(@PathVariable("teamid") final Integer teamId,
                                                       @PathVariable("startdate") final long startDateEpoch,
                                                       @PathVariable("enddate") final long endDateEpoch) {
 

@@ -44,10 +44,9 @@ $(document).ready(function() {
                 $("#activityCategory").change(function () {
                     showModalInputFields();
                 });
-                $('.modal').modal('show');
 
                 document.getElementById('save-change-event').setAttribute( "onClick", "saveEvent('"+ null + "','" + null + "')" );
-                toggleModalNewOrExistingEvent(start, end, "new");
+                fillModal(start, end, "new");
             },
 
             // This function is executed when an already planned event is clicked
@@ -56,12 +55,17 @@ $(document).ready(function() {
                 $("#activityCategory").change(function () {
                     showModalInputFields();
                 });
-                $('.modal').modal('show');
+
+                if (event.activity.type === "MedicationActivity") {
+                    $('.modal').find('#activityCategory').val("Medisch")
+                } else if (event.activity.type === "LeisureActivity") {
+                    $('.modal').find('#activityCategory').val("Vrije tijd")
+                }
 
                 document.getElementById('delete-event').setAttribute( "onClick", "deleteEvent('"+ event.id +"','" +  ctx + "/event/delete/" + "')" );
                 document.getElementById('save-change-event').setAttribute( "onClick", "saveEvent('"+ event.id + "','" + event.activity.id + "')" );
 
-                toggleModalNewOrExistingEvent(event.start, event.end, "existing");
+                fillModal(event.start, event.end, "existing");
             },
 
             // This function is executed when an event is dragged to another date
@@ -95,7 +99,7 @@ $(document).ready(function() {
 
             // This function gets all calendar events within the view using an AJAX get.
             events: function(start, end, timezone, callback) {
-                getCalendarData(start, end, callback);
+                getEvents(start, end, callback);
              },
 
             // If a date has many dates, show an 'extra' button to

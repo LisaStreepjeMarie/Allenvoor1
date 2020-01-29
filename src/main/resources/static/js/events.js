@@ -42,8 +42,7 @@ function saveEvent(eventId, activityId) {
             $('#calendar').fullCalendar('refetchEvents');
         },
         error : function(e) {
-            alert("Error sending new event with AJAX!")
-            console.log(eventToSave)
+            alert("saveEvent() error");
             console.log("ERROR: ", e);
         }
     });
@@ -64,14 +63,13 @@ function getMedication(){
                  }
              },
              error : function(e) {
-             alert("error Error ERROR!")
-             con
-             sole.log("ERROR: ", e);
+             alert("getMedication() error")
+             console.log("ERROR: ", e);
          }
     });
 }
 
-function getCalendarData(start, end, callback) {
+function getEvents(start, end, callback) {
     $.ajax({
         type:'GET',
         url: ctx + '/calendar/get/' + $('#teamId').attr('data-teamId') + '/' + start + '/' + end + '/',
@@ -112,8 +110,8 @@ function changeEvent(event, targetUrl) {
                 $('#calendar').fullCalendar('refetchEvents');
         },
         error: function(e) {
-            alert("Error sending new event with AJAX!")
-            console.log("ERROR: ");
+            alert("changeEvent() error")
+            console.log("ERROR: ",  e);
         }
     });
 }
