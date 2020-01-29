@@ -1,6 +1,8 @@
 package com.wemakeitwork.allenvooreen.service;
 
 import com.wemakeitwork.allenvooreen.model.Medication;
+import com.wemakeitwork.allenvooreen.model.Team;
+
 import java.util.Optional;
 
 public interface MedicationServiceInterface{
@@ -10,5 +12,4 @@ public interface MedicationServiceInterface{
     Optional<Medication> findById(Integer integer);
 
     Optional<Medication> findByMedicationName(String medicationName);
-
 }
