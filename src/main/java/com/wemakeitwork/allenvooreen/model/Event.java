@@ -11,6 +11,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -33,12 +34,13 @@ import java.util.Date;
 @JsonSubTypes({
         @JsonSubTypes.Type(value = Activity.class, name = "activity"),
 })
-@Table(name = "event")
+@Table(name = "events")
 public class Event {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonProperty("id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Integer eventId;
 
     @JsonProperty("title")
@@ -62,7 +64,8 @@ public class Event {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private java.util.Date eventDoneDate;
 
-    @OneToOne(mappedBy = "event", orphanRemoval=true, cascade=CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "activity_id", referencedColumnName = "id")
     private Activity activity;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
