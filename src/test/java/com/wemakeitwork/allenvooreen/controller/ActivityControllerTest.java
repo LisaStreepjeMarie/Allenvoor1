@@ -68,10 +68,9 @@ class ActivityControllerTest {
     @Test
     @WithMockUser(roles = "admin")
     public void showTeamData() throws Exception {
-        mockMvc.perform(get("/activity/select/{activityId}",1)
-                .contentType("text/plain"))
-                .andExpect(view().name("redirect:/activity/all"))
-                .andExpect(redirectedUrl("/activity/all"));
+        mockMvc.perform(get("/activity/select/{activityId}",1))
+                .andExpect(status().isOk())
+                .andExpect(forwardedUrl("/WEB-INF/jsp/activityData.jsp"));
     }
 
     @Test
