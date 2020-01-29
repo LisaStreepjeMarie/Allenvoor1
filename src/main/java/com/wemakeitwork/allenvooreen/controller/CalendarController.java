@@ -93,6 +93,7 @@ public class CalendarController {
             sortedList.forEach(x -> System.out.println(x.getTeamName()));
             model.addAttribute("teamList", sortedList);
         }
+
         return "home";
     }
 }
