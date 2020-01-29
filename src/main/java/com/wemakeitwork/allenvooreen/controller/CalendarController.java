@@ -29,6 +29,10 @@ public class CalendarController {
     @Autowired
     private HttpSession httpSession;
 
+    public CalendarController(EventRepository eventRepository) {
+        this.eventRepository = eventRepository;
+    }
+
     @Autowired
     MemberRepository memberRepository;
 

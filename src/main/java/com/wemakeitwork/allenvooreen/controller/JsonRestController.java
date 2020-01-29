@@ -31,7 +31,7 @@ public class JsonRestController {
     TeamRepository teamRepository;
 
     @Autowired
-    EventRepository eventRepository;
+    private EventRepository eventRepository;
 
     @GetMapping("/calendar/get/{teamid}/{startdate}/{enddate}")
     public List<Event> getJsonEventListPeriod(@PathVariable("teamid") final Integer teamId,
@@ -57,12 +57,12 @@ public class JsonRestController {
         //creating an event from the first part of the json string
         Event event = mapper.readValue(jsonSplit[0], Event.class);
 
-        if (event.getEventId() != null){
-            eventRepository.findById(event.getEventId()).stream()
-                    .filter(x -> x.getActivity() instanceof MedicationActivity)
-                    .forEach(x -> ((MedicationActivity) x.getActivity()).getMedication().removalActivityAddedAmount(
-                            ((MedicationActivity) x.getActivity()).getTakenMedication()));
-        }
+//        if (event.getEventId() != null){
+//            eventRepository.findById(event.getEventId()).stream()
+//                    .filter(x -> x.getActivity() instanceof MedicationActivity)
+//                    .forEach(x -> ((MedicationActivity) x.getActivity()).getMedication().removalActivityAddedAmount(
+//                            ((MedicationActivity) x.getActivity()).getTakenMedication()));
+//        }
 
         //creating a medicationActivity if it's needed from the second part
         // will look into setting takenmedication in the event model to be triggered when a medicationActivity is being added to an event
@@ -75,7 +75,7 @@ public class JsonRestController {
             event.setActivity(medicationActivity);
         }
 
-        eventRepository.save(event);
+//        eventRepository.save(event);
         ServiceResponse<Event> response = new ServiceResponse<Event>("success", event);
         return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
