@@ -60,7 +60,7 @@ public class Event {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private java.util.Date eventDoneDate;
 
-    @OneToOne(mappedBy = "event", cascade={CascadeType.ALL, CascadeType.PERSIST})
+    @OneToOne(mappedBy = "event", orphanRemoval=true, cascade={CascadeType.ALL, CascadeType.PERSIST})
     private Activity activity;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
