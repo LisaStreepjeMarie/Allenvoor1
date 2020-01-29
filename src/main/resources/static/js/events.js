@@ -132,3 +132,25 @@ function deleteEvent(eventId) {
             }
         });
 }
+
+// This function gets a medicationlist.
+function getMedication(){
+    $.ajax({
+         type:'GET',
+         url: ctx + "/calendar/" + $('#teamId').attr('data-teamId') + '/medications',
+         dataType: 'json',
+         success : function(result) {
+                 List = result.data
+                 $('#medicationChoice').empty();
+                 $('#medicationChoice').append('<option value="">Kies een medicatie</option>');
+                 for (i in List ) {
+                    $('#medicationChoice').append('<option value="' + List[i].id + '">' + List[i].name + '</option>');
+                 }
+             },
+             error : function(e) {
+             alert("error Error ERROR!")
+             con
+             sole.log("ERROR: ", e);
+         }
+    });
+}

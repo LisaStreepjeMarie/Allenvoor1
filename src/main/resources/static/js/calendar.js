@@ -23,13 +23,6 @@ $(document).ready(function() {
                     $("#datetimepickerDone").hide()
             }
         });
-
-        // This makes sure that the unwanted fields in the modal are hidden and calls the selection upon change
-        $("#activityCategory").change(function () {
-            hideAllModalInputFields();
-            activitySelection();
-        });
-
         // Cleans the modal upon closing
         $('.modal').on("hide.bs.modal", function() {
             $('#formID').trigger("reset");
@@ -58,49 +51,24 @@ $(document).ready(function() {
 
             // This function is executed when an empty date/time is clicked
             select: function(start, end) {
-
-                $(".fc-highlight").css("background", "purple");
-
-                $('#save-change-event').attr('onclick', "saveNewEvent()");
-
-                $('.modal').find('#eventStartDate').val(moment(start).format('DD-MM-YYYY H:mm'));
-                $('.modal').find('#eventEndDate').val(moment(end).format('DD-MM-YYYY H:mm'));
-
-                document.getElementById("modal-title").innerHTML = "Maak nieuwe afspraak";
-                document.getElementById("save-change-event").innerHTML = "Maak afspraak";
-                $("#delete-event").hide();
+                $("#modal-footer").hide();
+                $("#activityCategory").change(function () {
+                    showModalInputFields();
+                });
                 $('.modal').modal('show');
+
+                toggleModalNewOrExistingEvent("new");
             },
 
             // This function is executed when an already planned event is clicked
             eventClick: function(event, element) {
-                // redefines the onclick action of the delete-event button, so that it will point the browser -->
-                // to the /event/delete/{eventId}/{activityId} mapping
-                $('#delete-event').attr('onclick',"deleteEvent(" + event.id + ")");
-
-                $("#eventId").val(event.id);/*
-                $('#modal-form').attr('action', ctx + "/event/change/" + event.activity.id);*/
-                $('#save-change-event').attr('onclick', "saveChangedEvent(" + event.id + ", " + event.activity.id + ")");
-                $('.modal').find('#eventComment').val(event.description);
-/*                $('.modal').find('#activityCategory').val(event.activity.category);*/
-                $('.modal').find('#eventName').val(event.title);
-
-                // Shows modal fields based on the event.activity.category
-                fillingTheModal();
-                showMedicationAmount(event, element);
-
-                $('.modal').find('#eventStartDate').val(moment(event.start).format('DD-MM-YYYY H:mm'));
-                $('.modal').find('#eventEndDate').val(moment(event.end).format('DD-MM-YYYY H:mm'));
-
-                // Redefines the modal (popup) buttons with the appropriate button text
-                document.getElementById("modal-title").innerHTML = "Wijzig of verwijder afspraak";
-                document.getElementById("save-change-event").innerHTML = "Wijzig afspraak";
-
-                // Shows the delete button on the (still hidden) modal
-                $("#delete-event").show();
-
-                // lastly, the modal (popup) is shown, which by now has been properly configured
+                $("#modal-footer").hide();
+                $("#activityCategory").change(function () {
+                    showModalInputFields();
+                });
                 $('.modal').modal('show');
+
+                toggleModalNewOrExistingEvent("existing");
             },
 
             // This function is executed when an event is dragged to another date

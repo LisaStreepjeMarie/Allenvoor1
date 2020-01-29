@@ -16,26 +16,9 @@ $("#datetimepickerEnd").on("change.datetimepicker", function (e) {
 });
 $('#datetimepickerDone').datetimepicker();
 
-
-// This function shows the correct modal form based on the activity selection
-function activitySelection() {
-    if ($("#activityCategory").val() === "Medisch") {
-    <!-- below function makes sure the medication is only loaded when the medical activity is chosen -->
-        getMedication()
-        $('#eventComment').val("")
-        $("#eventNameDiv, #eventDateStartEndDiv, #medicationChoiceDiv, #takenMedicationDiv, #eventDatesDiv").show();
-    } else {
-        $('#takenMedication').val("")
-        $('#medicationChoice').empty()
-        $("#eventNameDiv, #eventDateStartEndDiv, #eventDatesDiv, #eventCommentDiv").show();
-    }
-    $("#datetimepickerDone").hide();
-    $("#eventDoneDiv").css("display", "");
-}
-
 // This function hides all modal options
 function hideAllModalInputFields() {
-    $("#eventNameDiv, #eventCommentDiv, #medicationChoiceDiv, #eventDatesDiv, #takenMedicationDiv").css("display", "none");
+    $("#datetimepickerDone, #eventNameDiv, #eventCommentDiv, #medicationChoiceDiv, #eventDatesDiv, #takenMedicationDiv").css("display", "none");
 }
 
 //this shows the medication amount when an excisting event is chosen
@@ -46,34 +29,26 @@ function showMedicationAmount(event, element){
 }
 
 // This function fills the modal with event info if it exist
-function fillingTheModal() {
+function showModalInputFields() {
     if ($('.modal').find('#activityCategory').val() == "Medisch") {
-        $("#eventNameDiv, #eventDateStartEndDiv, #medicationChoiceDiv, #takenMedicationDiv, #eventDatesDiv").show();
+        hideAllModalInputFields();
+        $("#eventNameDiv, #eventDateStartEndDiv, #medicationChoiceDiv, #takenMedicationDiv, #eventDatesDiv, #modal-footer").show();
     } else {
-        $("#eventNameDiv, #eventDateStartEndDiv, #eventDatesDiv, #eventCommentDiv").show();
+        hideAllModalInputFields();
+        $("#eventNameDiv, #eventDateStartEndDiv, #eventDatesDiv, #eventCommentDiv, #modal-footer").show();
     }
-    $("#datetimepickerDone").hide();
+
     $("#eventDoneDiv").css("display", "");
 }
 
-// This function gets a medicationlist.
-function getMedication(){
-    $.ajax({
-         type:'GET',
-         url: ctx + "/calendar/" + $('#teamId').attr('data-teamId') + '/medications',
-         dataType: 'json',
-         success : function(result) {
-                 List = result.data
-                 $('#medicationChoice').empty();
-                 $('#medicationChoice').append('<option value="">Kies een medicatie</option>');
-                 for (i in List ) {
-                    $('#medicationChoice').append('<option value="' + List[i].id + '">' + List[i].name + '</option>');
-                 }
-             },
-             error : function(e) {
-             alert("error Error ERROR!")
-             con
-             sole.log("ERROR: ", e);
-         }
-    });
+function toggleModalNewOrExistingEvent(newOrExisting) {
+    if (newOrExisting === "existing") {
+        document.getElementById("modal-title").innerHTML = "Wijzig of verwijder afspraak";
+        document.getElementById("save-change-event").innerHTML = "Wijzig afspraak";
+        $("#delete-event").show();
+    } else {
+        document.getElementById("modal-title").innerHTML = "Maak nieuwe afspraak";
+        document.getElementById("save-change-event").innerHTML = "Maak afspraak";
+        $("#delete-event").hide();
+    }
 }

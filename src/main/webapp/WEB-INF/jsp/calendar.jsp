@@ -127,7 +127,7 @@
                     </div>
                 </div>
                     </span>
-                <div class="modal-footer">
+                <div class="modal-footer" id="modal-footer">
                     <button type="button" id="delete-event" class="btn btn-danger" data-dismiss="modal" >Verwijder Afspraak</button>
                     <button type="button" class="btn btn-light" data-dismiss="modal">Sluiten</button>
                     <button type="submit" class="btn btn-primary" onclick="saveEvent()" id="save-change-event" data-dismiss="modal">Maak afspraak</button>
