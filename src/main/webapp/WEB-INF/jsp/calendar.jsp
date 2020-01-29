@@ -29,6 +29,8 @@
     <link id="teamId" data-teamId="${team.teamId}"/>
     <link id="csrfToken" data-csrfToken="${_csrf.token}"/>
 
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/modal.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/events.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/calendar.js"></script>
 </head>
 
