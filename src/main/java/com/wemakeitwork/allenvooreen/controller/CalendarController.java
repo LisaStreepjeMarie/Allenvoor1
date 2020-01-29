@@ -16,8 +16,11 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Controller
 public class CalendarController {
@@ -44,7 +47,14 @@ public class CalendarController {
         Team team = teamRepository.getOne(teamId);
         httpSession.setAttribute("team", team);
         Set<Team> teamList = memberRepository.findByMemberName(principal.getName()).get().getAllTeamsOfMemberSet();
-        model.addAttribute("teamList", teamList);
+
+        ArrayList<Team> sortedList = (ArrayList<Team>) teamList.stream()
+                .sorted(Comparator.comparing(Team::getTeamName))
+                .collect(Collectors.toList());
+
+        sortedList.forEach(x -> System.out.println(x.getTeamName()));
+
+        model.addAttribute("teamList", sortedList);
 
         return "calendar";
     }
@@ -76,7 +86,12 @@ public class CalendarController {
             teamList = member.get().getAllTeamsOfMemberSet();
         }
         if (teamList != null) {
-            model.addAttribute("teamList", teamList);
+            ArrayList<Team> sortedList = (ArrayList<Team>) teamList.stream()
+                    .sorted(Comparator.comparing(Team::getTeamName))
+                    .collect(Collectors.toList());
+
+            sortedList.forEach(x -> System.out.println(x.getTeamName()));
+            model.addAttribute("teamList", sortedList);
         }
         return "home";
     }
