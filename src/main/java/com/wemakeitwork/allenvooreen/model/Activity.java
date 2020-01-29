@@ -21,7 +21,7 @@ import javax.persistence.OneToOne;
         @JsonSubTypes.Type(value = MedicationActivity.class, name = "MedicationActivity"),
         @JsonSubTypes.Type(value = LeisureActivity.class, name = "LeisureActivity")
 })
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Activity {
 
     @Id

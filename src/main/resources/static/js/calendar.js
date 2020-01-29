@@ -80,7 +80,7 @@ $(document).ready(function() {
 
                 $("#eventId").val(event.id);/*
                 $('#modal-form').attr('action', ctx + "/event/change/" + event.activity.id);*/
-                $('#save-change-event').attr('onclick', "saveChangedEvent(" + event.id + ")");
+                $('#save-change-event').attr('onclick', "saveChangedEvent(" + event.id + ", " + event.activity.id + ")");
                 $('.modal').find('#eventComment').val(event.description);
 /*                $('.modal').find('#activityCategory').val(event.activity.category);*/
                 $('.modal').find('#eventName').val(event.title);
@@ -161,11 +161,11 @@ $(document).ready(function() {
 
             // Distinct event colors based on activity.category
             eventRender: function(event, element) {
-                /*if (typeof event.activity !== 'undefined') {
-                    if( event.activity.category == "Medisch") {
+                if (event.activity != null) {
+                    if ( event.activity.type === 'MedicationActivity') {
                         element.css('background-color', '#98639C');
                     }
-                }*/
+                }
             },
 
             // This function makes the browser remember the last view on a page reload. -->
@@ -292,7 +292,6 @@ function deleteEvent(eventId) {
 
 function saveNewEvent() {
     // If eventId is null, make a new event. Otherwise change it
-    console.log(document.getElementById("eventId").value);
     if ( document.getElementById("eventId").value === "" ) {
         urlVariable = ctx + "/calendar/new/event"
     } else {
@@ -307,7 +306,6 @@ function saveNewEvent() {
         activityType = "LeisureActivity"
     }
 
-    console.log(activityType);
     eventToSave = {
         type: "Event",
         title: document.getElementById("eventName").value,
@@ -349,23 +347,36 @@ function saveNewEvent() {
     });
 }
 
-function saveChangedEvent(eventId) {
+function saveChangedEvent(eventId, activityId) {
     // Fill the object currentEvent with values from input fields in the modal
-    currentEvent = {
-        id: eventId,
-        title: document.getElementById("eventName").value,
-        start: moment(document.getElementById("eventStartDate").value, "DD-MM-YYYY H:mm").toDate(),
-        end: moment(document.getElementById("eventEndDate").value, "DD-MM-YYYY H:mm").toDate(),
-        donedate: moment(document.getElementById("eventDoneDate").value, "DD-MM-YYYY H:mm").toDate(),
-        description: document.getElementById("eventComment").value,
-        activity: {
-            name: document.getElementById("eventName").value,
-            category: document.getElementById("activityCategory").value,
-        },
-        team: {
-            id: parseInt($('#teamId').attr('data-teamId'), 10),
-        }
+    if ($("#activityCategory").val() === "Medisch") {
+        activityType = "MedicationActivity"
+    } else if ($("#activityCategory").val() === "Vrije tijd") {
+        activityType = "LeisureActivity"
     }
+
+    eventToSave = {
+            id: eventId,
+            type: "Event",
+            title: document.getElementById("eventName").value,
+            start: moment(document.getElementById("eventStartDate").value, "DD-MM-YYYY H:mm").toDate(),
+            end: moment(document.getElementById("eventEndDate").value, "DD-MM-YYYY H:mm").toDate(),
+            comment: document.getElementById("eventComment").value,
+            activity: {
+                id: activityId,
+                type: activityType,
+                name: document.getElementById("eventName").value,
+                takenmedication: document.getElementById("takenMedication").value,
+                comment: document.getElementById("eventComment").value,
+                medication: {
+                    id: document.getElementById("medicationChoice").value,
+                    amount: document.getElementById("takenMedication").value,
+                },
+            },
+            team: {
+                id: parseInt($('#teamId').attr('data-teamId'), 10),
+            }
+        }
 
     //creating a medicalActivity to ass along
     medicalActivity = {
@@ -380,7 +391,7 @@ function saveChangedEvent(eventId) {
         url: ctx + "/calendar/new/event",
         method: "POST",
         contentType: "application/json; charset=UTF-8",
-        data:  JSON.stringify(currentEvent) + "SPLIT" + JSON.stringify(medicalActivity),
+        data:  JSON.stringify(eventToSave),
         dataType : 'json',
         async: true,
         success: function(result) {
