@@ -46,7 +46,8 @@ $(document).ready(function() {
                 });
 
                 document.getElementById('save-change-event').setAttribute( "onClick", "saveEvent('"+ null + "','" + null + "')" );
-                fillModal(start, end, "new");
+                event = {type: "Event", id: null, start: start, end: end,};
+                fillModal(event);
             },
 
             // This function is executed when an already planned event is clicked
@@ -65,7 +66,7 @@ $(document).ready(function() {
                 document.getElementById('delete-event').setAttribute( "onClick", "deleteEvent('"+ event.id +"','" +  ctx + "/event/delete/" + "')" );
                 document.getElementById('save-change-event').setAttribute( "onClick", "saveEvent('"+ event.id + "','" + event.activity.id + "')" );
 
-                fillModal(event.start, event.end, "existing");
+                fillModal(event);
             },
 
             // This function is executed when an event is dragged to another date

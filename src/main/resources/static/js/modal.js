@@ -41,12 +41,14 @@ function showModalInputFields() {
     $("#eventDoneDiv").css("display", "");
 }
 
-function fillModal(start, end, newOrExisting) {
-    if (newOrExisting === "existing") {
+function fillModal(event) {
+    if (event.id != null) {
         showModalInputFields();
         document.getElementById("modal-title").innerHTML = "Wijzig of verwijder afspraak";
         document.getElementById("save-change-event").innerHTML = "Wijzig afspraak";
         $("#delete-event").show();
+        $('.modal').find('#eventName').val(event.title);
+        $('.modal').find('#eventComment').val(event.comment);
         getMedication();
     } else {
         document.getElementById("modal-title").innerHTML = "Maak nieuwe afspraak";
@@ -64,7 +66,7 @@ function fillModal(start, end, newOrExisting) {
         }
     });
 
-    $('.modal').find('#eventStartDate').val(moment(start).format('DD-MM-YYYY H:mm'));
-    $('.modal').find('#eventEndDate').val(moment(end).format('DD-MM-YYYY H:mm'));
+    $('.modal').find('#eventStartDate').val(moment(event.start).format('DD-MM-YYYY H:mm'));
+    $('.modal').find('#eventEndDate').val(moment(event.end).format('DD-MM-YYYY H:mm'));
     $('.modal').modal('show');
 }
