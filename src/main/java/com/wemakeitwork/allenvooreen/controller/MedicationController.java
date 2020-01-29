@@ -4,6 +4,8 @@ import com.wemakeitwork.allenvooreen.model.*;
 import com.wemakeitwork.allenvooreen.repository.MedicationRepository;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
+import com.wemakeitwork.allenvooreen.service.MedicationServiceInterface;
+import com.wemakeitwork.allenvooreen.validator.MedicationValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.Optional;
 import java.util.Set;
@@ -32,6 +35,12 @@ public class MedicationController {
 
     @Autowired
     TeamRepository teamRepository;
+
+    @Autowired
+    MedicationServiceInterface medicationServiceInterface;
+
+    @Autowired
+    MedicationValidator medicationValidator;
 
     @GetMapping("/medication/new")
     protected String showMedication(Model model) {
@@ -64,13 +73,16 @@ public class MedicationController {
     }
 
     @PostMapping("/medication/new")
-    protected String saveOrUpdateMedication(@ModelAttribute("medication") Medication medication, BindingResult result) {
+    protected String saveOrUpdateMedication(@ModelAttribute("medication")@Valid Medication medication, BindingResult result){
+        System.out.println("is er output? " + medication.getMedicationName());
+        medicationValidator.validate(medication,result);
         if (result.hasErrors()) {
             return "newMedication";
         } else {
+            System.out.println(medication.getMedicationName());
             Team team = (Team) httpSession.getAttribute("team");
             medication.setTeam(team);
-            medicationRepository.save(medication);
+            medicationServiceInterface.save(medication);
             return "redirect:/medication/"+ team.getTeamId();
         }
     }

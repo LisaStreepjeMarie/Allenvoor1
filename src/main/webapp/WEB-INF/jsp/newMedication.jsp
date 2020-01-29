@@ -2,8 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<html xmlns:c="">
+<html lang="en" xmlns:c="http://www.w3.org/1999/XSL/Transform" xmlns:fmt="" xmlns:spring="" xmlns:beans="">
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
         <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
 
@@ -39,6 +40,7 @@
                       </ul>
                     </div>
                 </nav>
+
     <div id="container">
     <header class= "masthead">
     <br>
@@ -48,17 +50,27 @@
         <form:form action="${pageContext.request.contextPath}/medication/new" modelAttribute="medication">
             <table>
                 <tr>
+                    <spring:bind path="medicationName">
+                    <div class="form-group ${status.error ? 'has-error' : ''}">
                     <td><h5 class="font-weight-light">Naam medicatie:</h5>
                     <td>
-                        <form:input path="medicationName" />
+                        <form:input path="medicationName"  />
                     </td>
+                    <form:errors path="medicationName"></form:errors>
+                     </div>
+                   </spring:bind>
                 </tr>
                 <tr>
+                <spring:bind path="medicationAmount">
+                  <div class="form-group ${status.error ? 'has-error' : ''}">
                     <td><h5 class="font-weight-light">Hoeveelheid:</h5>
                     <td>
-                        <form:input path="medicationAmount"/>
-                    </td>
-                </tr>
+                        <form:input path="medicationAmount" />
+                        </td>
+                       <form:errors path= "medicationAmount"></form:errors>
+                        </div>
+                        </spring:bind>
+                    </tr>
                 <tr>
                     <td><h5 class="font-weight-light">Beschrijving:</h5>
                     <td>
@@ -67,11 +79,13 @@
                 </tr>
                 <tr>
                     <td colspan="2">
+                         <input name="_csrf" type="hidden" value="${_csrf.token}" />
                         <input class="btn btn-primary" type="submit" value="Sla medicatie op" />
                     </td>
                 </tr>
             </table>
         </form:form>
-        </div>
+      </div>
     </body>
 </html>
+
