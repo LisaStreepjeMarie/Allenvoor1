@@ -41,14 +41,29 @@ function showModalInputFields() {
     $("#eventDoneDiv").css("display", "");
 }
 
-function toggleModalNewOrExistingEvent(newOrExisting) {
+function toggleModalNewOrExistingEvent(start, end, newOrExisting) {
     if (newOrExisting === "existing") {
+        showModalInputFields();
         document.getElementById("modal-title").innerHTML = "Wijzig of verwijder afspraak";
         document.getElementById("save-change-event").innerHTML = "Wijzig afspraak";
         $("#delete-event").show();
+        getMedication();
     } else {
         document.getElementById("modal-title").innerHTML = "Maak nieuwe afspraak";
         document.getElementById("save-change-event").innerHTML = "Maak afspraak";
         $("#delete-event").hide();
     }
+
+    // this shows/hides the eventDone input field when the checkbox is toggled
+    $("#eventDone").change(function () {
+        if(document.getElementById("eventDone").checked == true) {
+                $("#datetimepickerDone").show()
+        } else {
+                document.getElementById("eventDoneDate").removeAttribute("required");
+                $("#datetimepickerDone").hide()
+        }
+    });
+
+    $('.modal').find('#eventStartDate').val(moment(start).format('DD-MM-YYYY H:mm'));
+    $('.modal').find('#eventEndDate').val(moment(end).format('DD-MM-YYYY H:mm'));
 }

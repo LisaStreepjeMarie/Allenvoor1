@@ -94,7 +94,7 @@ function deleteEvent(eventId, targetUrl) {
 }
 
 function changeEvent(event, targetUrl) {
-    currentEvent = {
+    eventToChange = {
         type: "Event",
         id: event.id,
         start: event.start,
@@ -105,7 +105,7 @@ function changeEvent(event, targetUrl) {
         url: targetUrl,
         method: "POST",
         contentType: "application/json; charset=UTF-8",
-        data: JSON.stringify(currentEvent),
+        data: JSON.stringify(eventToChange),
         dataType: 'json',
         async: true,
         success: function(result) {

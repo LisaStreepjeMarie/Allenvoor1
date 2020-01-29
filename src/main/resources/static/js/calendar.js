@@ -11,17 +11,6 @@ $.ajaxSetup({
 // functions in this method will only be available after the document (jsp) is completely loaded
 $(document).ready(function() {
 
-        hideAllModalInputFields();
-
-        // this shows/hides the eventDone input field when the checkbox is toggled
-        $("#eventDone").change(function () {
-            if(document.getElementById("eventDone").checked == true) {
-                    $("#datetimepickerDone").show()
-            } else {
-                    document.getElementById("eventDoneDate").removeAttribute("required");
-                    $("#datetimepickerDone").hide()
-            }
-        });
         // Cleans the modal upon closing
         $('.modal').on("hide.bs.modal", function() {
             $('#formID').trigger("reset");
@@ -51,14 +40,14 @@ $(document).ready(function() {
             // This function is executed when an empty date/time is clicked
             select: function(start, end) {
                 $("#modal-footer").hide();
+                /*$("#datetimepickerDone").hide();*/
                 $("#activityCategory").change(function () {
                     showModalInputFields();
                 });
                 $('.modal').modal('show');
 
                 document.getElementById('save-change-event').setAttribute( "onClick", "saveEvent('"+ null + "','" + null + "')" );
-
-                toggleModalNewOrExistingEvent("new");
+                toggleModalNewOrExistingEvent(start, end, "new");
             },
 
             // This function is executed when an already planned event is clicked
@@ -72,7 +61,7 @@ $(document).ready(function() {
                 document.getElementById('delete-event').setAttribute( "onClick", "deleteEvent('"+ event.id +"','" +  ctx + "/event/delete/" + "')" );
                 document.getElementById('save-change-event').setAttribute( "onClick", "saveEvent('"+ event.id + "','" + event.activity.id + "')" );
 
-                toggleModalNewOrExistingEvent("existing");
+                toggleModalNewOrExistingEvent(event.start, event.end, "existing");
             },
 
             // This function is executed when an event is dragged to another date
@@ -112,4 +101,4 @@ $(document).ready(function() {
             // If a date has many dates, show an 'extra' button to
             eventLimit: true
         });
-}); // End of $(document).ready(function)
+});
