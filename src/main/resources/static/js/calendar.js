@@ -10,7 +10,6 @@ $.ajaxSetup({
 
 // functions in this method will only be available after the document (jsp) is completely loaded
 $(document).ready(function() {
-        var ctx = $('#contextPathHolder').attr('data-contextPath');
 
         hideAllModalInputFields();
 
@@ -68,18 +67,20 @@ $(document).ready(function() {
                 });
                 $('.modal').modal('show');
 
+                document.getElementById('delete-event').setAttribute( "onClick", "deleteEvent('"+ event.id +"','" +  ctx + "/event/delete/" + "')" );
                 toggleModalNewOrExistingEvent("existing");
             },
 
             // This function is executed when an event is dragged to another date
             eventDrop: function(event, info) {
-                changeEventDates(event);
+                targetUrl = ctx + "/calendar/change/eventdate";
+                changeEvent(event, targetUrl);
             },
 
             // This function is executed when an event is resized
-            // TODO: this code (along with eventDrop) is a prime candidate for refactoring as they are duplicates
             eventResize: function(event, delta) {
-                changeEventDates(event);
+                targetUrl = ctx + "/calendar/change/eventdate";
+                changeEvent(event, targetUrl);
             },
 
             // Distinct event colors based on activity.category

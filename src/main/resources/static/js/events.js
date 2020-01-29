@@ -106,33 +106,6 @@ function saveChangedEvent(eventId, activityId) {
     });
 }
 
-function deleteEvent(eventId) {
-    urlDeleteEvent = ctx + "/event/delete/";
-
-    eventToDelete = {
-        type: "Event",
-        id: eventId,
-    }
-
-    $.ajax({
-            url: urlDeleteEvent,
-            method: "POST",
-            contentType: "application/json; charset=UTF-8",
-            data: JSON.stringify(eventToDelete),
-            dataType : 'json',
-            async: true,
-            success: function(result) {
-                // Reload events on calendar if new event is written to the database successfully
-                $('#calendar').fullCalendar('refetchEvents');
-            },
-            error : function(e) {
-                alert("Error sending new event with AJAX!")
-                console.log(eventToDelete)
-                console.log("ERROR: ", e);
-            }
-        });
-}
-
 // This function gets a medicationlist.
 function getMedication(){
     $.ajax({
@@ -172,7 +145,12 @@ function getCalendarData(start, end, callback) {
     });
 }
 
-function changeEventDates(event) {
+function deleteEvent(eventId, targetUrl) {
+    event = {type: "Event", id: eventId, start: "0", end: "0",},
+    changeEvent(event, targetUrl)
+}
+
+function changeEvent(event, targetUrl) {
     currentEvent = {
         type: "Event",
         id: event.id,
@@ -181,7 +159,7 @@ function changeEventDates(event) {
     }
 
     $.ajax({
-        url: ctx + "/calendar/change/eventdate",
+        url: targetUrl,
         method: "POST",
         contentType: "application/json; charset=UTF-8",
         data: JSON.stringify(currentEvent),
@@ -192,7 +170,7 @@ function changeEventDates(event) {
         },
         error: function(e) {
             alert("Error sending new event with AJAX!")
-            console.log("ERROR: ", e);
+            console.log("ERROR: ");
         }
     });
 }
