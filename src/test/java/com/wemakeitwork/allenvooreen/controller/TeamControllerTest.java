@@ -47,15 +47,15 @@ class TeamControllerTest {
 
     @MockBean
     MemberDetailsService memberDetailsService;
-
-    @Test
-    @WithMockUser(roles = "admin")
-    void showTeamForm() throws Exception {
+//
+//    @Test
+//    @WithMockUser(roles = "admin")
+//    void showTeamForm() throws Exception {
 //        mockMvc.perform(get("/team/new")
 //                .contentType("text/plain"))
 //                .andExpect(status().isOk())
 //                .andExpect(forwardedUrl("/WEB-INF/jsp/teamForm.jsp"));
 //                .andExpect(model().attribute("teamList", teamRepository.findAll()));
-    }
+//    }
 
 }
