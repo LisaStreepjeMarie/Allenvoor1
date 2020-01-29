@@ -1,13 +1,3 @@
-// Define contextpath
-var ctx = $('#contextPathHolder').attr('data-contextPath');
-
-// Get csrf token (needed to post a json through spring boot security)
-$.ajaxSetup({
-    beforeSend: function(xhr) {
-        xhr.setRequestHeader('X-CSRF-TOKEN', $('#csrfToken').attr('data-csrfToken'));
-    }
-});
-
 // functions in this method will only be available after the document (jsp) is completely loaded
 $(document).ready(function() {
 
@@ -71,22 +61,20 @@ $(document).ready(function() {
 
             // This function is executed when an event is dragged to another date
             eventDrop: function(event, info) {
-                targetUrl = ctx + "/calendar/change/eventdate";
-                changeEvent(event, targetUrl);
+                changeEvent(event, ctx + "/calendar/change/eventdate");
             },
 
             // This function is executed when an event is resized
             eventResize: function(event, delta) {
-                targetUrl = ctx + "/calendar/change/eventdate";
-                changeEvent(event, targetUrl);
+                changeEvent(event, ctx + "/calendar/change/eventdate");
             },
 
-            // Distinct event colors based on activity.category
+            // Distinct event colors based on event.activity.type
             eventRender: function(event, element) {
-                if (event.activity != null) {
-                    if ( event.activity.type === 'MedicationActivity') {
-                        element.css('background-color', '#98639C');
-                    }
+                switch(event.activity.type) {
+                    case undefined: console.log("event.activity is undefined"); break;
+                    case "MedicationActivity": element.css('background-color', '#98639C'); break;
+                    case "LeisureActivity": break;
                 }
             },
 

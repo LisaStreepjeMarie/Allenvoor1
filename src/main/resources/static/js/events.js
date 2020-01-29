@@ -1,3 +1,13 @@
+// Define contextpath
+var ctx = $('#contextPathHolder').attr('data-contextPath');
+
+// Get csrf token (needed to post a json through spring boot security)
+$.ajaxSetup({
+    beforeSend: function(xhr) {
+        xhr.setRequestHeader('X-CSRF-TOKEN', $('#csrfToken').attr('data-csrfToken'));
+    }
+});
+
 function saveEvent(eventId, activityId) {
     // Fill the object currentEvent with values from input fields in the modal
     if ($("#activityCategory").val() === "Medisch") {
@@ -49,7 +59,7 @@ function saveEvent(eventId, activityId) {
 }
 
 // This function gets a medicationlist.
-function getMedication(){
+function getMedication(event){
     $.ajax({
          type:'GET',
          url: ctx + "/calendar/" + $('#teamId').attr('data-teamId') + '/medications',
@@ -61,6 +71,8 @@ function getMedication(){
                  for (i in List ) {
                     $('#medicationChoice').append('<option value="' + List[i].id + '">' + List[i].name + '</option>');
                  }
+                 $('.modal').find('#medicationChoice').val(event.activity.medication.name);
+                 $('.modal').find('#takenMedication').val(event.activity.takenmedication);
              },
              error : function(e) {
              alert("getMedication() error")

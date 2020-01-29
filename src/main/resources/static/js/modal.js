@@ -21,13 +21,6 @@ function hideAllModalInputFields() {
     $("#datetimepickerDone, #eventNameDiv, #eventCommentDiv, #medicationChoiceDiv, #eventDatesDiv, #takenMedicationDiv").css("display", "none");
 }
 
-//this shows the medication amount when an excisting event is chosen
-function showMedicationAmount(event, element){
-    if ($('.modal').find('#activityCategory').val() == "Medisch")
-      getMedication()
-      /*$('.modal').find('#takenMedication').val(event.activity.takenmedication);*/
-}
-
 // This function fills the modal with event info if it exist
 function showModalInputFields() {
     if ($('.modal').find('#activityCategory').val() == "Medisch") {
@@ -41,6 +34,7 @@ function showModalInputFields() {
     $("#eventDoneDiv").css("display", "");
 }
 
+// Modify modal fields/buttons/labels with values depending on event/activity type
 function fillModal(event) {
     if (event.id != null) {
         showModalInputFields();
@@ -49,7 +43,7 @@ function fillModal(event) {
         $("#delete-event").show();
         $('.modal').find('#eventName').val(event.title);
         $('.modal').find('#eventComment').val(event.comment);
-        getMedication();
+        getMedication(event);
     } else {
         document.getElementById("modal-title").innerHTML = "Maak nieuwe afspraak";
         document.getElementById("save-change-event").innerHTML = "Maak afspraak";
