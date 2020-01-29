@@ -65,6 +65,7 @@ public class MedicationController {
         return "medicationOverview";
     }
 
+
     @GetMapping("/medication/delete/{medicationId}")
     public String deleteTeam(@PathVariable("medicationId") final Integer medicationId) {
         medicationRepository.deleteById(medicationId);
@@ -74,7 +75,6 @@ public class MedicationController {
 
     @PostMapping("/medication/new")
     protected String saveOrUpdateMedication(@ModelAttribute("medication")@Valid Medication medication, BindingResult result){
-        System.out.println("is er output? " + medication.getMedicationName());
         medicationValidator.validate(medication,result);
         if (result.hasErrors()) {
             return "newMedication";

@@ -46,4 +46,3 @@ public class MedicationValidator implements Validator {
         }
     }
 }
-
