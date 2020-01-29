@@ -122,7 +122,6 @@ body {
 }
 
 #container {
-
 }
 
 table tr td, table tr th {
@@ -131,13 +130,13 @@ table tr td, table tr th {
 }
 
 table tr th {
-    font-size: 16pt;
+    font-size: 12pt;
     color: #0e4171;
 }
 
 th, td {
 	font-size: 12pt;
-	vertical-align: middle;
+	vertical-align: top;
 	text-align: left;
 	line-height:135%;
 }
@@ -168,11 +167,22 @@ a:hover {
 h1 {
     font-family: $navbar-brand-font-family;
     font-size: 23pt;
+}
+
+h2 {
+    font-family: $navbar-brand-font-family;
+    font-size: 16pt;
     color: #0e4171;
 }
 
 .btn-primary {
     border-color: #641F11; background-color: #98639C;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+    color: #fff;
+    background-color: #C765B9;
+    border-color: #C765B9;
 }
 
 .badge-primary {
@@ -186,14 +196,14 @@ h1 {
 .masthead {
   height: 100vh;
   min-height: 500px;
-  background-image: url('https://source.unsplash.com/BtbjCFUvBXs/1920x1080');
+  background-image: url('/allenvooreen/images/background.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
 
 .nav {
-background-image: url('https://source.unsplash.com/BtbjCFUvBXs/1920x1080');
+background-image: url('/allenvooreen/images/background.jpg');
 }
 
 .navbar-brand {
@@ -202,3 +212,24 @@ background-image: url('https://source.unsplash.com/BtbjCFUvBXs/1920x1080');
   text-align: left;
   align-items: left;
 }
+
+.navbar-nav > li > a {padding-top:5px !important; padding-bottom:5px !important;}
+.navbar {max-height:75px !important}
+
+.dropdown-header {
+    -webkit-font-smoothing: antialiased;
+    font-size: 13pt;
+    font-weight: normal;
+    color: #333333;
+    line-height: 135%;
+}
+
+.dropdown-item {
+    -webkit-font-smoothing: antialiased;
+    font-size: 11pt;
+    color: #686666;
+    line-height: 135%;
+}
+
+
+

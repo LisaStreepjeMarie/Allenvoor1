@@ -18,7 +18,6 @@ public class Event {
     private Integer eventId;
 
     @JsonProperty("title")
-    // @NotBlank(message = "{org.hibernate.validator.constraints.NotBlank.message}")
     @NotBlank(message = "veld mag niet blank zijn")
     private String eventName;
 

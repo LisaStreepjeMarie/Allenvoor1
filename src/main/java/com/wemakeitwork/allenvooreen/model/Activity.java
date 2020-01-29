@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Activity {
@@ -19,6 +21,10 @@ public class Activity {
 
     @JsonProperty("category")
     private String activityCategory;
+
+    @OneToOne
+    @JoinColumn(name = "activity_id")
+    private Event event;
 
     public Integer getActivityId() {
         return activityId;

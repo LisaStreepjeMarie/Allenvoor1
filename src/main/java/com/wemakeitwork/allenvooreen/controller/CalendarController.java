@@ -2,24 +2,27 @@ package com.wemakeitwork.allenvooreen.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.wemakeitwork.allenvooreen.model.*;
-import com.wemakeitwork.allenvooreen.repository.MedicationRepository;
+import com.wemakeitwork.allenvooreen.repository.ActivityRepository;
+import com.wemakeitwork.allenvooreen.repository.EventRepository;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 @Controller
 public class CalendarController {
+    ObjectMapper mapper = new ObjectMapper();
+
     @Autowired
     private HttpSession httpSession;
 
@@ -29,32 +32,40 @@ public class CalendarController {
     @Autowired
     TeamRepository teamRepository;
 
+    @Autowired
+    EventRepository eventRepository;
+
+    @Autowired
+    ActivityRepository activityRepository;
+
     @GetMapping("/calendar/{teamId}")
     public String showmyCalender(@PathVariable("teamId") final Integer teamId, Model model, Principal principal)
             throws JsonProcessingException {
         Team team = teamRepository.getOne(teamId);
         httpSession.setAttribute("team", team);
-
-        Set<Team> teamList = null;
-        Optional<Member> member = memberRepository.findByMemberName(principal.getName());
-        if(member.isPresent()){
-            teamList = member.get().getAllTeamsOfMemberSet();
-        }
-
-
-        List<Medication> medicationList = team.getMedicationList();
-
-        Event event = new Event();
-        event.setActivity(new Activity());
+        Set<Team> teamList = memberRepository.findByMemberName(principal.getName()).get().getAllTeamsOfMemberSet();
         model.addAttribute("teamList", teamList);
-        model.addAttribute("event", event);
-        model.addAttribute("medicationList", medicationList);
-
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.enable(SerializationFeature.INDENT_OUTPUT);
-        model.addAttribute("calendarData", mapper.writeValueAsString(team.getEventList()));
 
         return "calendar";
+    }
+
+    @PostMapping("/event/delete")
+    public ResponseEntity<Object> deleteEvent(@RequestBody String deleteEventJson) throws JsonProcessingException {
+        Team team = (Team) httpSession.getAttribute("team");
+
+        Event eventToDelete = mapper.readValue(deleteEventJson, Event.class);
+
+        // Stream to remove the taken amount from the medication if the event is deleted
+        activityRepository.findAll().stream()
+                .filter(x -> x.getActivityId() == eventRepository.getOne(eventToDelete.getEventId()).getActivity().getActivityId())
+                .filter(x -> x instanceof MedicationActivity)
+                .forEach(x -> {
+                    assert ((MedicationActivity) x).getMedication() != null;
+                    ((MedicationActivity) x).getMedication().removalActivityAddedAmount(((MedicationActivity) x).getTakenMedication());
+                });
+
+        eventRepository.deleteById(eventToDelete.getEventId());
+        return new ResponseEntity<Object>(eventToDelete, HttpStatus.OK);
     }
 
     @GetMapping("/home")

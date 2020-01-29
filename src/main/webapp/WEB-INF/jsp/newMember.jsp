@@ -1,23 +1,34 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 
-<html xmlns:form="http://www.w3.org/1999/xhtml">
+<html xmlns:form="http://www.w3.org/1999/xhtml" xmlns:spring="">
     <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="shortcut icon" href="${pageContext.request.contextPath}/images/favicon.ico" type="image/x-icon" />
         <title>Maak een nieuwe gebruiker aan</title>
+
+        <script src="${pageContext.request.contextPath}/webjars/jquery/3.4.1/jquery.min.js"></script>
+
         <!-- Bootstrap core CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
+        <script src="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
         <!-- Custom styles for this template -->
-        <link href="https://getbootstrap.com/docs/4.0/examples/sign-in/signin.css" rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/css/common.css" rel="stylesheet" type="text/css"/>
+        <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
+        <link href="${pageContext.request.contextPath}/css/signin.css" rel="stylesheet" type="text/css"/>
     </head>
 
     <body class="text-center">
         <div class="container">
             <form class="form-signin" method="post" action="${pageContext.request.contextPath}/member/new">
-            <img class="mb-4" src="${pageContext.request.contextPath}/images/LogoAllenVoorEen.png" alt="" width="300" height="228">
-                <h1 class="h3 mb-3 font-weight-normal">Nieuw? Meld je aan:</h1>
+            <a href="${pageContext.request.contextPath}/home">
+            <img class="mb-4" src="${pageContext.request.contextPath}/images/LogoAllenVoorEen.png" alt="" width="300" height="228"></a>
+                <h1 class="h3 mb-3 font-weight-light"><strong>Nieuw?</strong><br> Maak een account:</h1>
 
         <form:form action="${pageContext.request.contextPath}/member/new" modelAttribute="member">
             <spring:bind path="memberName">
@@ -50,9 +61,6 @@
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Inloggen</button>
                 <p class="mt-5 mb-3 text-muted">&copy; 2019 Allenvooreen</p>
             </form>
-
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-        <script src="${contextPath}/resources/js/bootstrap.min.js"></script>
     </body>
 </html>
 

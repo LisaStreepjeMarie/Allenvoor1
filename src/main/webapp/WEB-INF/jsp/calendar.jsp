@@ -1,6 +1,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 
 <html xmlns:form="http://www.w3.org/1999/xhtml" xmlns:c="" xmlns:jsp="http://www.w3.org/1999/XSL/Transform">
 <head>
@@ -23,7 +24,7 @@
     <script src="${pageContext.request.contextPath}/webjars/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.js"></script>
     <link href="${pageContext.request.contextPath}/webjars/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.css" rel='stylesheet'>
 
-    <!-- variables passed to calendar.js -->
+    <!-- data attributes which calendar.js uses -->
     <link id="contextPathHolder" data-contextPath="${pageContext.request.contextPath}"/>
     <link id="teamId" data-teamId="${team.teamId}"/>
     <link id="csrfToken" data-csrfToken="${_csrf.token}"/>
@@ -32,8 +33,8 @@
 </head>
 
 <body>
-<form:form id="modal-form" modelAttribute="event" onclick="saveEvent()" method="post">
-    <div class="modal fade" tabindex="-1" role="dialog">
+<form role="form" id="formID" >
+    <div class="modal fade" tabindex="-1" role="dialog" id="formDiv">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -44,11 +45,11 @@
                 <!-- select below decides the input fields for event -->
                 <span>
                 <div class="modal-body">
-                    <div class="modal-body ">
+                    <div class="modal-body">
                         <div class="row">
-                            <label class="col-4" for="selectie" control-label>Categorie</label>
-                            <select name="activity.activityCategory" id="selectie" style="width:13.2em;" >
-                            <option disabled selected="selected">Selecteer categorie</option>
+                            <label class="col-4" for="activityCategory" control-label>Categorie</label>
+                            <select name="activity.activityCategory" id="activityCategory" style="width:13.2em;" >
+                            <option disabled selected="activityCategory">Selecteer categorie</option>
                                 <option value="Vrije tijd" >Vrije tijd</option>
                                 <option value="Medisch">Medisch</option>
                             </select>
@@ -74,12 +75,9 @@
                     <!-- event with MedicationActivity modal input fields -->
                     <div class="modal-body" id="medicationChoiceDiv">
                         <div class="row">
-                           <label class="col-4" for="selectie2" control-label>Medicijn</label>
-                           <select name="medication.medicationId" id="selectie2" >
+                           <label class="col-4" for="medicationChoice" control-label>Medicijn</label>
+                           <select name="medication.medicationId" id="medicationChoice" >
                                <option disabled selected="selected">Kies een medicijn</option>
-                               <c:forEach var="medication" items="${medicationList}">
-                                   <option value="${medication.medicationId}">${medication.medicationName}</option>
-                               </c:forEach>
                            </select>
                         </div>
                     </div>
@@ -130,13 +128,12 @@
                 <div class="modal-footer">
                     <button type="button" id="delete-event" class="btn btn-danger" data-dismiss="modal" >Verwijder Afspraak</button>
                     <button type="button" class="btn btn-light" data-dismiss="modal">Sluiten</button>
-                    <form:errors path="eventName" cssClass="error" />
-                    <button type="submit" class="btn btn-primary" id="save-change-event">Maak afspraak</button>
+                    <button type="submit" class="btn btn-primary" onaction="" id="save-change-event" data-dismiss="modal">Maak afspraak</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
-</form:form>
+</form>
   <jsp:include page="home.jsp" />
 
 </body>
