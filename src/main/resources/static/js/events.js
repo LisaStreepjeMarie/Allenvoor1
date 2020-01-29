@@ -154,3 +154,45 @@ function getMedication(){
          }
     });
 }
+
+function getCalendarData(start, end, callback) {
+    $.ajax({
+        type:'GET',
+        url: ctx + '/calendar/get/' + $('#teamId').attr('data-teamId') + '/' + start + '/' + end + '/',
+        dataType: 'json',
+        error: function (xhr, type, exception) { alert("Error fetching calendar data: " + exception); },
+        success : function(result) {
+                if (result.status == "success") {
+                   var events = result.data;
+                   callback(events);
+                } else {
+                   console.log("ERROR: ", e);
+                }
+        }
+    });
+}
+
+function changeEventDates(event) {
+    currentEvent = {
+        type: "Event",
+        id: event.id,
+        start: event.start,
+        end: event.end,
+    }
+
+    $.ajax({
+        url: ctx + "/calendar/change/eventdate",
+        method: "POST",
+        contentType: "application/json; charset=UTF-8",
+        data: JSON.stringify(currentEvent),
+        dataType: 'json',
+        async: true,
+        success: function(result) {
+                $('#calendar').fullCalendar('refetchEvents');
+        },
+        error: function(e) {
+            alert("Error sending new event with AJAX!")
+            console.log("ERROR: ", e);
+        }
+    });
+}

@@ -73,58 +73,13 @@ $(document).ready(function() {
 
             // This function is executed when an event is dragged to another date
             eventDrop: function(event, info) {
-                // Puts needed fullcalendar event.data attributes into an object to pass to the REST api
-                // (for resizing and dragging an event we only need to know: a. which event, and b. what are the new dates.
-                currentEvent = {
-                    type: "Event",
-                    id: event.id,
-                    start: event.start,
-                    end: event.end,
-                }
-
-                // Make AJAX Post to change eventdate
-                $.ajax({
-                    url: ctx + "/calendar/change/eventdate",
-                    method: "POST",
-                    contentType: "application/json; charset=UTF-8",
-                    data: JSON.stringify(currentEvent),
-                    dataType: 'json',
-                    async: true,
-                    success: function(result) {
-                            $('#calendar').fullCalendar('refetchEvents');
-                    },
-                    error : function(e) {
-                        alert("Error sending new event with AJAX!")
-                        console.log("ERROR: ", e);
-                    }
-                });
+                changeEventDates(event);
             },
 
             // This function is executed when an event is resized
             // TODO: this code (along with eventDrop) is a prime candidate for refactoring as they are duplicates
             eventResize: function(event, delta) {
-                currentEvent = {
-                    type: "Event",
-                    id: event.id,
-                    start: event.start,
-                    end: event.end,
-                }
-
-                $.ajax({
-                    url: ctx + "/calendar/change/eventdate",
-                    method: "POST",
-                    contentType: "application/json; charset=UTF-8",
-                    data: JSON.stringify(currentEvent),
-                    dataType: 'json',
-                    async: true,
-                    success: function(result) {
-                            $('#calendar').fullCalendar('refetchEvents');
-                    },
-                    error: function(e) {
-                        alert("Error sending new event with AJAX!")
-                        console.log("ERROR: ", e);
-                    }
-                });
+                changeEventDates(event);
             },
 
             // Distinct event colors based on activity.category
@@ -146,26 +101,7 @@ $(document).ready(function() {
 
             // This function gets all calendar events within the view using an AJAX get.
             events: function(start, end, timezone, callback) {
-                $.ajax({
-                    type:'GET',
-                    url: ctx + '/calendar/get/' + $('#teamId').attr('data-teamId') + '/' + start + '/' + end + '/',
-                    dataType: 'json',
-                    error: function (xhr, type, exception) { alert("Error fetching calendar data: " + exception); },
-                    success: function (response) {
-                        var events = [];
-                        for (i in response) {
-                            events.push({
-                                id: response[i].id,
-                                title: response[i].title,
-                                start: response[i].start,
-                                end: response[i].end,
-                                description: response[i].description,
-                                activity: response[i].activity,
-                            });
-                        }
-                        callback(events);
-                    }
-                });
+                getCalendarData(start, end, callback);
              },
 
             // If a date has many dates, show an 'extra' button to
