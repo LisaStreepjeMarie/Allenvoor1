@@ -68,10 +68,14 @@ public class CalendarController {
     }
 
     @PostMapping("/calendar/change/event/{eventId}")
-    protected ResponseEntity<Object> changeEvent(@RequestBody String changeEventJson,
+    protected ResponseEntity<Object> changeEvent(@RequestBody String changedEventJson,
                                                  @PathVariable("eventId") final Integer eventId) throws JsonProcessingException {
+        Event changedEvent = mapper.readValue(changedEventJson, Event.class);
+        Event oldEvent = eventRepository.getOne(changedEvent.getEventId());
+        activityRepository.delete(oldEvent.getActivity());
+
         return new ResponseEntity<Object>(new ServiceResponse<Event>("success",
-                eventRepository.save(mapper.readValue(changeEventJson, Event.class))), HttpStatus.OK);
+                eventRepository.save(changedEvent)), HttpStatus.OK);
     }
 
     @PostMapping("/event/delete")

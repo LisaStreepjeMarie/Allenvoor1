@@ -19,6 +19,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
@@ -32,10 +33,11 @@ import java.util.Date;
 @JsonSubTypes({
         @JsonSubTypes.Type(value = Activity.class, name = "activity"),
 })
+@Table(name = "event")
 public class Event {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonProperty("id")
     private Integer eventId;
 
@@ -60,7 +62,7 @@ public class Event {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private java.util.Date eventDoneDate;
 
-    @OneToOne(mappedBy = "event", orphanRemoval=true, cascade={CascadeType.ALL, CascadeType.PERSIST})
+    @OneToOne(mappedBy = "event", orphanRemoval=true, cascade=CascadeType.ALL)
     private Activity activity;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

@@ -10,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -21,11 +20,11 @@ import javax.persistence.OneToOne;
         @JsonSubTypes.Type(value = MedicationActivity.class, name = "MedicationActivity"),
         @JsonSubTypes.Type(value = LeisureActivity.class, name = "LeisureActivity")
 })
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Activity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonProperty("id")
     private Integer activityId;
 
@@ -33,7 +32,6 @@ public abstract class Activity {
     private String activityName;
 
     @OneToOne
-    @JoinColumn(name = "activity_id")
     private Event event;
 
     public Activity(Integer activityId, String activityName) {

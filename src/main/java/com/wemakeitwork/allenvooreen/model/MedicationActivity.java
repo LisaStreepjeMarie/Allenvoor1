@@ -10,8 +10,6 @@ import org.springframework.lang.Nullable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -26,7 +24,7 @@ import javax.persistence.ManyToOne;
 public class MedicationActivity extends Activity{
 
     @JsonProperty("takenmedication")
-    @Column(nullable = false)
+    @Column
     private Integer takenMedication;
 
     @Nullable
