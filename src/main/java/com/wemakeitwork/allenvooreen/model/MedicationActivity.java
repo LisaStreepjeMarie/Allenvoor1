@@ -26,8 +26,7 @@ import javax.persistence.ManyToOne;
 public class MedicationActivity extends Activity{
 
     @JsonProperty("takenmedication")
-    @Column
-    @Nullable
+    @Column(nullable = false)
     private Integer takenMedication;
 
     @Nullable
