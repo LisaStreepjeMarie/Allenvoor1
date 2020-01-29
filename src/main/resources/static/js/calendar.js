@@ -56,6 +56,8 @@ $(document).ready(function() {
                 });
                 $('.modal').modal('show');
 
+                document.getElementById('save-change-event').setAttribute( "onClick", "saveEvent('"+ null + "','" + null + "')" );
+
                 toggleModalNewOrExistingEvent("new");
             },
 
@@ -68,6 +70,8 @@ $(document).ready(function() {
                 $('.modal').modal('show');
 
                 document.getElementById('delete-event').setAttribute( "onClick", "deleteEvent('"+ event.id +"','" +  ctx + "/event/delete/" + "')" );
+                document.getElementById('save-change-event').setAttribute( "onClick", "saveEvent('"+ event.id + "','" + event.activity.id + "')" );
+
                 toggleModalNewOrExistingEvent("existing");
             },
 
