@@ -50,8 +50,10 @@ public class CalendarController {
     @PostMapping("/calendar/new/event")
     public ResponseEntity<Object> newEvent(@RequestBody String newEventJson) throws JsonProcessingException {
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        return new ResponseEntity<Object>(new ServiceResponse<Event>("success",
-                eventRepository.save(mapper.readValue(newEventJson, Event.class))), HttpStatus.OK);
+        Event event = mapper.readValue(newEventJson, Event.class);
+        eventRepository.save(event);
+        ServiceResponse<Event> result = new ServiceResponse<Event>("Succes", event);
+        return new ResponseEntity<Object>(result, HttpStatus.OK);
     }
 
     @PostMapping("/calendar/change/eventdate")
