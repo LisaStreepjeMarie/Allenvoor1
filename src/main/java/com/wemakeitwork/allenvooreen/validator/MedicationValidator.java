@@ -36,7 +36,7 @@ public class MedicationValidator implements Validator {
         if (medication.getMedicationName().length() < 3 ) {
             errors.rejectValue("medicationName", "Size.userForm.medicationName");
         }
-        if (medicationServiceInterface.findByMedicationName(medication.getMedicationName()).isPresent()) {
+        if (team.equals(medication.getTeam()) && medicationServiceInterface.findByMedicationName(medication.getMedicationName()).isPresent()) {
             errors.rejectValue("medicationName", "Duplicate.userForm.medicationName");
         }
 
