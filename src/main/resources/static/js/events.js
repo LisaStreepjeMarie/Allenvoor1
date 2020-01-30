@@ -24,8 +24,8 @@ function saveEvent(eventId, activityId) {
             end: moment(document.getElementById("eventEndDate").value, "DD-MM-YYYY H:mm").toDate(),
             comment: document.getElementById("eventComment").value,
             activity: {
-                id: activityId,
                 type: activityType,
+                activityId: document.getElementById("activityId").value,
                 name: document.getElementById("eventName").value,
                 takenmedication: document.getElementById("takenMedication").value,
                 comment: document.getElementById("eventComment").value,

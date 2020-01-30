@@ -4,14 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.wemakeitwork.allenvooreen.model.Event;
-import com.wemakeitwork.allenvooreen.model.Medication;
-import com.wemakeitwork.allenvooreen.model.MedicationActivity;
-import com.wemakeitwork.allenvooreen.model.Team;
-import com.wemakeitwork.allenvooreen.repository.ActivityRepository;
-import com.wemakeitwork.allenvooreen.repository.EventRepository;
-import com.wemakeitwork.allenvooreen.repository.MemberRepository;
-import com.wemakeitwork.allenvooreen.repository.TeamRepository;
+import com.wemakeitwork.allenvooreen.model.*;
+import com.wemakeitwork.allenvooreen.repository.*;
 import com.wemakeitwork.allenvooreen.service.ServiceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Controller
@@ -34,6 +29,9 @@ public class CalendarController {
 
     @Autowired
     private HttpSession httpSession;
+
+    @Autowired
+    MedicationRepository medicationRepository;
 
     @Autowired
     MemberRepository memberRepository;
@@ -51,6 +49,18 @@ public class CalendarController {
     public ResponseEntity<Object> newEvent(@RequestBody String newEventJson) throws JsonProcessingException {
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         Event event = mapper.readValue(newEventJson, Event.class);
+        System.out.println(event.getEventId());
+
+        // this sets the activity to the medication from the activity
+        if (event.getActivity() instanceof MedicationActivity){
+            setActivityToMedication(event);
+        }
+
+        // removes any medication amount if the old activity was a medical one
+        if (event.getEventId() != null){
+            removeMedicationAmountFromActivity(event);
+        }
+
         eventRepository.save(event);
         ServiceResponse<Event> result = new ServiceResponse<Event>("Succes", event);
         return new ResponseEntity<Object>(result, HttpStatus.OK);
@@ -121,5 +131,19 @@ public class CalendarController {
 
         model.addAttribute("calendarData", calendarData);
         return "calendar";
+    }
+
+    private void setActivityToMedication(Event event){
+        Optional<Medication> medication = medicationRepository.findById(((MedicationActivity) event.getActivity())
+                .getMedication().getMedicationId());
+        medication.ifPresent(value -> value.setTakenMedications((MedicationActivity) event.getActivity()));
+        medicationRepository.save(medication.get());
+    }
+
+    private void removeMedicationAmountFromActivity(Event event){
+        eventRepository.findById(event.getEventId()).stream()
+                .filter(x -> x.getActivity() instanceof MedicationActivity)
+                .forEach(x -> ((MedicationActivity) x.getActivity()).getMedication().removalActivityAddedAmount
+                        (((MedicationActivity) x.getActivity()).getTakenMedication()));
     }
 }

@@ -62,6 +62,7 @@
                             <label class="col-4" for="eventName">Onderwerp</label>
                             <input type="text" name="eventName" id="eventName" />
                             <input type="hidden" name="eventId" id="eventId" />
+                            <input type="hidden" name="activityId" id="activityId" />
                             <input type="hidden" name="teamId" id="team.teamId"/>
                         </div>
                     </div>
