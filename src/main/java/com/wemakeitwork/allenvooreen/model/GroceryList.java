@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@JsonIgnoreProperties({ "groceryListId", "team", "allItemsOnGroceryList", "hibernateLazyInitializer"})
+@JsonIgnoreProperties({ "groceryListId", "team", "allItemsOnGroceryList", "hibernateLazyInitializer", "allMedicationOnGroceryList"})
 public class GroceryList {
 
     @Id
@@ -16,14 +16,6 @@ public class GroceryList {
     Integer groceryListId;
 
     //TODO Team needs to be added including mapping
-
-    public List<Medication> getAllMedicationOnGroceryList() {
-        return allMedicationOnGroceryList;
-    }
-
-    public void setAllMedicationOnGroceryList(List<Medication> allMedicationOnGroceryList) {
-        this.allMedicationOnGroceryList = allMedicationOnGroceryList;
-    }
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "groceryList")
     private List<Medication> allMedicationOnGroceryList;
@@ -45,5 +37,13 @@ public class GroceryList {
 
     public void setAllItemsOnGroceryList(List<GroceryItem> allItemsOnGroceryList) {
         this.allItemsOnGroceryList = allItemsOnGroceryList;
+    }
+
+    public List<Medication> getAllMedicationOnGroceryList() {
+        return allMedicationOnGroceryList;
+    }
+
+    public void setAllMedicationOnGroceryList(List<Medication> allMedicationOnGroceryList) {
+        this.allMedicationOnGroceryList = allMedicationOnGroceryList;
     }
 }

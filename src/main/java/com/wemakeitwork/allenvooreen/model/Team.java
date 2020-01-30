@@ -20,6 +20,11 @@ public class Team {
     public Team() {
     }
 
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "grocery_list_id", referencedColumnName = "id")
+    private GroceryList groceryList;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("id")
@@ -89,4 +94,11 @@ public class Team {
         allMembersInThisTeamSet.remove(member);
     }
 
+    public GroceryList getGroceryList() {
+        return groceryList;
+    }
+
+    public void setGroceryList(GroceryList groceryList) {
+        this.groceryList = groceryList;
+    }
 }
