@@ -101,7 +101,7 @@ function getEvents(start, end, callback) {
 // creates an event object to delete and gives this to the function below together with a delete endpoint URL
 function deleteEvent(eventId, targetUrl) {
     event = {type: "Event", id: eventId, start: "0", end: "0",},
-    changeEvent(event, targetUrl)
+    dropResizeOrDeleteEvent(event, targetUrl)
 }
 
 // this function gives an event to the right end point for either changing the dates or deleting an event (through the targetUrl)

@@ -79,31 +79,13 @@ public class CalendarController {
         return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
 
-    @PostMapping("/calendar/change/event/{eventId}")
-    protected ResponseEntity<Object> changeEvent(@RequestBody String changedEventJson,
-                                                 @PathVariable("eventId") final Integer eventId) throws JsonProcessingException {
-        Event changedEvent = mapper.readValue(changedEventJson, Event.class);
-        Event oldEvent = eventRepository.getOne(changedEvent.getEventId());
-        activityRepository.delete(oldEvent.getActivity());
-
-        return new ResponseEntity<Object>(new ServiceResponse<Event>("success",
-                eventRepository.save(changedEvent)), HttpStatus.OK);
-    }
-
     @PostMapping("/event/delete")
     public ResponseEntity<Object> deleteEvent(@RequestBody String deleteEventJson) throws JsonProcessingException {
-        Team team = (Team) httpSession.getAttribute("team");
 
         Event eventToDelete = mapper.readValue(deleteEventJson, Event.class);
 
-        // Stream to remove the taken amount from the medication if the event is deleted
-        activityRepository.findAll().stream()
-                .filter(x -> x.getActivityId() == eventRepository.getOne(eventToDelete.getEventId()).getActivity().getActivityId())
-                .filter(x -> x instanceof MedicationActivity)
-                .forEach(x -> {
-                    assert ((MedicationActivity) x).getMedication() != null;
-                    ((MedicationActivity) x).getMedication().removalActivityAddedAmount(((MedicationActivity) x).getTakenMedication());
-                });
+        // if the event to delete is a medical one, the medication amount needs to be balanced
+        removeMedicationAmountFromActivity(eventToDelete);
 
         eventRepository.deleteById(eventToDelete.getEventId());
         return new ResponseEntity<Object>(eventToDelete, HttpStatus.OK);
