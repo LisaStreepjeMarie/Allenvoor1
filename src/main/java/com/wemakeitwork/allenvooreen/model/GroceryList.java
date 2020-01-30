@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,10 +19,10 @@ public class GroceryList {
     //TODO Team needs to be added including mapping
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "groceryList")
-    private List<Medication> allMedicationOnGroceryList;
+    private List<Medication> allMedicationOnGroceryList = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "groceryList")
-    private List<GroceryItem> allItemsOnGroceryList;
+    private List<GroceryItem> allItemsOnGroceryList = new ArrayList<>();
 
     public Integer getGroceryListId() {
         return groceryListId;

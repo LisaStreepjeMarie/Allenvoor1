@@ -15,7 +15,7 @@ import java.util.Set;
 @JsonPropertyOrder(value = {"id","name"}, alphabetic = true)
 // Ignoring 'hibernateLazyInitializer' & 'handler' is needed to prevent infinite recursion
 // when calling the ObjectMapper to create a JSON
-@JsonIgnoreProperties({ "allMembersInThisTeamSet", "eventList", "medicationList", "hibernateLazyInitializer", "handler" })
+@JsonIgnoreProperties({ "allMembersInThisTeamSet", "eventList", "medicationList", "hibernateLazyInitializer", "groceryList"})
 public class Team {
     public Team() {
     }

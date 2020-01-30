@@ -5,6 +5,7 @@ import com.wemakeitwork.allenvooreen.model.Event;
 import com.wemakeitwork.allenvooreen.model.GroceryItem;
 import com.wemakeitwork.allenvooreen.model.GroceryList;
 import com.wemakeitwork.allenvooreen.model.Team;
+import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import com.wemakeitwork.allenvooreen.service.ServiceResponse;
 import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,19 +25,20 @@ public class GroceryListController {
     @Autowired
     private HttpSession httpSession;
 
+    @Autowired
+    TeamRepository teamRepository;
+
     @GetMapping("/GroceryList")
     protected String showGrocerylist(Model model) {
+        Team team = teamRepository.getOne(1);
 
-        GroceryItem een = new GroceryItem();
-        GroceryItem twee = new GroceryItem();
-        een.setGroceryName("check");
-        twee.setGroceryName("check2");
+        GroceryList groceryList = team.getGroceryList();
+        System.out.println(groceryList.getAllItemsOnGroceryList().size());
+
+        List<GroceryItem> allGroceries = groceryList.getAllItemsOnGroceryList();
 
         List<GroceryItem> alleItems = new ArrayList<>();
-        alleItems.add(een);
-        alleItems.add(twee);
-
-        model.addAttribute("groceryList", alleItems);
+        model.addAttribute("groceryList", allGroceries);
         return "groceryList";
     }
 
