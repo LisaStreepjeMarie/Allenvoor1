@@ -1,4 +1,8 @@
-<!DOCTYPE html>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
+<html xmlns:form="http://www.w3.org/1999/xhtml" xmlns:c="">
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -132,14 +136,10 @@ input {
     <input type="text" id="myInput" placeholder="Title...">
     <span onclick="newElement()" class="addBtn">Add</span>
 </div>
-
 <ul id="myUL">
-    <li>Hit the gym</li>
-    <li class="checked">Pay bills</li>
-    <li>Meet George</li>
-    <li>Buy eggs</li>
-    <li>Read a book</li>
-    <li>Organize office</li>
+    <c:forEach var="groceryItem" items="${groceryList}">
+        <li>${groceryItem.groceryName}</li>
+    </c:forEach>
 </ul>
 
 <script>
