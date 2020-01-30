@@ -79,10 +79,10 @@ public class MedicationController {
         if (result.hasErrors()) {
             return "newMedication";
         } else {
-            System.out.println(medication.getMedicationName());
+            //System.out.println(medication.getMedicationName());
             Team team = (Team) httpSession.getAttribute("team");
             medication.setTeam(team);
-            medicationServiceInterface.save(medication);
+            medicationRepository.save(medication);
             return "redirect:/medication/"+ team.getTeamId();
         }
     }

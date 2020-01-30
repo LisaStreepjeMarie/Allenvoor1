@@ -31,14 +31,14 @@ public class MedicationValidator implements Validator {
         Medication medication = (Medication) o;
         Team team = (Team) httpSession.getAttribute("team");
 
+        team.getMedicationList().stream()
+                .filter(x -> x.getMedicationName().equals(((Medication) o).getMedicationName()))
+                .forEach(x ->  errors.rejectValue("medicationName", "Duplicate.userForm.medicationName"));
+
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "medicationName", "NotEmpty");
         if (medication.getMedicationName().length() < 3 ) {
             errors.rejectValue("medicationName", "Size.userForm.medicationName");
         }
-
-        team.getMedicationList().stream()
-                .filter(x -> x.getMedicationName().equals(((Medication) o).getMedicationName()))
-                .forEach(x ->  errors.rejectValue("medicationName", "Duplicate.userForm.medicationName"));
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "medicationAmount", "NotEmpty");
         if (medication.getMedicationAmount() < 1) {
