@@ -63,12 +63,12 @@ $(document).ready(function() {
 
             // This function is executed when an event is dragged to another date
             eventDrop: function(event, info) {
-                changeEvent(event, ctx + "/calendar/change/eventdate");
+                dropResizeOrDeleteEvent(event, ctx + "/calendar/change/eventdate");
             },
 
             // This function is executed when an event is resized
             eventResize: function(event, delta) {
-                changeEvent(event, ctx + "/calendar/change/eventdate");
+                dropResizeOrDeleteEvent(event, ctx + "/calendar/change/eventdate");
             },
 
             // Distinct event colors based on event.activity.type
