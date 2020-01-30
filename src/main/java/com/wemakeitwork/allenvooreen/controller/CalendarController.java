@@ -25,7 +25,6 @@ import java.security.Principal;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -131,21 +130,4 @@ public class CalendarController {
         return new ResponseEntity<Object>(eventToDelete, HttpStatus.OK);
     }
 
-    @GetMapping("/home")
-    public String calendar(Model model, Principal principal){
-        Set<Team> teamList = null;
-        Optional<Member> member = memberRepository.findByMemberName(principal.getName());
-        if(member.isPresent()){
-            teamList = member.get().getAllTeamsOfMemberSet();
-        }
-        if (teamList != null) {
-            ArrayList<Team> sortedList = (ArrayList<Team>) teamList.stream()
-                    .sorted(Comparator.comparing(Team::getTeamName))
-                    .collect(Collectors.toList());
-
-            sortedList.forEach(x -> System.out.println(x.getTeamName()));
-            model.addAttribute("teamList", sortedList);
-        }
-        return "home";
-    }
 }
