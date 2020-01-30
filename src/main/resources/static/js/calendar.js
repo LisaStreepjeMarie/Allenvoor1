@@ -1,5 +1,7 @@
 // functions in this method will only be available after the document (jsp) is completely loaded
 $(document).ready(function() {
+        // Hide model fields by default
+        hideAllModalInputFields();
 
         // Cleans the modal upon closing
         $('.modal').on("hide.bs.modal", function() {
