@@ -79,6 +79,7 @@ class JsonRestControllerTest {
         team.setTeamId(1);
         testevent1.setTeam(team);
         String testEvent = mapper.writeValueAsString(testevent1);
+
         ServiceResponse<Event> result = new ServiceResponse<Event>("Success", testevent1);
         ResponseEntity<Object> expected = new ResponseEntity<Object>(result, HttpStatus.OK);
 
@@ -91,8 +92,6 @@ class JsonRestControllerTest {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isEqualTo(testevent1);
         Assertions.assertThat(responseEntity.getBody().getClass()).isEqualTo(result.getClass());
-
-
 
     }
 

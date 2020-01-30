@@ -16,8 +16,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = CalendarController.class)
@@ -48,6 +47,18 @@ public class CalendarControllerTest {
         mockMvc.perform(get("/home"))
                 .andExpect(status().isOk())
                 .andExpect(forwardedUrl("/WEB-INF/jsp/home.jsp"));
+    }
+
+    @Test
+    @WithMockUser(roles = "admin")
+    public void testController() throws Exception {
+
+        String meegeven = "testString";
+
+        mockMvc.perform(get("/testController"))
+                .andExpect(status().isOk())
+                .andExpect(forwardedUrl("/WEB-INF/jsp/calendar.jsp"))
+                .andExpect(model().attribute("testString", meegeven));
     }
 
 }

@@ -96,4 +96,11 @@ public class CalendarController {
 
         return "home";
     }
+
+    @GetMapping("/testController")
+    public String testController(Model model){
+        String meegeven = "testString";
+        model.addAttribute("testString", meegeven);
+        return "calendar";
+    }
 }
