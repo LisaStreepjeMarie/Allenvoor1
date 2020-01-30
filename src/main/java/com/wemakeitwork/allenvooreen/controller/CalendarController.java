@@ -6,6 +6,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.wemakeitwork.allenvooreen.model.*;
 import com.wemakeitwork.allenvooreen.repository.*;
+import com.wemakeitwork.allenvooreen.model.*;
+import com.wemakeitwork.allenvooreen.repository.ActivityRepository;
+import com.wemakeitwork.allenvooreen.repository.EventRepository;
+import com.wemakeitwork.allenvooreen.repository.MemberRepository;
+import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import com.wemakeitwork.allenvooreen.service.ServiceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,7 +26,10 @@ import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Controller
 public class CalendarController {
@@ -44,6 +52,37 @@ public class CalendarController {
 
     @Autowired
     ActivityRepository activityRepository;
+
+    @GetMapping("/calendar/{teamid}/medications")
+    public ResponseEntity<Object> getMedications(@PathVariable("teamid") final Integer teamId) {
+        ServiceResponse<List<Medication>> response = new ServiceResponse<>("success", teamRepository.getOne(teamId).getMedicationList());
+        return new ResponseEntity<Object>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/calendar/{teamId}")
+    public String showCalender(@PathVariable("teamId") final Integer teamId, Model model, Principal principal)
+            throws JsonProcessingException {
+        Team team = teamRepository.getOne(teamId);
+        httpSession.setAttribute("team", team);
+        Set<Team> teamList = memberRepository.findByMemberName(principal.getName()).get().getAllTeamsOfMemberSet();
+
+        ArrayList<Team> sortedList = (ArrayList<Team>) teamList.stream()
+                .sorted(Comparator.comparing(Team::getTeamName))
+                .collect(Collectors.toList());
+
+        sortedList.forEach(x -> System.out.println(x.getTeamName()));
+
+        model.addAttribute("teamList", sortedList);
+
+        List<Event> sourceCalendarData = team.getEventList();
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        String calendarData = mapper.writeValueAsString(sourceCalendarData);
+
+        model.addAttribute("calendarData", calendarData);
+        return "calendar";
+    }
 
     @PostMapping("/calendar/new/event")
     public ResponseEntity<Object> newEvent(@RequestBody String newEventJson) throws JsonProcessingException {
@@ -91,29 +130,6 @@ public class CalendarController {
         return new ResponseEntity<Object>(eventToDelete, HttpStatus.OK);
     }
 
-    @GetMapping("/calendar/{teamid}/medications")
-    public ResponseEntity<Object> getMedications(@PathVariable("teamid") final Integer teamId) {
-        ServiceResponse<List<Medication>> response = new ServiceResponse<>("success", teamRepository.getOne(teamId).getMedicationList());
-        return new ResponseEntity<Object>(response, HttpStatus.OK);
-    }
-
-    @GetMapping("/calendar/{teamId}")
-    public String showCalender(@PathVariable("teamId") final Integer teamId, Model model, Principal principal)
-            throws JsonProcessingException {
-        Team team = teamRepository.getOne(teamId);
-        httpSession.setAttribute("team", team);
-        Set<Team> teamList = memberRepository.findByMemberName(principal.getName()).get().getAllTeamsOfMemberSet();
-        model.addAttribute("teamList", teamList);
-
-        List<Event> sourceCalendarData = team.getEventList();
-
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.enable(SerializationFeature.INDENT_OUTPUT);
-        String calendarData = mapper.writeValueAsString(sourceCalendarData);
-
-        model.addAttribute("calendarData", calendarData);
-        return "calendar";
-    }
 
     private void setActivityToMedication(Event event){
         Optional<Medication> medication = medicationRepository.findById(((MedicationActivity) event.getActivity())
