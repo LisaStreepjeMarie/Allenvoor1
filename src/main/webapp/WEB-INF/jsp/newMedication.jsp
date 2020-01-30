@@ -47,6 +47,7 @@
         <h3 class="font-weight-light">Voer medicatie voor ${team.teamName} in</h3>
         <br>
         <form:form action="${pageContext.request.contextPath}/medication/new" modelAttribute="medication">
+        <form:errors path = "*" cssClass = "errorblock" element = "div" />
             <table>
                 <tr>
                     <spring:bind path="medicationName">
@@ -55,7 +56,6 @@
                     <td>
                         <form:input path="medicationName"  />
                     </td>
-                    <form:errors path="medicationName"></form:errors>
                      </div>
                    </spring:bind>
                 </tr>
@@ -66,7 +66,6 @@
                     <td>
                         <form:input path="medicationAmount" />
                         </td>
-                       <form:errors path= "medicationAmount"></form:errors>
                         </div>
                         </spring:bind>
                     </tr>
