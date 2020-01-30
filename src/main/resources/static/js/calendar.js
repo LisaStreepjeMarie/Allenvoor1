@@ -73,10 +73,12 @@ $(document).ready(function() {
 
             // Distinct event colors based on event.activity.type
             eventRender: function(event, element) {
-                switch(event.activity.type) {
-                    case undefined: console.log("event.activity is undefined"); break;
-                    case "MedicationActivity": element.css('background-color', '#98639C'); break;
-                    case "LeisureActivity": break;
+                if (event.activity != null) {
+                    switch(event.activity.type) {
+                        case undefined: console.log("event.activity is undefined"); break;
+                        case "MedicationActivity": element.css('background-color', '#98639C'); break;
+                        case "LeisureActivity": break;
+                    }
                 }
             },
 
