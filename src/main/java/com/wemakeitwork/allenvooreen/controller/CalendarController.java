@@ -4,10 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.wemakeitwork.allenvooreen.model.Event;
-import com.wemakeitwork.allenvooreen.model.Medication;
-import com.wemakeitwork.allenvooreen.model.MedicationActivity;
-import com.wemakeitwork.allenvooreen.model.Team;
+import com.wemakeitwork.allenvooreen.model.*;
+import com.wemakeitwork.allenvooreen.repository.*;
+import com.wemakeitwork.allenvooreen.model.*;
 import com.wemakeitwork.allenvooreen.repository.ActivityRepository;
 import com.wemakeitwork.allenvooreen.repository.EventRepository;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
@@ -26,7 +25,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Controller
 public class CalendarController {
@@ -34,6 +37,9 @@ public class CalendarController {
 
     @Autowired
     private HttpSession httpSession;
+
+    @Autowired
+    MedicationRepository medicationRepository;
 
     @Autowired
     MemberRepository memberRepository;
@@ -59,7 +65,14 @@ public class CalendarController {
         Team team = teamRepository.getOne(teamId);
         httpSession.setAttribute("team", team);
         Set<Team> teamList = memberRepository.findByMemberName(principal.getName()).get().getAllTeamsOfMemberSet();
-        model.addAttribute("teamList", teamList);
+
+        ArrayList<Team> sortedList = (ArrayList<Team>) teamList.stream()
+                .sorted(Comparator.comparing(Team::getTeamName))
+                .collect(Collectors.toList());
+
+        sortedList.forEach(x -> System.out.println(x.getTeamName()));
+
+        model.addAttribute("teamList", sortedList);
 
         List<Event> sourceCalendarData = team.getEventList();
 
@@ -75,6 +88,18 @@ public class CalendarController {
     public ResponseEntity<Object> newEvent(@RequestBody String newEventJson) throws JsonProcessingException {
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         Event event = mapper.readValue(newEventJson, Event.class);
+        System.out.println(event.getEventId());
+
+        // this sets the activity to the medication from the activity
+        if (event.getActivity() instanceof MedicationActivity){
+            setActivityToMedication(event);
+        }
+
+        // removes any medication amount if the old activity was a medical one
+        if (event.getEventId() != null){
+            removeMedicationAmountFromActivity(event);
+        }
+
         eventRepository.save(event);
         ServiceResponse<Event> result = new ServiceResponse<Event>("Succes", event);
         return new ResponseEntity<Object>(result, HttpStatus.OK);
@@ -93,33 +118,30 @@ public class CalendarController {
         return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
 
-    @PostMapping("/calendar/change/event/{eventId}")
-    protected ResponseEntity<Object> changeEvent(@RequestBody String changedEventJson,
-                                                 @PathVariable("eventId") final Integer eventId) throws JsonProcessingException {
-        Event changedEvent = mapper.readValue(changedEventJson, Event.class);
-        Event oldEvent = eventRepository.getOne(changedEvent.getEventId());
-        activityRepository.delete(oldEvent.getActivity());
-
-        return new ResponseEntity<Object>(new ServiceResponse<Event>("success",
-                eventRepository.save(changedEvent)), HttpStatus.OK);
-    }
-
     @PostMapping("/event/delete")
     public ResponseEntity<Object> deleteEvent(@RequestBody String deleteEventJson) throws JsonProcessingException {
-        Team team = (Team) httpSession.getAttribute("team");
 
         Event eventToDelete = mapper.readValue(deleteEventJson, Event.class);
 
-        // Stream to remove the taken amount from the medication if the event is deleted
-        activityRepository.findAll().stream()
-                .filter(x -> x.getActivityId() == eventRepository.getOne(eventToDelete.getEventId()).getActivity().getActivityId())
-                .filter(x -> x instanceof MedicationActivity)
-                .forEach(x -> {
-                    assert ((MedicationActivity) x).getMedication() != null;
-                    ((MedicationActivity) x).getMedication().removalActivityAddedAmount(((MedicationActivity) x).getTakenMedication());
-                });
+        // if the event to delete is a medical one, the medication amount needs to be balanced
+        removeMedicationAmountFromActivity(eventToDelete);
 
         eventRepository.deleteById(eventToDelete.getEventId());
         return new ResponseEntity<Object>(eventToDelete, HttpStatus.OK);
+    }
+
+
+    private void setActivityToMedication(Event event){
+        Optional<Medication> medication = medicationRepository.findById(((MedicationActivity) event.getActivity())
+                .getMedication().getMedicationId());
+        medication.ifPresent(value -> value.setTakenMedications((MedicationActivity) event.getActivity()));
+        medicationRepository.save(medication.get());
+    }
+
+    private void removeMedicationAmountFromActivity(Event event){
+        eventRepository.findById(event.getEventId()).stream()
+                .filter(x -> x.getActivity() instanceof MedicationActivity)
+                .forEach(x -> ((MedicationActivity) x.getActivity()).getMedication().removalActivityAddedAmount
+                        (((MedicationActivity) x.getActivity()).getTakenMedication()));
     }
 }

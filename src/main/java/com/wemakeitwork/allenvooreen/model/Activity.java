@@ -28,7 +28,7 @@ import javax.persistence.Table;
 public abstract class Activity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer activityId;
 
