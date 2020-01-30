@@ -1,30 +1,59 @@
 package com.wemakeitwork.allenvooreen.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
-public class Activity {
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = MedicationActivity.class, name = "MedicationActivity"),
+        @JsonSubTypes.Type(value = LeisureActivity.class, name = "LeisureActivity")
+})
+@Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "activity")
+public abstract class Activity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonProperty("id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Integer activityId;
 
     @JsonProperty("name")
     private String activityName;
 
-    @JsonProperty("category")
-    private String activityCategory;
-
-    @OneToOne
-    @JoinColumn(name = "activity_id")
+    @OneToOne(mappedBy = "activity")
+    @JsonIgnore
     private Event event;
+
+    public Activity(Integer activityId, String activityName) {
+        this.activityId = activityId;
+        this.activityName = activityName;
+    }
+
+    public Activity() {
+    }
+
+    public Event getEvent() {
+        return event;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
+    }
 
     public Integer getActivityId() {
         return activityId;
@@ -40,13 +69,5 @@ public class Activity {
 
     public void setActivityName(String activityName) {
         this.activityName = activityName;
-    }
-
-    public String getActivityCategory() {
-        return activityCategory;
-    }
-
-    public void setActivityCategory(String activityCategory) {
-        this.activityCategory = activityCategory;
     }
 }

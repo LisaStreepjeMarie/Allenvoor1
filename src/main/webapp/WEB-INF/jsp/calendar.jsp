@@ -3,7 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 
-<html xmlns:form="http://www.w3.org/1999/xhtml" xmlns:c="" xmlns:jsp="http://www.w3.org/1999/XSL/Transform">
+<html xmlns:jsp="http://www.w3.org/1999/XSL/Transform">
 <head>
     <meta charset='utf-8' />
     <title>Kalender</title>
@@ -29,6 +29,8 @@
     <link id="teamId" data-teamId="${team.teamId}"/>
     <link id="csrfToken" data-csrfToken="${_csrf.token}"/>
 
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/modal.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/events.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/calendar.js"></script>
 </head>
 
@@ -125,10 +127,10 @@
                     </div>
                 </div>
                     </span>
-                <div class="modal-footer">
-                    <button type="button" id="delete-event" class="btn btn-danger" data-dismiss="modal" >Verwijder Afspraak</button>
+                <div class="modal-footer" id="modal-footer">
+                    <button type="button" id="delete-event" class="btn btn-danger" data-dismiss="modal">Verwijder Afspraak</button>
                     <button type="button" class="btn btn-light" data-dismiss="modal">Sluiten</button>
-                    <button type="submit" class="btn btn-primary" onaction="" id="save-change-event" data-dismiss="modal">Maak afspraak</button>
+                    <button type="submit" class="btn btn-primary" id="save-change-event" data-dismiss="modal">Maak afspraak</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

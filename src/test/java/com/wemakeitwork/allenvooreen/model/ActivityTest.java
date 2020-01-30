@@ -1,22 +1,7 @@
 package com.wemakeitwork.allenvooreen.model;
 
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Before;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
 public class ActivityTest {
-    private Activity testActivity = new Activity();
+    /*private Activity testActivity = new Activity();
 
     @Test
     void testGetActivityId() {
@@ -76,6 +61,6 @@ public class ActivityTest {
     @AfterEach
     void cleanUp(){
         testActivity = null;
-    }
+    }*/
 
 }

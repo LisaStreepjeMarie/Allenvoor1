@@ -1,6 +1,8 @@
 package com.wemakeitwork.allenvooreen.controller;
 
-import com.wemakeitwork.allenvooreen.model.*;
+import com.wemakeitwork.allenvooreen.model.Event;
+import com.wemakeitwork.allenvooreen.model.MedicationActivity;
+import com.wemakeitwork.allenvooreen.model.Team;
 import com.wemakeitwork.allenvooreen.repository.ActivityRepository;
 import com.wemakeitwork.allenvooreen.repository.EventRepository;
 import com.wemakeitwork.allenvooreen.repository.MedicationRepository;
@@ -11,7 +13,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
@@ -67,10 +72,10 @@ public class EventController {
             return "calendar";
         } else {
             Team team = (Team) httpSession.getAttribute("team");
-            event.setTeam(team);
+            event.setTeam((Team) httpSession.getAttribute("team"));
             event.getActivity().setActivityName(event.getEventName());
 
-            if (event.getActivity().getActivityCategory().equals("Medisch")){
+            if (event.getActivity() instanceof MedicationActivity){
                 if (medicationActivity.getMedication() == null) {
                     return "redirect:/calendar/" + team.getTeamId();
                 }else {
@@ -79,45 +84,6 @@ public class EventController {
                 }
             }
 
-            eventRepository.save(event);
-            return "redirect:/calendar/" + team.getTeamId();
-        }
-    }
-
-    @PostMapping("/event/change/{activityId}")
-    protected String changeEvent(@ModelAttribute("event") Event event, BindingResult result,
-                                 @ModelAttribute("medicationActivity") MedicationActivity medicationActivity,
-                                 @PathVariable("activityId") final Integer activityId) {
-        if (result.hasErrors()) {
-            return "calendar";
-        } else {
-
-            //setting the team to the event
-            Team team = (Team) httpSession.getAttribute("team");
-            event.setTeam(team);
-
-            //checking if the event is medical to set the subclass
-            if (event.getActivity().getActivityCategory().equals("Medisch")){
-                event.setActivity(medicationActivity);
-                newEventWithMedicationActivity(event);
-
-                //removing the taken medication from the origal medication if there was one in the activity
-                //also trying streams
-                activityRepository.findAll().stream()
-                        //finding the right activity
-                        .filter(x -> x.getActivityId() == activityId)
-                        //checking if it's a medical activity
-                        .filter(x -> x instanceof MedicationActivity)
-                        //doing something with the result (in this case removing the medical amount)
-                        .forEach(x ->
-                        {
-                            assert ((MedicationActivity) x).getMedication() != null;
-                            ((MedicationActivity) x).getMedication().removalActivityAddedAmount(((MedicationActivity) x).getTakenMedication());
-                        });
-            }
-
-            event.getActivity().setActivityId(activityId);
-            event.getActivity().setActivityName(event.getEventName());
             eventRepository.save(event);
             return "redirect:/calendar/" + team.getTeamId();
         }

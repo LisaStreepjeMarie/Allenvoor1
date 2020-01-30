@@ -1,34 +1,7 @@
-// Define contextpath
-var ctx = $('#contextPathHolder').attr('data-contextPath');
-
-// Get csrf token (needed to post a json through spring boot security)
-$.ajaxSetup({
-    beforeSend: function(xhr) {
-        xhr.setRequestHeader('X-CSRF-TOKEN', $('#csrfToken').attr('data-csrfToken'));
-    }
-});
-
 // functions in this method will only be available after the document (jsp) is completely loaded
 $(document).ready(function() {
-        var ctx = $('#contextPathHolder').attr('data-contextPath');
-
+        // Hide model fields by default
         hideAllModalInputFields();
-
-        // this shows/hides the eventDone input field when the checkbox is toggled
-        $("#eventDone").change(function () {
-            if(document.getElementById("eventDone").checked == true) {
-                    $("#datetimepickerDone").show()
-            } else {
-                    document.getElementById("eventDoneDate").removeAttribute("required");
-                    $("#datetimepickerDone").hide()
-            }
-        });
-
-        // This makes sure that the unwanted fields in the modal are hidden and calls the selection upon change
-        $("#activityCategory").change(function () {
-            hideAllModalInputFields();
-            activitySelection();
-        });
 
         // Cleans the modal upon closing
         $('.modal').on("hide.bs.modal", function() {
@@ -58,110 +31,53 @@ $(document).ready(function() {
 
             // This function is executed when an empty date/time is clicked
             select: function(start, end) {
+                $("#modal-footer").hide();
+                /*$("#datetimepickerDone").hide();*/
+                $("#activityCategory").change(function () {
+                    showModalInputFields();
+                });
 
-                $(".fc-highlight").css("background", "purple");
-
-                $('#save-change-event').attr('onclick', "saveNewEvent()");
-
-                $('.modal').find('#eventStartDate').val(moment(start).format('DD-MM-YYYY H:mm'));
-                $('.modal').find('#eventEndDate').val(moment(end).format('DD-MM-YYYY H:mm'));
-
-                document.getElementById("modal-title").innerHTML = "Maak nieuwe afspraak";
-                document.getElementById("save-change-event").innerHTML = "Maak afspraak";
-                $("#delete-event").hide();
-                $('.modal').modal('show');
+                document.getElementById('save-change-event').setAttribute( "onClick", "saveEvent('"+ null + "','" + null + "')" );
+                event = {type: "Event", id: null, start: start, end: end,};
+                fillModal(event);
             },
 
             // This function is executed when an already planned event is clicked
             eventClick: function(event, element) {
-                // redefines the onclick action of the delete-event button, so that it will point the browser -->
-                // to the /event/delete/{eventId}/{activityId} mapping
-                $('#delete-event').attr('onclick',"deleteEvent(" + event.id + ")");
+                $("#modal-footer").hide();
+                $("#activityCategory").change(function () {
+                    showModalInputFields();
+                });
 
-                $("#eventId").val(event.id);
-                $('#modal-form').attr('action', ctx + "/event/change/" + event.activity.id);
-                $('#save-change-event').attr('onclick', "saveChangedEvent(" + event.id + ")");
-                $('.modal').find('#eventComment').val(event.description);
-                $('.modal').find('#activityCategory').val(event.activity.category);
-                $('.modal').find('#eventName').val(event.title);
+                if (event.activity.type === "MedicationActivity") {
+                    $('.modal').find('#activityCategory').val("Medisch")
+                } else if (event.activity.type === "LeisureActivity") {
+                    $('.modal').find('#activityCategory').val("Vrije tijd")
+                }
 
-                // Shows modal fields based on the event.activity.category
-                fillingTheModal();
-                showMedicationAmount(event, element);
+                document.getElementById('delete-event').setAttribute( "onClick", "deleteEvent('"+ event.id +"','" +  ctx + "/event/delete/" + "')" );
+                document.getElementById('save-change-event').setAttribute( "onClick", "saveEvent('"+ event.id + "','" + event.activity.id + "')" );
 
-                $('.modal').find('#eventStartDate').val(moment(event.start).format('DD-MM-YYYY H:mm'));
-                $('.modal').find('#eventEndDate').val(moment(event.end).format('DD-MM-YYYY H:mm'));
-
-                // Redefines the modal (popup) buttons with the appropriate button text
-                document.getElementById("modal-title").innerHTML = "Wijzig of verwijder afspraak";
-                document.getElementById("save-change-event").innerHTML = "Wijzig afspraak";
-
-                // Shows the delete button on the (still hidden) modal
-                $("#delete-event").show();
-
-                // lastly, the modal (popup) is shown, which by now has been properly configured
-                $('.modal').modal('show');
+                fillModal(event);
             },
 
             // This function is executed when an event is dragged to another date
             eventDrop: function(event, info) {
-                // Puts needed fullcalendar event.data attributes into an object to pass to the REST api
-                // (for resizing and dragging an event we only need to know: a. which event, and b. what are the new dates.
-                currentEvent = {
-                    id: event.id,
-                    start: event.start,
-                    end: event.end,
-                }
-
-                // Make AJAX Post to change eventdate
-                $.ajax({
-                    url: ctx + "/calendar/change/eventdate",
-                    method: "POST",
-                    contentType: "application/json; charset=UTF-8",
-                    data: JSON.stringify(currentEvent),
-                    dataType: 'json',
-                    async: true,
-                    success: function(result) {
-                            $('#calendar').fullCalendar('refetchEvents');
-                    },
-                    error : function(e) {
-                        alert("Error sending new event with AJAX!")
-                        console.log("ERROR: ", e);
-                    }
-                });
+                dropResizeOrDeleteEvent(event, ctx + "/calendar/change/eventdate");
             },
 
             // This function is executed when an event is resized
-            // TODO: this code (along with eventDrop) is a prime candidate for refactoring as they are duplicates
             eventResize: function(event, delta) {
-                currentEvent = {
-                    id: event.id,
-                    start: event.start,
-                    end: event.end,
-                }
-
-                $.ajax({
-                    url: ctx + "/calendar/change/eventdate",
-                    method: "POST",
-                    contentType: "application/json; charset=UTF-8",
-                    data: JSON.stringify(currentEvent),
-                    dataType: 'json',
-                    async: true,
-                    success: function(result) {
-                            $('#calendar').fullCalendar('refetchEvents');
-                    },
-                    error: function(e) {
-                        alert("Error sending new event with AJAX!")
-                        console.log("ERROR: ", e);
-                    }
-                });
+                dropResizeOrDeleteEvent(event, ctx + "/calendar/change/eventdate");
             },
 
-            // Distinct event colors based on activity.category
+            // Distinct event colors based on event.activity.type
             eventRender: function(event, element) {
-                if (typeof event.activity !== 'undefined') {
-                    if( event.activity.category == "Medisch") {
-                        element.css('background-color', '#98639C');
+                if (event.activity != null) {
+                    switch(event.activity.type) {
+                        case undefined: console.log("event.activity is undefined"); break;
+                        case "MedicationActivity": element.css('background-color', '#98639C'); break;
+                        case "LeisureActivity": break;
                     }
                 }
             },
@@ -176,227 +92,10 @@ $(document).ready(function() {
 
             // This function gets all calendar events within the view using an AJAX get.
             events: function(start, end, timezone, callback) {
-                $.ajax({
-                    type:'GET',
-                    url: ctx + '/calendar/get/' + $('#teamId').attr('data-teamId') + '/' + start + '/' + end + '/',
-                    dataType: 'json',
-                    error: function (xhr, type, exception) { alert("Error: " + exception); },
-                    success: function (response) {
-                        var events = [];
-                        for (i in response) {
-                            events.push({
-                                id: response[i].id,
-                                title: response[i].title,
-                                start: response[i].start,
-                                end: response[i].end,
-                                description: response[i].description,
-                                activity: response[i].activity,
-                            });
-                        }
-                        callback(events);
-                    }
-                });
+                getEvents(start, end, callback);
              },
 
             // If a date has many dates, show an 'extra' button to
             eventLimit: true
         });
-        // End of fullcalendar configuration
-
-        // These functions load the start, end & done date calendars (datetimepickers) in the modal (popup).
-        $('#datetimepickerStart').datetimepicker({
-            format: 'DD-MM-YYYY HH:mm'
-        });
-        $('#datetimepickerEnd').datetimepicker({
-            format: 'DD-MM-YYYY HH:mm'
-        });
-        $('#datetimepickerDone').datetimepicker({
-            format: 'DD-MM-YYYY HH:mm'
-        });
-        $("#datetimepickerStart").on("change.datetimepicker", function (e) {
-            $('#datetimepickerEnd').datetimepicker('minDate', e.date);
-        });
-        $("#datetimepickerEnd").on("change.datetimepicker", function (e) {
-            $('#datetimepickerStart').datetimepicker('maxDate', e.date);
-        });
-        $('#datetimepickerDone').datetimepicker();
-    }); // End of $(document).ready(function)
-
-// This function shows the correct modal form based on the activity selection
-function activitySelection() {
-    if ($("#activityCategory").val() === "Medisch") {
-    <!-- below function makes sure the medication is only loaded when the medical activity is chosen -->
-        getMedication()
-        $('#eventComment').val("")
-        $("#eventNameDiv, #eventDateStartEndDiv, #medicationChoiceDiv, #takenMedicationDiv, #eventDatesDiv").show();
-    } else {
-        $('#takenMedication').val("")
-        $('#medicationChoice').empty()
-        $("#eventNameDiv, #eventDateStartEndDiv, #eventDatesDiv, #eventCommentDiv").show();
-    }
-    $("#datetimepickerDone").hide();
-    $("#eventDoneDiv").css("display", "");
-}
-
-// This function hides all modal options
-function hideAllModalInputFields() {
-    $("#eventNameDiv, #eventCommentDiv, #medicationChoiceDiv, #eventDatesDiv, #takenMedicationDiv").css("display", "none");
-}
-
-//this shows the medication amount when an excisting event is chosen
-function showMedicationAmount(event, element){
-    if ($('.modal').find('#activityCategory').val() == "Medisch")
-      getMedication()
-      $('.modal').find('#takenMedication').val(event.activity.takenmedication);
-}
-
-// This function fills the modal with event info if it exist
-function fillingTheModal() {
-    if ($('.modal').find('#activityCategory').val() == "Medisch") {
-        $("#eventNameDiv, #eventDateStartEndDiv, #medicationChoiceDiv, #takenMedicationDiv, #eventDatesDiv").show();
-    } else {
-        $("#eventNameDiv, #eventDateStartEndDiv, #eventDatesDiv, #eventCommentDiv").show();
-    }
-    $("#datetimepickerDone").hide();
-    $("#eventDoneDiv").css("display", "");
-}
-
-function deleteEvent(eventId) {
-    urlDeleteEvent = ctx + "/event/delete/";
-
-    eventToDelete = {
-        id: eventId,
-    }
-
-    $.ajax({
-            url: urlDeleteEvent,
-            method: "POST",
-            contentType: "application/json; charset=UTF-8",
-            data: JSON.stringify(eventToDelete),
-            dataType : 'json',
-            async: true,
-            success: function(result) {
-                // Reload events on calendar if new event is written to the database successfully
-                $('#calendar').fullCalendar('refetchEvents');
-            },
-            error : function(e) {
-                alert("Error sending new event with AJAX!")
-                console.log(eventToDelete)
-                console.log("ERROR: ", e);
-            }
-        });
-}
-
-function saveNewEvent() {
-    // Fill the object currentEvent with values from input fields in the modal
-    currentEvent = {
-        title: document.getElementById("eventName").value,
-        start: moment(document.getElementById("eventStartDate").value, "DD-MM-YYYY H:mm").toDate(),
-        end: moment(document.getElementById("eventEndDate").value, "DD-MM-YYYY H:mm").toDate(),
-        donedate: moment(document.getElementById("eventDoneDate").value, "DD-MM-YYYY H:mm").toDate(),
-        description: document.getElementById("eventComment").value,
-        activity: {
-            name: document.getElementById("eventName").value,
-            category: document.getElementById("activityCategory").value,
-        },
-        team: {
-            id: parseInt($('#teamId').attr('data-teamId'), 10),
-        }
-    }
-
-    //creating a medicalActivity to ass along
-    medicalActivity = {
-        name: document.getElementById("eventName").value,
-        medication: {
-            medicationname: document.getElementById("medicationChoice").value,
-            },
-        takenmedication: document.getElementById("takenMedication").value,
-    }
-
-    // Send the currentEvent object to the controller with an AJAX post
-    $.ajax({
-        url: ctx + "/calendar/new/event",
-        method: "POST",
-        contentType: "application/json; charset=UTF-8",
-        data:  JSON.stringify(currentEvent) + "SPLIT" + JSON.stringify(medicalActivity),
-        dataType : 'json',
-        async: true,
-        success: function(result) {
-            // Reload events on calendar if new event is written to the database successfully
-            $('#calendar').fullCalendar('refetchEvents');
-        },
-        error : function(e) {
-            alert("Error sending new event with AJAX!")
-            console.log(currentEvent)
-            console.log("ERROR: ", e);
-        }
-    });
-}
-
-function saveChangedEvent(eventId) {
-    // Fill the object currentEvent with values from input fields in the modal
-    currentEvent = {
-        id: eventId,
-        title: document.getElementById("eventName").value,
-        start: moment(document.getElementById("eventStartDate").value, "DD-MM-YYYY H:mm").toDate(),
-        end: moment(document.getElementById("eventEndDate").value, "DD-MM-YYYY H:mm").toDate(),
-        donedate: moment(document.getElementById("eventDoneDate").value, "DD-MM-YYYY H:mm").toDate(),
-        description: document.getElementById("eventComment").value,
-        activity: {
-            name: document.getElementById("eventName").value,
-            category: document.getElementById("activityCategory").value,
-        },
-        team: {
-            id: parseInt($('#teamId').attr('data-teamId'), 10),
-        }
-    }
-
-    //creating a medicalActivity to ass along
-    medicalActivity = {
-        name: document.getElementById("eventName").value,
-        medication: {
-            medicationname: document.getElementById("medicationChoice").value,
-            },
-        takenmedication: document.getElementById("takenMedication").value,
-    }
-    // Send the currentEvent object to the controller with an AJAX post
-    $.ajax({
-        url: ctx + "/calendar/new/event",
-        method: "POST",
-        contentType: "application/json; charset=UTF-8",
-        data:  JSON.stringify(currentEvent) + "SPLIT" + JSON.stringify(medicalActivity),
-        dataType : 'json',
-        async: true,
-        success: function(result) {
-            // Reload events on calendar if new event is written to the database successfully
-            $('#calendar').fullCalendar('refetchEvents');
-        },
-        error : function(e) {
-            alert("Error sending new event with AJAX!")
-            console.log(currentEvent)
-            console.log("ERROR: ", e);
-        }
-    });
-}
-
-// This function gets a medicationlist.
-function getMedication(){
-    $.ajax({
-         type:'GET',
-         url: ctx + "/calendar/" + $('#teamId').attr('data-teamId') + '/medications',
-         dataType: 'json',
-         success : function(result) {
-                 List = result.data
-                 $('#medicationChoice').empty();
-                 $('#medicationChoice').append('<option value="">Kies een medicatie</option>');
-                 for (i in List ) {
-                    $('#medicationChoice').append('<option value="' + List[i].medicationname + '">' + List[i].medicationname + '</option>');
-                 }
-             },
-             error : function(e) {
-             alert("error Error ERROR!")
-             con
-             sole.log("ERROR: ", e);
-              }
-    });
-}
+});

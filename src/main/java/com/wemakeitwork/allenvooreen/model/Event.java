@@ -1,20 +1,46 @@
 package com.wemakeitwork.allenvooreen.model;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @Entity
 @JsonPropertyOrder(value = {"id", "title", "description", "start", "end", "donedate"}, alphabetic = true)
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = Activity.class, name = "activity"),
+})
+@Table(name = "events")
 public class Event {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Integer eventId;
 
     @JsonProperty("title")
@@ -31,12 +57,35 @@ public class Event {
     @JsonProperty("end")
     private java.util.Date eventEndDate;
 
-    @JsonProperty("description")
+    @JsonProperty("comment")
     private String eventComment;
 
     @JsonProperty("donedate")
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private java.util.Date eventDoneDate;
+
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "activity_id", referencedColumnName = "id")
+    private Activity activity;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "teamId", referencedColumnName = "teamId", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Team team;
+
+    public Event() {
+    }
+
+    public Event(Integer eventId, @NotBlank(message = "veld mag niet blank zijn") String eventName, Date eventStartDate, Date eventEndDate, String eventComment, Date eventDoneDate, Activity activity, Team team) {
+        this.eventId = eventId;
+        this.eventName = eventName;
+        this.eventStartDate = eventStartDate;
+        this.eventEndDate = eventEndDate;
+        this.eventComment = eventComment;
+        this.eventDoneDate = eventDoneDate;
+        this.activity = activity;
+        this.team = team;
+    }
 
     public Date getEventDoneDate() {
         return eventDoneDate;
@@ -45,15 +94,6 @@ public class Event {
     public void setEventDoneDate(Date eventDoneDate) {
         this.eventDoneDate = eventDoneDate;
     }
-
-    @OneToOne(fetch = FetchType.EAGER, optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "activityId", referencedColumnName = "activityId", nullable = false)
-    private Activity activity;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "teamId", referencedColumnName = "teamId", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Team team;
 
     @JsonGetter
     public String getEventName() {

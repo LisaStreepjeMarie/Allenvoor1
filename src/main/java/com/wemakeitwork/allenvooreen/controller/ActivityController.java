@@ -22,7 +22,7 @@ public class ActivityController {
 
     @GetMapping("/activity/new")
     protected String showActivityForm(Model model) {
-        model.addAttribute("activity", new Activity());
+        //model.addAttribute("activity", new Activity());
         model.addAttribute("activityList", activityRepository.findAll());
         return "newActivity";
     }
@@ -36,12 +36,12 @@ public class ActivityController {
     @GetMapping("/activity/select/{activityId}")
     protected String showTeamData(@PathVariable("activityId") final Integer activityId, Model model) {
 
-        model.addAttribute("activity", new Activity());
+        //model.addAttribute("activity", new Activity());
 
         Optional<Activity> optActivity = activityRepository.findById(activityId);
         Activity activity;
-        activity = optActivity.orElseGet(Activity::new);
-        model.addAttribute("activity", activity);
+        //activity = optActivity.orElseGet(Activity::new);
+        //model.addAttribute("activity", activity);
         return "activityData";
     }
 
