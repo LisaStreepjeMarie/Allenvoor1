@@ -1,5 +1,6 @@
 package com.wemakeitwork.allenvooreen.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -87,4 +88,5 @@ public class Team {
     public void removeTeamMember(Member member){
         allMembersInThisTeamSet.remove(member);
     }
+
 }
