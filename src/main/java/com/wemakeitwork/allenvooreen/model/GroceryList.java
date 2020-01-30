@@ -10,13 +10,24 @@ import java.util.List;
 @JsonIgnoreProperties({ "groceryListId", "team", "allItemsOnGroceryList", "hibernateLazyInitializer"})
 public class GroceryList {
 
-    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     Integer groceryListId;
 
-    @JsonIgnore
+    //TODO Team needs to be added including mapping
+
+    public List<Medication> getAllMedicationOnGroceryList() {
+        return allMedicationOnGroceryList;
+    }
+
+    public void setAllMedicationOnGroceryList(List<Medication> allMedicationOnGroceryList) {
+        this.allMedicationOnGroceryList = allMedicationOnGroceryList;
+    }
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "groceryList")
+    private List<Medication> allMedicationOnGroceryList;
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "groceryList")
     private List<GroceryItem> allItemsOnGroceryList;
 

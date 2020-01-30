@@ -34,6 +34,20 @@ public class Medication {
 
     private String medicationComment;
 
+    public GroceryList getGroceryList() {
+        return groceryList;
+    }
+
+    public void setGroceryList(GroceryList groceryList) {
+        this.groceryList = groceryList;
+    }
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "grocerylistId", referencedColumnName = "id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private GroceryList groceryList;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "teamId", referencedColumnName = "teamId", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
