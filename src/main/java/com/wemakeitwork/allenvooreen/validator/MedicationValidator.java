@@ -35,6 +35,7 @@ public class MedicationValidator implements Validator {
         if (medication.getMedicationName().length() < 3 ) {
             errors.rejectValue("medicationName", "Size.userForm.medicationName");
         }
+
         team.getMedicationList().stream()
                 .filter(x -> x.getMedicationName().equals(((Medication) o).getMedicationName()))
                 .forEach(x ->  errors.rejectValue("medicationName", "Duplicate.userForm.medicationName"));

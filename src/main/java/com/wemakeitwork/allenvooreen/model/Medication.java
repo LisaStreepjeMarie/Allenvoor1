@@ -47,10 +47,6 @@ public class Medication {
         return medicationId;
     }
 
-    public Integer getTeamId() {
-        return team.getTeamId();
-    }
-
     public List<MedicationActivity> getTakenMedications() {
         return takenMedications;
     }
