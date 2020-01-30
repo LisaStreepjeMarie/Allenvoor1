@@ -47,6 +47,30 @@ public class CalendarController {
     @Autowired
     ActivityRepository activityRepository;
 
+    @GetMapping("/calendar/{teamid}/medications")
+    public ResponseEntity<Object> getMedications(@PathVariable("teamid") final Integer teamId) {
+        ServiceResponse<List<Medication>> response = new ServiceResponse<>("success", teamRepository.getOne(teamId).getMedicationList());
+        return new ResponseEntity<Object>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/calendar/{teamId}")
+    public String showCalender(@PathVariable("teamId") final Integer teamId, Model model, Principal principal)
+            throws JsonProcessingException {
+        Team team = teamRepository.getOne(teamId);
+        httpSession.setAttribute("team", team);
+        Set<Team> teamList = memberRepository.findByMemberName(principal.getName()).get().getAllTeamsOfMemberSet();
+        model.addAttribute("teamList", teamList);
+
+        List<Event> sourceCalendarData = team.getEventList();
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        String calendarData = mapper.writeValueAsString(sourceCalendarData);
+
+        model.addAttribute("calendarData", calendarData);
+        return "calendar";
+    }
+
     @PostMapping("/calendar/new/event")
     public ResponseEntity<Object> newEvent(@RequestBody String newEventJson) throws JsonProcessingException {
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -97,29 +121,5 @@ public class CalendarController {
 
         eventRepository.deleteById(eventToDelete.getEventId());
         return new ResponseEntity<Object>(eventToDelete, HttpStatus.OK);
-    }
-
-    @GetMapping("/calendar/{teamid}/medications")
-    public ResponseEntity<Object> getMedications(@PathVariable("teamid") final Integer teamId) {
-        ServiceResponse<List<Medication>> response = new ServiceResponse<>("success", teamRepository.getOne(teamId).getMedicationList());
-        return new ResponseEntity<Object>(response, HttpStatus.OK);
-    }
-
-    @GetMapping("/calendar/{teamId}")
-    public String showCalender(@PathVariable("teamId") final Integer teamId, Model model, Principal principal)
-            throws JsonProcessingException {
-        Team team = teamRepository.getOne(teamId);
-        httpSession.setAttribute("team", team);
-        Set<Team> teamList = memberRepository.findByMemberName(principal.getName()).get().getAllTeamsOfMemberSet();
-        model.addAttribute("teamList", teamList);
-
-        List<Event> sourceCalendarData = team.getEventList();
-
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.enable(SerializationFeature.INDENT_OUTPUT);
-        String calendarData = mapper.writeValueAsString(sourceCalendarData);
-
-        model.addAttribute("calendarData", calendarData);
-        return "calendar";
     }
 }
