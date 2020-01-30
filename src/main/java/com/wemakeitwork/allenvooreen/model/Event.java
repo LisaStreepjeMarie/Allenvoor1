@@ -64,7 +64,7 @@ public class Event {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private java.util.Date eventDoneDate;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "activity_id", referencedColumnName = "id")
     private Activity activity;
 
