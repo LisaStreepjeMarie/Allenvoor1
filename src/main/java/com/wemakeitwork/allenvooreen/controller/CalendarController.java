@@ -4,10 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.wemakeitwork.allenvooreen.model.Event;
-import com.wemakeitwork.allenvooreen.model.Medication;
-import com.wemakeitwork.allenvooreen.model.MedicationActivity;
-import com.wemakeitwork.allenvooreen.model.Team;
+import com.wemakeitwork.allenvooreen.model.*;
 import com.wemakeitwork.allenvooreen.repository.ActivityRepository;
 import com.wemakeitwork.allenvooreen.repository.EventRepository;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
@@ -26,7 +23,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Controller
 public class CalendarController {
@@ -59,7 +60,14 @@ public class CalendarController {
         Team team = teamRepository.getOne(teamId);
         httpSession.setAttribute("team", team);
         Set<Team> teamList = memberRepository.findByMemberName(principal.getName()).get().getAllTeamsOfMemberSet();
-        model.addAttribute("teamList", teamList);
+
+        ArrayList<Team> sortedList = (ArrayList<Team>) teamList.stream()
+                .sorted(Comparator.comparing(Team::getTeamName))
+                .collect(Collectors.toList());
+
+        sortedList.forEach(x -> System.out.println(x.getTeamName()));
+
+        model.addAttribute("teamList", sortedList);
 
         List<Event> sourceCalendarData = team.getEventList();
 
@@ -121,5 +129,23 @@ public class CalendarController {
 
         eventRepository.deleteById(eventToDelete.getEventId());
         return new ResponseEntity<Object>(eventToDelete, HttpStatus.OK);
+    }
+
+    @GetMapping("/home")
+    public String calendar(Model model, Principal principal){
+        Set<Team> teamList = null;
+        Optional<Member> member = memberRepository.findByMemberName(principal.getName());
+        if(member.isPresent()){
+            teamList = member.get().getAllTeamsOfMemberSet();
+        }
+        if (teamList != null) {
+            ArrayList<Team> sortedList = (ArrayList<Team>) teamList.stream()
+                    .sorted(Comparator.comparing(Team::getTeamName))
+                    .collect(Collectors.toList());
+
+            sortedList.forEach(x -> System.out.println(x.getTeamName()));
+            model.addAttribute("teamList", sortedList);
+        }
+        return "home";
     }
 }
