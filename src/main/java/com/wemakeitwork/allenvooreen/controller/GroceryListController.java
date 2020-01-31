@@ -1,5 +1,6 @@
 package com.wemakeitwork.allenvooreen.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wemakeitwork.allenvooreen.model.Event;
 import com.wemakeitwork.allenvooreen.model.GroceryItem;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
@@ -27,6 +29,8 @@ public class GroceryListController {
 
     @Autowired
     TeamRepository teamRepository;
+
+    ObjectMapper mapper = new ObjectMapper();
 
     @GetMapping("/grocerylist")
     protected String showGrocerylist(Model model) {
@@ -43,12 +47,11 @@ public class GroceryListController {
         return "groceryList";
     }
 
-    @GetMapping("/getYourGroceries")
-    public ResponseEntity<Object> getMedications(@PathVariable("teamid") final Integer teamId) {
-        Team team = (Team) httpSession.getAttribute("team");
-        GroceryList groceryList = team.getGroceryList();
+    @GetMapping("/add/groceryitem")
+    public ResponseEntity<Object> addGroceryItem(@RequestBody String newGroceryItem) throws JsonProcessingException {
 
-        ServiceResponse<GroceryList> response = new ServiceResponse<GroceryList>("success", groceryList);
+        GroceryItem groceryItem = mapper.readValue(newGroceryItem, GroceryItem.class);
+        ServiceResponse<GroceryItem> response = new ServiceResponse<GroceryItem>("success", groceryItem);
         return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
 }
