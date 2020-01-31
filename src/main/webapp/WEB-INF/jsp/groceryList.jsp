@@ -183,6 +183,7 @@ var i;
 for (i = 0; i < close.length; i++) {
   close[i].onclick = function() {
     var div = this.parentElement;
+    console.log(this);
     div.style.display = "none";
   }
 }
@@ -223,10 +224,10 @@ function newElement() {
         }
     });
 
-  var t = document.createTextNode(inputValue);
-  li.appendChild(t);
-  if (inputValue === '') {
-    alert("You must write something!");
+  var newInList = document.createTextNode(newGroceryItem.title);
+  li.appendChild(newInList);
+  if (newGroceryItem.title === '') {
+    alert("Niks kan je niet kopen bij de supermarkt!");
   } else {
     document.getElementById("myUL").appendChild(li);
   }

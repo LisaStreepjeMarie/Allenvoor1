@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -53,11 +54,22 @@ public class GroceryListController {
     public ResponseEntity<Object> addGroceryItem(@RequestBody String newGroceryItem) throws JsonProcessingException {
         GroceryItem groceryItem = mapper.readValue(newGroceryItem, GroceryItem.class);
         System.out.println(groceryItem.getGroceryName());
-        Integer teamId = ((Team) httpSession.getAttribute("team")).getTeamId();
-        teamRepository.findById(teamId)
-                .ifPresent(x -> groceryItem.setGroceryList(x.getGroceryList()));
-        groceryItemRepository.save(groceryItem);
-        ServiceResponse<GroceryItem> response = new ServiceResponse<GroceryItem>("success", groceryItem);
+        if (groceryItem.getGroceryName() != null) {
+            Integer teamId = ((Team) httpSession.getAttribute("team")).getTeamId();
+            teamRepository.findById(teamId)
+                    .ifPresent(x -> groceryItem.setGroceryList(x.getGroceryList()));
+            groceryItemRepository.save(groceryItem);
+            ServiceResponse<GroceryItem> response = new ServiceResponse<GroceryItem>("success", groceryItem);
+            return new ResponseEntity<Object>(response, HttpStatus.OK);
+        }
+        ServiceResponse<GroceryItem> response = new ServiceResponse<GroceryItem>("FAILED", new GroceryItem());
+        return new ResponseEntity<Object>(response, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/delete/groceryitem/{groceryItemId}")
+    public  ResponseEntity<Object> deleteGroceryItem(@PathVariable("grocerItemId") final Integer groceryItemid){
+
         return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
 }
