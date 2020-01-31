@@ -66,8 +66,8 @@ ul li:hover {
 
 /* When clicked on, add a background color and strike out text */
 ul li.checked {
-  background: #ccf2ff;
-  color: #fff;
+  background: #fff;
+  color: #000000;
   text-decoration: line-through;
 }
 
@@ -75,7 +75,7 @@ ul li.checked {
 ul li.checked::before {
   content: '';
   position: absolute;
-  border-color: #fff;
+  border-color: #33cc00;
   border-style: solid;
   border-width: 0 2px 2px 0;
   top: 10px;
