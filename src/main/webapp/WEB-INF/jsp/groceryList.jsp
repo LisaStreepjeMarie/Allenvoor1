@@ -6,7 +6,7 @@
 <html>
 <head>
     <meta charset='utf-8' />
-    <title>Kalender</title>
+    <title>Boodschappenlijst</title>
 
     <script src="${pageContext.request.contextPath}/webjars/jquery/3.4.1/jquery.min.js"></script>
 
@@ -20,8 +20,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
 body {
-  margin: 0;
-  min-width: 250px;
+  margin: auto;
+  width: 50%;
+  padding: 10px;
 }
 
 /* Include the padding and border in an element's total width and height */
@@ -41,9 +42,10 @@ ul li {
   position: relative;
   padding: 12px 8px 12px 40px;
   list-style-type: none;
-  background: #eee;
+  background: #ffffff;
   font-size: 18px;
   transition: 0.2s;
+  border: 0.5px #e6f2ff;
 
   /* make the list items unselectable */
   -webkit-user-select: none;
@@ -54,17 +56,17 @@ ul li {
 
 /* Set all odd list items to a different color (zebra-stripes) */
 ul li:nth-child(odd) {
-  background: #f9f9f9;
+  background: #e6f9ff;
 }
 
 /* Darker background-color on hover */
 ul li:hover {
-  background: #ddd;
+  background: #66a3ff;
 }
 
 /* When clicked on, add a background color and strike out text */
 ul li.checked {
-  background: #888;
+  background: #ccf2ff;
   color: #fff;
   text-decoration: line-through;
 }
@@ -98,7 +100,7 @@ ul li.checked::before {
 
 /* Style the header */
 .header {
-  background-color: #f44336;
+  background-color: #99c2ff;
   padding: 30px 40px;
   color: white;
   text-align: center;
@@ -126,8 +128,8 @@ input {
 .addBtn {
   padding: 10px;
   width: 25%;
-  background: #d9d9d9;
-  color: #555;
+  background: #66a3ff;
+  color: #ffffff;
   float: left;
   text-align: center;
   font-size: 16px;
@@ -137,7 +139,7 @@ input {
 }
 
 .addBtn:hover {
-  background-color: #bbb;
+  background-color: #4d94ff;
 }
 </style>
 </head>
