@@ -2,7 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<html lang="en" xmlns:c="http://www.w3.org/1999/XSL/Transform" xmlns:fmt="" xmlns:spring="" xmlns:beans="">
+<html lang="en" xmlns:spring=""
+      xmlns:form="http://www.w3.org/1999/xhtml">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
@@ -47,7 +48,7 @@
         <h3 class="font-weight-light">Voer medicatie voor ${team.teamName} in</h3>
         <br>
         <form:form action="${pageContext.request.contextPath}/medication/new" modelAttribute="medication">
-        <form:errors path = "*" cssClass = "errorblock" element = "div" />
+        <form:errors path = "*" cssClass = "alert alert-danger alert-dismissible fade show" role="alert" element = "div" />
             <table>
                 <tr>
                     <spring:bind path="medicationName">
