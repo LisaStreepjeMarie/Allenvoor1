@@ -65,6 +65,9 @@
                   <div class="form-group ${status.error ? 'has-error' : ''}">
                     <td><h5 class="font-weight-light">Hoeveelheid:</h5>
                     <td>
+                        <form:input type= "number" path="medicationAmount"/>
+                    </td>
+                </tr>
                         <form:input path="medicationAmount" />
                         </td>
                         </div>
