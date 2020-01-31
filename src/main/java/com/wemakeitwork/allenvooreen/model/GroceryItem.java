@@ -1,25 +1,31 @@
 package com.wemakeitwork.allenvooreen.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
 @Entity
-@JsonIgnoreProperties({ "groceryItemId", "groceryName", "bought", "groceryList"})
+@JsonPropertyOrder(value = {"id", "title"}, alphabetic = true)
 public class GroceryItem {
 
     @Id
+    @JsonProperty("id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     Integer groceryItemId;
 
+    @JsonProperty("title")
     String groceryName;
 
-
+    @JsonIgnore
     Boolean bought;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "grocerylistId", referencedColumnName = "id")
     @OnDelete(action = OnDeleteAction.CASCADE)
