@@ -13,7 +13,6 @@
     <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
     <script src="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
-    <!-- data attributes which calendar.js uses -->
     <link id="contextPathHolder" data-contextPath="${pageContext.request.contextPath}"/>
 
     <link id="teamId" data-teamId="${team.teamId}"/>
@@ -149,10 +148,9 @@ input {
     <input type="text" id="newGroceryItem" placeholder="Nieuwe Boodschap toevoegen...">
     <span onclick="newElement()" class="addBtn">Voeg toe!</span>
 </div>
-<ul id="myUL">
+<ul id="allGroceries">
     <c:forEach var="groceryItem" items="${groceryList}">
-        <input type="hidden" name="groceryItemId" id="groceryItemId" />
-        <li>${groceryItem.groceryName}</li>
+        <li value="groceryItem.groceryId">${groceryItem.groceryName}</li>
     </c:forEach>
 </ul>
 
@@ -167,14 +165,15 @@ $.ajaxSetup({
 var ctx = $('#contextPathHolder').attr('data-contextPath');
 
 // Create a "close" button and append it to each list item
-var myNodelist = document.getElementsByTagName("LI");
+var allGroceriesInList = document.getElementsByTagName("LI");
 var i;
-for (i = 0; i < myNodelist.length; i++) {
+for (i = 0; i < allGroceriesInList.length; i++) {
   var span = document.createElement("SPAN");
   var txt = document.createTextNode("\u00D7");
   span.className = "close";
   span.appendChild(txt);
-  myNodelist[i].appendChild(span);
+  allGroceriesInList[i].appendChild(span);
+  console.log(allGroceriesInList[i].innerHTML);
 }
 
 // Click on a close button to hide the current list item
@@ -183,7 +182,9 @@ var i;
 for (i = 0; i < close.length; i++) {
   close[i].onclick = function() {
     var div = this.parentElement;
-    console.log(this);
+    //removing the added X
+    div.removeChild(div.lastElementChild)
+    console.log(div.innerHTML);
     div.style.display = "none";
   }
 }
@@ -226,10 +227,11 @@ function newElement() {
 
   var newInList = document.createTextNode(newGroceryItem.title);
   li.appendChild(newInList);
+
   if (newGroceryItem.title === '') {
     alert("Niks kan je niet kopen bij de supermarkt!");
   } else {
-    document.getElementById("myUL").appendChild(li);
+    document.getElementById("allGroceries").appendChild(li);
   }
   document.getElementById("newGroceryItem").value = "";
 
