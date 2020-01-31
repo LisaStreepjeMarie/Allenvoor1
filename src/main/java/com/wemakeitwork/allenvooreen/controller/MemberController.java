@@ -8,6 +8,7 @@ import com.wemakeitwork.allenvooreen.service.MemberServiceInterface;
 import com.wemakeitwork.allenvooreen.service.SecurityServiceInterface;
 import com.wemakeitwork.allenvooreen.validator.MemberValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,6 +39,9 @@ public class MemberController {
 
     @Autowired
     private MemberValidator memberValidator;
+
+    @Autowired
+    ApplicationEventPublisher eventPublisher;
 
     @GetMapping("member/current")
     protected String showMember(Model model, Principal principal){
