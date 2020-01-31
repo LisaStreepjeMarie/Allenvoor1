@@ -28,9 +28,10 @@ public class GroceryListController {
     @Autowired
     TeamRepository teamRepository;
 
-    @GetMapping("/GroceryList")
+    @GetMapping("/grocerylist")
     protected String showGrocerylist(Model model) {
-        Team team = teamRepository.getOne(1);
+        Integer teamId = ((Team) httpSession.getAttribute("team")).getTeamId();
+        Team team = teamRepository.getOne(teamId);
 
         GroceryList groceryList = team.getGroceryList();
         System.out.println(groceryList.getAllItemsOnGroceryList().size());
