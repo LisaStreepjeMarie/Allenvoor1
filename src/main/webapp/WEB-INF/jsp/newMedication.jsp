@@ -56,7 +56,7 @@
                 <tr>
                     <td><h5 class="font-weight-light">Hoeveelheid:</h5>
                     <td>
-                        <form:input path="medicationAmount"/>
+                        <form:input type= "number" path="medicationAmount"/>
                     </td>
                 </tr>
                 <tr>
