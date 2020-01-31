@@ -70,6 +70,6 @@ public class GroceryListController {
     @GetMapping("/delete/groceryitem/{groceryItemId}")
     public  ResponseEntity<Object> deleteGroceryItem(@PathVariable("grocerItemId") final Integer groceryItemid){
 
-        return new ResponseEntity<Object>(response, HttpStatus.OK);
+        return new ResponseEntity<Object>("placeholder", HttpStatus.OK);
     }
 }
