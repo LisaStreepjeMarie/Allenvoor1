@@ -167,6 +167,7 @@ input {
 </ul>
 
 <script>
+
 $.ajaxSetup({
     beforeSend: function(xhr) {
         xhr.setRequestHeader('X-CSRF-TOKEN', $('#csrfToken').attr('data-csrfToken'));

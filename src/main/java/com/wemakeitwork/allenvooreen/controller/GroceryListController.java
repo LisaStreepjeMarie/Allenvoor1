@@ -2,20 +2,18 @@ package com.wemakeitwork.allenvooreen.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wemakeitwork.allenvooreen.model.Event;
 import com.wemakeitwork.allenvooreen.model.GroceryItem;
 import com.wemakeitwork.allenvooreen.model.GroceryList;
 import com.wemakeitwork.allenvooreen.model.Team;
+import com.wemakeitwork.allenvooreen.repository.GroceryItemRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import com.wemakeitwork.allenvooreen.service.ServiceResponse;
-import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -30,6 +28,9 @@ public class GroceryListController {
 
     @Autowired
     TeamRepository teamRepository;
+
+    @Autowired
+    GroceryItemRepository groceryItemRepository;
 
     ObjectMapper mapper = new ObjectMapper();
 
@@ -50,8 +51,12 @@ public class GroceryListController {
 
     @PostMapping("/add/groceryitem")
     public ResponseEntity<Object> addGroceryItem(@RequestBody String newGroceryItem) throws JsonProcessingException {
-
         GroceryItem groceryItem = mapper.readValue(newGroceryItem, GroceryItem.class);
+        System.out.println(groceryItem.getGroceryName());
+        Integer teamId = ((Team) httpSession.getAttribute("team")).getTeamId();
+        teamRepository.findById(teamId)
+                .ifPresent(x -> groceryItem.setGroceryList(x.getGroceryList()));
+        groceryItemRepository.save(groceryItem);
         ServiceResponse<GroceryItem> response = new ServiceResponse<GroceryItem>("success", groceryItem);
         return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
