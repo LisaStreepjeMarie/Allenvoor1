@@ -1,7 +1,6 @@
 package com.wemakeitwork.allenvooreen.service;
 
 import com.wemakeitwork.allenvooreen.model.Medication;
-import com.wemakeitwork.allenvooreen.model.Team;
 
 import java.util.Optional;
 
