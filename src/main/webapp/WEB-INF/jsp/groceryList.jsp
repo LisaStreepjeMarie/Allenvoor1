@@ -206,7 +206,6 @@ function newElement() {
   var inputValue = document.getElementById("newGroceryItem").value;
 
   newGroceryItem = {
-        id: document.getElementById("groceryItemId").value,
         title: document.getElementById("newGroceryItem").value,
     }
 
