@@ -54,6 +54,8 @@ public class GroceryListController {
     public ResponseEntity<Object> addGroceryItem(@RequestBody String newGroceryItem) throws JsonProcessingException {
         GroceryItem groceryItem = mapper.readValue(newGroceryItem, GroceryItem.class);
         System.out.println(groceryItem.getGroceryName());
+
+        //TODO this isn't really clear, needs to be checked before sending in ajax
         if (groceryItem.getGroceryName() != null) {
             Integer teamId = ((Team) httpSession.getAttribute("team")).getTeamId();
             teamRepository.findById(teamId)
@@ -62,14 +64,16 @@ public class GroceryListController {
             ServiceResponse<GroceryItem> response = new ServiceResponse<GroceryItem>("success", groceryItem);
             return new ResponseEntity<Object>(response, HttpStatus.OK);
         }
+
         ServiceResponse<GroceryItem> response = new ServiceResponse<GroceryItem>("FAILED", new GroceryItem());
         return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
 
 
     @GetMapping("/delete/groceryitem/{groceryItemId}")
-    public  ResponseEntity<Object> deleteGroceryItem(@PathVariable("grocerItemId") final Integer groceryItemid){
-
-        return new ResponseEntity<Object>("placeholder", HttpStatus.OK);
+    public  ResponseEntity<Object> deleteGroceryItem(@PathVariable("groceryItemId") final Integer groceryItemid){
+        GroceryItem groceryItem = groceryItemRepository.getOne(groceryItemid);
+        groceryItemRepository.delete(groceryItem);
+        return new ResponseEntity<Object>("success!", HttpStatus.OK);
     }
 }

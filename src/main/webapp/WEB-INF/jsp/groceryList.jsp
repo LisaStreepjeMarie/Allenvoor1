@@ -150,7 +150,7 @@ input {
 </div>
 <ul id="allGroceries">
     <c:forEach var="groceryItem" items="${groceryList}">
-        <li value="groceryItem.groceryId">${groceryItem.groceryName}</li>
+        <li value="${groceryItem.groceryItemId}">${groceryItem.groceryName}</li>
     </c:forEach>
 </ul>
 
@@ -182,10 +182,13 @@ var i;
 for (i = 0; i < close.length; i++) {
   close[i].onclick = function() {
     var div = this.parentElement;
+    var groceryItemId = div.value;
+    console.log(div.value);
     //removing the added X
     div.removeChild(div.lastElementChild)
     console.log(div.innerHTML);
     div.style.display = "none";
+    removeGroceryItem(groceryItemId);
   }
 }
 
@@ -248,6 +251,21 @@ function newElement() {
     }
   }
 }
+
+function removeGroceryItem(groceryItemId){
+    $.ajax({
+         type:'GET',
+         url: ctx + "/delete/groceryitem/" + groceryItemId,
+         success : function(result) {
+            console.log("woop wopp")
+             },
+             error : function(e) {
+             alert("getMedication() error")
+             console.log("ERROR: ", e);
+         }
+    });
+}
+
 </script>
 
 </body>
