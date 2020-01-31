@@ -26,6 +26,8 @@ public class Member implements UserDetails {
 
     private String rol;
 
+    private String email;
+
     @Transient
     private String passwordConfirm;
 
@@ -123,5 +125,13 @@ public class Member implements UserDetails {
 
     public void removeTeamFromMember(Team team){
         allTeamsOfMemberSet.remove(team);
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
