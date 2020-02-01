@@ -61,27 +61,20 @@
                    </spring:bind>
                 </tr>
                 <tr>
-                <spring:bind path="medicationAmount">
-                  <div class="form-group ${status.error ? 'has-error' : ''}">
-                    <td><h5 class="font-weight-light">Hoeveelheid:</h5>
-                    <td>
-                        <form:input type= "number" path="medicationAmount"/>
-                    </td>
-                </tr>
-                        <form:input path="medicationAmount" />
-                        </td>
+                    <spring:bind path="medicationAmount">
+                        <div class="form-group ${status.error ? 'has-error' : ''}">
+                            <td><h5 class="font-weight-light">Hoeveelheid:</h5></td>
+                            <td><form:input path="medicationAmount" /></td>
                         </div>
-                        </spring:bind>
-                    </tr>
+                    </spring:bind>
+                </tr>
                 <tr>
-                    <td><h5 class="font-weight-light">Beschrijving:</h5>
-                    <td>
-                       <form:input path="medicationComment"/>
-                     </td>
+                    <td><h5 class="font-weight-light">Beschrijving:</h5></td>
+                    <td><form:input path="medicationComment"/></td>
                 </tr>
                 <tr>
                     <td colspan="2">
-                         <input name="_csrf" type="hidden" value="${_csrf.token}" />
+                        <input name="_csrf" type="hidden" value="${_csrf.token}" />
                         <input class="btn btn-primary" type="submit" value="Sla medicatie op" />
                     </td>
                 </tr>

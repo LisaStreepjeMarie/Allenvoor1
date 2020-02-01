@@ -1,6 +1,8 @@
 package com.wemakeitwork.allenvooreen.controller;
 
-import com.wemakeitwork.allenvooreen.model.*;
+import com.wemakeitwork.allenvooreen.model.Medication;
+import com.wemakeitwork.allenvooreen.model.Member;
+import com.wemakeitwork.allenvooreen.model.Team;
 import com.wemakeitwork.allenvooreen.repository.MedicationRepository;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
@@ -48,6 +50,20 @@ public class MedicationController {
         return "newMedication";
     }
 
+    @PostMapping("/medication/new")
+    protected String saveOrUpdateMedication(@ModelAttribute("medication")@Valid Medication medication, BindingResult result){
+        medicationValidator.validate(medication,result);
+        if (result.hasErrors()) {
+            return "newMedication";
+        } else {
+            //System.out.println(medication.getMedicationName());
+            Team team = (Team) httpSession.getAttribute("team");
+            medication.setTeam(team);
+            medicationRepository.save(medication);
+            return "redirect:/medication/"+ team.getTeamId();
+        }
+    }
+
     @GetMapping("/medication/{teamId}")
     public String showMedication(@PathVariable("teamId") final Integer teamId, Model model, Principal principal) {
         Team team = teamRepository.getOne(teamId);
@@ -71,20 +87,6 @@ public class MedicationController {
         medicationRepository.deleteById(medicationId);
         Team team = (Team) httpSession.getAttribute("team");
         return "redirect:/medication/"+ team.getTeamId();
-    }
-
-    @PostMapping("/medication/new")
-    protected String saveOrUpdateMedication(@ModelAttribute("medication")@Valid Medication medication, BindingResult result){
-        medicationValidator.validate(medication,result);
-        if (result.hasErrors()) {
-            return "newMedication";
-        } else {
-            //System.out.println(medication.getMedicationName());
-            Team team = (Team) httpSession.getAttribute("team");
-            medication.setTeam(team);
-            medicationRepository.save(medication);
-            return "redirect:/medication/"+ team.getTeamId();
-        }
     }
 }
 
