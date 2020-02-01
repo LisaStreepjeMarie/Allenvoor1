@@ -11,7 +11,10 @@ import com.wemakeitwork.allenvooreen.validator.MedicationValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,6 +27,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @Controller
+@ControllerAdvice
 public class MedicationController {
 
     @Autowired
@@ -48,6 +52,12 @@ public class MedicationController {
     protected String showMedication(Model model) {
         model.addAttribute("medication", new Medication());
         return "newMedication";
+    }
+
+    // This method is (amongst others) used to show a user friendly error message when the input of medicationAmount is not an integer.
+    @ExceptionHandler(BindException.class)
+    public String handleBindException(BindException bindException) {
+        return "error message is in validation.properties";
     }
 
     @PostMapping("/medication/new")
