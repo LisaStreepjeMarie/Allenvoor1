@@ -213,15 +213,13 @@ function newElement() {
 
   console.log(newGroceryItem);
 
-
-
   var newInList = document.createTextNode(newGroceryItem.title);
   li.appendChild(newInList);
 
   if (newGroceryItem.title === '') {
     alert("Niks kan je niet kopen bij de supermarkt!");
   } else {
-    document.getElementById("allGroceries").appendChild(li)
+
     addGroceryItem(newGroceryItem);
   }
   document.getElementById("newGroceryItem").value = "";
@@ -240,6 +238,7 @@ function newElement() {
   }
 }
 
+// going to the delete groceryitem controller from this
 function removeGroceryItem(groceryItemId){
     $.ajax({
          type:'GET',
@@ -248,12 +247,12 @@ function removeGroceryItem(groceryItemId){
             console.log("woop wopp")
              },
              error : function(e) {
-             alert("getMedication() error")
              console.log("ERROR: ", e);
          }
     });
 }
 
+// making sure the enter button works to add something to the list
 var input = document.getElementById("newGroceryItem");
 input.addEventListener("keyup", function(event) {
   if (event.keyCode === 13) {
@@ -262,6 +261,7 @@ input.addEventListener("keyup", function(event) {
   }
 });
 
+// sending a grocery item through json, need to append the item to the list next
 function addGroceryItem(newGroceryItem){
       $.ajax({
         url: ctx + "/add/groceryitem",
@@ -271,6 +271,8 @@ function addGroceryItem(newGroceryItem){
         dataType: 'json',
         async: true,
         success: function(result) {
+            $('#allGroceries').append('<li value="' + result.data.id + '">' + result.data.title + '</li>');
+            console.log(result.data.id);
             console.log("woop woop");
         },
         error: function(e) {
