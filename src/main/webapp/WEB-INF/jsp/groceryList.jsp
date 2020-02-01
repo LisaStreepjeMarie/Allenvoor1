@@ -21,7 +21,7 @@
     <style>
 body {
   margin: auto;
-  width: 50%;
+  width: 600px;
   padding: 10px;
 }
 
@@ -45,7 +45,7 @@ ul li {
   background: #ffffff;
   font-size: 18px;
   transition: 0.2s;
-  border: 0.5px #e6f2ff;
+  border: 1px solid #e6f2ff;
 
   /* make the list items unselectable */
   -webkit-user-select: none;
@@ -55,19 +55,19 @@ ul li {
 }
 
 /* Set all odd list items to a different color (zebra-stripes) */
-ul li:nth-child(odd) {
-  background: #e6f9ff;
-}
+<!--ul li:nth-child(odd) {-->
+<!--  background: #e6f9ff;-->
+<!--}-->
 
 /* Darker background-color on hover */
 ul li:hover {
-  background: #66a3ff;
+  background: #e6f9ff;
 }
 
 /* When clicked on, add a background color and strike out text */
 ul li.checked {
   background: #fff;
-  color: #000000;
+  color: #737373;
   text-decoration: line-through;
 }
 
@@ -101,7 +101,7 @@ ul li.checked::before {
 /* Style the header */
 .header {
   background-color: #99c2ff;
-  padding: 30px 40px;
+  padding: 20px 30px;
   color: white;
   text-align: center;
 }
@@ -145,10 +145,10 @@ input {
 </head>
 <body>
 
-<div id="myDIV" class="header">
-    <h2 style="margin:5px">Boodschappenlijst!</h2>
-    <input type="text" id="newGroceryItem" placeholder="Nieuwe Boodschap toevoegen...">
-    <span onclick="newElement()" class="addBtn">Voeg toe!</span>
+<div id="GroceryList" class="header">
+    <h2 style="margin:5px">Boodschappenlijst!</h2><br>
+    <input type="text" id="newGroceryItem" placeholder="Nieuwe Boodschap...">
+    <span onclick="newElement()" id="addButton" class="addBtn">Voeg toe!</span>
 </div>
 <ul id="allGroceries">
     <c:forEach var="groceryItem" items="${groceryList}">
@@ -185,10 +185,10 @@ for (i = 0; i < close.length; i++) {
   close[i].onclick = function() {
     var div = this.parentElement;
     var groceryItemId = div.value;
-    console.log(div.value);
-    //removing the added X
-    div.removeChild(div.lastElementChild)
-    console.log(div.innerHTML);
+<!--    console.log(div.value);-->
+<!--    //removing the added X-->
+<!--    div.removeChild(div.lastElementChild)-->
+<!--    console.log(div.innerHTML);-->
     div.style.display = "none";
     removeGroceryItem(groceryItemId);
   }
@@ -213,21 +213,7 @@ function newElement() {
 
   console.log(newGroceryItem);
 
-      $.ajax({
-        url: ctx + "/add/groceryitem",
-        method: "POST",
-        contentType: "application/json; charset=UTF-8",
-        data: JSON.stringify(newGroceryItem),
-        dataType: 'json',
-        async: true,
-        success: function(result) {
-            console.log("woop woop");
-        },
-        error: function(e) {
-            alert("changeEvent() error")
-            console.log("ERROR: ",  e);
-        }
-    });
+
 
   var newInList = document.createTextNode(newGroceryItem.title);
   li.appendChild(newInList);
@@ -235,7 +221,8 @@ function newElement() {
   if (newGroceryItem.title === '') {
     alert("Niks kan je niet kopen bij de supermarkt!");
   } else {
-    document.getElementById("allGroceries").appendChild(li);
+    document.getElementById("allGroceries").appendChild(li)
+    addGroceryItem(newGroceryItem);
   }
   document.getElementById("newGroceryItem").value = "";
 
@@ -264,6 +251,32 @@ function removeGroceryItem(groceryItemId){
              alert("getMedication() error")
              console.log("ERROR: ", e);
          }
+    });
+}
+
+var input = document.getElementById("newGroceryItem");
+input.addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+   event.preventDefault();
+   document.getElementById("addButton").click();
+  }
+});
+
+function addGroceryItem(newGroceryItem){
+      $.ajax({
+        url: ctx + "/add/groceryitem",
+        method: "POST",
+        contentType: "application/json; charset=UTF-8",
+        data: JSON.stringify(newGroceryItem),
+        dataType: 'json',
+        async: true,
+        success: function(result) {
+            console.log("woop woop");
+        },
+        error: function(e) {
+            alert("changeEvent() error")
+            console.log("ERROR: ",  e);
+        }
     });
 }
 

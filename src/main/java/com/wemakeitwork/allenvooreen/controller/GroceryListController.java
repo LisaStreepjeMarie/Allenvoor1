@@ -54,17 +54,6 @@ public class GroceryListController {
     public ResponseEntity<Object> addGroceryItem(@RequestBody String newGroceryItem) throws JsonProcessingException {
         GroceryItem groceryItem = mapper.readValue(newGroceryItem, GroceryItem.class);
         System.out.println(groceryItem.getGroceryName());
-
-        //TODO this isn't really clear, needs to be checked before sending in ajax
-        if (groceryItem.getGroceryName() != null) {
-            Integer teamId = ((Team) httpSession.getAttribute("team")).getTeamId();
-            teamRepository.findById(teamId)
-                    .ifPresent(x -> groceryItem.setGroceryList(x.getGroceryList()));
-            groceryItemRepository.save(groceryItem);
-            ServiceResponse<GroceryItem> response = new ServiceResponse<GroceryItem>("success", groceryItem);
-            return new ResponseEntity<Object>(response, HttpStatus.OK);
-        }
-
         ServiceResponse<GroceryItem> response = new ServiceResponse<GroceryItem>("FAILED", new GroceryItem());
         return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
