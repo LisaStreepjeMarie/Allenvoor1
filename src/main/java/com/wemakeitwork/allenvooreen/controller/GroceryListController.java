@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -42,10 +41,9 @@ public class GroceryListController {
 
         //for some reason it's needed to get the team from repository before getting the grocerylist -LM
         Team team = teamRepository.getOne(teamId);
-
         GroceryList groceryList = team.getGroceryList();
-        List<GroceryItem> allGroceries = groceryList.getAllItemsOnGroceryList();
 
+        List<GroceryItem> allGroceries = groceryList.getAllItemsOnGroceryList();
         team.getGroceryList().setAllMedicationOnGroceryList(team.getMedicationList());
 
         model.addAttribute("groceryList", allGroceries);

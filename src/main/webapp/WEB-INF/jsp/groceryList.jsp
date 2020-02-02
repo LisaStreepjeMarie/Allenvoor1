@@ -151,15 +151,15 @@ input {
     <span onclick="newElement()" id="addButton" class="addBtn">Voeg toe!</span>
 </div>
 
-<ul id="allGroceries">
-    <c:forEach var="groceryItem" items="${groceryList}">
-        <li value="${groceryItem.groceryItemId}">${groceryItem.groceryName}</li>
+<ul id="allmedications">
+    <c:forEach var="medication" items="${allMedications}">
+        <li value="${medication.medicationId}">${medication.medicationName}</li>
     </c:forEach>
 </ul>
 
-<ul id="allMedications">
-    <c:forEach var="medication" items="${allMedications}">
-        <li value="${medication.medicationId}">${medication.medicationName}</li>
+<ul id="allGroceries">
+    <c:forEach var="groceryItem" items="${groceryList}">
+        <li value="${groceryItem.groceryItemId}">${groceryItem.groceryName}</li>
     </c:forEach>
 </ul>
 
