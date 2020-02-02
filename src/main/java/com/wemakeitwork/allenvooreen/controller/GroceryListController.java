@@ -38,11 +38,11 @@ public class GroceryListController {
     @GetMapping("/grocerylist")
     protected String showGrocerylist(Model model) {
         Integer teamId = ((Team) httpSession.getAttribute("team")).getTeamId();
+
+        //for some reason it's needed to get the team from repository before getting the grocerylist -LM
         Team team = teamRepository.getOne(teamId);
 
         GroceryList groceryList = team.getGroceryList();
-        System.out.println(groceryList.getAllItemsOnGroceryList().size());
-
         List<GroceryItem> allGroceries = groceryList.getAllItemsOnGroceryList();
 
         List<GroceryItem> alleItems = new ArrayList<>();
@@ -53,8 +53,12 @@ public class GroceryListController {
     @PostMapping("/add/groceryitem")
     public ResponseEntity<Object> addGroceryItem(@RequestBody String newGroceryItem) throws JsonProcessingException {
         GroceryItem groceryItem = mapper.readValue(newGroceryItem, GroceryItem.class);
-        System.out.println(groceryItem.getGroceryName());
-        ServiceResponse<GroceryItem> response = new ServiceResponse<GroceryItem>("FAILED", new GroceryItem());
+
+        Integer teamId = ((Team) httpSession.getAttribute("team")).getTeamId();
+        groceryItem.setGroceryList(teamRepository.findById(teamId).get().getGroceryList());
+        groceryItemRepository.save(groceryItem);
+
+        ServiceResponse<GroceryItem> response = new ServiceResponse<GroceryItem>("success", groceryItem);
         return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
 

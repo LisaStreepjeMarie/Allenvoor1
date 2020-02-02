@@ -167,32 +167,8 @@ $.ajaxSetup({
 var ctx = $('#contextPathHolder').attr('data-contextPath');
 
 // Create a "close" button and append it to each list item
-var allGroceriesInList = document.getElementsByTagName("LI");
-var i;
-for (i = 0; i < allGroceriesInList.length; i++) {
-  var span = document.createElement("SPAN");
-  var txt = document.createTextNode("\u00D7");
-  span.className = "close";
-  span.appendChild(txt);
-  allGroceriesInList[i].appendChild(span);
-  console.log(allGroceriesInList[i].innerHTML);
-}
+closeButtonOnAll();
 
-// Click on a close button to hide the current list item
-var close = document.getElementsByClassName("close");
-var i;
-for (i = 0; i < close.length; i++) {
-  close[i].onclick = function() {
-    var div = this.parentElement;
-    var groceryItemId = div.value;
-<!--    console.log(div.value);-->
-<!--    //removing the added X-->
-<!--    div.removeChild(div.lastElementChild)-->
-<!--    console.log(div.innerHTML);-->
-    div.style.display = "none";
-    removeGroceryItem(groceryItemId);
-  }
-}
 
 // Add a "checked" symbol when clicking on a list item
 var list = document.querySelector('ul');
@@ -207,29 +183,31 @@ function newElement() {
   var li = document.createElement("li");
   var inputValue = document.getElementById("newGroceryItem").value;
 
+// Creating a new groceryItem to save
   newGroceryItem = {
         title: document.getElementById("newGroceryItem").value,
     }
 
-  console.log(newGroceryItem);
-
   var newInList = document.createTextNode(newGroceryItem.title);
   li.appendChild(newInList);
 
+// checking if the input isn't zero
   if (newGroceryItem.title === '') {
     alert("Niks kan je niet kopen bij de supermarkt!");
   } else {
-
+    // sending the new item to the controller through ajax
     addGroceryItem(newGroceryItem);
   }
   document.getElementById("newGroceryItem").value = "";
 
+// ads a close (or X) button to the new item
   var span = document.createElement("SPAN");
   var txt = document.createTextNode("\u00D7");
   span.className = "close";
   span.appendChild(txt);
   li.appendChild(span);
 
+// gives the close button functions
   for (i = 0; i < close.length; i++) {
     close[i].onclick = function() {
       var div = this.parentElement;
@@ -238,7 +216,7 @@ function newElement() {
   }
 }
 
-// going to the delete groceryitem controller from this
+// deletes the chosen grocery item, isn't expecting anything back (besides success)
 function removeGroceryItem(groceryItemId){
     $.ajax({
          type:'GET',
@@ -261,7 +239,7 @@ input.addEventListener("keyup", function(event) {
   }
 });
 
-// sending a grocery item through json, need to append the item to the list next
+// sending a grocery item through json and adding it to the list
 function addGroceryItem(newGroceryItem){
       $.ajax({
         url: ctx + "/add/groceryitem",
@@ -272,7 +250,7 @@ function addGroceryItem(newGroceryItem){
         async: true,
         success: function(result) {
             $('#allGroceries').append('<li value="' + result.data.id + '">' + result.data.title + '</li>');
-            console.log(result.data.id);
+            closeButtonOnAll();
             console.log("woop woop");
         },
         error: function(e) {
@@ -280,6 +258,31 @@ function addGroceryItem(newGroceryItem){
             console.log("ERROR: ",  e);
         }
     });
+}
+
+// using this atm to add a close button to the newest item in the list. Will look into a cleaner solution later
+function closeButtonOnAll(){
+var allGroceriesInList = document.getElementsByTagName("LI");
+var i;
+for (i = 0; i < allGroceriesInList.length; i++) {
+      var span = document.createElement("SPAN");
+      var txt = document.createTextNode("\u00D7");
+      span.className = "close";
+      span.appendChild(txt);
+      allGroceriesInList[i].appendChild(span);
+}
+
+// Click on a close button to delete the current list item
+var close = document.getElementsByClassName("close");
+var i;
+for (i = 0; i < close.length; i++) {
+      close[i].onclick = function()   {
+            var div = this.parentElement;
+            var groceryItemId = div.value;
+            div.style.display = "none";
+            removeGroceryItem(groceryItemId);
+       }
+    }
 }
 
 </script>
