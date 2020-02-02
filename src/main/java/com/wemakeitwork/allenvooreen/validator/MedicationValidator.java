@@ -35,14 +35,17 @@ public class MedicationValidator implements Validator {
                 .filter(x -> x.getMedicationName().equals(((Medication) o).getMedicationName()))
                 .forEach(x ->  errors.rejectValue("medicationName", "Duplicate.userForm.medicationName"));
 
+
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "medicationName", "NotEmpty");
         if (medication.getMedicationName().length() < 3 ) {
             errors.rejectValue("medicationName", "Size.userForm.medicationName");
         }
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "medicationAmount", "NotEmpty");
-        if (medication.getMedicationAmount() < 1) {
-            errors.rejectValue("medicationAmount", "Size.userForm.medicationAmount");
+        if (medication.getMedicationAmount() != null) {
+            if (medication.getMedicationAmount() < 1) {
+                errors.rejectValue("medicationAmount", "Size.userForm.medicationAmount");
+            }
         }
     }
 }
