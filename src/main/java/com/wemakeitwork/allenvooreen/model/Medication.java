@@ -96,3 +96,4 @@ public class Medication {
         this.medicationAmount += integer;
     }
 }
+

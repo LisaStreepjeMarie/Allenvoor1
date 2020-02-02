@@ -230,6 +230,18 @@ background-image: url('/allenvooreen/images/background.jpg');
     color: #686666;
     line-height: 135%;
 }
+.error {
+    color: #ff0000;
+      }
+
+.errorblock {
+    color: red;
+    background-color: #ffEEEE;
+    border: 3px solid #ff0000;
+    padding: 8px;
+    margin: 0px;
+ }
+
 
 
 
