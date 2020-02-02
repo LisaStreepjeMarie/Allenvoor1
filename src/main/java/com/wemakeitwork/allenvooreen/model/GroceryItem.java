@@ -13,6 +13,10 @@ import javax.persistence.*;
 @JsonPropertyOrder(value = {"id", "title"}, alphabetic = true)
 public class GroceryItem {
 
+    public GroceryItem() {
+        this.bought = false;
+    }
+
     @Id
     @JsonProperty("id")
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -51,8 +55,8 @@ public class GroceryItem {
         return bought;
     }
 
-    public void setBought(Boolean bought) {
-        this.bought = bought;
+    public void setBought() {
+        this.bought = !this.bought;
     }
 
     public GroceryList getGroceryList() {

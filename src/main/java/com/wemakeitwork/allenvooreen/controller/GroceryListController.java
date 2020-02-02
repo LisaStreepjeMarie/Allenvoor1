@@ -75,7 +75,8 @@ public class GroceryListController {
     @GetMapping("/bought/groceryitem/{groceryItemId}")
     public  ResponseEntity<Object> boughtGroceryItem(@PathVariable("groceryItemId") final Integer groceryItemid){
         GroceryItem groceryItem = groceryItemRepository.getOne(groceryItemid);
-        groceryItem.setBought(true);
+        groceryItem.setBought();
+        System.out.println(groceryItem.getBought());
         groceryItemRepository.save(groceryItem);
         return new ResponseEntity<Object>("success!", HttpStatus.OK);
     }
