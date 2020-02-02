@@ -10,6 +10,7 @@
 
     <script src="${pageContext.request.contextPath}/webjars/jquery/3.4.1/jquery.min.js"></script>
 
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
     <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
     <script src="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
@@ -156,8 +157,8 @@ input {
     <div id="allMedications">
         <c:forEach var="medication" items="${allMedications}">
             <li value="${medication.medicationId}">
-                ${medication.medicationName}
-                <span class="badge badge-primary badge-pill">${medication.medicationAmount}</span>
+                <i class="fas fa-pills"></i> ${medication.medicationName}&emsp;
+<!--                <span class="badge badge-primary badge-pill">${medication.medicationAmount}</span>-->
             </li>
         </c:forEach>
     </div>
