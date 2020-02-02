@@ -4,8 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wemakeitwork.allenvooreen.model.GroceryItem;
 import com.wemakeitwork.allenvooreen.model.GroceryList;
+import com.wemakeitwork.allenvooreen.model.Medication;
 import com.wemakeitwork.allenvooreen.model.Team;
 import com.wemakeitwork.allenvooreen.repository.GroceryItemRepository;
+import com.wemakeitwork.allenvooreen.repository.MedicationRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import com.wemakeitwork.allenvooreen.service.ServiceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,9 @@ public class GroceryListController {
 
     @Autowired
     GroceryItemRepository groceryItemRepository;
+
+    @Autowired
+    MedicationRepository medicationRepository;
 
     ObjectMapper mapper = new ObjectMapper();
 
@@ -70,12 +75,21 @@ public class GroceryListController {
         return new ResponseEntity<Object>("success!", HttpStatus.OK);
     }
 
-    @GetMapping("/bought/groceryitem/{groceryItemId}")
+    @GetMapping("/bought/groceryItem/{groceryItemId}")
     public  ResponseEntity<Object> boughtGroceryItem(@PathVariable("groceryItemId") final Integer groceryItemid){
         GroceryItem groceryItem = groceryItemRepository.getOne(groceryItemid);
         groceryItem.setBought();
         System.out.println(groceryItem.getBought());
         groceryItemRepository.save(groceryItem);
+        return new ResponseEntity<Object>("success!", HttpStatus.OK);
+    }
+
+    @GetMapping("/bought/allMedications/{medicationid}")
+    public  ResponseEntity<Object> boughtMedicationItem(@PathVariable("medicationid") final Integer medicationid){
+        System.out.println("check check");
+        Medication medication = medicationRepository.getOne(medicationid);
+        medication.setBought();
+        medicationRepository.save(medication);
         return new ResponseEntity<Object>("success!", HttpStatus.OK);
     }
 }

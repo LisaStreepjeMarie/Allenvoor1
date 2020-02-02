@@ -57,6 +57,17 @@ public class Medication {
     @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, mappedBy = "medication")
     private List<MedicationActivity> takenMedications;
 
+    @JsonIgnore
+    private Boolean bought;
+
+    public Boolean getBought() {
+        return bought;
+    }
+
+    public void setBought() {
+        this.bought = !this.bought;
+    }
+
     public Integer getMedicationId() {
         return medicationId;
     }

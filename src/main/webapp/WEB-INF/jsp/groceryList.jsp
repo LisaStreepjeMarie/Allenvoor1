@@ -151,16 +151,21 @@ input {
     <span onclick="newElement()" id="addButton" class="addBtn">Voeg toe!</span>
 </div>
 
-<ul id="allmedications">
-    <c:forEach var="medication" items="${allMedications}">
-        <li value="${medication.medicationId}">${medication.medicationName}</li>
-    </c:forEach>
-</ul>
 
 <ul id="allGroceries">
-    <c:forEach var="groceryItem" items="${groceryList}">
-        <li value="${groceryItem.groceryItemId}">${groceryItem.groceryName}</li>
-    </c:forEach>
+    <div id="allMedications">
+        <c:forEach var="medication" items="${allMedications}">
+            <li value="${medication.medicationId}">
+                ${medication.medicationName}
+                <span class="badge badge-primary badge-pill">${medication.medicationAmount}</span>
+            </li>
+        </c:forEach>
+    </div>
+    <div id="groceryItem">
+        <c:forEach var="groceryItem" items="${groceryList}">
+            <li value="${groceryItem.groceryItemId}">${groceryItem.groceryName}</li>
+        </c:forEach>
+    </div>
 </ul>
 
 <script>
@@ -182,7 +187,9 @@ closeButtonOnAll();
 var list = document.querySelector('ul');
 list.addEventListener('click', function(ev) {
   if (ev.target.tagName === 'LI') {
-    boughtBoolean(ev.target.value)
+    var type = ev.target.parentNode.id
+    console.log(type)
+    boughtBoolean(type, ev.target.value);
     ev.target.classList.toggle('checked');
   }
 }, false);
@@ -294,10 +301,12 @@ for (i = 0; i < close.length; i++) {
    }
 }
 
-function boughtBoolean(groceryItemId){
+function boughtBoolean(type, groceryItemId){
+console.log(type)
+console.log(groceryItemId)
     $.ajax({
          type:'GET',
-         url: ctx + "/bought/groceryitem/" + groceryItemId,
+         url: ctx + "/bought/" + type + "/" + groceryItemId,
          success : function(result) {
             console.log("woop wopp")
              },
@@ -306,7 +315,6 @@ function boughtBoolean(groceryItemId){
          }
     });
 }
-
 
 </script>
 
