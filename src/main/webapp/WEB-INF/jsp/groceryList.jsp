@@ -157,8 +157,8 @@ input {
     <div id="allMedications">
         <c:forEach var="medication" items="${allMedications}">
             <li value="${medication.medicationId}">
-                <i class="fas fa-pills"></i> ${medication.medicationName}&emsp;
-<!--                <span class="badge badge-primary badge-pill">${medication.medicationAmount}</span>-->
+                <i class="fas fa-pills fa-lg" style="color:#e6b3ff;"></i> ${medication.medicationName}
+<!--                <span class="badge badge-primary badge-pill" style="float:right;">${medication.medicationAmount}</span>-->
             </li>
         </c:forEach>
     </div>
@@ -233,7 +233,7 @@ function newElement() {
   }
 }
 
-// deletes the chosen grocery item, isn't expecting anything back (besides success)
+// deletes the chosen  item, isn't expecting anything back (besides success)
 function removeGroceryItem(groceryItemId){
     $.ajax({
          type:'GET',
