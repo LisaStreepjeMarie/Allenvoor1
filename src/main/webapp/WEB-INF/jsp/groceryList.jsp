@@ -150,9 +150,16 @@ input {
     <input type="text" id="newGroceryItem" placeholder="Nieuwe Boodschap...">
     <span onclick="newElement()" id="addButton" class="addBtn">Voeg toe!</span>
 </div>
+
 <ul id="allGroceries">
     <c:forEach var="groceryItem" items="${groceryList}">
         <li value="${groceryItem.groceryItemId}">${groceryItem.groceryName}</li>
+    </c:forEach>
+</ul>
+
+<ul id="allMedications">
+    <c:forEach var="medication" items="${allMedications}">
+        <li value="${medication.medicationId}">${medication.medicationName}</li>
     </c:forEach>
 </ul>
 
@@ -171,9 +178,11 @@ closeButtonOnAll();
 
 
 // Add a "checked" symbol when clicking on a list item
+// Added a boolean ajax call to write it as bought boolean in the database
 var list = document.querySelector('ul');
 list.addEventListener('click', function(ev) {
   if (ev.target.tagName === 'LI') {
+    boughtBoolean(ev.target.value)
     ev.target.classList.toggle('checked');
   }
 }, false);
@@ -186,7 +195,7 @@ function newElement() {
 // Creating a new groceryItem to save
   newGroceryItem = {
         title: document.getElementById("newGroceryItem").value,
-    }
+  }
 
   var newInList = document.createTextNode(newGroceryItem.title);
   li.appendChild(newInList);
@@ -281,9 +290,23 @@ for (i = 0; i < close.length; i++) {
             var groceryItemId = div.value;
             div.style.display = "none";
             removeGroceryItem(groceryItemId);
-       }
-    }
+      }
+   }
 }
+
+function boughtBoolean(groceryItemId){
+    $.ajax({
+         type:'GET',
+         url: ctx + "/bought/groceryitem/" + groceryItemId,
+         success : function(result) {
+            console.log("woop wopp")
+             },
+             error : function(e) {
+             console.log("ERROR: ", e);
+         }
+    });
+}
+
 
 </script>
 

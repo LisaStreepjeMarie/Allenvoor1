@@ -24,6 +24,7 @@ import java.util.List;
 
 @Controller
 public class GroceryListController {
+
     @Autowired
     private HttpSession httpSession;
 
@@ -48,6 +49,7 @@ public class GroceryListController {
         team.getGroceryList().setAllMedicationOnGroceryList(team.getMedicationList());
 
         model.addAttribute("groceryList", allGroceries);
+        model.addAttribute("allMedications", team.getMedicationList());
         return "groceryList";
     }
 
@@ -63,11 +65,18 @@ public class GroceryListController {
         return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
 
-
     @GetMapping("/delete/groceryitem/{groceryItemId}")
     public  ResponseEntity<Object> deleteGroceryItem(@PathVariable("groceryItemId") final Integer groceryItemid){
         GroceryItem groceryItem = groceryItemRepository.getOne(groceryItemid);
         groceryItemRepository.delete(groceryItem);
+        return new ResponseEntity<Object>("success!", HttpStatus.OK);
+    }
+
+    @GetMapping("/bought/groceryitem/{groceryItemId}")
+    public  ResponseEntity<Object> boughtGroceryItem(@PathVariable("groceryItemId") final Integer groceryItemid){
+        GroceryItem groceryItem = groceryItemRepository.getOne(groceryItemid);
+        groceryItem.setBought(true);
+        groceryItemRepository.save(groceryItem);
         return new ResponseEntity<Object>("success!", HttpStatus.OK);
     }
 }
