@@ -45,7 +45,8 @@ public class GroceryListController {
         GroceryList groceryList = team.getGroceryList();
         List<GroceryItem> allGroceries = groceryList.getAllItemsOnGroceryList();
 
-        List<GroceryItem> alleItems = new ArrayList<>();
+        team.getGroceryList().setAllMedicationOnGroceryList(team.getMedicationList());
+
         model.addAttribute("groceryList", allGroceries);
         return "groceryList";
     }
