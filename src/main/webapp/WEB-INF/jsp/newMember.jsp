@@ -33,6 +33,8 @@
 
         <form:form action="${pageContext.request.contextPath}/member/new" modelAttribute="member">
             <spring:bind path="memberName">
+            <div th:if="${param.error != null}"
+              th:text="${session[SPRING_SECURITY_LAST_EXCEPTION]}">error</div>
                 <div class="form-group ${status.error ? 'has-error' : ''}">
                     <form:input type="text" path="memberName" class="form-control" placeholder="Gebruikersnaam"
                                 autofocus="true"></form:input>

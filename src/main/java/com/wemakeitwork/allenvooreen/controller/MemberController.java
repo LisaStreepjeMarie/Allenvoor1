@@ -1,27 +1,35 @@
 package com.wemakeitwork.allenvooreen.controller;
 
 import com.wemakeitwork.allenvooreen.model.Member;
-import com.wemakeitwork.allenvooreen.model.Team;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import com.wemakeitwork.allenvooreen.service.MemberServiceInterface;
 import com.wemakeitwork.allenvooreen.service.SecurityServiceInterface;
 import com.wemakeitwork.allenvooreen.validator.MemberValidator;
+import com.wemakeitwork.allenvooreen.web.error.MemberAlreadyExistsException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.MessageSource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.ModelAndView;
+
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.Calendar;
+import java.util.Locale;
 import java.util.Optional;
 
 
 @Controller
 public class MemberController {
-
     @Autowired
     private MemberRepository memberRepository;
 
@@ -112,6 +120,10 @@ public class MemberController {
         }
     }
 }
+
+
+
+
 
 
 

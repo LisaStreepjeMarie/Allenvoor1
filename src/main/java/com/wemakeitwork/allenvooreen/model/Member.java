@@ -5,6 +5,9 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import javax.management.ObjectName;
+import javax.management.relation.Role;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.util.ArrayList;
@@ -15,8 +18,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "members")
-public class Member implements UserDetails {
-
+public class Member implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer memberId = 0;
@@ -141,3 +143,5 @@ public class Member implements UserDetails {
         this.email = email;
     }
 }
+
+

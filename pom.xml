@@ -89,6 +89,12 @@
             <artifactId>spring-boot-starter-tomcat</artifactId>
         </dependency>
 
+        <!--Send email-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+
         <!-- JSTL -->
         <dependency>
             <groupId>javax.servlet</groupId>

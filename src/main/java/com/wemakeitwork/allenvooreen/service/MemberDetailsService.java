@@ -1,5 +1,6 @@
 package com.wemakeitwork.allenvooreen.service;
 
+import com.wemakeitwork.allenvooreen.model.Member;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class MemberDetailsService implements UserDetailsService {
 
     @Autowired
