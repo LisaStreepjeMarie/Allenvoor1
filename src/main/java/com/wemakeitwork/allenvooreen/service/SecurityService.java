@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Calendar;
 
 @Service
-@Transactional
 public class SecurityService implements SecurityServiceInterface {
     @Autowired
     private AuthenticationManager authenticationManager;
