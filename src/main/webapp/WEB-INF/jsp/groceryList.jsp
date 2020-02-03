@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<html xmlns:form="http://www.w3.org/1999/xhtml" xmlns:c="">
+<html xmlns:c="">
 <html>
 <head>
     <meta charset='utf-8' />
@@ -107,8 +107,23 @@ ul li.checked::before {
   text-align: center;
 }
 
+/* Style the footer */
+.footer {
+  background-color: #99c2ff;
+  padding: 20px 30px;
+  color: white;
+  text-align: center;
+}
+
 /* Clear floats after the header */
 .header:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Clear floats after the footer */
+.footer:after {
   content: "";
   display: table;
   clear: both;
@@ -132,6 +147,34 @@ input {
   background: #66a3ff;
   color: #ffffff;
   float: left;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 0;
+}
+
+/* Style the "removeChecked" button */
+.checkDBtn {
+  padding: 10px;
+  width: 40%;
+  background: #66a3ff;
+  color: #ffffff;
+  float: left;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 0;
+}
+
+/* Style the "removeAll" button */
+.removeBtn {
+  padding: 10px;
+  width: 40%;
+  background: #6666ff;
+  color: #ffffff;
+  float: right;
   text-align: center;
   font-size: 16px;
   cursor: pointer;
@@ -168,6 +211,12 @@ input {
         </c:forEach>
     </div>
 </ul>
+
+<div class="footer">
+    <span onclick="..." id="checkDBtn" class="checkDBtn">verwijder gekochte items</span>&nbsp;
+    <span onclick="removeAllFromList()" id="removeBtn" class="removeBtn">verwijder alle items</span>
+    <br>
+</div>
 
 <script>
 
@@ -297,6 +346,14 @@ console.log(groceryItemId)
              console.log("ERROR: ", e);
          }
     });
+}
+
+function removeAllFromList(){
+var allGroceriesInList = document.getElementsByTagName("LI");
+var i;
+for (i = 0; i < allGroceriesInList.length; i++) {
+      console.log(allGroceriesInList[i].value);
+}
 }
 
 </script>
