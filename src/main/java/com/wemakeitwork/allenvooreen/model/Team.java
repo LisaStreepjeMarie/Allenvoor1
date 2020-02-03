@@ -18,6 +18,7 @@ import java.util.Set;
 @JsonIgnoreProperties({ "allMembersInThisTeamSet", "eventList", "medicationList", "hibernateLazyInitializer", "groceryList"})
 public class Team {
     public Team() {
+        this.groceryList = new GroceryList();
     }
 
     @JsonIgnore

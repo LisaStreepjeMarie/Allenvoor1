@@ -1,7 +1,6 @@
 package com.wemakeitwork.allenvooreen.controller;
 
 import com.wemakeitwork.allenvooreen.dto.TeamMemberDTO;
-import com.wemakeitwork.allenvooreen.model.GroceryList;
 import com.wemakeitwork.allenvooreen.model.Member;
 import com.wemakeitwork.allenvooreen.model.Team;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
@@ -120,8 +119,6 @@ public class TeamController {
         Member member = memberRepository.findByMemberName(membername).get();
         member.getAllTeamsOfMemberSet().add(team);
         team.getAllMembersInThisTeamSet().add(member);
-        GroceryList groceryList = new GroceryList();
-        team.setGroceryList(groceryList);
         teamRepository.save(team);
         memberRepository.save(member);
         return "redirect:/team/all";

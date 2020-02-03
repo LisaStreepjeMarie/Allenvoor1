@@ -14,6 +14,7 @@ closeButtonOnAll();
 // Add a "checked" symbol when clicking on a list item
 // Added a boolean ajax call to write it as bought boolean in the database
 var list = document.querySelector('ul');
+console.log(list);
 list.addEventListener('click', function(ev) {
   if (ev.target.tagName === 'LI') {
     var type = ev.target.parentNode.id
@@ -79,7 +80,7 @@ function addGroceryItem(newGroceryItem){
             console.log("woop woop");
         },
         error: function(e) {
-            alert("changeEvent() error")
+            alert("boodschappenerror")
             console.log("ERROR: ",  e);
         }
     });
