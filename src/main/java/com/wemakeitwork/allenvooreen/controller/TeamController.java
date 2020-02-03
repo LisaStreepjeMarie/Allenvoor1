@@ -3,7 +3,9 @@ package com.wemakeitwork.allenvooreen.controller;
 import com.wemakeitwork.allenvooreen.dto.TeamMemberDTO;
 import com.wemakeitwork.allenvooreen.model.Member;
 import com.wemakeitwork.allenvooreen.model.Team;
+import com.wemakeitwork.allenvooreen.model.TeamMembership;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
+import com.wemakeitwork.allenvooreen.repository.TeamMembershipRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,6 +31,10 @@ public class TeamController {
     @Autowired
     MemberRepository memberRepository;
 
+    @Autowired
+    TeamMembershipRepository teamMembershipRepository;
+
+
     @GetMapping("/team/all")
     protected String showTeamsPerMember(Model model){
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -37,9 +43,9 @@ public class TeamController {
     }
 
     private Set<Team> teamList (Integer memberId){
-        Set<Team> teamList;
+        Set<Team> teamList = null;
         Member member = memberRepository.getOne(memberId);
-        teamList = member.
+        teamList.add(new Team());
         return teamList;
     }
 
@@ -74,12 +80,12 @@ public class TeamController {
 
         Team team = teamRepository.getOne(teamId);
         Set<Member> membersToRemoveSet = new HashSet<>();
-        membersToRemoveSet.addAll(team.getAllMembersInThisTeamSet());
+        /*membersToRemoveSet.addAll(team.getAllMembersInThisTeamSet());
 
         for (Member member : membersToRemoveSet){
             member.removeTeamFromMember(team);
             team.removeTeamMember(member);
-        }
+        }*/
 
         teamRepository.save(team);
         teamRepository.delete(team);
@@ -92,24 +98,26 @@ public class TeamController {
                                        @PathVariable("memberId") final Integer memberId) {
         Team team = teamRepository.getOne(teamId);
         Member member = memberRepository.getOne(memberId);
-        member.removeTeamFromMember(team);
-        team.removeTeamMember(member);
+       /* member.removeTeamFromMember(team);
+        team.removeTeamMember(member);*/
         teamRepository.save(team);
         memberRepository.save(member);
         return "redirect:/team/select/{teamId}";
     }
 
     @PostMapping("/team/new")
-    protected String saveOrUpdateTeam(HttpServletRequest request) {
+    protected String newTeam(HttpServletRequest request) {
         String teamName = request.getParameter("teamName");
-        String membername = request.getParameter("allMembersInThisTeamSet");
+        Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
         Team team = new Team();
         team.setTeamName(teamName);
-        Member member = memberRepository.findByMemberName(membername).get();
-        member.getAllTeamsOfMemberSet().add(team);
-        team.getAllMembersInThisTeamSet().add(member);
         teamRepository.save(team);
-        memberRepository.save(member);
+
+        TeamMembership tms = new TeamMembership();
+        tms.setMember(member);
+        tms.setTeam(team);
+        teamMembershipRepository.save(tms);
         return "redirect:/team/all";
     }
 
@@ -133,12 +141,12 @@ public class TeamController {
             Team team = teamRepository.getOne(teamMemberDTO.getTeamId());
             System.out.println("teamId uit DTO:   " + teamMemberDTO.getTeamId());
 
-            if (memberOpt.isPresent()){
+   /*         if (memberOpt.isPresent()){
                 memberOpt.get().getAllTeamsOfMemberSet().add(team);
                 team.getAllMembersInThisTeamSet().add(memberOpt.get());
                 memberRepository.save(memberOpt.get());
             }
-            teamRepository.save(team);
+            teamRepository.save(team);*/
             return "redirect:/team/select/" + teamMemberDTO.getTeamId();
         }
     }
