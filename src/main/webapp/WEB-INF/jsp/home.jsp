@@ -3,7 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 
-<html xmlns:c="">
+<html xmlns:c="" xmlns:mytags="">
     <head>
         <title>Kalender</title>
         <meta charset='utf-8' />
@@ -12,7 +12,7 @@
         <meta name="apple-mobile-web-app-capable" content="yes">
 
         <!-- Add icon library -->
-        <link href="${pageContext.request.contextPath}/webjars/font-awesome/4.7.0/css/font-awesome.css" rel='stylesheet'>
+        <link href="${pageContext.request.contextPath}/webjars/font-awesome/5.12.0/css/all.css" rel='stylesheet'>
         <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
         <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
 
