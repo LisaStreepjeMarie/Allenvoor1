@@ -4,14 +4,13 @@ import com.wemakeitwork.allenvooreen.model.Member;
 import com.wemakeitwork.allenvooreen.model.Team;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -27,12 +26,10 @@ public class IndexController {
     }
 
     @GetMapping("/home")
-    public String calendar(Model model, Principal principal){
-        Set<Team> teamList = null;
-        Optional<Member> member = memberRepository.findByMemberName(principal.getName());
-        if(member.isPresent()){
-            teamList = member.get().getAllTeamsOfMemberSet();
-        }
+    public String calendar(Model model){
+        Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Set<Team> teamList = member.getAllTeamsOfMemberSet();
+
         if (teamList != null) {
             ArrayList<Team> sortedList = (ArrayList<Team>) teamList.stream()
                     .sorted(Comparator.comparing(Team::getTeamName))
