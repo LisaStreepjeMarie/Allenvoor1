@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashSet;
 import java.util.Optional;
@@ -31,20 +29,17 @@ public class TeamController {
     @Autowired
     MemberRepository memberRepository;
 
-    @PersistenceContext
-    EntityManager entityManager;
-
     @GetMapping("/team/all")
     protected String showTeamsPerMember(Model model){
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("teamList", memberRepository.findByMemberName(member.getMemberName()).get().getAllTeamsOfMemberSet());
+        //model.addAttribute("teamList", memberRepository.findByMemberName(member.getMemberName()).get().getAllTeamsOfMemberSet());
         return "teamOverview";
     }
 
     private Set<Team> teamList (Integer memberId){
         Set<Team> teamList;
         Member member = memberRepository.getOne(memberId);
-        teamList = member.getAllTeamsOfMemberSet();
+        teamList = member.
         return teamList;
     }
 

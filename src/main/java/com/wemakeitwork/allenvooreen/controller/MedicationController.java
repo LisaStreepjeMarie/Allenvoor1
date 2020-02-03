@@ -3,6 +3,7 @@ package com.wemakeitwork.allenvooreen.controller;
 import com.wemakeitwork.allenvooreen.model.Medication;
 import com.wemakeitwork.allenvooreen.model.Member;
 import com.wemakeitwork.allenvooreen.model.Team;
+import com.wemakeitwork.allenvooreen.model.TeamMembership;
 import com.wemakeitwork.allenvooreen.repository.MedicationRepository;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
@@ -69,7 +70,7 @@ public class MedicationController {
         httpSession.setAttribute("team", team);
 
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Set<Team> teamList = member.getAllTeamsOfMemberSet();
+        Set<TeamMembership> teamList = member.getTeamMemberships();
 
         Medication medication = new Medication();
         model.addAttribute("medicationList", team.getMedicationList());

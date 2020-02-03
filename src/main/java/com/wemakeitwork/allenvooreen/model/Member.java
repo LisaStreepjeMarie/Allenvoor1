@@ -5,15 +5,18 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 @Entity
-@Table(name = "members")
+@Table(name = "member")
 public class Member implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer memberId = 0;
+    private Integer memberId;
 
     private String memberName;
 
@@ -24,17 +27,8 @@ public class Member implements UserDetails {
     @Transient
     private String passwordConfirm;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "team_membername", joinColumns = @JoinColumn(name = "membername_member_id"), inverseJoinColumns = @JoinColumn(name = "team_team_id"))
-    private Set<Team> allTeamsOfMemberSet = new HashSet<>();
-
-    public Set<Team> getAllTeamsOfMemberSet() {
-        return allTeamsOfMemberSet;
-    }
-
-    public void setAllTeamsOfMemberSet(Set<Team> allTeamsOfMemberSet) {
-        this.allTeamsOfMemberSet = allTeamsOfMemberSet;
-    }
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "member")
+    Set<TeamMembership> teamMemberships;
 
     public String getRol() {
         return rol;
@@ -116,7 +110,11 @@ public class Member implements UserDetails {
         }
     }
 
-    public void removeTeamFromMember(Team team){
-        allTeamsOfMemberSet.remove(team);
+    public Set<TeamMembership> getTeamMemberships() {
+        return teamMemberships;
+    }
+
+    public void setTeamMemberships(Set<TeamMembership> teamMemberships) {
+        this.teamMemberships = teamMemberships;
     }
 }

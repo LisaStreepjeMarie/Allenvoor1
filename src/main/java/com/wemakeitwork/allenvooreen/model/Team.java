@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -15,20 +14,19 @@ import java.util.Set;
 // Ignoring 'hibernateLazyInitializer' & 'handler' is needed to prevent infinite recursion
 // when calling the ObjectMapper to create a JSON
 @JsonIgnoreProperties({ "allMembersInThisTeamSet", "eventList", "medicationList", "hibernateLazyInitializer", "handler" })
+@Table(name = "team")
 public class Team {
-    public Team() {
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("id")
-    private int teamId = 0;
+    private Integer teamId;
 
     @JsonProperty("name")
     private String teamName;
 
-    @ManyToMany(mappedBy = "allTeamsOfMemberSet")
-    private Set<Member> allMembersInThisTeamSet = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "team")
+    Set<TeamMembership> teamMemberships;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "team")
     List<Event> eventList = new ArrayList<>();
@@ -42,14 +40,6 @@ public class Team {
 
     public void setMedicationList(Medication medication) {
         this.medicationList.add(medication);
-    }
-
-    public Set<Member> getAllMembersInThisTeamSet() {
-        return allMembersInThisTeamSet;
-    }
-
-    public void setAllMembersInThisTeamSet(Set<Member> allMembersInThisTeamSet) {
-        this.allMembersInThisTeamSet = allMembersInThisTeamSet;
     }
 
     public Integer getTeamId() {
@@ -80,11 +70,11 @@ public class Team {
         this.eventList.add(event);
     }
 
-    public void addTeamMember(Member member){
-        allMembersInThisTeamSet.add(member);
+    public Set<TeamMembership> getTeamMemberships() {
+        return teamMemberships;
     }
 
-    public void removeTeamMember(Member member){
-        allMembersInThisTeamSet.remove(member);
+    public void setTeamMemberships(Set<TeamMembership> teamMemberships) {
+        this.teamMemberships = teamMemberships;
     }
 }

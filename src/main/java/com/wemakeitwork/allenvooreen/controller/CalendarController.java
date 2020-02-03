@@ -19,8 +19,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpSession;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Controller
 public class CalendarController {
@@ -57,15 +58,15 @@ public class CalendarController {
         httpSession.setAttribute("team", team);
 
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Set<Team> teamList = member.getAllTeamsOfMemberSet();
+        Set<TeamMembership> teamList = member.getTeamMemberships();
 
-        ArrayList<Team> sortedList = (ArrayList<Team>) teamList.stream()
+       /* ArrayList<Team> sortedList = (ArrayList<Team>) teamList.stream()
                 .sorted(Comparator.comparing(Team::getTeamName))
                 .collect(Collectors.toList());
 
         sortedList.forEach(x -> System.out.println(x.getTeamName()));
 
-        model.addAttribute("teamList", sortedList);
+        model.addAttribute("teamList", sortedList);*/
 
         List<Event> sourceCalendarData = team.getEventList();
 
