@@ -28,8 +28,7 @@ public class IndexController {
     @GetMapping("/home")
     public String calendar(Model model){
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Set<Team> teamList = member.getAllTeamsOfMemberSet();
-
+        Set<Team> teamList = memberRepository.findByMemberName(member.getMemberName()).get().getAllTeamsOfMemberSet();
         if (teamList != null) {
             ArrayList<Team> sortedList = (ArrayList<Team>) teamList.stream()
                     .sorted(Comparator.comparing(Team::getTeamName))
