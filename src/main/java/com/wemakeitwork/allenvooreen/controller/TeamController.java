@@ -36,11 +36,15 @@ public class TeamController {
 
     @GetMapping("/team/all")
     protected String showTeamsPerMember(Model model){
+        System.out.println("hallo!");
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Set<Team> teamList = member.getAllTeamsOfMemberSet();
-        if (teamList != null) {
-            model.addAttribute("teamList", teamList);
+        for (Team team : teamList){
+            int teamInt = team.getTeamId();
+            teamList.remove(team);
+            teamList.add(teamRepository.getOne(teamInt));
         }
+        model.addAttribute("teamList", teamList);
         return "teamOverview";
     }
 
