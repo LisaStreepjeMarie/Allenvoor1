@@ -3,7 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 
-<html xmlns:form="http://www.w3.org/1999/xhtml" xmlns:c="">
+<html xmlns:c="">
     <head>
         <title>Kalender</title>
         <meta charset='utf-8' />
@@ -37,6 +37,12 @@
                        <tr>
                           <a class="dropdown-item" href='${pageContext.request.contextPath}/medication/${team.teamId}'> Medicatie ${team.teamName} </a>
                        </tr>
+                    </c:forEach>
+                    <h2 class="dropdown-header"><i class="fa fa-shopping-basket"></i> Boodschappen </h2>
+                    <c:forEach items="${teamList}" var="team">
+                        <tr>
+                            <a class="dropdown-item" href='${pageContext.request.contextPath}/grocerylist/${team.teamId}'> Boodschappenlijst ${team.teamName} </a>
+                        </tr>
                     </c:forEach>
                 </div>
                 <br />

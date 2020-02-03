@@ -40,12 +40,12 @@ public class GroceryListController {
 
     ObjectMapper mapper = new ObjectMapper();
 
-    @GetMapping("/grocerylist")
-    protected String showGrocerylist(Model model) {
-        Integer teamId = ((Team) httpSession.getAttribute("team")).getTeamId();
+    @GetMapping("/grocerylist/{teamId}")
+    protected String showGrocerylist(@PathVariable("teamId") final Integer teamId, Model model) {
 
         //for some reason it's needed to get the team from repository before getting the grocerylist -LM
         Team team = teamRepository.getOne(teamId);
+        httpSession.setAttribute("team", team);
         GroceryList groceryList = team.getGroceryList();
 
         List<GroceryItem> allGroceries = groceryList.getAllItemsOnGroceryList();
