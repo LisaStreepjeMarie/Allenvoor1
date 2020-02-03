@@ -259,7 +259,7 @@ function newElement() {
     // sending the new item to the controller through ajax
     addGroceryItem(newGroceryItem);
   }
-
+    document.getElementById("newGroceryItem").value = "";
 }
 
 // deletes the chosen  item, isn't expecting anything back (besides success)
@@ -352,11 +352,13 @@ function removeAllFromList(){
 var allGroceriesInList = document.getElementsByTagName("LI");
 var i;
 for (i = 0; i < allGroceriesInList.length; i++) {
-      console.log(allGroceriesInList[i].value);
-}
+      var itemValue = allGroceriesInList[i].value;
+      var type = allGroceriesInList[i].parentNode.id;
+      removeGroceryItem(type, itemValue);
+      allGroceriesInList[i].style.display = "none";
+    }
 }
 
 </script>
-
 </body>
 </html>
