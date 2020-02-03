@@ -68,10 +68,15 @@ public class GroceryListController {
         return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/delete/groceryitem/{groceryItemId}")
+    @GetMapping("/delete/groceryItem/{groceryItemId}")
     public  ResponseEntity<Object> deleteGroceryItem(@PathVariable("groceryItemId") final Integer groceryItemid){
-        GroceryItem groceryItem = groceryItemRepository.getOne(groceryItemid);
-        groceryItemRepository.delete(groceryItem);
+        groceryItemRepository.deleteById(groceryItemid);
+        return new ResponseEntity<Object>("success!", HttpStatus.OK);
+    }
+
+    @GetMapping("/delete/allMedications/{medicationId}")
+    public  ResponseEntity<Object> deletemedicationItem(@PathVariable("medicationId") final Integer medicationId){
+        medicationRepository.deleteById(medicationId);
         return new ResponseEntity<Object>("success!", HttpStatus.OK);
     }
 

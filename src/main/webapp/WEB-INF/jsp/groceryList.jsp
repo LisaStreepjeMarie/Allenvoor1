@@ -234,10 +234,10 @@ function newElement() {
 }
 
 // deletes the chosen  item, isn't expecting anything back (besides success)
-function removeGroceryItem(groceryItemId){
+function removeGroceryItem(type, itemId){
     $.ajax({
          type:'GET',
-         url: ctx + "/delete/groceryitem/" + groceryItemId,
+         url: ctx + "/delete/" + type + "/" + itemId,
          success : function(result) {
             console.log("woop wopp")
              },
@@ -295,9 +295,11 @@ var i;
 for (i = 0; i < close.length; i++) {
       close[i].onclick = function()   {
             var div = this.parentElement;
+            var type = div.parentElement.id;
+            console.log(type)
             var groceryItemId = div.value;
             div.style.display = "none";
-            removeGroceryItem(groceryItemId);
+            removeGroceryItem(type, groceryItemId);
       }
    }
 }
