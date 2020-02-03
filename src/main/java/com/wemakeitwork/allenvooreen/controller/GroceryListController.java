@@ -83,18 +83,21 @@ public class GroceryListController {
     @GetMapping("/bought/groceryItem/{groceryItemId}")
     public  ResponseEntity<Object> boughtGroceryItem(@PathVariable("groceryItemId") final Integer groceryItemid){
         GroceryItem groceryItem = groceryItemRepository.getOne(groceryItemid);
-        groceryItem.setBought();
-        System.out.println(groceryItem.getBought());
-        groceryItemRepository.save(groceryItem);
+        if(groceryItem != null) {
+            groceryItem.setBought();
+            System.out.println(groceryItem.getBought());
+            groceryItemRepository.save(groceryItem);
+        }
         return new ResponseEntity<Object>("success!", HttpStatus.OK);
     }
 
     @GetMapping("/bought/allMedications/{medicationid}")
     public  ResponseEntity<Object> boughtMedicationItem(@PathVariable("medicationid") final Integer medicationid){
-        System.out.println("check check");
         Medication medication = medicationRepository.getOne(medicationid);
-        medication.setBought();
-        medicationRepository.save(medication);
+        if(medication != null) {
+            medication.setBought();
+            medicationRepository.save(medication);
+        }
         return new ResponseEntity<Object>("success!", HttpStatus.OK);
     }
 }

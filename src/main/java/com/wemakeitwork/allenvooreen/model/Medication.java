@@ -21,6 +21,10 @@ import java.util.List;
 @JsonIgnoreProperties({ "medicationAmount", "medicationComment", "team", "getTakenMedications", "hibernateLazyInitializer"})
 public class Medication {
 
+    public Medication() {
+        this.bought = false;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("id")
