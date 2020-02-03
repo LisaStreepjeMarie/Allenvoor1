@@ -182,7 +182,6 @@ var ctx = $('#contextPathHolder').attr('data-contextPath');
 // Create a "close" button and append it to each list item
 closeButtonOnAll();
 
-
 // Add a "checked" symbol when clicking on a list item
 // Added a boolean ajax call to write it as bought boolean in the database
 var list = document.querySelector('ul');
@@ -197,16 +196,12 @@ list.addEventListener('click', function(ev) {
 
 // Create a new list item when clicking on the "Add" button
 function newElement() {
-  var li = document.createElement("li");
-  var inputValue = document.getElementById("newGroceryItem").value;
+
 
 // Creating a new groceryItem to save
   newGroceryItem = {
         title: document.getElementById("newGroceryItem").value,
   }
-
-  var newInList = document.createTextNode(newGroceryItem.title);
-  li.appendChild(newInList);
 
 // checking if the input isn't zero
   if (newGroceryItem.title === '') {
@@ -215,22 +210,7 @@ function newElement() {
     // sending the new item to the controller through ajax
     addGroceryItem(newGroceryItem);
   }
-  document.getElementById("newGroceryItem").value = "";
 
-// ads a close (or X) button to the new item
-  var span = document.createElement("SPAN");
-  var txt = document.createTextNode("\u00D7");
-  span.className = "close";
-  span.appendChild(txt);
-  li.appendChild(span);
-
-// gives the close button functions
-  for (i = 0; i < close.length; i++) {
-    close[i].onclick = function() {
-      var div = this.parentElement;
-      div.style.display = "none";
-    }
-  }
 }
 
 // deletes the chosen  item, isn't expecting anything back (besides success)
@@ -266,7 +246,7 @@ function addGroceryItem(newGroceryItem){
         dataType: 'json',
         async: true,
         success: function(result) {
-            $('#allGroceries').append('<li value="' + result.data.id + '">' + result.data.title + '</li>');
+            $('#groceryItem').append('<li value="' + result.data.id + '">' + result.data.title + '</li>');
             closeButtonOnAll();
             console.log("woop woop");
         },
