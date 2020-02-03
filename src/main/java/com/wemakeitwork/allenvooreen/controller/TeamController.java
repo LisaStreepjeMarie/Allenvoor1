@@ -6,6 +6,7 @@ import com.wemakeitwork.allenvooreen.model.Team;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
-import java.security.Principal;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -35,15 +35,9 @@ public class TeamController {
     EntityManager entityManager;
 
     @GetMapping("/team/all")
-    protected String showTeamsPerMember(Model model, Principal principal){
-        Set<Team> teamList = null;
-        Optional<Member> member = memberRepository.findByMemberName(principal.getName());
-        if(member.isPresent()){
-            teamList = teamList(member.get().getMemberId());
-        }
-        if (teamList != null) {
-            model.addAttribute("teamList", teamList);
-        }
+    protected String showTeamsPerMember(Model model){
+        Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("teamList", memberRepository.findByMemberName(member.getMemberName()).get().getAllTeamsOfMemberSet());
         return "teamOverview";
     }
 

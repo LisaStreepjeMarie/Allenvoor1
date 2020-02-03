@@ -5,11 +5,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import javax.management.ObjectName;
-import javax.management.relation.Role;
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -30,16 +26,12 @@ public class Member implements UserDetails{
     private String rol;
 
     @Column(unique = true)
-    @Email(message = "Voer een geldig e-mailadres in")
     private String email;
 
     @Transient
     private String passwordConfirm;
 
-    public Member(){
-    }
-
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "team_membername", joinColumns = @JoinColumn(name = "membername_member_id"), inverseJoinColumns = @JoinColumn(name = "team_team_id"))
     private Set<Team> allTeamsOfMemberSet = new HashSet<>();
 
