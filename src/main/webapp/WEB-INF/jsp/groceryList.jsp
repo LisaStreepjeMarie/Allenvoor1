@@ -213,7 +213,7 @@ input {
 </ul>
 
 <div class="footer">
-    <span onclick="..." id="checkDBtn" class="checkDBtn">verwijder gekochte items</span>&nbsp;
+    <span onclick="removeAllCheckedFromList()" id="checkDBtn" class="checkDBtn">verwijder gekochte items</span>&nbsp;
     <span onclick="removeAllFromList()" id="removeBtn" class="removeBtn">verwijder alle items</span>
     <br>
 </div>
@@ -346,6 +346,17 @@ console.log(groceryItemId)
              console.log("ERROR: ", e);
          }
     });
+}
+
+function removeAllCheckedFromList(){
+var allChecked = document.querySelectorAll('li.checked');
+var i;
+for (i = 0; i < allChecked.length; i++) {
+      var itemValue = allChecked[i].value;
+      var type = allChecked[i].parentNode.id;
+      removeGroceryItem(type, itemValue);
+      allChecked[i].style.display = "none";
+    }
 }
 
 function removeAllFromList(){
