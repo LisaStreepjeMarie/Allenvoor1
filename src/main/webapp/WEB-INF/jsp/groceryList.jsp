@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<html xmlns:c="">
+<html>
 <html>
 <head>
     <meta charset='utf-8' />
@@ -33,17 +33,8 @@
 
 <ul id="allGroceries">
     <div id="allMedications">
-        <c:forEach var="medication" items="${allMedications}">
-            <li value="${medication.medicationId}">
-                <i class="fas fa-pills fa-lg" style="color:#e6b3ff;"></i> ${medication.medicationName}
-<!--                <span class="badge badge-primary badge-pill" style="float:right;">${medication.medicationAmount}</span>-->
-            </li>
-        </c:forEach>
     </div>
     <div id="groceryItem">
-        <c:forEach var="groceryItem" items="${groceryList}">
-            <li value="${groceryItem.groceryItemId}">${groceryItem.groceryName}</li>
-        </c:forEach>
     </div>
 </ul>
 

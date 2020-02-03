@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 @Controller
 public class GroceryListController {
@@ -42,18 +41,20 @@ public class GroceryListController {
 
     @GetMapping("/grocerylist/{teamId}")
     protected String showGrocerylist(@PathVariable("teamId") final Integer teamId, Model model) {
-
-        //for some reason it's needed to get the team from repository before getting the grocerylist -LM
-        Team team = teamRepository.getOne(teamId);
-        httpSession.setAttribute("team", team);
-        GroceryList groceryList = team.getGroceryList();
-
-        List<GroceryItem> allGroceries = groceryList.getAllItemsOnGroceryList();
-        team.getGroceryList().setAllMedicationOnGroceryList(team.getMedicationList());
-
-        model.addAttribute("groceryList", allGroceries);
-        model.addAttribute("allMedications", team.getMedicationList());
+        httpSession.setAttribute("team", teamRepository.getOne(teamId));
         return "groceryList";
+    }
+
+    @GetMapping("/grocerylist/getAll")
+    public ResponseEntity<Object> fillList(){
+        int teamId = ((Team) httpSession.getAttribute("team")).getTeamId();
+        Team team = teamRepository.getOne(teamId);
+        GroceryList groceryList = team.getGroceryList();
+        for (GroceryItem groceryItem : groceryList.getAllItemsOnGroceryList()){
+            System.out.println(groceryItem.getGroceryName());
+        }
+        ServiceResponse<GroceryList> response = new ServiceResponse<>("succes", groceryList);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping("/add/groceryitem")

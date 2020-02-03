@@ -1,7 +1,6 @@
 package com.wemakeitwork.allenvooreen.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import org.hibernate.annotations.OnDelete;
@@ -10,7 +9,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 
 @Entity
-@JsonPropertyOrder(value = {"id", "title"}, alphabetic = true)
+@JsonPropertyOrder(value = {"id", "title", "bought"}, alphabetic = true)
 public class GroceryItem {
 
     public GroceryItem() {
@@ -26,7 +25,7 @@ public class GroceryItem {
     @JsonProperty("title")
     String groceryName;
 
-    @JsonIgnore
+    @JsonProperty("bought")
     Boolean bought;
 
     @JsonIgnore

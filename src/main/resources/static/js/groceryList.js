@@ -5,16 +5,20 @@ $.ajaxSetup({
     }
 });
 
+//  csrf token
 var ctx = $('#contextPathHolder').attr('data-contextPath');
 
-// Create a "close" button and append it to each list item
-// Also makes sure the item is deleted when clicked
-closeButtonOnAll();
+getAllItemsFromDataBase();
+
+// Create a "X" button and append it to each list item when opening the page
+//  full function below in document
+
 
 // Add a "checked" symbol when clicking on a list item
 // Added a boolean ajax call to write it as bought boolean in the database
 var list = document.querySelector('ul');
-console.log(list);
+
+
 list.addEventListener('click', function(ev) {
   if (ev.target.tagName === 'LI') {
     var type = ev.target.parentNode.id
@@ -146,4 +150,28 @@ for (i = 0; i < allGroceriesInList.length; i++) {
       removeGroceryItem(type, itemValue);
       allGroceriesInList[i].style.display = "none";
     }
+}
+function getAllItemsFromDataBase(){
+    $.ajax({
+         type:'GET',
+         url: ctx + "/grocerylist/getAll",
+         success : function(result) {
+                MedicationList = result.data.medications;
+                GroceryList = result.data.groceries;
+                 for (i in MedicationList ) {
+                 $('#allMedications').append('<li value="' + MedicationList[i].id + '"><i class="fas fa-pills fa-lg" style="color:#e6b3ff;"></i>' + MedicationList[i].name + '</li>');
+                 }
+                 for (i in GroceryList){
+                 $('#groceryItem').append('<li value="' + GroceryList[i].id + '">' + GroceryList[i].title + '</li>');
+                 console.log(GroceryList[i].title);
+                      if (GroceryList[i].bought){
+                      console.log("do something here");
+                     }
+                 }
+                 closeButtonOnAll();
+             },
+             error : function(e) {
+             console.log("ERROR: ", e);
+         }
+    });
 }
