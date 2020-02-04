@@ -82,9 +82,10 @@ public class MemberController {
             member.setRol("gebruiker");
             memberServiceInterface.save(member);
             securityServiceInterface.autoLogin(member.getUsername(), member.getPasswordConfirm());
-            return "redirect:/login";
+            return "redirect:/signup-success";
         }
     }
+
 
     @PostMapping("/member/change")
     protected String changeMember(@ModelAttribute("currentmember") Member newNameMember, BindingResult result) {

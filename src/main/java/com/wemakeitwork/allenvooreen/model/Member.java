@@ -25,11 +25,16 @@ public class Member implements UserDetails{
 
     private String rol;
 
+    private String identifier;
+
     @Column(unique = true)
     private String email;
 
     @Transient
     private String passwordConfirm;
+
+    public Member(){
+    }
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "team_membername", joinColumns = @JoinColumn(name = "membername_member_id"), inverseJoinColumns = @JoinColumn(name = "team_team_id"))
@@ -133,6 +138,14 @@ public class Member implements UserDetails{
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
     }
 }
 
