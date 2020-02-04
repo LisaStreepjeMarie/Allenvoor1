@@ -42,7 +42,7 @@ public class GroceryListController {
     @GetMapping("/grocerylist/{teamId}")
     protected String showGrocerylist(@PathVariable("teamId") final Integer teamId, Model model) {
         httpSession.setAttribute("team", teamRepository.getOne(teamId));
-        return "groceryList";
+        return "groceryListWebpage";
     }
 
     @GetMapping("/grocerylist/getAll")

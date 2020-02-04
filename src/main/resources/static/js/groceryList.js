@@ -10,23 +10,6 @@ var ctx = $('#contextPathHolder').attr('data-contextPath');
 
 getAllItemsFromDataBase();
 
-// Create a "X" button and append it to each list item when opening the page
-//  full function below in document
-
-
-// Add a "checked" symbol when clicking on a list item
-// Added a boolean ajax call to write it as bought boolean in the database
-var list = document.querySelector('ul');
-
-
-list.addEventListener('click', function(ev) {
-  if (ev.target.tagName === 'LI') {
-    var type = ev.target.parentNode.id
-    boughtBoolean(type, ev.target.value);
-    ev.target.classList.toggle('checked');
-  }
-}, false);
-
 // Create a new list item when clicking on the "Add" button
 function newElement() {
 
@@ -79,7 +62,7 @@ function addGroceryItem(newGroceryItem){
         dataType: 'json',
         async: true,
         success: function(result) {
-            $('#groceryItem').append('<li value="' + result.data.id + '">' + result.data.title + '</li>');
+            $('#groceryItem').append('<li class="listItem" value="' + result.data.id + '">' + result.data.title + '</li>');
             closeButtonOnAll();
             console.log("woop woop");
         },
@@ -92,9 +75,19 @@ function addGroceryItem(newGroceryItem){
 
 // every item on the list gets the delete button with the first part of this function
 function closeButtonOnAll(){
-var allGroceriesInList = document.getElementsByTagName("LI");
+var allGroceriesInList = document.getElementById("allGroceries").children;
 var i;
 for (i = 0; i < allGroceriesInList.length; i++) {
+      allGroceriesInList[i].addEventListener('click', function(ev) {
+      // adding the clicked action to each item in the list
+      if (ev.target.tagName === 'LI') {
+      var type = ev.target.parentNode.id
+      boughtBoolean(type, ev.target.value);
+      ev.target.classList.toggle('checked');
+        }
+      }, false);
+
+      // adding an X to each button
       var span = document.createElement("SPAN");
       var txt = document.createTextNode("\u00D7");
       span.className = "close";
@@ -102,7 +95,7 @@ for (i = 0; i < allGroceriesInList.length; i++) {
       allGroceriesInList[i].appendChild(span);
 }
 
-// this part makes sure the item gets deleten when clicked and also the X dissapears
+// this part makes sure the item gets deleted when clicked and also the X disappear
 var close = document.getElementsByClassName("close");
 var i;
 for (i = 0; i < close.length; i++) {
@@ -160,16 +153,16 @@ function getAllItemsFromDataBase(){
                 GroceryList = result.data.groceries;
                  for (i in MedicationList ) {
                      if (MedicationList[i].bought){
-                     $('#allMedications').append('<li class="checked" value="' + MedicationList[i].id + '"><i class="fas fa-pills fa-lg" style="color:#e6b3ff;"></i>' + MedicationList[i].name + '</li>');
+                     $('#allMedications').append('<li class="checked listItem" value="' + MedicationList[i].id + '"><i class="fas fa-pills fa-lg" style="color:#e6b3ff;"></i>' + MedicationList[i].name + '</li>');
                      } else {
-                     $('#allMedications').append('<li value="' + MedicationList[i].id + '"><i class="fas fa-pills fa-lg" style="color:#e6b3ff;"></i>' + MedicationList[i].name + '</li>');
+                     $('#allMedications').append('<li class="listItem" value="' + MedicationList[i].id + '"><i class="fas fa-pills fa-lg" style="color:#e6b3ff;"></i>' + MedicationList[i].name + '</li>');
                      }
                  }
                  for (i in GroceryList){
                      if (GroceryList[i].bought){
-                        $('#groceryItem').append('<li class="checked" value="' + GroceryList[i].id + '">' + GroceryList[i].title + '</li>');
+                        $('#groceryItem').append('<li class="checked listItem" value="' + GroceryList[i].id + '">' + GroceryList[i].title + '</li>');
                      } else {
-                        $('#groceryItem').append('<li value="' + GroceryList[i].id + '">' + GroceryList[i].title + '</li>');
+                        $('#groceryItem').append('<li class="listItem" value="' + GroceryList[i].id + '">' + GroceryList[i].title + '</li>');
                      }
                  }
                  closeButtonOnAll();

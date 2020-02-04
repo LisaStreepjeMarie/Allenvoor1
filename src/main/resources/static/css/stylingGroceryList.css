@@ -1,24 +1,20 @@
 
-body {
-  margin: auto;
-  width: 600px;
-  padding: 10px;
-}
 
-/* Include the padding and border in an element's total width and height */
-* {
-  box-sizing: border-box;
+.WholeGroceryList {
+    padding-top: 40px;
+    padding-left: 40px;
 }
 
 /* Remove margins and padding from the list */
-ul {
+.allGroceries ul {
   margin: 0;
   padding: 0;
 }
 
 /* Style the list items */
-ul li {
+.listItem {
   cursor: pointer;
+  width: 600px;
   position: relative;
   padding: 12px 8px 12px 40px;
   list-style-type: none;
@@ -35,24 +31,25 @@ ul li {
 }
 
 /* Set all odd list items to a different color (zebra-stripes) */
+/* not using this since I didn't like it - LM */
 <!--ul li:nth-child(odd) {-->
 <!--  background: #e6f9ff;-->
 <!--}-->
 
 /* Darker background-color on hover */
-ul li:hover {
+.listItem:hover {
   background: #e6f9ff;
 }
 
 /* When clicked on, add a background color and strike out text */
-ul li.checked {
+.listItem.checked {
   background: #fff;
   color: #737373;
   text-decoration: line-through;
 }
 
 /* Add a "checked" mark when clicked on */
-ul li.checked::before {
+.listItem.checked::before {
   content: '';
   position: absolute;
   border-color: #33cc00;
@@ -80,6 +77,7 @@ ul li.checked::before {
 
 /* Style the header */
 .header {
+  width: 600px;
   background-color: #99c2ff;
   padding: 20px 30px;
   color: white;
@@ -88,6 +86,7 @@ ul li.checked::before {
 
 /* Style the footer */
 .footer {
+  width: 600px;
   background-color: #99c2ff;
   padding: 20px 30px;
   color: white;
