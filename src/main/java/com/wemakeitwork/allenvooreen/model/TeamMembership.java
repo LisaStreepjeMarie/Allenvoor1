@@ -7,7 +7,8 @@ import javax.persistence.*;
 public class TeamMembership {
     @Id
     @Column(name = "membership_id")
-    private long membershipId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer membershipId;
 
     @ManyToOne(fetch= FetchType.EAGER)
     private Team team;
@@ -39,5 +40,13 @@ public class TeamMembership {
 
     public void setMember(Member member) {
         this.member = member;
+    }
+
+    public Integer getMembershipId() {
+        return membershipId;
+    }
+
+    public void setMembershipId(Integer membershipId) {
+        this.membershipId = membershipId;
     }
 }

@@ -56,15 +56,15 @@ public class TeamController {
     }
 
     @GetMapping("/team/new")
-    protected String showTeamForm(Model model) {
+    protected String showNewTeam(Model model) {
         model.addAttribute("team", new Team());
         model.addAttribute("member", new Member());
         model.addAttribute("teamList", teamRepository.findAll());
-        return "teamForm";
+        return "newTeam";
     }
 
     @GetMapping("/team/select/{teamId}")
-    protected String showTeamData(@PathVariable("teamId") final Integer teamId, Model model) {
+    protected String showChangeTeam(@PathVariable("teamId") final Integer teamId, Model model) {
         // extra regel om te testen:
         model.addAttribute("team", new Team());
         Optional<Team> teamOpt = teamRepository.findById(teamId);
@@ -78,7 +78,7 @@ public class TeamController {
         teamMemberDTO.setTeamId(teamId);
         model.addAttribute("teamMemberDTO", teamMemberDTO);
 
-        return "teamData";
+        return "changeTeam";
     }
 
     @GetMapping("/team/delete/{teamId}")
@@ -121,7 +121,7 @@ public class TeamController {
     @PostMapping("/team/change")
     protected String saveOrUpdateTeam(@ModelAttribute("team") Team team, BindingResult result){
         if (result.hasErrors()) {
-            return "teamData";
+            return "changeTeam";
         } else {
             teamRepository.save(team);
             return "redirect:/team/all";
@@ -131,19 +131,19 @@ public class TeamController {
     @PostMapping("team/addMember")
     protected String addMember(@ModelAttribute("teamMemberDTO") TeamMemberDTO teamMemberDTO, BindingResult result) {
         if (result.hasErrors()) {
-            return "teamData";
+            return "changeTeam";
         } else {
             Optional<Member> memberOpt = memberRepository.findByMemberName(teamMemberDTO.getTeamMemberName());
             System.out.println("member uit DTO:   " + teamMemberDTO.getTeamMemberName());
-            Team team = teamRepository.getOne(teamMemberDTO.getTeamId());
+            Team team = teamRepository.getOne((int) teamMemberDTO.getTeamId());
             System.out.println("teamId uit DTO:   " + teamMemberDTO.getTeamId());
 
-   /*         if (memberOpt.isPresent()){
+            /*if (memberOpt.isPresent()){
                 memberOpt.get().getAllTeamsOfMemberSet().add(team);
                 team.getAllMembersInThisTeamSet().add(memberOpt.get());
                 memberRepository.save(memberOpt.get());
-            }
-            teamRepository.save(team);*/
+            }*/
+            teamRepository.save(team);
             return "redirect:/team/select/" + teamMemberDTO.getTeamId();
         }
     }

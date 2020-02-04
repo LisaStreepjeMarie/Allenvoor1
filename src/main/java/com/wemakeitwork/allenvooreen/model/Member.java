@@ -4,15 +4,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -26,7 +18,7 @@ public class Member implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     // Yes... this NEEDS to be a long, not an integer. Why? All lettuce you me dead:
     // https://stackoverflow.com/questions/10997494/hibernate-error-ids-for-this-class-must-be-manually-assigned-before-calling-sav
-    private long memberId;
+    private Integer memberId;
 
     private String memberName;
 
@@ -88,11 +80,11 @@ public class Member implements UserDetails {
         return true;
     }
 
-    public long getMemberId() {
+    public Integer getMemberId() {
         return memberId;
     }
 
-    public void setMemberId(long memberId) {
+    public void setMemberId(Integer memberId) {
         this.memberId = memberId;
     }
 

@@ -34,7 +34,7 @@ public class ActivityController {
     }
 
     @GetMapping("/activity/select/{activityId}")
-    protected String showTeamData(@PathVariable("activityId") final Integer activityId, Model model) {
+    protected String showChangeTeam(@PathVariable("activityId") final Integer activityId, Model model) {
 
         //model.addAttribute("activity", new Activity());
 
