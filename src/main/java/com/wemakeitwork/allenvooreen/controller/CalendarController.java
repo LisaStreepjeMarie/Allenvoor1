@@ -82,9 +82,23 @@ public class CalendarController {
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         Event event = mapper.readValue(newEventJson, Event.class);
         System.out.println(event.getEventId());
-
         System.out.println("eventStartDate is " + event.getEventStartDate());
+        System.out.println("eventInterval is: " + event.getEventInterval());
+        if (event.getEventInterval() == "month") {
 
+            //Java calendar in default timezone and default locale
+            // Calendar cal = Calendar.getInstance();
+            // cal.setTimeZone(TimeZone.getTimeZone("GMT"));
+            Date date = event.getEventStartDate();
+
+            //adding months into Date
+            date.add(Date.MONTH, 1);
+            System.out.println("date after 1 month : " + getDate(cal));
+
+
+            event.getEventStartDate() = event.getEventStartDate().plusMonths( 1 );
+            eventRepository.save(event);
+        }
         // this sets the activity to the medication from the activity
         if (event.getActivity() instanceof MedicationActivity){
             setActivityToMedication(event);
@@ -100,6 +114,9 @@ public class CalendarController {
         eventRepository.save(event);
         ServiceResponse<Event> result = new ServiceResponse<Event>("Succes", event);
         return new ResponseEntity<Object>(result, HttpStatus.OK);
+    }
+
+    private String getDate(Calendar cal) {
     }
 
     @PostMapping("/calendar/change/eventdate")
