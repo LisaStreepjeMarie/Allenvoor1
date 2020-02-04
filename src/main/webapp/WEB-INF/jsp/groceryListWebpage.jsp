@@ -12,7 +12,6 @@
     <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
     <script src="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
-
     <link id="contextPathHolder" data-contextPath="${pageContext.request.contextPath}"/>
 
     <link id="teamId" data-teamId="${team.teamId}"/>
@@ -20,13 +19,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <%@ taglib prefix="mytags" tagdir="/WEB-INF/tags" %>
-</head>
+<style>
+    .groceryList {
+  padding-top: 50px;
+  padding-right: 50px;
+  padding-bottom: 50px;
+  padding-left: 50px;;
+</style>
 </head>
 
 <body class= "webpage">
 <mytags:navbar/>
     <div class= "masthead">
-            <div id="container">
+            <div id="container" class="groceryList">
                 <jsp:include page="groceryList.jsp" />
             </div>
     </div>

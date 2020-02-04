@@ -10,6 +10,9 @@ var ctx = $('#contextPathHolder').attr('data-contextPath');
 
 getAllItemsFromDataBase();
 
+// Create a "X" button and append it to each list item when opening the page
+//  full function below in document
+
 // Create a new list item when clicking on the "Add" button
 function newElement() {
 
@@ -75,7 +78,7 @@ function addGroceryItem(newGroceryItem){
 
 // every item on the list gets the delete button with the first part of this function
 function closeButtonOnAll(){
-var allGroceriesInList = document.getElementById("allGroceries").children;
+var allGroceriesInList = document.getElementsByClassName("listItem");
 var i;
 for (i = 0; i < allGroceriesInList.length; i++) {
       allGroceriesInList[i].addEventListener('click', function(ev) {
@@ -87,7 +90,6 @@ for (i = 0; i < allGroceriesInList.length; i++) {
         }
       }, false);
 
-      // adding an X to each button
       var span = document.createElement("SPAN");
       var txt = document.createTextNode("\u00D7");
       span.className = "close";
@@ -95,7 +97,7 @@ for (i = 0; i < allGroceriesInList.length; i++) {
       allGroceriesInList[i].appendChild(span);
 }
 
-// this part makes sure the item gets deleted when clicked and also the X disappear
+// this part makes sure the item gets deleten when clicked and also the X dissapears
 var close = document.getElementsByClassName("close");
 var i;
 for (i = 0; i < close.length; i++) {
@@ -135,7 +137,7 @@ for (i = 0; i < allChecked.length; i++) {
 }
 
 function removeAllFromList(){
-var allGroceriesInList = document.getElementsByTagName("LI");
+var allGroceriesInList = document.getElementsByClassName("listItem");
 var i;
 for (i = 0; i < allGroceriesInList.length; i++) {
       var itemValue = allGroceriesInList[i].value;
