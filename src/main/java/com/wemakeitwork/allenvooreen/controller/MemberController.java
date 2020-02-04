@@ -82,7 +82,6 @@ public class MemberController {
         } else {
             System.out.println(member.getMemberName());
             member.setPassword(passwordEncoder.encode(member.getPassword()));
-            member.setRol("gebruiker");
             memberServiceInterface.save(member);
             securityServiceInterface.autoLogin(member.getUsername(), member.getPasswordConfirm());
             return "redirect:/login";
@@ -97,7 +96,6 @@ public class MemberController {
             Member originalMember = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             newNameMember.setPassword(originalMember.getPassword());
             newNameMember.setMemberId(originalMember.getMemberId());
-            newNameMember.setRol(originalMember.getRol());
             memberRepository.save(newNameMember);
             return "redirect:/logout";
         }

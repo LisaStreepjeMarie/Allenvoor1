@@ -16,29 +16,17 @@ public class Member implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    // Yes... this NEEDS to be a long, not an integer. Why? All lettuce you me dead:
-    // https://stackoverflow.com/questions/10997494/hibernate-error-ids-for-this-class-must-be-manually-assigned-before-calling-sav
     private Integer memberId;
 
     private String memberName;
 
     private String password;
 
-    private String rol;
-
     @Transient
     private String passwordConfirm;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "member")
     Set<TeamMembership> teamMemberships;
-
-    public String getRol() {
-        return rol;
-    }
-
-    public void setRol(String rol) {
-        this.rol = rol;
-    }
 
     public String getPasswordConfirm() {
         return passwordConfirm;

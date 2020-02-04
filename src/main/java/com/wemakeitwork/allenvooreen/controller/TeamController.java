@@ -41,7 +41,13 @@ public class TeamController {
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         ArrayList<Team> teamList = memberRepository.findByMemberName(member.getMemberName()).get()
-                .getTeamMemberships().stream().map(x -> x.getTeam()).collect(Collectors.toCollection(ArrayList::new));
+                .getTeamMemberships().stream().map(TeamMembership::getTeam).collect(Collectors.toCollection(ArrayList::new));
+
+        for (Team team: teamList) {
+            System.out.print("Current member is admin: " );
+            team.getTeamMemberships().stream().filter(x -> x.getMember().getMemberId().equals(member.getMemberId())).map(TeamMembership::isAdmin).forEach(System.out::print);
+            System.out.println("of team: " + team.getTeamName());
+        }
 
         model.addAttribute("teamList", teamList);
         return "teamOverview";
@@ -65,7 +71,6 @@ public class TeamController {
 
     @GetMapping("/team/select/{teamId}")
     protected String showChangeTeam(@PathVariable("teamId") final Integer teamId, Model model) {
-        // extra regel om te testen:
         model.addAttribute("team", new Team());
         Optional<Team> teamOpt = teamRepository.findById(teamId);
         Team team;
