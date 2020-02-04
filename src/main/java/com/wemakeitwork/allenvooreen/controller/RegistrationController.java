@@ -1,6 +1,7 @@
 package com.wemakeitwork.allenvooreen.controller;
 
 import com.wemakeitwork.allenvooreen.model.Member;
+//import com.wemakeitwork.allenvooreen.service.NotificationService;
 import com.wemakeitwork.allenvooreen.service.NotificationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 
 @RestController
 public class RegistrationController {
@@ -22,6 +22,7 @@ public class RegistrationController {
     public String signup(){
         return "Please sign up for our service.";
     }
+
 
     @RequestMapping("/signup-success")
     public String signupSuccess(){
@@ -37,6 +38,12 @@ public class RegistrationController {
         }catch (MailException e) {
             logger.info("Error Sending Email: " + e.getMessage());
         }
-        return "Thank you for registering with us";
+        return "Je bent succesvol geregistreerd. Controleer je email en klik op de link om je aanmelding af te ronden.";
     }
 }
+
+
+
+
+
+

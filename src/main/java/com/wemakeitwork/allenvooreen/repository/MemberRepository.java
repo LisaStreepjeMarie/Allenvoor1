@@ -4,12 +4,12 @@ import com.wemakeitwork.allenvooreen.model.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Integer> {
-    Optional<Member> findByMemberName(String membername);
+
+    Optional<Member> findByMemberName(String memberName);
 
     @Override
     Optional<Member> findById(Integer integer);
