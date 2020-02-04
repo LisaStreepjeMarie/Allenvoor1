@@ -156,14 +156,13 @@ public class TeamController {
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         teamMembershipRepository.findAll().stream()
+                // Find all memberships of member
                 .filter(x -> x.getMember().getMemberId().equals(member.getMemberId()))
+                // filter the team that is passed with the pathvariable (ignore other teams from member)
                 .filter(x -> x.getTeam().getTeamId().equals(teamId))
-                .forEach(x -> toWorkWith = x.getMembershipId());
+                // Toggle the boolean isAdmin in the detached object and save it to the database
+                .map(x -> { x.setAdmin(!x.isAdmin()); return x;}).forEach(teamMembershipRepository::save);
 
-
-        Optional<TeamMembership> tms = teamMembershipRepository.findById(toWorkWith);
-        tms.get().setAdmin(!tms.get().isAdmin());
-        teamMembershipRepository.save(tms.get());
         return "redirect:/team/all";
     }
 
