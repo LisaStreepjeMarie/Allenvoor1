@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<html xmlns:c="">
+<html xmlns:c="" xmlns:mytags="">
     <head>
         <title>Overzicht groepen</title>
         <!-- Add icon library -->
@@ -29,8 +29,8 @@
                             <tr>
                                 <td><a href="${pageContext.request.contextPath}/team/select/<c:out value="${team.teamId}" />"><c:out value="${team.teamName}" /></a></td>
                                 <td>
-                                <c:forEach items="${team.allMembersInThisTeamSet}" var="member">
-                                    <c:out value="${member.memberName}" /><br />
+                                <c:forEach items="${team.teamMemberships}" var="membership">
+                                    <c:out value="${membership.member.memberName}" /><br />
                                 </c:forEach>
                                 </td>
                                 <td><input class="btn btn-primary" type="submit" value="Verwijder groep" onclick="window.location='${pageContext.request.contextPath}/team/delete/${team.teamId}'" /></td>

@@ -18,9 +18,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Controller
 public class TeamController {
@@ -38,8 +39,13 @@ public class TeamController {
     @GetMapping("/team/all")
     protected String showTeamsPerMember(Model model){
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        //model.addAttribute("teamList", memberRepository.findByMemberName(member.getMemberName()).get().getAllTeamsOfMemberSet());
+
+        ArrayList<Team> teamList = memberRepository.findByMemberName(member.getMemberName()).get()
+                .getTeamMemberships().stream().map(x -> x.getTeam()).collect(Collectors.toCollection(ArrayList::new));
+
+        model.addAttribute("teamList", teamList);
         return "teamOverview";
+
     }
 
     private Set<Team> teamList (Integer memberId){
@@ -78,17 +84,8 @@ public class TeamController {
     @GetMapping("/team/delete/{teamId}")
     public String deleteTeam(@PathVariable("teamId") final Integer teamId) {
 
-        Team team = teamRepository.getOne(teamId);
-        Set<Member> membersToRemoveSet = new HashSet<>();
-        /*membersToRemoveSet.addAll(team.getAllMembersInThisTeamSet());
-
-        for (Member member : membersToRemoveSet){
-            member.removeTeamFromMember(team);
-            team.removeTeamMember(member);
-        }*/
-
-        teamRepository.save(team);
-        teamRepository.delete(team);
+        teamMembershipRepository.deleteById(teamId);
+        teamRepository.deleteById(teamId);
 
         return "redirect:/team/all";
     }
