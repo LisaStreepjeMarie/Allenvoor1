@@ -7,6 +7,7 @@ import com.wemakeitwork.allenvooreen.model.TeamMembership;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamMembershipRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
+import org.springframework.beans.InvalidPropertyException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -35,8 +36,7 @@ public class TeamController {
     @Autowired
     TeamMembershipRepository teamMembershipRepository;
 
-    int toWorkWith;
-
+    int membershipId;
 
     @GetMapping("/team/all")
     protected String showTeamsPerMember(Model model){
@@ -166,12 +166,33 @@ public class TeamController {
         return "redirect:/team/all";
     }
 
-    @GetMapping("/team/quit/{membershipId}")
-    public String quitTeam(@PathVariable("membershipId") final Integer membershipId) {
+    @GetMapping("/team/quit/{teamId}")
+    public String quitTeam(@PathVariable("teamId") final Integer teamId) {
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        TeamMembership tms = teamMembershipRepository.getOne(membershipId);
-        System.out.println("ASDADASDA " + tms.getMember().getMemberName());
-        teamMembershipRepository.delete(tms);
+
+        Team team = teamRepository.findById(teamId).orElseThrow(() -> new InvalidPropertyException(this.getClass(), "teamId", "Dit teamId bestaat niet"));
+        for (TeamMembership tms: team.getTeamMemberships()) {
+            System.out.println("ID " + tms.getMembershipId());
+            teamMembershipRepository.delete(tms);
+            teamMembershipRepository.deleteById(1);
+            teamMembershipRepository.flush();
+        }
+        /*  teamMembershipRepository.findAll().stream()
+                .filter(x -> x.getMember().getMemberId().equals(member.getMemberId()))
+                .filter(x -> x.getTeam().getTeamId().equals(teamId))
+                .forEach(x -> membershipId = x.getMembershipId());
+
+        teamMembershipRepository.deleteById(membershipId);*/
+
+        // Only performs a select statement, possibly the object is in detached state:
+        // https://stackoverflow.com/a/13252120
+        /*teamMembershipRepository.findAll().stream()
+                // Find all memberships of member
+                .filter(x -> x.getMember().getMemberId().equals(member.getMemberId()))
+                // filter the team that is passed with the pathvariable (ignore other teams from member)
+                .filter(x -> x.getTeam().getTeamId().equals(teamId))
+                // Toggle the boolean isAdmin in the detached object and save it to the database
+                .forEach(teamMembershipRepository::delete);*/
         return "redirect:/team/all";
     }
 }
