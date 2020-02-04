@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.wemakeitwork.allenvooreen.model.*;
 import com.wemakeitwork.allenvooreen.repository.*;
 import com.wemakeitwork.allenvooreen.service.ServiceResponse;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpSession;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -77,6 +81,21 @@ public class CalendarController {
         return "calendar";
     }
 
+    public static String addOneDayJodaTime(String date) {
+        DateTime dateTime = new DateTime(date);
+                return dateTime
+                        .plusDays(1)
+                        .toString("yyyy-MM-dd");
+    }
+
+
+    public static String addOneDay(String date) {
+        return LocalDate
+                .parse(date)
+                .plusDays(1)
+                .toString();
+    }
+
     @PostMapping("/calendar/new/event")
     public ResponseEntity<Object> newEvent(@RequestBody String newEventJson) throws JsonProcessingException {
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -84,19 +103,19 @@ public class CalendarController {
         System.out.println(event.getEventId());
         System.out.println("eventStartDate is " + event.getEventStartDate());
         System.out.println("eventInterval is: " + event.getEventInterval());
-        if (event.getEventInterval() == "month") {
 
-            //Java calendar in default timezone and default locale
-            // Calendar cal = Calendar.getInstance();
-            // cal.setTimeZone(TimeZone.getTimeZone("GMT"));
-            Date date = event.getEventStartDate();
+        // Date date = Calendar.getInstance().getTime();
+        Date date = event.getEventStartDate();
+        // DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String strStartDate = dateFormat.format(date);
+        System.out.println("Converted String: " + strStartDate);
 
-            //adding months into Date
-            date.add(Date.MONTH, 1);
-            System.out.println("date after 1 month : " + getDate(cal));
+        if (event.getEventInterval().equals("day")) {
 
+            String strStartDateExtraEvent = addOneDayJodaTime(strStartDate);
+            System.out.println("strStartDateExtraEvent is: " + strStartDateExtraEvent);
 
-            event.getEventStartDate() = event.getEventStartDate().plusMonths( 1 );
             eventRepository.save(event);
         }
         // this sets the activity to the medication from the activity
@@ -109,14 +128,9 @@ public class CalendarController {
             removeMedicationAmountFromActivity(event);
         }
 
-
-
         eventRepository.save(event);
         ServiceResponse<Event> result = new ServiceResponse<Event>("Succes", event);
         return new ResponseEntity<Object>(result, HttpStatus.OK);
-    }
-
-    private String getDate(Calendar cal) {
     }
 
     @PostMapping("/calendar/change/eventdate")
