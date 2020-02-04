@@ -20,23 +20,46 @@
             <div id="container">
                 <br />
                 <div class="ml-3 mt-3">
-                    <h3 class="font-weight-light">Mijn groepen:</h3><br>
                     <table>
                         <tr>
-                            <td><h5 class="font-weight-light">Groep</h5></td>
-                            <td colspan="2"><h5 class="font-weight-light">Groepsleden</h5></td>
+                            <td colspan="2"><h3 class="font-weight-light">Groepen waar je groepsbeheerder bent: </h3></td>
                         </tr>
-                        <c:forEach items="${teamList}" var="team">
+                        <tr>
+                            <td><c:if test="${empty adminTeamList}">Je bent van geen enkele groep beheerder</c:if></td>
+                        </tr>
+                        <c:forEach items="${adminTeamList}" var="team">
                             <tr>
                                 <td>
                                     <a href="${pageContext.request.contextPath}/team/select/<c:out value="${team.teamId}" />"><c:out value="${team.teamName}" /></a>
                                 </td>
                                 <td>
                                     <c:forEach items="${team.teamMemberships}" var="membership">
+                                        <c:out value="${membership.member.memberName}"  /><br />
+                                    </c:forEach>
+                                </td>
+                                <td><input class="btn btn-primary" type="submit" value="Schrijf jezelf uit" onclick="window.location='${pageContext.request.contextPath}/team/quit/${membership.membershipId}'" /></td>
+                                <td><input class="btn btn-primary" type="submit" value="Stop beheerderschap" onclick="window.location='${pageContext.request.contextPath}/team/toggleadmin/${team.teamId}'" /></td>
+                                <td><input class="btn btn-primary" type="submit" value="Verwijder groep" onclick="window.location='${pageContext.request.contextPath}/team/delete/${team.teamId}'" /></td>
+
+                            </tr>
+                        </c:forEach>
+                        <tr>
+                            <td colspan="2"><h3 class="font-weight-light">Groepen waar je lid bent: </h3></td>
+                        </tr>
+                        <tr>
+                            <td><c:if test="${empty memberTeamList}">Je bent van geen enkele groep lid</c:if></td>
+                        </tr>
+                        <c:forEach items="${memberTeamList}" var="team">
+                            <tr>
+                                <td>
+                                    <c:out value="${team.teamName}" />
+                                </td>
+                                <td>
+                                    <c:forEach items="${team.teamMemberships}" var="membership">
                                         <c:out value="${membership.member.memberName}" /><br />
                                     </c:forEach>
                                 </td>
-                                <td><input class="btn btn-primary" type="submit" value="Verwijder groep" onclick="window.location='${pageContext.request.contextPath}/team/delete/${team.teamId}'" /></td>
+                                <td><input class="btn btn-primary" type="submit" value="Schrijf jezelf uit" onclick="window.location='${pageContext.request.contextPath}/team/quit/${team.teamId}'" /></td>
                             </tr>
                         </c:forEach>
                     </table>

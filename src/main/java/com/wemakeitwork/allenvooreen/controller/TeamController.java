@@ -35,21 +35,31 @@ public class TeamController {
     @Autowired
     TeamMembershipRepository teamMembershipRepository;
 
+    int toWorkWith;
+
 
     @GetMapping("/team/all")
     protected String showTeamsPerMember(Model model){
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        ArrayList<Team> teamList = memberRepository.findByMemberName(member.getMemberName()).get()
-                .getTeamMemberships().stream().map(TeamMembership::getTeam).collect(Collectors.toCollection(ArrayList::new));
+        // List of teams where current user is an admin
+        model.addAttribute("adminTeamList", memberRepository
+                // Find all teams where current user is a member
+                .findByMemberName(member.getMemberName()).get().getTeamMemberships().stream()
+                // Filter out the member (and leave out the rest of the teammembers)
+                .filter(x -> x.getMember().getMemberId().equals(member.getMemberId()))
+                // Filter out teams where user is admin
+                .filter(TeamMembership::isAdmin).map(TeamMembership::getTeam)
+                // Save resulting teams to adminTeamList
+                .collect(Collectors.toCollection(ArrayList::new)));
 
-        for (Team team: teamList) {
-            System.out.print("Current member is admin: " );
-            team.getTeamMemberships().stream().filter(x -> x.getMember().getMemberId().equals(member.getMemberId())).map(TeamMembership::isAdmin).forEach(System.out::print);
-            System.out.println("of team: " + team.getTeamName());
-        }
+        // list of teams where current user is NOT an admin
+        model.addAttribute("memberTeamList", memberRepository
+                .findByMemberName(member.getMemberName()).get().getTeamMemberships().stream()
+                .filter(x -> x.getMember().getMemberId().equals(member.getMemberId()))
+                .filter(x -> !x.isAdmin()).map(TeamMembership::getTeam)
+                .collect(Collectors.toCollection(ArrayList::new)));
 
-        model.addAttribute("teamList", teamList);
         return "teamOverview";
 
     }
@@ -138,5 +148,31 @@ public class TeamController {
             teamMembershipRepository.save(tms);
             return "redirect:/team/select/" + teamMemberDTO.getTeamId();
         }
+    }
+
+
+    @GetMapping("/team/toggleadmin/{teamId}")
+    public String toggleAdmin(@PathVariable("teamId") final Integer teamId) {
+        Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        teamMembershipRepository.findAll().stream()
+                .filter(x -> x.getMember().getMemberId().equals(member.getMemberId()))
+                .filter(x -> x.getTeam().getTeamId().equals(teamId))
+                .forEach(x -> toWorkWith = x.getMembershipId());
+
+
+        Optional<TeamMembership> tms = teamMembershipRepository.findById(toWorkWith);
+        tms.get().setAdmin(!tms.get().isAdmin());
+        teamMembershipRepository.save(tms.get());
+        return "redirect:/team/all";
+    }
+
+    @GetMapping("/team/quit/{membershipId}")
+    public String quitTeam(@PathVariable("membershipId") final Integer membershipId) {
+        Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        TeamMembership tms = teamMembershipRepository.getOne(membershipId);
+        System.out.println("ASDADASDA " + tms.getMember().getMemberName());
+        teamMembershipRepository.delete(tms);
+        return "redirect:/team/all";
     }
 }
