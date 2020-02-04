@@ -32,6 +32,7 @@
                                 <td><c:out value="${medication.medicationAmount}" /></td>
                                 <td><c:out value="${medication.medicationComment}" /></td><br>
                                 <td><input class="btn btn-primary" type="submit" value="Verwijder medicatie" onclick="window.location='${pageContext.request.contextPath}/medication/delete/${medication.medicationId}';" /></td>
+                                <td><input class="btn btn-primary" type="submit" value="Zet op boodschappenlijst" onclick="window.location='${pageContext.request.contextPath}/medication/grocerylist/${medication.medicationId}';" /></td>
                             </h5></tr>
                         </c:forEach>
                     </table>

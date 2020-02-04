@@ -21,8 +21,6 @@
 
 <style>
 
-
-
 /* Remove margins and padding from the list */
 ul {
   margin: 0;
@@ -209,7 +207,6 @@ input {
     </div>
 
  <script type="text/javascript" src="${pageContext.request.contextPath}/js/groceryList.js"></script>
-
 
 </body>
 </html>

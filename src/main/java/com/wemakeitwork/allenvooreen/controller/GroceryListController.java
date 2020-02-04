@@ -76,8 +76,10 @@ public class GroceryListController {
     }
 
     @GetMapping("/delete/allMedications/{medicationId}")
-    public  ResponseEntity<Object> deletemedicationItem(@PathVariable("medicationId") final Integer medicationId){
-        medicationRepository.deleteById(medicationId);
+    public  ResponseEntity<Object> deletemedicationItemFromGroceryList(@PathVariable("medicationId") final Integer medicationId){
+        Medication medication = medicationRepository.getOne(medicationId);
+        medication.setGroceryList(null);
+        medicationRepository.save(medication);
         return new ResponseEntity<Object>("success!", HttpStatus.OK);
     }
 

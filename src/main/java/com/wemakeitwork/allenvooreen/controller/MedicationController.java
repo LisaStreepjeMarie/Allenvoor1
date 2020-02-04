@@ -1,6 +1,8 @@
 package com.wemakeitwork.allenvooreen.controller;
 
-import com.wemakeitwork.allenvooreen.model.*;
+import com.wemakeitwork.allenvooreen.model.Medication;
+import com.wemakeitwork.allenvooreen.model.Member;
+import com.wemakeitwork.allenvooreen.model.Team;
 import com.wemakeitwork.allenvooreen.repository.MedicationRepository;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
@@ -61,6 +63,15 @@ public class MedicationController {
         medicationRepository.deleteById(medicationId);
         Team team = (Team) httpSession.getAttribute("team");
         return "redirect:/medication/"+ team.getTeamId();
+    }
+
+    @GetMapping("/medication/grocerylist/{medicationId}")
+    public String addMedicationToGrocerylist(@PathVariable("medicationId") final Integer medicationId) {
+        Medication medication = medicationRepository.getOne(medicationId);
+        int teamId = ((Team) httpSession.getAttribute("team")).getTeamId();
+        medication.setGroceryList(teamRepository.getOne(teamId).getGroceryList());
+        medicationRepository.save(medication);
+        return "redirect:/medication/"+ teamId;
     }
 
     @PostMapping("/medication/new")
