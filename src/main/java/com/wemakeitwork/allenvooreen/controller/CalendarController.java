@@ -83,6 +83,8 @@ public class CalendarController {
         Event event = mapper.readValue(newEventJson, Event.class);
         System.out.println(event.getEventId());
 
+        System.out.println("eventStartDate is " + event.getEventStartDate());
+
         // this sets the activity to the medication from the activity
         if (event.getActivity() instanceof MedicationActivity){
             setActivityToMedication(event);
@@ -92,6 +94,8 @@ public class CalendarController {
         if (event.getEventId() != null){
             removeMedicationAmountFromActivity(event);
         }
+
+
 
         eventRepository.save(event);
         ServiceResponse<Event> result = new ServiceResponse<Event>("Succes", event);

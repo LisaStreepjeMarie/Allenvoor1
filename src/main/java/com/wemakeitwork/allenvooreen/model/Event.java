@@ -60,6 +60,9 @@ public class Event {
     @JsonProperty("comment")
     private String eventComment;
 
+    @JsonProperty("interval")
+    private String eventInterval;
+
     @JsonProperty("donedate")
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private java.util.Date eventDoneDate;
@@ -76,15 +79,26 @@ public class Event {
     public Event() {
     }
 
-    public Event(Integer eventId, @NotBlank(message = "veld mag niet blank zijn") String eventName, Date eventStartDate, Date eventEndDate, String eventComment, Date eventDoneDate, Activity activity, Team team) {
+    public Event(Integer eventId, @NotBlank(message = "veld mag niet blank zijn") String eventName, Date eventStartDate,
+                 Date eventEndDate, String eventComment, String eventInterval, Date eventDoneDate, Activity activity,
+                 Team team) {
         this.eventId = eventId;
         this.eventName = eventName;
         this.eventStartDate = eventStartDate;
         this.eventEndDate = eventEndDate;
         this.eventComment = eventComment;
+        this.eventInterval = eventInterval;
         this.eventDoneDate = eventDoneDate;
         this.activity = activity;
         this.team = team;
+    }
+
+    public String getEventInterval() {
+        return eventInterval;
+    }
+
+    public void setEventInterval(String eventInterval) {
+        this.eventInterval = eventInterval;
     }
 
     public Date getEventDoneDate() {
