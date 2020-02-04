@@ -112,6 +112,29 @@
                         </div>
                     </div>
                     <div class="modal-body" >
+                        <div class="modal-body" id="eventPeriodicDiv">
+                            <div class="row">
+                                <label class="col-xs-4" for="eventPeriodic">Periodieke afspraak?&nbsp;</label>
+                                <input type="checkbox" id="eventPeriodic" name="eventPeriodic"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-body" id="eventIsPeriodic">
+                        <div class="row" id="intervalDiv">
+                           <label class="col-4" for="interval" control-label>Frequentie</label>
+                           <select name="event.eventInterval" id="eventInterval" >
+                               <option disabled selected="selected" value="">Elke</option>
+                               <option value="day">dag</option>
+                               <option value="week">week</option>
+                               <option value="month">maand</option>
+                           </select>
+                        </div>
+                        <div class="row" id="repeatedNumberDiv">
+                            <label class="col-4" for="eventRepeatedNumber" control-label>Aantal keer</label>
+                            <input type="text" size="2" name="eventRepeatedNumber" id="eventRepeatedNumber" />
+                        </div>
+                    </div>
+                    <div class="modal-body" >
                         <div class="modal-body" >
                             <div class="row" id="eventDoneDiv">
                                 <label class="col-xs-4" for="eventDone">Afspraak al uitgevoerd?&nbsp;</label>
