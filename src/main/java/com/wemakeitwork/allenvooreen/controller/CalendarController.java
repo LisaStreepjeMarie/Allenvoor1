@@ -85,15 +85,8 @@ public class CalendarController {
         DateTime dateTime = new DateTime(date);
                 return dateTime
                         .plusDays(1)
-                        .toString("yyyy-MM-dd");
-    }
-
-
-    public static String addOneDay(String date) {
-        return LocalDate
-                .parse(date)
-                .plusDays(1)
-                .toString();
+                        .toString("dd-MM-yyyy HH:mm");
+                        // .toString("yyyy-MM-dd");
     }
 
     @PostMapping("/calendar/new/event")
@@ -106,13 +99,13 @@ public class CalendarController {
 
         // Date date = Calendar.getInstance().getTime();
         Date date = event.getEventStartDate();
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         // DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        // DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String strStartDate = dateFormat.format(date);
         System.out.println("Converted String: " + strStartDate);
 
         if (event.getEventInterval().equals("day")) {
-
             String strStartDateExtraEvent = addOneDayJodaTime(strStartDate);
             System.out.println("strStartDateExtraEvent is: " + strStartDateExtraEvent);
 
