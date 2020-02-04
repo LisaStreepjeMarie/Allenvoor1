@@ -6,15 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -35,6 +27,9 @@ public class Medication {
 
     @JsonProperty("amount")
     private Integer medicationAmount;
+
+    @JsonIgnore
+    private int medicationRefillAmount;
 
     private String medicationComment;
 
@@ -61,7 +56,7 @@ public class Medication {
     @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, mappedBy = "medication")
     private List<MedicationActivity> takenMedications;
 
-    @JsonIgnore
+    @JsonProperty("bought")
     private Boolean bought;
 
     public Boolean getBought() {
