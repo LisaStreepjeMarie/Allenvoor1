@@ -1,5 +1,7 @@
 package com.wemakeitwork.allenvooreen.model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,7 +27,8 @@ public class Member implements UserDetails {
     @Transient
     private String passwordConfirm;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "member")
+    @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER, mappedBy = "member")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     Set<TeamMembership> teamMemberships;
 
     public String getPasswordConfirm() {
