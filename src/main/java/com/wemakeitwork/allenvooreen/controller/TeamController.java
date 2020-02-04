@@ -83,10 +83,7 @@ public class TeamController {
 
     @GetMapping("/team/delete/{teamId}")
     public String deleteTeam(@PathVariable("teamId") final Integer teamId) {
-
-        teamMembershipRepository.deleteById(teamId);
         teamRepository.deleteById(teamId);
-
         return "redirect:/team/all";
     }
 
@@ -102,15 +99,12 @@ public class TeamController {
     @PostMapping("/team/new")
     protected String newTeam(HttpServletRequest request) {
         String teamName = request.getParameter("teamName");
-        Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
         Team team = new Team();
         team.setTeamName(teamName);
         teamRepository.save(team);
 
-        TeamMembership tms = new TeamMembership();
-        tms.setMember(member);
-        tms.setTeam(team);
+        TeamMembership tms = new TeamMembership(team,
+                (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal(), true);
         teamMembershipRepository.save(tms);
         return "redirect:/team/all";
     }

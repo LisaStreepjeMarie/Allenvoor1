@@ -18,6 +18,15 @@ public class TeamMembership {
 
     boolean isAdmin;
 
+    public TeamMembership(Team team, Member member, boolean isAdmin) {
+        this.team = team;
+        this.member = member;
+        this.isAdmin = isAdmin;
+    }
+
+    public TeamMembership() {
+    }
+
     public boolean isAdmin() {
         return isAdmin;
     }
