@@ -121,7 +121,7 @@
                     </div>
                     <div class="modal-body" id="eventIsPeriodic">
                         <div class="row" id="intervalDiv">
-                           <label class="col-4" for="interval" control-label>Frequentie</label>
+                           <label class="col-4" for="eventInterval" control-label>Frequentie</label>
                            <select name="event.eventInterval" id="eventInterval" >
                                <option disabled selected="selected" value="">Elke</option>
                                <option value="day">dag</option>
