@@ -90,15 +90,12 @@ public class TeamController {
         return "redirect:/team/all";
     }
 
-    @GetMapping("/team{teamId}/deleteMember/{memberId}")
+    @GetMapping("/team/{teamId}/delete/membership/{membershipId}")
     public String deleteMemberFromTeam(@PathVariable("teamId") final Integer teamId,
-                                       @PathVariable("memberId") final Integer memberId) {
-        Team team = teamRepository.getOne(teamId);
-        Member member = memberRepository.getOne(memberId);
-       /* member.removeTeamFromMember(team);
-        team.removeTeamMember(member);*/
-        teamRepository.save(team);
-        memberRepository.save(member);
+                                       @PathVariable("membershipId") final Integer membershipId) {
+        TeamMembership tms = new TeamMembership();
+        tms.setMembershipId(membershipId);
+        teamMembershipRepository.delete(tms);
         return "redirect:/team/select/{teamId}";
     }
 
@@ -134,16 +131,12 @@ public class TeamController {
             return "changeTeam";
         } else {
             Optional<Member> memberOpt = memberRepository.findByMemberName(teamMemberDTO.getTeamMemberName());
-            System.out.println("member uit DTO:   " + teamMemberDTO.getTeamMemberName());
-            Team team = teamRepository.getOne((int) teamMemberDTO.getTeamId());
-            System.out.println("teamId uit DTO:   " + teamMemberDTO.getTeamId());
+            Team team = teamRepository.getOne(teamMemberDTO.getTeamId());
 
-            /*if (memberOpt.isPresent()){
-                memberOpt.get().getAllTeamsOfMemberSet().add(team);
-                team.getAllMembersInThisTeamSet().add(memberOpt.get());
-                memberRepository.save(memberOpt.get());
-            }*/
-            teamRepository.save(team);
+            TeamMembership tms = new TeamMembership();
+            tms.setTeam(team);
+            tms.setMember(memberOpt.get());
+            teamMembershipRepository.save(tms);
             return "redirect:/team/select/" + teamMemberDTO.getTeamId();
         }
     }

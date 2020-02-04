@@ -11,5 +11,5 @@ public interface TeamMembershipRepository extends JpaRepository<TeamMembership, 
     Optional<TeamMembership> findByTeam(Team team);
     //Optional<TeamMembership> findByTeamId(long teamId);
     Optional<TeamMembership> findByMember(Member member);
-    //Optional<TeamMembership> findByMemberId(long memberId);
+    //Optional<TeamMembership> findByMemberId(Integer memberId);
 }

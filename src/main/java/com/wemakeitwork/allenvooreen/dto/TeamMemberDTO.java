@@ -4,7 +4,7 @@ public class TeamMemberDTO {
 
     String teamMemberName;
 
-    long teamId;
+    Integer teamId;
 
     public String getTeamMemberName() {
         return teamMemberName;
@@ -14,11 +14,11 @@ public class TeamMemberDTO {
         this.teamMemberName = teamMemberName;
     }
 
-    public long getTeamId() {
+    public Integer getTeamId() {
         return teamId;
     }
 
-    public void setTeamId(long teamId) {
+    public void setTeamId(Integer teamId) {
         this.teamId = teamId;
     }
 }
