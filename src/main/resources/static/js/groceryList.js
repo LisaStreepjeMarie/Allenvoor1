@@ -159,13 +159,17 @@ function getAllItemsFromDataBase(){
                 MedicationList = result.data.medications;
                 GroceryList = result.data.groceries;
                  for (i in MedicationList ) {
-                 $('#allMedications').append('<li value="' + MedicationList[i].id + '"><i class="fas fa-pills fa-lg" style="color:#e6b3ff;"></i>' + MedicationList[i].name + '</li>');
+                     if (MedicationList[i].bought){
+                     $('#allMedications').append('<li class="checked" value="' + MedicationList[i].id + '"><i class="fas fa-pills fa-lg" style="color:#e6b3ff;"></i>' + MedicationList[i].name + '</li>');
+                     } else {
+                     $('#allMedications').append('<li value="' + MedicationList[i].id + '"><i class="fas fa-pills fa-lg" style="color:#e6b3ff;"></i>' + MedicationList[i].name + '</li>');
+                     }
                  }
                  for (i in GroceryList){
-                 $('#groceryItem').append('<li value="' + GroceryList[i].id + '">' + GroceryList[i].title + '</li>');
-                 console.log(GroceryList[i].title);
-                      if (GroceryList[i].bought){
-                      console.log("do something here");
+                     if (GroceryList[i].bought){
+                        $('#groceryItem').append('<li class="checked" value="' + GroceryList[i].id + '">' + GroceryList[i].title + '</li>');
+                     } else {
+                        $('#groceryItem').append('<li value="' + GroceryList[i].id + '">' + GroceryList[i].title + '</li>');
                      }
                  }
                  closeButtonOnAll();

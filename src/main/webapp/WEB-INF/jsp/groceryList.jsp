@@ -31,8 +31,10 @@
 
 <ul id="allGroceries">
     <div id="allMedications">
+        <!-- this list is filled with ajax in the grocery.js -->
     </div>
     <div id="groceryItem">
+        <!-- this list is filled with ajax in the grocery.js -->
     </div>
 </ul>
 
@@ -42,7 +44,6 @@
     <br>
 </div>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/groceryList.js"></script>
-
 
 </body>
 </html>
