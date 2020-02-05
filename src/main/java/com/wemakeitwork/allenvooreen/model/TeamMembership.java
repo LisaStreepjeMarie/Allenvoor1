@@ -1,9 +1,12 @@
 package com.wemakeitwork.allenvooreen.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "membership")
+@JsonIgnoreProperties("team")
 public class TeamMembership {
     @Id
     @Column(name = "membership_id")
