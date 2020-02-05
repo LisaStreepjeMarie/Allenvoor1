@@ -82,6 +82,7 @@ public class GroceryListController {
         if(medication.getBought()){
             medication.upTheMedicationAmount(medication.getMedicationRefillAmount());
             medication.setMedicationRefillAmount(0);
+            medication.setBought(true);
         }
         medicationRepository.save(medication);
         return new ResponseEntity<Object>("success!", HttpStatus.OK);
@@ -102,7 +103,7 @@ public class GroceryListController {
     public  ResponseEntity<Object> boughtMedicationItem(@PathVariable("medicationid") final Integer medicationid){
         Medication medication = medicationRepository.getOne(medicationid);
         if(medication != null) {
-            medication.setBought();
+            medication.toggleBought();
             medicationRepository.save(medication);
         }
         return new ResponseEntity<Object>("success!", HttpStatus.OK);

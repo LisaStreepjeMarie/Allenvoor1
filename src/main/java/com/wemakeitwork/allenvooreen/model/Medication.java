@@ -63,7 +63,11 @@ public class Medication {
         return bought;
     }
 
-    public void setBought() {
+    public void setBought(boolean bought){
+        this.bought = bought;
+    }
+
+    public void toggleBought() {
         this.bought = !this.bought;
     }
 

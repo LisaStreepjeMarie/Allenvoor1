@@ -76,7 +76,7 @@ public class MedicationController {
         Optional<Medication> medication = medicationRepository.findById(medicationId);
 
         if (medication.isPresent()){
-            medication.get().setBought();
+            medication.get().setBought(false);
             medication.get().upTheRefillAmount(amount);
             medication.get().setGroceryList(teamRepository.findById(teamId).get().getGroceryList());
             medicationRepository.save(medication.get());

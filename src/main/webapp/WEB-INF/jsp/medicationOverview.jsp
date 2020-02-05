@@ -53,7 +53,7 @@
         </button>
 
         <!-- Modal -->
-        <form role="form" id="formID" >
+        <form role="form" id="refillForm" >
         <div class="modal fade" id="refillMedication" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -107,6 +107,9 @@
              console.log("ERROR: ", e);
          }
     });
+
+    $('#refillMedication').modal('toggle');
+    $('#refillForm').trigger("reset");
 }
     </script>
    </body>
