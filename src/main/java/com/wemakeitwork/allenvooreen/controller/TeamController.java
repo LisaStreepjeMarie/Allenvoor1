@@ -158,18 +158,36 @@ public class TeamController {
 
 
     @GetMapping("/team/quitadmin/{teamId}")
-    public String toggleAdmin(@PathVariable("teamId") final Integer teamId) {
+    public String toggleAdmin(@PathVariable("teamId") final Integer teamId, Model model) {
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Team team = teamRepository.getOne(teamId);
 
-        teamMembershipRepository.findAll().stream()
-                // Find all memberships of member
-                .filter(x -> x.getMember().getMemberId().equals(member.getMemberId()))
-                // filter the team that is passed with the pathvariable (ignore other teams from member)
-                .filter(x -> x.getTeam().getTeamId().equals(teamId))
-                // Toggle the boolean isAdmin in the detached object and save it to the database
-                .map(x -> { x.setAdmin(!x.isAdmin()); return x;}).forEach(teamMembershipRepository::save);
+        // Count number of admins in team
+        Integer numberOfAdminsInTeam = 0;
+        Set<TeamMembership> tmsList = team.getTeamMemberships();
+        for (TeamMembership tms : tmsList) {
+            if (tms.isAdmin()) {
+                numberOfAdminsInTeam++;
+            }
+        }
 
-        return "redirect:/team/all";
+        // Prevent admin from giving up admin rights when there are no other admins.
+        if (numberOfAdminsInTeam > 1) {
+            teamMembershipRepository.findAll().stream()
+                    // Find all memberships of member
+                    .filter(x -> x.getMember().getMemberId().equals(member.getMemberId()))
+                    // filter the team that is passed with the pathvariable (ignore other teams from member)
+                    .filter(x -> x.getTeam().getTeamId().equals(teamId))
+                    // Toggle the boolean isAdmin in the detached object and save it to the database
+                    .map(x -> {
+                        x.setAdmin(!x.isAdmin());
+                        return x;
+                    }).forEach(teamMembershipRepository::save);
+            return "redirect:/team/all";
+        } else {
+            model.addAttribute("statuscode", "Kan rol als groepsbeheerder niet opgeven omdat je de enige groepsbeheerder bent.");
+            return "error";
+        }
     }
 
     @GetMapping("/team/grantadmin/{teamId}/{memberId}")
