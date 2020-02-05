@@ -129,9 +129,10 @@ public class MemberController {
 
     @GetMapping("/confirmRegistration")
     public String confirmRegistration(WebRequest request, Model model,@RequestParam("token") String token) {
+        Locale locale = request.getLocale();
         VerificationToken verificationToken =  memberServiceInterface.getVerificationToken(token);
         if(verificationToken == null) {
-            String message = messages.getMessage("auth.message.invalidToken", null);
+            String message = messages.getMessage("auth.message.invalidToken", null, locale);
             model.addAttribute("message", message);
             return "redirect:access-denied";
         }
@@ -144,10 +145,8 @@ public class MemberController {
         }
         member.setEnabled(true);
         memberServiceInterface.enableRegisteredUser(member);
-        return null;
+        return "confirmRegistration";
     }
-
-
 }
 
 

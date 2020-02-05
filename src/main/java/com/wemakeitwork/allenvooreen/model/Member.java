@@ -33,6 +33,8 @@ public class Member implements UserDetails{
     @Transient
     private String passwordConfirm;
 
+    private boolean enabled;
+
     public Member(){
     }
 
@@ -146,6 +148,10 @@ public class Member implements UserDetails{
 
     public void setIdentifier(String identifier) {
         this.identifier = identifier;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }
 

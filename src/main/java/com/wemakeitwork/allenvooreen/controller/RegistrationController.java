@@ -25,9 +25,9 @@ public class RegistrationController {
 
 
     @RequestMapping("/signup-success")
-    public String signupSuccess(){
+    public String signupSuccess() {
 
-        // create user
+        /*// create user
         Member member = new Member();
         member.setMemberName("Anna");
         member.setEmail("ambrand5@hotmail.com");
@@ -38,6 +38,8 @@ public class RegistrationController {
         }catch (MailException e) {
             logger.info("Error Sending Email: " + e.getMessage());
         }
+
+     */
         return "Je bent succesvol geregistreerd. Controleer je email en klik op de link om je aanmelding af te ronden.";
     }
 }

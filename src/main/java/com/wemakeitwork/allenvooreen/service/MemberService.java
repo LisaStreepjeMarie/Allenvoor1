@@ -38,8 +38,12 @@ public class MemberService implements MemberServiceInterface {
     }
 
     @Override
-    @Transactional
     public void enableRegisteredUser(Member member) {
         memberRepository.save(member);
+    }
+
+    @Override
+    public VerificationToken getVerificationToken(String verificationToken) {
+        return tokenRepository.findByToken(verificationToken);
     }
 }

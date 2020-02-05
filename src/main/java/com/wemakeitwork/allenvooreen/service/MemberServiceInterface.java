@@ -17,6 +17,8 @@ public interface MemberServiceInterface {
     public void createVerificationToken(Member member, String token);
 
     public void enableRegisteredUser(Member member);
+
+    public VerificationToken getVerificationToken(String verificationToken);
 }
 
 
