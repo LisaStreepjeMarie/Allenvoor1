@@ -81,19 +81,25 @@ public class TeamController {
 
     @GetMapping("/team/select/{teamId}")
     protected String showChangeTeam(@PathVariable("teamId") final Integer teamId, Model model) {
-        model.addAttribute("team", new Team());
         Optional<Team> teamOpt = teamRepository.findById(teamId);
         Team team;
         team = teamOpt.orElseGet(Team::new);
         Integer addMembernameToTeam = 0;
-        model.addAttribute("addMembernameToTeam", addMembernameToTeam);
-        model.addAttribute("team", team);
 
         TeamMemberDTO teamMemberDTO = new TeamMemberDTO();
         teamMemberDTO.setTeamId(teamId);
-        model.addAttribute("teamMemberDTO", teamMemberDTO);
 
-        return "changeTeam";
+        Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (teamMembershipRepository.findByTeamAndMember(team, member).isAdmin()) {
+            model.addAttribute("team", new Team());
+            model.addAttribute("addMembernameToTeam", addMembernameToTeam);
+            model.addAttribute("team", team);
+            model.addAttribute("teamMemberDTO", teamMemberDTO);
+            return "changeTeam";
+        } else {
+            model.addAttribute("statuscode", "Geen toegang: je bent geen groepsbeheerder");
+            return "error";
+        }
     }
 
     @GetMapping("/team/delete/{teamId}")
