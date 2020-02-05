@@ -31,6 +31,7 @@ public class Medication {
     @JsonProperty("refillamount")
     private int medicationRefillAmount;
 
+    @JsonProperty("comment")
     private String medicationComment;
 
     public GroceryList getGroceryList() {

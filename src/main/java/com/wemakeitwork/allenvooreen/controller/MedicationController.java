@@ -1,12 +1,13 @@
 package com.wemakeitwork.allenvooreen.controller;
 
-import com.wemakeitwork.allenvooreen.model.Medication;
-import com.wemakeitwork.allenvooreen.model.Member;
-import com.wemakeitwork.allenvooreen.model.Team;
+import com.wemakeitwork.allenvooreen.model.*;
 import com.wemakeitwork.allenvooreen.repository.MedicationRepository;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
+import com.wemakeitwork.allenvooreen.service.ServiceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -42,19 +44,9 @@ public class MedicationController {
     }
 
     @GetMapping("/medication/{teamId}")
-    public String showMedication(@PathVariable("teamId") final Integer teamId, Model model, Principal principal) {
+    public String showMedication(@PathVariable("teamId") final Integer teamId) {
         Team team = teamRepository.getOne(teamId);
         httpSession.setAttribute("team", team);
-
-        Set<Team> teamList = null;
-        Optional<Member> member = memberRepository.findByMemberName(principal.getName());
-        if (member.isPresent()) {
-            teamList = member.get().getAllTeamsOfMemberSet();
-        }
-
-        Medication medication = new Medication();
-        model.addAttribute("medicationList", team.getMedicationList());
-
         return "medicationOverview";
     }
 
@@ -83,6 +75,16 @@ public class MedicationController {
         }
 
         return "redirect:/medication/"+ teamId;
+    }
+
+    @GetMapping("/medication/getList")
+    public ResponseEntity<Object> fillMedicationList(){
+        int teamId = ((Team) httpSession.getAttribute("team")).getTeamId();
+        Team team = teamRepository.getOne(teamId);
+        List<Medication> medicationList = team.getMedicationList();
+
+        ServiceResponse<List<Medication>> response = new ServiceResponse<>("succes", medicationList);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping("/medication/new")
