@@ -81,28 +81,19 @@ public class CalendarController {
         return "calendar";
     }
 
-    public static String addDaysJodaTime(String date, int i) {
-        DateTime dateTime = new DateTime(date);
-                return dateTime
-                        .plusDays(i)
-                        // .toString("dd-MM-yyyy HH:mm");
-                        .toString("yyyy-MM-dd");
+    public static DateTime addDaysJodaTime(DateTime dateTime, int i) {
+        return dateTime
+                .plusDays(i);
     }
 
-    public static String addWeeksJodaTime(String date, int i) {
-        DateTime dateTime = new DateTime(date);
+    public static DateTime addWeeksJodaTime(DateTime dateTime, int i) {
         return dateTime
-                .plusWeeks(i)
-                // .toString("dd-MM-yyyy HH:mm");
-                .toString("yyyy-MM-dd");
+                .plusWeeks(i);
     }
 
-    public static String addMonthsJodaTime(String date, int i) {
-        DateTime dateTime = new DateTime(date);
+    public static DateTime addMonthsJodaTime(DateTime dateTime, int i) {
         return dateTime
-                .plusMonths(i)
-                // .toString("dd-MM-yyyy HH:mm");
-                .toString("yyyy-MM-dd");
+                .plusMonths(i);
     }
 
     @PostMapping("/calendar/new/event")
@@ -114,32 +105,28 @@ public class CalendarController {
         System.out.println("eventInterval is: " + event.getEventInterval());
 
         // Date date = Calendar.getInstance().getTime();
-        Date date = event.getEventStartDate();
+        DateTime startDateTime = event.getEventStartDate();
         // DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-        // DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String strStartDate = dateFormat.format(date);
-        System.out.println("Converted String: " + strStartDate);
 
         int i = 0;
         int maxNumber = event.getEventMaxNumber() + 1;
         for (i = 0; i < maxNumber; i++) {
             switch (event.getEventInterval()) {
                 case "day": {
-                    String strStartDateExtraEvent = addDaysJodaTime(strStartDate, i);
-                    System.out.println("strStartDateExtraEvent is: " + strStartDateExtraEvent);
+                    DateTime startDateTimeExtraEvent = addDaysJodaTime(startDateTime, i);
+                    System.out.println("startDateExtraEvent is: " + startDateTimeExtraEvent);
                     eventRepository.save(event);
                     break;
                 }
                 case "week": {
-                    String strStartDateExtraEvent = addWeeksJodaTime(strStartDate, i);
-                    System.out.println("strStartDateExtraEvent is: " + strStartDateExtraEvent);
+                    DateTime startDateTimeExtraEvent = addWeeksJodaTime(startDateTime, i);
+                    System.out.println("startDateExtraEvent is: " + startDateTimeExtraEvent);
                     eventRepository.save(event);
                     break;
                 }
                 case "month": {
-                    String strStartDateExtraEvent = addMonthsJodaTime(strStartDate, i);
-                    System.out.println("strStartDateExtraEvent is: " + strStartDateExtraEvent);
+                    DateTime startDateTimeExtraEvent = addMonthsJodaTime(startDateTime, i);
+                    System.out.println("startDateExtraEvent is: " + startDateTimeExtraEvent);
                     eventRepository.save(event);
                     break;
                 }

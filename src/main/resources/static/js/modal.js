@@ -49,6 +49,16 @@ function fillModal(event) {
     }
     getMedication(event);
 
+    // this shows/hides the eventPeriodic input field when the checkbox is toggled
+    $("#eventPeriodic").change(function () {
+        if(document.getElementById("eventPeriodic").checked == true) {
+                $("#eventIsPeriodic").show()
+        } else {
+                document.getElementById("eventPeriodic").removeAttribute("required");
+                $("#eventIsPeriodic").hide()
+        }
+    });
+
     // this shows/hides the eventDone input field when the checkbox is toggled
     $("#eventDone").change(function () {
         if(document.getElementById("eventDone").checked == true) {

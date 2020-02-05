@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.joda.time.DateTime;
 
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -50,12 +51,14 @@ public class Event {
     @Basic
     @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty("start")
-    private java.util.Date eventStartDate;
+    // private java.util.Date eventStartDate;
+    private DateTime eventStartDate;
 
     @Basic
     @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty("end")
-    private java.util.Date eventEndDate;
+    // private java.util.Date eventEndDate;
+    private DateTime eventEndDate;
 
     @JsonProperty("comment")
     private String eventComment;
@@ -82,8 +85,8 @@ public class Event {
     public Event() {
     }
 
-    public Event(Integer eventId, @NotBlank(message = "veld mag niet blank zijn") String eventName, Date eventStartDate,
-                 Date eventEndDate, String eventComment, String eventInterval, Integer eventMaxNumber,
+    public Event(Integer eventId, @NotBlank(message = "veld mag niet blank zijn") String eventName, DateTime eventStartDate,
+                 DateTime eventEndDate, String eventComment, String eventInterval, Integer eventMaxNumber,
                  Date eventDoneDate, Activity activity,
                  Team team) {
         this.eventId = eventId;
@@ -150,20 +153,20 @@ public class Event {
     }
 
     @JsonGetter
-    public Date getEventStartDate() {
+    public DateTime getEventStartDate() {
         return eventStartDate;
     }
 
-    public void setEventStartDate(Date eventStartDate) {
+    public void setEventStartDate(DateTime eventStartDate) {
         this.eventStartDate = eventStartDate;
     }
 
     @JsonGetter
-    public Date getEventEndDate() {
+    public DateTime getEventEndDate() {
         return eventEndDate;
     }
 
-    public void setEventEndDate(Date eventEndDate) {
+    public void setEventEndDate(DateTime eventEndDate) {
         this.eventEndDate = eventEndDate;
     }
 
