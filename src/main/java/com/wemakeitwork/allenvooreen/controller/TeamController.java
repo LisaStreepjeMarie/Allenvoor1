@@ -7,6 +7,7 @@ import com.wemakeitwork.allenvooreen.model.TeamMembership;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamMembershipRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
+import org.springframework.beans.InvalidPropertyException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -168,6 +169,8 @@ public class TeamController {
     @GetMapping("/team/quit/{teamId}")
     public String quitTeam(@PathVariable("teamId") final Integer teamId) {
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Team team = teamRepository.findById(teamId).orElseThrow(() -> new InvalidPropertyException(this.getClass(), "team", "Dit team bestaat niet"));
+
         teamMembershipRepository.findAll().stream()
                 // Find all memberships of member
                 .filter(x -> x.getMember().getMemberId().equals(member.getMemberId()))
@@ -175,6 +178,11 @@ public class TeamController {
                 .filter(x -> x.getTeam().getTeamId().equals(teamId))
                 // Toggle the boolean isAdmin in the detached object and save it to the database
                 .forEach(teamMembershipRepository::delete);
+
+        // Delete team if it has no members anymore. TODO: needs confirmation check
+        if (teamMembershipRepository.findByTeam(team).isEmpty()) {
+            teamRepository.delete(team);
+        }
         return "redirect:/team/all";
     }
 }
