@@ -26,8 +26,11 @@ public class CalendarRestController {
                                                       @PathVariable("enddate") final long endDateEpoch) {
 
         List<Event> allEvents =  teamRepository.getOne(teamId).getEventList().stream()
-                .filter(x -> x.getEventStartDate().isAfter(new DateTime(startDateEpoch)))
-                .filter(x -> x.getEventEndDate().isBefore(new DateTime(endDateEpoch)))
+                .filter(x -> x.getEventStartDate().after(new Date(startDateEpoch)))
+                .filter(x -> x.getEventEndDate().before(new Date(endDateEpoch)))
+                //joda-time
+                /*.filter(x -> x.getEventStartDate().isAfter(new DateTime(startDateEpoch)))
+                .filter(x -> x.getEventEndDate().isBefore(new DateTime(endDateEpoch))) */
                 .collect(Collectors.toList());
 
         /*for (Event event : allEvents) {

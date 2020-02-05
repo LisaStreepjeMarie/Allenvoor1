@@ -10,6 +10,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
+import org.joda.time.contrib.hibernate.PersistentDateTime;
 
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -49,23 +50,25 @@ public class Event {
     @NotBlank(message = "veld mag niet blank zijn")
     private String eventName;
 
-    /* @Basic
+    @Basic
     @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty("start")
-    private java.util.Date eventStartDate; */
+    private java.util.Date eventStartDate;
 
-    @Column
+    /* @Column
+    @JsonProperty("start")
     @Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
-    private DateTime eventStartDate;
+    private DateTime eventStartDate; */
 
-    /* @Basic
+    @Basic
     @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty("end")
-    private java.util.Date eventEndDate; */
+    private java.util.Date eventEndDate;
 
-    @Column
+    /* @Column
+    @JsonProperty("end")
     @Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
-    private DateTime eventEndDate;
+    private DateTime eventEndDate; */
 
     @JsonProperty("comment")
     private String eventComment;
@@ -91,11 +94,15 @@ public class Event {
 
     public Event() {
     }
-
-    public Event(Integer eventId, @NotBlank(message = "veld mag niet blank zijn") String eventName, DateTime eventStartDate,
-                 DateTime eventEndDate, String eventComment, String eventInterval, Integer eventMaxNumber,
+    public Event(Integer eventId, @NotBlank(message = "veld mag niet blank zijn") String eventName, Date eventStartDate,
+                 Date eventEndDate, String eventComment, String eventInterval, Integer eventMaxNumber,
                  Date eventDoneDate, Activity activity,
                  Team team) {
+    //joda-time
+    /* public Event(Integer eventId, @NotBlank(message = "veld mag niet blank zijn") String eventName, DateTime eventStartDate,
+                 DateTime eventEndDate, String eventComment, String eventInterval, Integer eventMaxNumber,
+                 Date eventDoneDate, Activity activity,
+                 Team team) { */
         this.eventId = eventId;
         this.eventName = eventName;
         this.eventStartDate = eventStartDate;
@@ -160,6 +167,25 @@ public class Event {
     }
 
     @JsonGetter
+    public Date getEventStartDate() {
+        return eventStartDate;
+    }
+
+    public void setEventStartDate(Date eventStartDate) {
+        this.eventStartDate = eventStartDate;
+    }
+
+    @JsonGetter
+    public Date getEventEndDate() {
+        return eventEndDate;
+    }
+
+    public void setEventEndDate(Date eventEndDate) {
+        this.eventEndDate = eventEndDate;
+    }
+
+    //joda-time
+    /* @JsonGetter
     public DateTime getEventStartDate() {
         return eventStartDate;
     }
@@ -175,7 +201,7 @@ public class Event {
 
     public void setEventEndDate(DateTime eventEndDate) {
         this.eventEndDate = eventEndDate;
-    }
+    } */
 
     @JsonGetter
     public String getEventComment() {

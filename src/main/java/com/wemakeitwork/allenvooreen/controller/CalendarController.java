@@ -4,9 +4,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.joda.JodaMapper;
+import com.fasterxml.jackson.datatype.joda.JodaModule;
 import com.wemakeitwork.allenvooreen.model.*;
 import com.wemakeitwork.allenvooreen.repository.*;
 import com.wemakeitwork.allenvooreen.service.ServiceResponse;
+import org.apache.commons.lang3.time.DateUtils;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +51,11 @@ public class CalendarController {
     @Autowired
     ActivityRepository activityRepository;
 
+    //joda-time
+    /* public CalendarController(){
+        mapper.registerModule(new JodaModule());
+    } */
+
     @GetMapping("/calendar/{teamid}/medications")
     public ResponseEntity<Object> getMedications(@PathVariable("teamid") final Integer teamId) {
         ServiceResponse<List<Medication>> response = new ServiceResponse<>("success", teamRepository.getOne(teamId).getMedicationList());
@@ -81,7 +89,11 @@ public class CalendarController {
         return "calendar";
     }
 
-    public static DateTime addDaysJodaTime(DateTime dateTime, int i) {
+    //vb
+    // Date newDate = DateUtils.addMonths(new Date(), 1);
+
+    //joda-time
+    /* public static DateTime addDaysJodaTime(DateTime dateTime, int i) {
         return dateTime
                 .plusDays(i);
     }
@@ -94,7 +106,7 @@ public class CalendarController {
     public static DateTime addMonthsJodaTime(DateTime dateTime, int i) {
         return dateTime
                 .plusMonths(i);
-    }
+    } */
 
     @PostMapping("/calendar/new/event")
     public ResponseEntity<Object> newEvent(@RequestBody String newEventJson) throws JsonProcessingException {
@@ -104,33 +116,51 @@ public class CalendarController {
         System.out.println("eventStartDate is " + event.getEventStartDate());
         System.out.println("eventInterval is: " + event.getEventInterval());
 
-        // Date date = Calendar.getInstance().getTime();
-        DateTime startDateTime = event.getEventStartDate();
-        // DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        Date startDateTime = event.getEventStartDate();
+        Date endDateTime = event.getEventEndDate();
+
+        //joda-time
+        /* DateTime startDateTime = event.getEventStartDate();
+        DateTime endDateTime = event.getEventEndDate(); */
 
         int i = 0;
-        int maxNumber = event.getEventMaxNumber() + 1;
-        for (i = 0; i < maxNumber; i++) {
+        int maxNumber = event.getEventMaxNumber();
+        for (i = 1; i < maxNumber; i++) {
+            Date startDateTimeExtraEvent = null;
+            Date endDateTimeExtraEvent = null;
+            //joda-time
+            /* DateTime startDateTimeExtraEvent = null;
+            DateTime endDateTimeExtraEvent = null; */
             switch (event.getEventInterval()) {
+
                 case "day": {
-                    DateTime startDateTimeExtraEvent = addDaysJodaTime(startDateTime, i);
-                    System.out.println("startDateExtraEvent is: " + startDateTimeExtraEvent);
-                    eventRepository.save(event);
+                    startDateTimeExtraEvent = DateUtils.addDays(startDateTime, i);
+                    endDateTimeExtraEvent = DateUtils.addDays(endDateTime, i);
+                    //joda-time
+                    /* startDateTimeExtraEvent = addDaysJodaTime(startDateTime, i);
+                    endDateTimeExtraEvent = addDaysJodaTime(endDateTime, i); */
                     break;
                 }
                 case "week": {
-                    DateTime startDateTimeExtraEvent = addWeeksJodaTime(startDateTime, i);
-                    System.out.println("startDateExtraEvent is: " + startDateTimeExtraEvent);
-                    eventRepository.save(event);
+                    startDateTimeExtraEvent = DateUtils.addWeeks(startDateTime, i);
+                    endDateTimeExtraEvent = DateUtils.addWeeks(endDateTime, i);
+                    //joda-time
+                    /* startDateTimeExtraEvent = addWeeksJodaTime(startDateTime, i);
+                    endDateTimeExtraEvent = addWeeksJodaTime(endDateTime, i); */
                     break;
                 }
                 case "month": {
-                    DateTime startDateTimeExtraEvent = addMonthsJodaTime(startDateTime, i);
-                    System.out.println("startDateExtraEvent is: " + startDateTimeExtraEvent);
-                    eventRepository.save(event);
+                    startDateTimeExtraEvent = DateUtils.addMonths(startDateTime, i);
+                    endDateTimeExtraEvent = DateUtils.addMonths(endDateTime, i);
+                    // joda-time
+                    /* startDateTimeExtraEvent = addMonthsJodaTime(startDateTime, i);
+                    endDateTimeExtraEvent = addMonthsJodaTime(endDateTime, i); */
                     break;
                 }
             }
+            System.out.println("startDateTimeExtraEvent is: " + startDateTimeExtraEvent);
+            System.out.println("endDateTimeExtraEvent is: " + endDateTimeExtraEvent);
+            eventRepository.save(event);
         }
 
         // this sets the activity to the medication from the activity

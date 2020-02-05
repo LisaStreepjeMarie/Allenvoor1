@@ -70,7 +70,9 @@ class EventTest {
     @Test
     void getEventDate() {
         //arrange
-        DateTime testdate = new DateTime(2323223232L);
+        //joda-time
+        // DateTime testdate = new DateTime(2323223232L);
+        Date testdate = new Date(2323223232L);
         testEvent.setEventStartDate(testdate);
 
         //assert
@@ -80,7 +82,9 @@ class EventTest {
     @Test
     void setEventDate() {
         //arrange
-        DateTime testdate = new DateTime(2323223232L);
+        //joda-time
+        // DateTime testdate = new DateTime(2323223232L);
+        Date testdate = new Date(2323223232L);
         testEvent.setEventStartDate(testdate);
 
         //assert
