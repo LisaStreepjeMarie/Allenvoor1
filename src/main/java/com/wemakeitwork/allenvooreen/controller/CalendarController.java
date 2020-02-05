@@ -4,14 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.joda.JodaMapper;
-import com.fasterxml.jackson.datatype.joda.JodaModule;
 import com.wemakeitwork.allenvooreen.model.*;
 import com.wemakeitwork.allenvooreen.repository.*;
 import com.wemakeitwork.allenvooreen.service.ServiceResponse;
 import org.apache.commons.lang3.time.DateUtils;
-import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +20,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpSession;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -50,11 +44,6 @@ public class CalendarController {
 
     @Autowired
     ActivityRepository activityRepository;
-
-    //joda-time
-    /* public CalendarController(){
-        mapper.registerModule(new JodaModule());
-    } */
 
     @GetMapping("/calendar/{teamid}/medications")
     public ResponseEntity<Object> getMedications(@PathVariable("teamid") final Integer teamId) {
@@ -89,29 +78,12 @@ public class CalendarController {
         return "calendar";
     }
 
-    //vb
-    // Date newDate = DateUtils.addMonths(new Date(), 1);
-
-    //joda-time
-    /* public static DateTime addDaysJodaTime(DateTime dateTime, int i) {
-        return dateTime
-                .plusDays(i);
-    }
-
-    public static DateTime addWeeksJodaTime(DateTime dateTime, int i) {
-        return dateTime
-                .plusWeeks(i);
-    }
-
-    public static DateTime addMonthsJodaTime(DateTime dateTime, int i) {
-        return dateTime
-                .plusMonths(i);
-    } */
-
     @PostMapping("/calendar/new/event")
     public ResponseEntity<Object> newEvent(@RequestBody String newEventJson) throws JsonProcessingException {
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         Event event = mapper.readValue(newEventJson, Event.class);
+
+
         System.out.println(event.getEventId());
         System.out.println("eventStartDate is " + event.getEventStartDate());
         System.out.println("eventInterval is: " + event.getEventInterval());
@@ -119,52 +91,39 @@ public class CalendarController {
         Date startDateTime = event.getEventStartDate();
         Date endDateTime = event.getEventEndDate();
 
-        //joda-time
-        /* DateTime startDateTime = event.getEventStartDate();
-        DateTime endDateTime = event.getEventEndDate(); */
-
         int i = 0;
-        int maxNumber = event.getEventMaxNumber();
-        for (i = 0; i < maxNumber; i++) {
-            Date startDateTimeExtraEvent = null;
-            Date endDateTimeExtraEvent = null;
-            //joda-time
-            /* DateTime startDateTimeExtraEvent = null;
-            DateTime endDateTimeExtraEvent = null; */
-            switch (event.getEventInterval()) {
+        Integer maxNumber = event.getEventMaxNumber();
+        System.out.println("maxNumber is " + maxNumber);
+        if (maxNumber != null) {
+            for (i = 0; i < maxNumber; i++) {
+                Date startDateTimeExtraEvent = null;
+                Date endDateTimeExtraEvent = null;
+                switch (event.getEventInterval()) {
 
-                case "day": {
-                    startDateTimeExtraEvent = DateUtils.addDays(startDateTime, i);
-                    endDateTimeExtraEvent = DateUtils.addDays(endDateTime, i);
-                    //joda-time
-                    /* startDateTimeExtraEvent = addDaysJodaTime(startDateTime, i);
-                    endDateTimeExtraEvent = addDaysJodaTime(endDateTime, i); */
-                    break;
+                    case "day": {
+                        startDateTimeExtraEvent = DateUtils.addDays(startDateTime, i);
+                        endDateTimeExtraEvent = DateUtils.addDays(endDateTime, i);
+                        break;
+                    }
+                    case "week": {
+                        startDateTimeExtraEvent = DateUtils.addWeeks(startDateTime, i);
+                        endDateTimeExtraEvent = DateUtils.addWeeks(endDateTime, i);
+                        break;
+                    }
+                    case "month": {
+                        startDateTimeExtraEvent = DateUtils.addMonths(startDateTime, i);
+                        endDateTimeExtraEvent = DateUtils.addMonths(endDateTime, i);
+                        break;
+                    }
                 }
-                case "week": {
-                    startDateTimeExtraEvent = DateUtils.addWeeks(startDateTime, i);
-                    endDateTimeExtraEvent = DateUtils.addWeeks(endDateTime, i);
-                    //joda-time
-                    /* startDateTimeExtraEvent = addWeeksJodaTime(startDateTime, i);
-                    endDateTimeExtraEvent = addWeeksJodaTime(endDateTime, i); */
-                    break;
-                }
-                case "month": {
-                    startDateTimeExtraEvent = DateUtils.addMonths(startDateTime, i);
-                    endDateTimeExtraEvent = DateUtils.addMonths(endDateTime, i);
-                    // joda-time
-                    /* startDateTimeExtraEvent = addMonthsJodaTime(startDateTime, i);
-                    endDateTimeExtraEvent = addMonthsJodaTime(endDateTime, i); */
-                    break;
-                }
+                System.out.println("startDateTimeExtraEvent is: " + startDateTimeExtraEvent);
+                System.out.println("endDateTimeExtraEvent is: " + endDateTimeExtraEvent);
+
+                event = mapper.readValue(newEventJson, Event.class);
+                event.setEventStartDate(startDateTimeExtraEvent);
+                event.setEventEndDate(endDateTimeExtraEvent);
+                eventRepository.save(event);
             }
-            System.out.println("startDateTimeExtraEvent is: " + startDateTimeExtraEvent);
-            System.out.println("endDateTimeExtraEvent is: " + endDateTimeExtraEvent);
-
-            event = mapper.readValue(newEventJson, Event.class);
-            event.setEventStartDate(startDateTimeExtraEvent);
-            event.setEventEndDate(endDateTimeExtraEvent);
-            eventRepository.save(event);
         }
 
         // this sets the activity to the medication from the activity

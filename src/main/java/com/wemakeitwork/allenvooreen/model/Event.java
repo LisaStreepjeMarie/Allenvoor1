@@ -8,9 +8,6 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.annotations.Type;
-import org.joda.time.DateTime;
-import org.joda.time.contrib.hibernate.PersistentDateTime;
 
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -55,20 +52,10 @@ public class Event {
     @JsonProperty("start")
     private java.util.Date eventStartDate;
 
-    /* @Column
-    @JsonProperty("start")
-    @Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
-    private DateTime eventStartDate; */
-
     @Basic
     @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty("end")
     private java.util.Date eventEndDate;
-
-    /* @Column
-    @JsonProperty("end")
-    @Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
-    private DateTime eventEndDate; */
 
     @JsonProperty("comment")
     private String eventComment;
@@ -98,11 +85,6 @@ public class Event {
                  Date eventEndDate, String eventComment, String eventInterval, Integer eventMaxNumber,
                  Date eventDoneDate, Activity activity,
                  Team team) {
-    //joda-time
-    /* public Event(Integer eventId, @NotBlank(message = "veld mag niet blank zijn") String eventName, DateTime eventStartDate,
-                 DateTime eventEndDate, String eventComment, String eventInterval, Integer eventMaxNumber,
-                 Date eventDoneDate, Activity activity,
-                 Team team) { */
         this.eventId = eventId;
         this.eventName = eventName;
         this.eventStartDate = eventStartDate;

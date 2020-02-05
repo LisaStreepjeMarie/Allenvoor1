@@ -17,21 +17,11 @@
 
     <properties>
         <java.version>11</java.version>
-        <property type="org.joda.time.contrib.hibernate.PersistentDateTime" name="dateTime"/>
+        <!-- <property type="org.joda.time.contrib.hibernate.PersistentDateTime" name="dateTime"/> -->
     </properties>
 
     <dependencies>
-
-        <!--<dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-        </dependency>-->
-
-        <dependency>
+        <!-- <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-joda</artifactId>
         </dependency>
@@ -39,15 +29,15 @@
             <groupId>joda-time</groupId>
             <artifactId>joda-time-hibernate</artifactId>
             <version>1.4</version>
-        </dependency>
+        </dependency> -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
-        <dependency>
+        <!-- <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
-        </dependency>
+        </dependency> -->
 
         <!-- test dependencies -->
         <dependency>
