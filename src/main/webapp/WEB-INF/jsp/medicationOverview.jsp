@@ -6,11 +6,11 @@
     <head>
         <title>Medicatieoverzicht</title>
 
+        <script src="${pageContext.request.contextPath}/webjars/jquery/3.4.1/jquery.min.js"></script>
+        <link href="${pageContext.request.contextPath}/webjars/font-awesome/5.12.0/css/all.min.css" rel='stylesheet'>
+        <script src="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>
         <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
         <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
-        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
         <!-- Add icon library -->
             <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
@@ -35,7 +35,7 @@
                                 <td><c:out value="${medication.medicationAmount}" /></td>
                                 <td><c:out value="${medication.medicationComment}" /></td><br>
                                 <td><input class="btn btn-primary" type="submit" value="Verwijder medicatie" onclick="window.location='${pageContext.request.contextPath}/medication/delete/${medication.medicationId}';" /></td>
-                                <td><input id="groceryListButton" class="btn btn-primary" data-id="${medication.medicationName}" type="submit" value="Zet op boodschappenlijst"  data-toggle="modal" /></td>
+                                <td><input id="groceryListButton" class="btn btn-primary" data-id="${medication.medicationId}" data-name="${medication.medicationName}" type="submit" value="Zet op boodschappenlijst"  data-toggle="modal" /></td>
                             </h5></tr>
                         </c:forEach>
                     </table>
@@ -68,28 +68,54 @@
                         <br>
                         <div class="row">
                             <br>
-                            <label class="col-4" for="takenMedication" control-label>Hoeveelheid</label>
-                            <input type="number" name="takenMedication" id="takenMedication" />
+                            <input type="hidden" name="medicationID" id="medicationID" />
+                            <label class="col-4" for="refillAmount" control-label>Hoeveelheid</label>
+                            <input type="number" name="refillAmount" id="refillAmount" />
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Zet op de lijst!</button>
+                        <button type="button" onclick="addMedicationToList()" class="btn btn-primary">Zet op de lijst!</button>
                     </div>
                 </div>
             </div>
         </div>
         </form>
     <script>
-   $("#groceryListButton").click(function(){ // Click to only happen on announce links
-   var url = $(this).attr('data-id');
-    console.log(url);
-    console.log("hallo stomme lisa");
-     $(".modal-body").val(url);
-     $(".modal-title").prepend(url);
-     $('#refillMedication').modal('show');
 
+
+
+   $("#groceryListButton").click(function(){ // Click to only happen on announce links
+   var name = $(this).attr('data-name');
+   var medicationId = $(this).attr('data-id');
+    console.log("hallo stomme lisa");
+    console.log(medicationId);
+    console.log(name);
+<!--     $("#refillMedicationHeader").append(name);-->
+     $('#refillMedication').modal('show');
+<!--     document.getElementById("medicationID").value = name ;-->
+     $('.modal').find('#medicationID').val(medicationId);
+     document.getElementById("refillMedicationHeader").innerHTML = name;
    });
+
+    console.log
+
+   function addMedicationToList(){
+
+   id = document.getElementById("medicationID").value;
+   amount = document.getElementById("refillAmount").value;
+
+    $.ajax({
+         type:'GET',
+         url: "${pageContext.request.contextPath}/medication/grocerylist/" + id + "/" + amount,
+         success : function(result) {
+            console.log("woop w00p")
+             },
+             error : function(e) {
+             console.log("ERROR: ", e);
+         }
+    });
+}
     </script>
    </body>
 </html>

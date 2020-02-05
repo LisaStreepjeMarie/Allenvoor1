@@ -5,7 +5,7 @@ $.ajaxSetup({
     }
 });
 
-//  csrf token
+//setting the context url
 var ctx = $('#contextPathHolder').attr('data-contextPath');
 
 getAllItemsFromDataBase();

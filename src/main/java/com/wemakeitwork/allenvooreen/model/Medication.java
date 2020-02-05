@@ -28,7 +28,7 @@ public class Medication {
     @JsonProperty("amount")
     private Integer medicationAmount;
 
-    @JsonIgnore
+    @JsonProperty("refillamount")
     private int medicationRefillAmount;
 
     private String medicationComment;
