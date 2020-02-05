@@ -2,16 +2,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<html lang="en" xmlns:spring=""
-      xmlns:form="http://www.w3.org/1999/xhtml">
+<html>
     <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
         <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
 
         <!-- Add icon library -->
-        <link href="${pageContext.request.contextPath}/webjars/font-awesome/4.7.0/css/font-awesome.css" rel='stylesheet'>
-        <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
+         <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
         <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
         </head>
 
@@ -48,39 +45,32 @@
         <h3 class="font-weight-light">Voer medicatie voor ${team.teamName} in</h3>
         <br>
         <form:form action="${pageContext.request.contextPath}/medication/new" modelAttribute="medication">
-        <form:errors path = "*" cssClass = "alert alert-danger alert-dismissible fade show" role="alert" element = "div" />
             <table>
                 <tr>
-                    <spring:bind path="medicationName">
-                    <div class="form-group ${status.error ? 'has-error' : ''}">
                     <td><h5 class="font-weight-light">Naam medicatie:</h5>
                     <td>
-                        <form:input path="medicationName"  />
+                        <form:input path="medicationName" />
                     </td>
-                     </div>
-                   </spring:bind>
                 </tr>
                 <tr>
-                    <spring:bind path="medicationAmount">
-                        <div class="form-group ${status.error ? 'has-error' : ''}">
-                            <td><h5 class="font-weight-light">Hoeveelheid:</h5></td>
-                            <td><form:input path="medicationAmount" /></td>
-                        </div>
-                    </spring:bind>
+                    <td><h5 class="font-weight-light">Hoeveelheid:</h5>
+                    <td>
+                        <form:input path="medicationAmount"/>
+                    </td>
                 </tr>
                 <tr>
-                    <td><h5 class="font-weight-light">Beschrijving:</h5></td>
-                    <td><form:input path="medicationComment"/></td>
+                    <td><h5 class="font-weight-light">Beschrijving:</h5>
+                    <td>
+                       <form:input path="medicationComment"/>
+                     </td>
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <input name="_csrf" type="hidden" value="${_csrf.token}" />
                         <input class="btn btn-primary" type="submit" value="Sla medicatie op" />
                     </td>
                 </tr>
             </table>
         </form:form>
-      </div>
+        </div>
     </body>
 </html>
-
