@@ -3,7 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 
-<html xmlns:form="http://www.w3.org/1999/xhtml" xmlns:c="">
+<html xmlns:c="" xmlns:mytags="">
     <head>
         <title>Kalender</title>
         <meta charset='utf-8' />

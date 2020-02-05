@@ -35,22 +35,22 @@
                         </c:forEach>
                      </table>
 
-                     <form:form action="${pageContext.request.contextPath}/team/addMember" modelAttribute="teamMemberDTO">
-                         <form:input path="teamId" type="hidden" />
-                            <table>
+                    <form:form action="${pageContext.request.contextPath}/team/addMember" modelAttribute="teamMemberDTO">
+                        <form:input path="teamId" type="hidden" />
+                        <table>
                             <tr>
                                 <td><h5 class="font-weight-light">Nieuw groepslid:</h5></td>
                                 <td>
-                                   <form:input path="teamMemberName" /></form>
-                                   <input class="btn btn-primary" type="submit" value="Voeg toe" />
+                                    <form:input path="teamMemberName" /></form>
+                                    <input class="btn btn-primary" type="submit" value="Voeg toe" />
                                 </td>
                             </tr>
                         </table>
                     </form:form>
 
                     <form:form action="${pageContext.request.contextPath}/team/change" modelAttribute="team">
-                    <form:input path="teamId" type="hidden" />
-                    <form:input path="teamMemberships" type="hidden" />
+                        <form:input path="teamId" type="hidden" />
+                        <form:input path="teamMemberships" type="hidden" />
                         <table>
                             <tr>
                                 <td><h5 class="font-weight-light">Groepsnaam:</h5></td>
@@ -60,7 +60,7 @@
                                 </td>
                             </tr>
                         </table>
-                     </form:form>
+                    </form:form>
                 </div>
             </div>
         </div>

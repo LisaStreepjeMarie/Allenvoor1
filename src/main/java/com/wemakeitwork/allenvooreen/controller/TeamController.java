@@ -168,16 +168,15 @@ public class TeamController {
 
     @GetMapping("/team/grantadmin/{teamId}/{memberId}")
     public String grantAdmin(@PathVariable("teamId") final Integer teamId,
-                              @PathVariable("teamId") final Integer memberId) {
-        teamMembershipRepository.findAll().stream()
-                // Find all memberships of member
-                .filter(x -> x.getMember().getMemberId().equals(memberId))
-                // filter the team that is passed with the pathvariable (ignore other teams from member)
-                .filter(x -> x.getTeam().getTeamId().equals(teamId))
-                // Toggle the boolean isAdmin in the detached object and save it to the database
-                .map(x -> { x.setAdmin(true); return x;}).forEach(teamMembershipRepository::save);
+                              @PathVariable("memberId") final Integer memberId) {
+        Member member = memberRepository.getOne(memberId);
+        Team team = teamRepository.getOne(teamId);
+        TeamMembership tms = teamMembershipRepository.findByTeamAndMember(team, member);
 
-        return "/team/select/${teamId}";
+        tms.setAdmin(true);
+        teamMembershipRepository.save(tms);
+
+        return "redirect:/team/select/" + teamId;
     }
 
     @GetMapping("/team/quit/{teamId}")
