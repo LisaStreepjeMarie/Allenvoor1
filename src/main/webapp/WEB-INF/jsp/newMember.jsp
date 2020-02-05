@@ -30,14 +30,23 @@
             <img class="mb-4" src="${pageContext.request.contextPath}/images/LogoAllenVoorEen.png" alt="" width="300" height="228"></a>
                 <h1 class="h3 mb-3 font-weight-light"><strong>Nieuw?</strong><br> Maak een account:</h1>
 
+
         <form:form action="${pageContext.request.contextPath}/member/new" modelAttribute="member">
             <spring:bind path="memberName">
+            <div th:if="${param.error != null}"
                 <div class="form-group ${status.error ? 'has-error' : ''}">
                     <form:input type="text" path="memberName" class="form-control" placeholder="Gebruikersnaam"
                                 autofocus="true"></form:input>
                     <form:errors path="memberName"></form:errors>
                 </div>
             </spring:bind>
+
+            <spring:bind path="email">
+                <div class="form-group ${status.error ? 'has-error' : ''}">
+                   <form:input type="email" path="email" class="form-control" placeholder="Email"></form:input>
+                   <form:errors path="email"></form:errors>
+               </div>
+         </spring:bind>
 
             <spring:bind path="password">
                 <div class="form-group ${status.error ? 'has-error' : ''}">
