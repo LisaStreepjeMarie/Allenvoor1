@@ -60,9 +60,13 @@ public class MedicationController {
 
     @GetMapping("/medication/delete/{medicationId}")
     public String deleteTeam(@PathVariable("medicationId") final Integer medicationId) {
+        int teamId = ((Team) httpSession.getAttribute("team")).getTeamId();
+        Team team = teamRepository.getOne(teamId);
+        team.getMedicationList().remove(medicationRepository.getOne(medicationId));
+        teamRepository.save(team);
+
         medicationRepository.deleteById(medicationId);
-        Team team = (Team) httpSession.getAttribute("team");
-        return "redirect:/medication/"+ team.getTeamId();
+        return "redirect:/medication/"+ teamId;
     }
 
     @GetMapping("/medication/grocerylist/{medicationId}/{amount}")

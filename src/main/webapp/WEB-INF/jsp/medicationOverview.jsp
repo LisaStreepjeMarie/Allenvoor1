@@ -35,6 +35,7 @@
                                 <td><c:out value="${medication.medicationAmount}" /></td>
                                 <td><c:out value="${medication.medicationComment}" /></td><br>
                                 <td><input class="btn btn-primary" type="button" value="Verwijder medicatie" onclick="window.location='${pageContext.request.contextPath}/medication/delete/${medication.medicationId}';" /></td>
+                                <!-- not the best way to pass along value to the modal but it works for now -LM -->
                                 <td><input onclick="addToGroceryListButton(${medication.medicationId}, ${medication.medicationName}.innerHTML)" class="btn btn-primary" type="button" value="Zet op boodschappenlijst"  data-toggle="modal" /></td>
                             </h5></tr>
                         </c:forEach>
@@ -83,21 +84,16 @@
         </form>
     <script>
 
-
+<!-- function to open the modal and pass along/fill out some info -->
    function addToGroceryListButton(id, name){
-
-    console.log("hallo leuke lisa");
-    console.log(id);
-    console.log(name);
-
     $('#refillMedication').modal('show');
     $('.modal').find('#medicationID').val(id);
     document.getElementById("refillMedicationHeader").innerHTML = name;
 
 }
 
+<!-- ajax call to pass along a medication to the grocerylist including the needed amount -->
    function addMedicationToList(){
-
    id = document.getElementById("medicationID").value;
    amount = document.getElementById("refillAmount").value;
 
