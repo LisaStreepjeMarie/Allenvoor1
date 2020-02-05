@@ -66,15 +66,18 @@ public class MedicationController {
     }
 
     @GetMapping("/medication/grocerylist/{medicationId}/{amount}")
-    public String addMedicationToGrocerylist(@PathVariable("medicationname") String medicationName, @PathVariable ("amount") Integer amount) {
-        int teamId = ((Team) httpSession.getAttribute("team")).getTeamId();
+    public String addMedicationToGrocerylist(@PathVariable("medicationId") Integer medicationId, @PathVariable ("amount") Integer amount) {
 
-        //TODO better to pass along the medicationID somehow
-        medicationRepository.findAll().stream()
-                .filter(x -> x.getMedicationName().equals(medicationName))
-                .filter(x -> x.getTeam().getTeamId().equals(teamId))
-                .map(x -> { x.setGroceryList(teamRepository.findById(teamId).get().getGroceryList()); return x;})
-                .forEach(medicationRepository::save);
+        int teamId = ((Team) httpSession.getAttribute("team")).getTeamId();
+        Optional<Medication> medication = medicationRepository.findById(medicationId);
+
+        if (medication.isPresent()){
+
+            medication.get().setBought();
+            medication.get().setMedicationRefillAmount(amount);
+            medication.get().setGroceryList(teamRepository.findById(teamId).get().getGroceryList());
+            medicationRepository.save(medication.get());
+        }
 
         return "redirect:/medication/"+ teamId;
     }

@@ -14,7 +14,7 @@ import java.util.List;
 public class Medication {
 
     public Medication() {
-        this.bought = false;
+        this.bought = true;
     }
 
     @Id
@@ -118,5 +118,13 @@ public class Medication {
 
     public void removalActivityAddedAmount(Integer integer){
         this.medicationAmount += integer;
+    }
+
+    public int getMedicationRefillAmount() {
+        return medicationRefillAmount;
+    }
+
+    public void setMedicationRefillAmount(int medicationRefillAmount) {
+        this.medicationRefillAmount = medicationRefillAmount;
     }
 }

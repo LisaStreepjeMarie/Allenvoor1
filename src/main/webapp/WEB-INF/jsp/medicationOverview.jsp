@@ -30,12 +30,12 @@
                       <th><th><h5 class="font-weight-light">Naam</h5></th><th><h5 class="font-weight-light">Hoeveelheid</h5></th><th><h5 class="font-weight-light">Beschrijving</h5></th></th>
                         <c:forEach items="${medicationList}" var="medication">
                             <tr><h5>
-                                <td><a href="${pageContext.request.contextPath}/medication/select/<c:out value="${medication.medicationId}" />"</a>
-                                <td><c:out value="${medication.medicationName}" /></td>
+                                <td></td>
+                                <td id ="${medication.medicationName}"><c:out value="${medication.medicationName}" /></td>
                                 <td><c:out value="${medication.medicationAmount}" /></td>
                                 <td><c:out value="${medication.medicationComment}" /></td><br>
-                                <td><input class="btn btn-primary" type="submit" value="Verwijder medicatie" onclick="window.location='${pageContext.request.contextPath}/medication/delete/${medication.medicationId}';" /></td>
-                                <td><input id="groceryListButton" class="btn btn-primary" data-id="${medication.medicationId}" data-name="${medication.medicationName}" type="submit" value="Zet op boodschappenlijst"  data-toggle="modal" /></td>
+                                <td><input class="btn btn-primary" type="button" value="Verwijder medicatie" onclick="window.location='${pageContext.request.contextPath}/medication/delete/${medication.medicationId}';" /></td>
+                                <td><input onclick="addToGroceryListButton(${medication.medicationId}, ${medication.medicationName}.innerHTML)" class="btn btn-primary" type="button" value="Zet op boodschappenlijst"  data-toggle="modal" /></td>
                             </h5></tr>
                         </c:forEach>
                     </table>
@@ -84,21 +84,17 @@
     <script>
 
 
+   function addToGroceryListButton(id, name){
 
-   $("#groceryListButton").click(function(){ // Click to only happen on announce links
-   var name = $(this).attr('data-name');
-   var medicationId = $(this).attr('data-id');
-    console.log("hallo stomme lisa");
-    console.log(medicationId);
+    console.log("hallo leuke lisa");
+    console.log(id);
     console.log(name);
-<!--     $("#refillMedicationHeader").append(name);-->
-     $('#refillMedication').modal('show');
-<!--     document.getElementById("medicationID").value = name ;-->
-     $('.modal').find('#medicationID').val(medicationId);
-     document.getElementById("refillMedicationHeader").innerHTML = name;
-   });
 
-    console.log
+    $('#refillMedication').modal('show');
+    $('.modal').find('#medicationID').val(id);
+    document.getElementById("refillMedicationHeader").innerHTML = name;
+
+}
 
    function addMedicationToList(){
 
