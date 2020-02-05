@@ -63,7 +63,7 @@ public class Event {
     @JsonProperty("interval")
     private String eventInterval;
 
-    @JsonProperty("eventMaxNumber")
+    @JsonProperty("maxNumber")
     private Integer eventMaxNumber;
 
     @JsonProperty("donedate")

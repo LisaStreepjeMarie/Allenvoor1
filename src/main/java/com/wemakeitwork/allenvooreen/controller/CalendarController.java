@@ -81,12 +81,12 @@ public class CalendarController {
         return "calendar";
     }
 
-    public static String addOneDayJodaTime(String date, int i) {
+    public static String addDaysJodaTime(String date, int i) {
         DateTime dateTime = new DateTime(date);
                 return dateTime
                         .plusDays(i)
-                        .toString("dd-MM-yyyy HH:mm");
-                        // .toString("yyyy-MM-dd");
+                        // .toString("dd-MM-yyyy HH:mm");
+                        .toString("yyyy-MM-dd");
     }
 
     @PostMapping("/calendar/new/event")
@@ -106,10 +106,10 @@ public class CalendarController {
         System.out.println("Converted String: " + strStartDate);
 
         int i = 0;
-        Integer maxNumber = event.getEventMaxNumber();
+        int maxNumber = event.getEventMaxNumber() + 1;
         if (event.getEventInterval().equals("day")) {
-            for (i = 1; i <= maxNumber; i++) {
-                String strStartDateExtraEvent = addOneDayJodaTime(strStartDate, i);
+            for (i = 0; i < maxNumber; i++) {
+                String strStartDateExtraEvent = addDaysJodaTime(strStartDate, i);
                 System.out.println("strStartDateExtraEvent is: " + strStartDateExtraEvent);
 
                 eventRepository.save(event);
