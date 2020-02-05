@@ -43,6 +43,13 @@ function fillModal(event) {
         $("#delete-event").show();
         $('.modal').find('#eventName').val(event.title);
         $('.modal').find('#eventComment').val(event.comment);
+        $('.modal').find('#eventInterval').val(event.interval);
+        $('.modal').find('#eventMaxNumber').val(event.maxNumber);
+        if(event.interval != null) {
+            document.getElementById("eventPeriodic").checked = true;
+            $("#intervalDiv").show();
+            $("#maxNumberDiv").show();
+        }
     } else {
         document.getElementById("modal-title").innerHTML = "Maak nieuwe afspraak";
         document.getElementById("save-change-event").innerHTML = "Maak afspraak";
