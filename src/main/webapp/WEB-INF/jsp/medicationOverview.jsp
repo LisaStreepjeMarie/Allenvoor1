@@ -4,6 +4,7 @@
 
 <html xmlns:c="">
     <head>
+        <meta charset='utf-8' />
         <title>Medicatieoverzicht</title>
 
         <script src="${pageContext.request.contextPath}/webjars/jquery/3.4.1/jquery.min.js"></script>
@@ -71,17 +72,18 @@
         </div>
         </form>
     <script>
-
      $.ajax({
              type:'GET',
              url: "${pageContext.request.contextPath}/medication/getList",
              success : function(result) {
              medicationList = result.data;
              for (i in medicationList ) {
-             $('#allMedications').append('<tr><h5><td></td><td id ="' +
-             medicationList[i].name + '">' + medicationList[i].name + '</td><td>' +
-             medicationList[i].amount + '</td><td>' + medicationList[i].comment + '</td><br><td><input class="btn btn-primary" type="button" value="Verwijder medicatie" onclick="window.location="${pageContext.request.contextPath}/medication/delete/'
-             + medicationList[i].id + '";" /></td><td><input onclick="addToGroceryListButton(' + medicationList[i].id + ',' + medicationList[i].name + '.innerHTML)" class="btn btn-primary" type="button" value="Zet op boodschappenlijst"  data-toggle="modal" /></td></h5></tr>');
+             $('#allMedications').append('<table><tr><td></td><td id ="' +
+             medicationList[i].name + '"> ' + medicationList[i].name + '</td><td> ' +
+             medicationList[i].amount + '</td><td>' + medicationList[i].comment
+              + '</td><td><input class="btn btn-primary" type="button" value="Verwijder medicatie" onclick="window.location="${pageContext.request.contextPath}/medication/delete/'
+             + medicationList[i].id +'";" /></td><td><input onclick="addToGroceryListButton('
+             + medicationList[i].id + ',' + medicationList[i].name + '.innerHTML)" class="btn btn-primary" type="button" value="Zet op boodschappenlijst"  data-toggle="modal" /></td></tr></table>');
              }
                 console.log("woop w00p")
                  },
@@ -89,6 +91,13 @@
                  console.log("ERROR: ", e);
              }
         });
+
+        <!-- function to open the modal and pass along/fill out some info -->
+           function addToGroceryListButton(id, name){
+            $('#refillMedication').modal('show');
+            $('.modal').find('#medicationID').val(id);
+            document.getElementById("refillMedicationHeader").innerHTML = name;
+        }
 
 <!-- function to open the modal and pass along/fill out some info -->
    function addToGroceryListButton(id, name){
