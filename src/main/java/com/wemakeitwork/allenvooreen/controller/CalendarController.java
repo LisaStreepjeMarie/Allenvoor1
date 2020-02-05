@@ -89,6 +89,22 @@ public class CalendarController {
                         .toString("yyyy-MM-dd");
     }
 
+    public static String addWeeksJodaTime(String date, int i) {
+        DateTime dateTime = new DateTime(date);
+        return dateTime
+                .plusWeeks(i)
+                // .toString("dd-MM-yyyy HH:mm");
+                .toString("yyyy-MM-dd");
+    }
+
+    public static String addMonthsJodaTime(String date, int i) {
+        DateTime dateTime = new DateTime(date);
+        return dateTime
+                .plusMonths(i)
+                // .toString("dd-MM-yyyy HH:mm");
+                .toString("yyyy-MM-dd");
+    }
+
     @PostMapping("/calendar/new/event")
     public ResponseEntity<Object> newEvent(@RequestBody String newEventJson) throws JsonProcessingException {
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -107,14 +123,29 @@ public class CalendarController {
 
         int i = 0;
         int maxNumber = event.getEventMaxNumber() + 1;
-        if (event.getEventInterval().equals("day")) {
-            for (i = 0; i < maxNumber; i++) {
-                String strStartDateExtraEvent = addDaysJodaTime(strStartDate, i);
-                System.out.println("strStartDateExtraEvent is: " + strStartDateExtraEvent);
-
-                eventRepository.save(event);
+        for (i = 0; i < maxNumber; i++) {
+            switch (event.getEventInterval()) {
+                case "day": {
+                    String strStartDateExtraEvent = addDaysJodaTime(strStartDate, i);
+                    System.out.println("strStartDateExtraEvent is: " + strStartDateExtraEvent);
+                    eventRepository.save(event);
+                    break;
+                }
+                case "week": {
+                    String strStartDateExtraEvent = addWeeksJodaTime(strStartDate, i);
+                    System.out.println("strStartDateExtraEvent is: " + strStartDateExtraEvent);
+                    eventRepository.save(event);
+                    break;
+                }
+                case "month": {
+                    String strStartDateExtraEvent = addMonthsJodaTime(strStartDate, i);
+                    System.out.println("strStartDateExtraEvent is: " + strStartDateExtraEvent);
+                    eventRepository.save(event);
+                    break;
+                }
             }
         }
+
         // this sets the activity to the medication from the activity
         if (event.getActivity() instanceof MedicationActivity){
             setActivityToMedication(event);
