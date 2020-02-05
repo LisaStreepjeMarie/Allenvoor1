@@ -132,8 +132,10 @@
                     </div>
                     <div class="modal-body" id="maxNumberDiv">
                         <div class="row">
-                            <label class="col-4" for="eventMaxNumber" control-label>Aantal keer</label>
-                            <input type="text" size="2" name="eventMaxNumber" id="eventMaxNumber" />
+                            <!-- <label class="col-4" for="eventNumberToGoLabel" id="eventNumberToGoLabel" control-label>Aantal keer nog over</label>
+                            <label class="col-4" for="eventMaxNumberLabel" id="eventMaxNumberLabel" control-label>Aantal keer</label> -->
+                            <label class="col-4" for="eventMaxNumberLabel" id="eventMaxNumberLabel" control-label>Aantal keer</label>
+                            <input type="text" size="1" name="eventMaxNumber" id="eventMaxNumber" />
                         </div>
                     </div>
                     <!-- </div> -->

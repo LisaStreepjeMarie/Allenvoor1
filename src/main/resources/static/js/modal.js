@@ -46,9 +46,13 @@ function fillModal(event) {
         $('.modal').find('#eventInterval').val(event.interval);
         $('.modal').find('#eventMaxNumber').val(event.maxNumber);
         if(event.interval != null) {
-            document.getElementById("eventPeriodic").checked = true;
+            document.getElementById("eventPeriodic").checked;
+            //todo
+            alert($('.modal').find('#eventInterval').val(event.interval));
             $("#intervalDiv").show();
             $("#maxNumberDiv").show();
+            /* $("#eventMaxNumberLabel").show();
+            $("#eventNumberToGoLabel").hide(); */
         }
     } else {
         document.getElementById("modal-title").innerHTML = "Maak nieuwe afspraak";
@@ -62,6 +66,9 @@ function fillModal(event) {
         if(document.getElementById("eventPeriodic").checked == true) {
                 $("#intervalDiv").show();
                 $("#maxNumberDiv").show();
+                /* $("#eventNumberToGoLabel").hide();
+                $("#eventMaxNumberLabel").show(); */
+
         } else {
                 document.getElementById("eventPeriodic").removeAttribute("required");
                 $("#intervalDiv").hide();

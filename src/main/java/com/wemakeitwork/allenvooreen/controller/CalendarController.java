@@ -83,13 +83,11 @@ public class CalendarController {
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         Event event = mapper.readValue(newEventJson, Event.class);
 
-
         System.out.println(event.getEventId());
-        System.out.println("eventStartDate is " + event.getEventStartDate());
-        System.out.println("eventInterval is: " + event.getEventInterval());
-
         Date startDateTime = event.getEventStartDate();
         Date endDateTime = event.getEventEndDate();
+        System.out.println("eventStartDate is " + startDateTime);
+        System.out.println("eventInterval is: " + endDateTime);
 
         int i = 0;
         Integer maxNumber = event.getEventMaxNumber();
@@ -122,6 +120,7 @@ public class CalendarController {
                 event = mapper.readValue(newEventJson, Event.class);
                 event.setEventStartDate(startDateTimeExtraEvent);
                 event.setEventEndDate(endDateTimeExtraEvent);
+                event.setEventMaxNumber(maxNumber - i);
                 eventRepository.save(event);
             }
         }
