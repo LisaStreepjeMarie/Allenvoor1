@@ -29,6 +29,8 @@
                              <td><c:out value="${membership.member.memberName}" /></td>
                              <td><input class="btn btn-primary" type="submit" value="Verwijder"
                                   onclick="window.location='${pageContext.request.contextPath}/team/${team.teamId}/delete/membership/${membership.membershipId}'" /></td>
+                             <td><input class="btn btn-primary" type="submit" value="Geef beheerderrechten"
+                                        onclick="window.location='${pageContext.request.contextPath}/team/grantadmin/${team.teamId}/${membership.member.memberId}'" /></td>
                          </tr>
                         </c:forEach>
                      </table>

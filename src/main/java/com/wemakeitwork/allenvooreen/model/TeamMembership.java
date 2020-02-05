@@ -16,7 +16,7 @@ public class TeamMembership {
     @ManyToOne(fetch= FetchType.EAGER)
     private Member member;
 
-    boolean isAdmin;
+    boolean isAdmin = false;
 
     public TeamMembership(Team team, Member member, boolean isAdmin) {
         this.team = team;

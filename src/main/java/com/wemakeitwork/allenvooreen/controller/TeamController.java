@@ -151,7 +151,7 @@ public class TeamController {
     }
 
 
-    @GetMapping("/team/toggleadmin/{teamId}")
+    @GetMapping("/team/quitadmin/{teamId}")
     public String toggleAdmin(@PathVariable("teamId") final Integer teamId) {
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -164,6 +164,20 @@ public class TeamController {
                 .map(x -> { x.setAdmin(!x.isAdmin()); return x;}).forEach(teamMembershipRepository::save);
 
         return "redirect:/team/all";
+    }
+
+    @GetMapping("/team/grantadmin/{teamId}/{memberId}")
+    public String grantAdmin(@PathVariable("teamId") final Integer teamId,
+                              @PathVariable("teamId") final Integer memberId) {
+        teamMembershipRepository.findAll().stream()
+                // Find all memberships of member
+                .filter(x -> x.getMember().getMemberId().equals(memberId))
+                // filter the team that is passed with the pathvariable (ignore other teams from member)
+                .filter(x -> x.getTeam().getTeamId().equals(teamId))
+                // Toggle the boolean isAdmin in the detached object and save it to the database
+                .map(x -> { x.setAdmin(true); return x;}).forEach(teamMembershipRepository::save);
+
+        return "/team/select/${teamId}";
     }
 
     @GetMapping("/team/quit/{teamId}")
