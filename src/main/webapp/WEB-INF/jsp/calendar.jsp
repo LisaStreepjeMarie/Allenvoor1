@@ -111,15 +111,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="modal-body" >
-                        <div class="modal-body" id="eventPeriodicDiv">
+                    <div class="modal-body" id="eventPeriodicDiv">
+                        <div class="modal-body">
                             <div class="row">
                                 <label class="col-xs-4" for="eventPeriodic">Periodieke afspraak?&nbsp;</label>
                                 <input type="checkbox" id="eventPeriodic" name="eventPeriodic"/>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-body" id="eventIsPeriodic">
+                    <!-- </div>
+                    <div class="modal-body" id="eventIsPeriodic"> -->
                         <div class="row" id="intervalDiv">
                            <label class="col-4" for="eventInterval" control-label>Frequentie</label>
                            <select name="event.eventInterval" id="eventInterval" >
@@ -129,9 +129,9 @@
                                <option value="month">maand</option>
                            </select>
                         </div>
-                        <div class="row" id="repeatedNumberDiv">
-                            <label class="col-4" for="eventRepeatedNumber" control-label>Aantal keer</label>
-                            <input type="text" size="2" name="eventRepeatedNumber" id="eventRepeatedNumber" />
+                        <div class="row" id="maxNumberDiv">
+                            <label class="col-4" for="eventMaxNumber" control-label>Aantal keer</label>
+                            <input type="text" size="2" name="eventMaxNumber" id="eventMaxNumber" />
                         </div>
                     </div>
                     <div class="modal-body" >

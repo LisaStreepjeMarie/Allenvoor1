@@ -81,10 +81,10 @@ public class CalendarController {
         return "calendar";
     }
 
-    public static String addOneDayJodaTime(String date) {
+    public static String addOneDayJodaTime(String date, int i) {
         DateTime dateTime = new DateTime(date);
                 return dateTime
-                        .plusDays(1)
+                        .plusDays(i)
                         .toString("dd-MM-yyyy HH:mm");
                         // .toString("yyyy-MM-dd");
     }
@@ -99,17 +99,21 @@ public class CalendarController {
 
         // Date date = Calendar.getInstance().getTime();
         Date date = event.getEventStartDate();
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        // DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         // DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-        // DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String strStartDate = dateFormat.format(date);
         System.out.println("Converted String: " + strStartDate);
 
+        int i = 0;
+        Integer maxNumber = event.getEventMaxNumber();
         if (event.getEventInterval().equals("day")) {
-            String strStartDateExtraEvent = addOneDayJodaTime(strStartDate);
-            System.out.println("strStartDateExtraEvent is: " + strStartDateExtraEvent);
+            for (i = 1; i <= maxNumber; i++) {
+                String strStartDateExtraEvent = addOneDayJodaTime(strStartDate, i);
+                System.out.println("strStartDateExtraEvent is: " + strStartDateExtraEvent);
 
-            eventRepository.save(event);
+                eventRepository.save(event);
+            }
         }
         // this sets the activity to the medication from the activity
         if (event.getActivity() instanceof MedicationActivity){

@@ -63,6 +63,9 @@ public class Event {
     @JsonProperty("interval")
     private String eventInterval;
 
+    @JsonProperty("eventMaxNumber")
+    private Integer eventMaxNumber;
+
     @JsonProperty("donedate")
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private java.util.Date eventDoneDate;
@@ -80,7 +83,8 @@ public class Event {
     }
 
     public Event(Integer eventId, @NotBlank(message = "veld mag niet blank zijn") String eventName, Date eventStartDate,
-                 Date eventEndDate, String eventComment, String eventInterval, Date eventDoneDate, Activity activity,
+                 Date eventEndDate, String eventComment, String eventInterval, Integer eventMaxNumber,
+                 Date eventDoneDate, Activity activity,
                  Team team) {
         this.eventId = eventId;
         this.eventName = eventName;
@@ -88,9 +92,18 @@ public class Event {
         this.eventEndDate = eventEndDate;
         this.eventComment = eventComment;
         this.eventInterval = eventInterval;
+        this.eventMaxNumber = eventMaxNumber;
         this.eventDoneDate = eventDoneDate;
         this.activity = activity;
         this.team = team;
+    }
+
+    public Integer getEventMaxNumber() {
+        return eventMaxNumber;
+    }
+
+    public void setEventMaxNumber(Integer eventMaxNumber) {
+        this.eventMaxNumber = eventMaxNumber;
     }
 
     public String getEventInterval() {

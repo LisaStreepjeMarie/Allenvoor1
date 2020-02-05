@@ -29,6 +29,7 @@ function showModalInputFields() {
     } else {
         $("#eventNameDiv, #eventDateStartEndDiv, #eventDatesDiv, #eventCommentDiv, #modal-footer").show();
     }
+    $("#eventMaxNumber").css("display", "");
     $("#eventDoneDiv").css("display", "");
 }
 
