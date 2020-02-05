@@ -84,6 +84,7 @@ public class GroceryListController {
             medication.setMedicationRefillAmount(0);
             medication.setBought(true);
         }
+        medication.setMedicationRefillAmount(0);
         medicationRepository.save(medication);
         return new ResponseEntity<Object>("success!", HttpStatus.OK);
     }

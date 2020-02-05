@@ -1,4 +1,4 @@
-// set up to send a CSRF token with ajax for postmapping
+        // set up to send a CSRF token with ajax for postmapping
 $.ajaxSetup({
     beforeSend: function(xhr) {
         xhr.setRequestHeader('X-CSRF-TOKEN', $('#csrfToken').attr('data-csrfToken'));
@@ -66,7 +66,7 @@ function addGroceryItem(newGroceryItem){
         async: true,
         success: function(result) {
             $('#groceryItem').append('<li class="listItem" value="' + result.data.id + '">' + result.data.title + '</li>');
-            closeButtonOnAll();
+            addCloseAndListener();
             console.log("woop woop");
         },
         error: function(e) {
@@ -97,7 +97,7 @@ for (i = 0; i < allGroceriesInList.length; i++) {
       allGroceriesInList[i].appendChild(span);
 }
 
-// this part makes sure the item gets deleten when clicked and also the X dissapears
+// this part makes sure the item gets deleted when clicked and also the X dissapears
 var close = document.getElementsByClassName("close");
 var i;
 for (i = 0; i < close.length; i++) {
@@ -173,4 +173,38 @@ function getAllItemsFromDataBase(){
              console.log("ERROR: ", e);
          }
     });
+}
+
+function addCloseAndListener(){
+var allGroceriesInList = document.getElementsByClassName("listItem");
+var i = allGroceriesInList.length - 1;
+      allGroceriesInList[i].addEventListener('click', function(ev) {
+      // adding the clicked action to each item in the list
+      if (ev.target.tagName === 'LI') {
+      var type = ev.target.parentNode.id
+      boughtBoolean(type, ev.target.value);
+      ev.target.classList.toggle('checked');
+        }
+      }, false);
+
+      var span = document.createElement("SPAN");
+      var txt = document.createTextNode("\u00D7");
+      span.className = "close";
+      span.appendChild(txt);
+      allGroceriesInList[i].appendChild(span);
+
+// this part makes sure the item gets deleted when clicked and also the X dissapears
+var close = document.getElementsByClassName("close");
+var i;
+for (i = 0; i < close.length; i++) {
+      close[i].onclick = function()   {
+            var div = this.parentElement;
+            var type = div.parentElement.id;
+            var groceryItemId = div.value;
+            div.style.display = "none";
+            removeGroceryItem(type, groceryItemId);
+      }
+
+  }
+
 }
