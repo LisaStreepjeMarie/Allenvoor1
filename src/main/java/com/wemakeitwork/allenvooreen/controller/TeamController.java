@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -81,19 +82,17 @@ public class TeamController {
 
     @GetMapping("/team/select/{teamId}")
     protected String showChangeTeam(@PathVariable("teamId") final Integer teamId, Model model) {
-        Optional<Team> teamOpt = teamRepository.findById(teamId);
-        Team team;
-        team = teamOpt.orElseGet(Team::new);
-        Integer addMembernameToTeam = 0;
+        Team team = teamRepository.getOne(teamId);
+        List<TeamMembership> teamMemberList = team.getTeamMemberships().stream().filter(x -> !x.isAdmin()).collect(Collectors.toList());
+        List<TeamMembership> teamAdminList = team.getTeamMemberships().stream().filter(x -> x.isAdmin()).collect(Collectors.toList());
 
         TeamMemberDTO teamMemberDTO = new TeamMemberDTO();
         teamMemberDTO.setTeamId(teamId);
 
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (teamMembershipRepository.findByTeamAndMember(team, member).isAdmin()) {
-            model.addAttribute("team", new Team());
-            model.addAttribute("addMembernameToTeam", addMembernameToTeam);
-            model.addAttribute("team", team);
+            model.addAttribute("teamMemberList", teamMemberList);
+            model.addAttribute("teamAdminList", teamAdminList);
             model.addAttribute("teamMemberDTO", teamMemberDTO);
             return "changeTeam";
         } else {
