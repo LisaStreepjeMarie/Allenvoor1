@@ -53,7 +53,7 @@ public class Medication {
     private Team team;
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, mappedBy = "medication")
+    @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY, mappedBy = "medication")
     private List<MedicationActivity> takenMedications;
 
     @JsonProperty("bought")
@@ -116,12 +116,16 @@ public class Medication {
         this.team = team;
     }
 
-    public void removalActivityAddedAmount(Integer integer){
+    public void upTheMedicationAmount(Integer integer){
         this.medicationAmount += integer;
     }
 
     public int getMedicationRefillAmount() {
         return medicationRefillAmount;
+    }
+
+    public void upTheRefillAmount(Integer integer){
+        this.medicationRefillAmount += integer;
     }
 
     public void setMedicationRefillAmount(int medicationRefillAmount) {

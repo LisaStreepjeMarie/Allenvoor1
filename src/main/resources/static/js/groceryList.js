@@ -155,9 +155,9 @@ function getAllItemsFromDataBase(){
                 GroceryList = result.data.groceries;
                  for (i in MedicationList ) {
                      if (MedicationList[i].bought){
-                     $('#allMedications').append('<li class="checked listItem" value="' + MedicationList[i].id + '"><i class="fas fa-pills fa-lg" style="color:#e6b3ff;"></i>' + MedicationList[i].name + '</li>');
+                     $('#allMedications').append('<li class="checked listItem" value="' + MedicationList[i].id + '"><i class="fas fa-pills fa-lg" style="color:#e6b3ff;"></i>' + MedicationList[i].name + '<span class="badge badge-primary badge-pill">' + MedicationList[i].refillamount + '</span></li>');
                      } else {
-                     $('#allMedications').append('<li class="listItem" value="' + MedicationList[i].id + '"><i class="fas fa-pills fa-lg" style="color:#e6b3ff;"></i>' + MedicationList[i].name + '</li>');
+                     $('#allMedications').append('<li class="listItem" value="' + MedicationList[i].id + '"><i class="fas fa-pills fa-lg" style="color:#e6b3ff;"></i>' + MedicationList[i].name +'<span class="badge badge-primary badge-pill">' + MedicationList[i].refillamount + '</span></li>');
                      }
                  }
                  for (i in GroceryList){

@@ -79,6 +79,10 @@ public class GroceryListController {
     public  ResponseEntity<Object> deletemedicationItemFromGroceryList(@PathVariable("medicationId") final Integer medicationId){
         Medication medication = medicationRepository.getOne(medicationId);
         medication.setGroceryList(null);
+        if(medication.getBought()){
+            medication.upTheMedicationAmount(medication.getMedicationRefillAmount());
+            medication.setMedicationRefillAmount(0);
+        }
         medicationRepository.save(medication);
         return new ResponseEntity<Object>("success!", HttpStatus.OK);
     }
