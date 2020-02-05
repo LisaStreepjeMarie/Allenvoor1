@@ -118,22 +118,25 @@
                                 <input type="checkbox" id="eventPeriodic" name="eventPeriodic"/>
                             </div>
                         </div>
+                        <!-- <div class="modal-body" id="eventIsPeriodic"> -->
+                            <div class="row" id="intervalDiv">
+                               <label class="col-4" for="eventInterval" control-label>Frequentie</label>
+                               <select name="event.eventInterval" id="eventInterval" >
+                                   <option disabled selected="selected" value="">Elke</option>
+                                   <option value="day">dag</option>
+                                   <option value="week">week</option>
+                                   <option value="month">maand</option>
+                               </select>
+                            </div>
+                         <!-- </div> -->
                     </div>
-                    <div class="modal-body" id="eventIsPeriodic">
-                        <div class="row" id="intervalDiv">
-                           <label class="col-4" for="eventInterval" control-label>Frequentie</label>
-                           <select name="event.eventInterval" id="eventInterval" >
-                               <option disabled selected="selected" value="">Elke</option>
-                               <option value="day">dag</option>
-                               <option value="week">week</option>
-                               <option value="month">maand</option>
-                           </select>
-                        </div>
-                        <div class="row" id="maxNumberDiv">
+                    <div class="modal-body" id="maxNumberDiv">
+                        <div class="row">
                             <label class="col-4" for="eventMaxNumber" control-label>Aantal keer</label>
                             <input type="text" size="2" name="eventMaxNumber" id="eventMaxNumber" />
                         </div>
                     </div>
+                    <!-- </div> -->
                     <div class="modal-body" >
                         <div class="modal-body" >
                             <div class="row" id="eventDoneDiv">
@@ -150,7 +153,7 @@
                         </div>
                     </div>
                 </div>
-                    </span>
+                </span>
                 <div class="modal-footer" id="modal-footer">
                     <button type="button" id="delete-event" class="btn btn-danger" data-dismiss="modal">Verwijder Afspraak</button>
                     <button type="button" class="btn btn-light" data-dismiss="modal">Sluiten</button>

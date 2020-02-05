@@ -18,7 +18,7 @@ $('#datetimepickerDone').datetimepicker();
 
 // This function hides all modal options
 function hideAllModalInputFields() {
-    $("#datetimepickerDone, #eventNameDiv, #eventCommentDiv, #medicationChoiceDiv, #eventDatesDiv, #takenMedicationDiv").css("display", "none");
+    $("#datetimepickerDone, #intervalDiv, #maxNumberDiv, #eventNameDiv, #eventCommentDiv, #medicationChoiceDiv, #eventDatesDiv, #takenMedicationDiv").css("display", "none");6
 }
 
 // This function fills the modal with event info if it exist
@@ -29,6 +29,7 @@ function showModalInputFields() {
     } else {
         $("#eventNameDiv, #eventDateStartEndDiv, #eventDatesDiv, #eventCommentDiv, #modal-footer").show();
     }
+    $("#eventInterval").css("display", "");
     $("#eventMaxNumber").css("display", "");
     $("#eventDoneDiv").css("display", "");
 }
@@ -52,10 +53,12 @@ function fillModal(event) {
     // this shows/hides the eventPeriodic input field when the checkbox is toggled
     $("#eventPeriodic").change(function () {
         if(document.getElementById("eventPeriodic").checked == true) {
-                $("#eventIsPeriodic").show()
+                $("#intervalDiv").show();
+                $("#maxNumberDiv").show();
         } else {
                 document.getElementById("eventPeriodic").removeAttribute("required");
-                $("#eventIsPeriodic").hide()
+                $("#intervalDiv").hide();
+                $("#maxNumberDiv").hide()
         }
     });
 
