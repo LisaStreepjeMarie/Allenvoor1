@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 
 import javax.persistence.Basic;
@@ -48,16 +49,22 @@ public class Event {
     @NotBlank(message = "veld mag niet blank zijn")
     private String eventName;
 
-    @Basic
+    /* @Basic
     @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty("start")
-    // private java.util.Date eventStartDate;
+    private java.util.Date eventStartDate; */
+
+    @Column
+    @Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
     private DateTime eventStartDate;
 
-    @Basic
+    /* @Basic
     @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty("end")
-    // private java.util.Date eventEndDate;
+    private java.util.Date eventEndDate; */
+
+    @Column
+    @Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
     private DateTime eventEndDate;
 
     @JsonProperty("comment")

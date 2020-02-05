@@ -3,6 +3,7 @@ package com.wemakeitwork.allenvooreen.controller;
 import com.wemakeitwork.allenvooreen.model.Event;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import com.wemakeitwork.allenvooreen.service.ServiceResponse;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,8 +26,8 @@ public class CalendarRestController {
                                                       @PathVariable("enddate") final long endDateEpoch) {
 
         List<Event> allEvents =  teamRepository.getOne(teamId).getEventList().stream()
-                .filter(x -> x.getEventStartDate().after(new Date(startDateEpoch)))
-                .filter(x -> x.getEventEndDate().before(new Date(endDateEpoch)))
+                .filter(x -> x.getEventStartDate().isAfter(new DateTime(startDateEpoch)))
+                .filter(x -> x.getEventEndDate().isBefore(new DateTime(endDateEpoch)))
                 .collect(Collectors.toList());
 
         /*for (Event event : allEvents) {

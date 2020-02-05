@@ -1,6 +1,7 @@
 package com.wemakeitwork.allenvooreen.model;
 
 import org.assertj.core.api.Assertions;
+import org.joda.time.DateTime;
 import org.junit.jupiter.api.Test;
 
 import java.util.Date;
@@ -69,7 +70,7 @@ class EventTest {
     @Test
     void getEventDate() {
         //arrange
-        Date testdate = new Date(2323223232L);
+        DateTime testdate = new DateTime(2323223232L);
         testEvent.setEventStartDate(testdate);
 
         //assert
@@ -79,7 +80,7 @@ class EventTest {
     @Test
     void setEventDate() {
         //arrange
-        Date testdate = new Date(2323223232L);
+        DateTime testdate = new DateTime(2323223232L);
         testEvent.setEventStartDate(testdate);
 
         //assert

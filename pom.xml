@@ -17,6 +17,7 @@
 
     <properties>
         <java.version>11</java.version>
+        <property type="org.joda.time.contrib.hibernate.PersistentDateTime" name="dateTime"/>
     </properties>
 
     <dependencies>
@@ -142,7 +143,6 @@
             <artifactId>font-awesome</artifactId>
             <version>4.7.0</version>
         </dependency>
-
 
         <!-- bootstrap -->
         <dependency>
