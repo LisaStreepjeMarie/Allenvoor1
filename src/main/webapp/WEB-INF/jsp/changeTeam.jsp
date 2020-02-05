@@ -57,6 +57,19 @@
                         </table>
                     </form:form>
 
+                    <form:form action="${pageContext.request.contextPath}/team/change" modelAttribute="team">
+                        <form:input path="teamId" type="hidden" />
+                        <form:input path="teamMemberships" type="hidden" />
+                        <table>
+                            <tr>
+                                <td><h5 class="font-weight-light">Groepsnaam:</h5></td>
+                                <td>
+                                    <form:input size="30" path="teamName" value="${membership.team.teamName}" /></form>
+                                    <input class="btn btn-primary" type="submit" value="Wijzig" />
+                                </td>
+                            </tr>
+                        </table>
+                    </form:form>
                 </div>
             </div>
         </div>
