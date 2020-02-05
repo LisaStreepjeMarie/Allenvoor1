@@ -125,7 +125,7 @@ public class CalendarController {
 
         int i = 0;
         int maxNumber = event.getEventMaxNumber();
-        for (i = 1; i < maxNumber; i++) {
+        for (i = 0; i < maxNumber; i++) {
             Date startDateTimeExtraEvent = null;
             Date endDateTimeExtraEvent = null;
             //joda-time
@@ -160,6 +160,10 @@ public class CalendarController {
             }
             System.out.println("startDateTimeExtraEvent is: " + startDateTimeExtraEvent);
             System.out.println("endDateTimeExtraEvent is: " + endDateTimeExtraEvent);
+
+            event = mapper.readValue(newEventJson, Event.class);
+            event.setEventStartDate(startDateTimeExtraEvent);
+            event.setEventEndDate(endDateTimeExtraEvent);
             eventRepository.save(event);
         }
 
