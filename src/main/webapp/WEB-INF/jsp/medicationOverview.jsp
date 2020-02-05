@@ -4,6 +4,7 @@
 
 <html xmlns:c="">
     <head>
+        <meta charset='utf-8' />
         <title>Medicatieoverzicht</title>
 
         <script src="${pageContext.request.contextPath}/webjars/jquery/3.4.1/jquery.min.js"></script>
@@ -27,7 +28,7 @@
                 <div class="mt-3 col-12">
                    <h3 class="font-weight-light"> Overzicht medicatie ${team.teamName}</h3>
                     <table>
-                      <th><th><h5 class="font-weight-light">Naam</h5></th><th><h5 class="font-weight-light">Hoeveelheid</h5></th><th><h5 class="font-weight-light">Beschrijving</h5></th></th>
+                      <th><h5 class="font-weight-light">Naam</h5></th><th><h5 class="font-weight-light">Hoeveelheid</h5></th><th><h5 class="font-weight-light">Beschrijving</h5></th></th>
                     </table>
                     <p>
                      <div id="allMedications">
@@ -70,25 +71,29 @@
             </div>
         </div>
         </form>
-    <script>
 
+    <script>
      $.ajax({
-             type:'GET',
-             url: "${pageContext.request.contextPath}/medication/getList",
-             success : function(result) {
-             medicationList = result.data;
-             for (i in medicationList ) {
-             $('#allMedications').append('<tr><h5><td></td><td id ="' +
-             medicationList[i].name + '">' + medicationList[i].name + '</td><td>' +
-             medicationList[i].amount + '</td><td>' + medicationList[i].comment + '</td><br><td><input class="btn btn-primary" type="button" value="Verwijder medicatie" onclick="window.location="${pageContext.request.contextPath}/medication/delete/'
-             + medicationList[i].id + '";" /></td><td><input onclick="addToGroceryListButton(' + medicationList[i].id + ',' + medicationList[i].name + '.innerHTML)" class="btn btn-primary" type="button" value="Zet op boodschappenlijst"  data-toggle="modal" /></td></h5></tr>');
-             }
-                console.log("woop w00p")
-                 },
-                 error : function(e) {
-                 console.log("ERROR: ", e);
-             }
-        });
+            type:'GET',
+                  url: "${pageContext.request.contextPath}/medication/getList",
+                  success : function(result) {
+                  medicationList = result.data;
+                  for (i in medicationList ) {
+                     addMedication(medicationList[i])
+                     }
+                     console.log("woop w00p")
+                      },
+                      error : function(e) {
+                      console.log("ERROR: ", e);
+                  }
+             });
+
+<!-- function to open the modal and pass along/fill out some info -->
+    function addToGroceryListButton(id, name){
+    $('#refillMedication').modal('show');
+    $('.modal').find('#medicationID').val(id);
+    document.getElementById("refillMedicationHeader").innerHTML = name
+}
 
 <!-- function to open the modal and pass along/fill out some info -->
    function addToGroceryListButton(id, name){
@@ -116,7 +121,20 @@
     $('#refillMedication').modal('toggle');
     $('#refillForm').trigger("reset");
 }
+
+       function deleteMedication(medicationNumber){
+       window.location="${pageContext.request.contextPath}/medication/delete/" + medicationNumber;
+}
+
+       function addMedication(medication){
+        $('#allMedications').append('<table><tr><td id ="' +
+             medication.name + '">' + medication.name + '</td><td>' +
+             medication.amount + '</td><td>' + medication.comment +
+             '</td><td><input class="btn btn-primary deleteButton" onclick="deleteMedication(' + medication.id
+             + ')"  type="button" value="Verwijder medicatie" /><input type="hidden" name="medicationID" value="'
+             + medication.id + ' id="medicationNumber" /></td><td><input onclick="addToGroceryListButton(' + medication.id
+             + ',' + medication.name + '.innerHTML)" class="btn btn-primary" type="button" value="Zet op boodschappenlijst"  data-toggle="modal" /></td></tr></table>');
+            }
     </script>
    </body>
 </html>
-
