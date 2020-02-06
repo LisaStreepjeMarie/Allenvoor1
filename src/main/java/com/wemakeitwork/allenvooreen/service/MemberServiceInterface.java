@@ -8,4 +8,5 @@ public interface MemberServiceInterface {
     void save(Member member);
 
     Optional<Member> findByMembername(String membername);
+
 }

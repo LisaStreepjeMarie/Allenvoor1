@@ -9,10 +9,16 @@ import com.wemakeitwork.allenvooreen.model.Medication;
 import com.wemakeitwork.allenvooreen.model.MedicationActivity;
 import com.wemakeitwork.allenvooreen.model.Team;
 import com.wemakeitwork.allenvooreen.repository.*;
+import com.wemakeitwork.allenvooreen.model.*;
+import com.wemakeitwork.allenvooreen.repository.ActivityRepository;
+import com.wemakeitwork.allenvooreen.repository.EventRepository;
+import com.wemakeitwork.allenvooreen.repository.MemberRepository;
+import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import com.wemakeitwork.allenvooreen.service.ServiceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +27,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.*;
 import java.security.Principal;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -54,11 +61,13 @@ public class CalendarController {
     }
 
     @GetMapping("/calendar/{teamId}")
-    public String showCalender(@PathVariable("teamId") final Integer teamId, Model model, Principal principal)
+    public String showCalender(@PathVariable("teamId") final Integer teamId, Model model)
             throws JsonProcessingException {
         Team team = teamRepository.getOne(teamId);
         httpSession.setAttribute("team", team);
-        Set<Team> teamList = memberRepository.findByMemberName(principal.getName()).get().getAllTeamsOfMemberSet();
+
+        Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Set<Team> teamList = member.getAllTeamsOfMemberSet();
 
         ArrayList<Team> sortedList = (ArrayList<Team>) teamList.stream()
                 .sorted(Comparator.comparing(Team::getTeamName))

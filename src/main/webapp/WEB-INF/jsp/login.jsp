@@ -35,6 +35,7 @@
                     </button>
                 </div>
             </c:if>
+
             <label for="username" class="sr-only">Gebruikersnaam</label>
             <input type="text" id="username" name="username" class="form-control" placeholder="Gebruikersnaam" required autofocus>
             <br>
