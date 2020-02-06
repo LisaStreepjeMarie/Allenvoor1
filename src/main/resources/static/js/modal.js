@@ -62,3 +62,9 @@ function fillModal(event) {
     $('.modal').find('#eventEndDate').val(moment(event.end).format('DD-MM-YYYY H:mm'));
     $('.modal').modal('show');
 }
+
+        // Cleans the modal upon closing
+        $('.modal').on("hide.bs.modal", function() {
+            $('#formID').trigger("reset");
+            hideAllModalInputFields();
+        });

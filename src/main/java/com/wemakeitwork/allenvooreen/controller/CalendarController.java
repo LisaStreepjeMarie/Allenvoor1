@@ -4,8 +4,16 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.wemakeitwork.allenvooreen.model.*;
+import com.wemakeitwork.allenvooreen.model.Event;
+import com.wemakeitwork.allenvooreen.model.Medication;
+import com.wemakeitwork.allenvooreen.model.MedicationActivity;
+import com.wemakeitwork.allenvooreen.model.Team;
 import com.wemakeitwork.allenvooreen.repository.*;
+import com.wemakeitwork.allenvooreen.model.*;
+import com.wemakeitwork.allenvooreen.repository.ActivityRepository;
+import com.wemakeitwork.allenvooreen.repository.EventRepository;
+import com.wemakeitwork.allenvooreen.repository.MemberRepository;
+import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import com.wemakeitwork.allenvooreen.service.ServiceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +27,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.*;
+import java.security.Principal;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -136,7 +146,7 @@ public class CalendarController {
     private void removeMedicationAmountFromActivity(Event event){
         eventRepository.findById(event.getEventId()).stream()
                 .filter(x -> x.getActivity() instanceof MedicationActivity)
-                .forEach(x -> ((MedicationActivity) x.getActivity()).getMedication().removalActivityAddedAmount
+                .forEach(x -> ((MedicationActivity) x.getActivity()).getMedication().upTheMedicationAmount
                         (((MedicationActivity) x.getActivity()).getTakenMedication()));
     }
 }

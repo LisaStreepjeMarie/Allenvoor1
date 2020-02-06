@@ -6,8 +6,7 @@
 <head>
     <title>Wijzig de gegevens van een groep</title>
         <!-- Add icon library -->
-        <link href="${pageContext.request.contextPath}/webjars/font-awesome/4.7.0/css/font-awesome.css" rel='stylesheet'>
-        <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
+         <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
         <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
 
         <%@ taglib prefix="mytags" tagdir="/WEB-INF/tags" %>
