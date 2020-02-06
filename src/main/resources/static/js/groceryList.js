@@ -1,7 +1,7 @@
 
 // this creates a time interval to catch the items from the database every second
 $(document).ready(function(){
- setInterval(getAllItemsFromDataBase,5000);
+ setInterval(getAllItemsFromDataBase,1000);
 });
 
 // set up to send a CSRF token with ajax for postmapping
