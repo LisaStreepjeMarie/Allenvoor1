@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<html xmlns:c="" xmlns:mytags="">
+<html xmlns:c="" xmlns:mytags="" xmlns:form="http://www.w3.org/1999/xhtml">
 <head>
     <title>Wijzig de gegevens van een groep</title>
         <!-- Add icon library -->
@@ -44,7 +44,7 @@
                         </c:forEach>
                      </table>
 
-<!--                    <form:form action="${pageContext.request.contextPath}/team/addMember" modelAttribute="teamMemberDTO">
+                   <form:form action="${pageContext.request.contextPath}/team/addMember" modelAttribute="teamMemberDTO">
                         <form:input path="teamId" type="hidden" />
                         <table>
                             <tr>
@@ -55,7 +55,7 @@
                                 </td>
                             </tr>
                         </table>
-                    </form:form>-->
+                    </form:form>
 
                 </div>
             </div>
