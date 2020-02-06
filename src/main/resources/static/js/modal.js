@@ -18,7 +18,7 @@ $('#datetimepickerDone').datetimepicker();
 
 // This function hides all modal options
 function hideAllModalInputFields() {
-    $("#datetimepickerDone, #eventNameDiv, #eventCommentDiv, #medicationChoiceDiv, #eventDatesDiv, #takenMedicationDiv").css("display", "none");
+    $("#doneByMemberDiv, #datetimepickerDone, #eventNameDiv, #eventCommentDiv, #medicationChoiceDiv, #eventDatesDiv, #takenMedicationDiv").css("display", "none");
 }
 
 // This function fills the modal with event info if it exist
@@ -51,10 +51,11 @@ function fillModal(event) {
     // this shows/hides the eventDone input field when the checkbox is toggled
     $("#eventDone").change(function () {
         if(document.getElementById("eventDone").checked == true) {
-                $("#datetimepickerDone").show()
+                $("#datetimepickerDone, #doneByMemberDiv").show()
+                filldoneByMembers();
         } else {
-                document.getElementById("eventDoneDate").removeAttribute("required");
-                $("#datetimepickerDone").hide()
+                document.getElementById("eventDoneDate").removeAttribute("required")
+                $("#datetimepickerDone, #doneByMemberDiv").hide();
         }
     });
 
@@ -64,7 +65,25 @@ function fillModal(event) {
 }
 
         // Cleans the modal upon closing
-        $('.modal').on("hide.bs.modal", function() {
-            $('#formID').trigger("reset");
-            hideAllModalInputFields();
-        });
+function filldoneByMembers(){
+    console.log("hallo!");
+    $.ajax({
+         type:'GET',
+         url: ctx + "/calendar/" + $('#teamId').attr('data-teamId') + '/teamMembers',
+         dataType: 'json',
+         success : function(result) {
+                 List = result.data
+                 $('#doneByMember').empty();
+                 $('#doneByMember').append('<option value="">Kies een teamlid</option>');
+                 for (i in List ) {
+                    $('#doneByMember').append('<option value="' + List[i].id + '">' + List[i].name + '</option>');
+                 }
+             },
+             error : function(e) {
+             alert("getMedication() error")
+             console.log("ERROR: ", e);
+         }
+    });
+
+}
+

@@ -112,7 +112,7 @@
                         </div>
                     </div>
                     <div class="modal-body" >
-                        <div class="modal-body" >
+
                             <div class="row" id="eventDoneDiv">
                                 <label class="col-xs-4" for="eventDone">Afspraak al uitgevoerd?&nbsp;</label>
                                 <input type="checkbox" id="eventDone" name="eventDone"/>
@@ -124,7 +124,14 @@
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
                             </div>
+                    <div class="modal-body">
+                        <div class="row" id ="doneByMemberDiv">
+                            <label class="col-xs-4" for="doneByMember" control-label>Gedaan door: </label>
+                            <select name="event.doneByMember" id="doneByMember" style="width:13.2em;" >
+                            <option disabled selected="doneByMember">Kies een teamlid</option>
+                            </select>
                         </div>
+                    </div>
                     </div>
                 </div>
                     </span>
