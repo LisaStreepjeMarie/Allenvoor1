@@ -41,6 +41,14 @@ function fillModal(event) {
         $("#delete-event").show();
         $('.modal').find('#eventName').val(event.title);
         $('.modal').find('#eventComment').val(event.comment);
+        if(event.doneByMember){
+            $('#doneByMember').empty()
+            console.log(event.doneByMember.name)
+            $("#datetimepickerDone, #doneByMemberDiv").show()
+            filldoneByMembers()
+            $('.modal').find('#doneByMember').val(event.doneByMember.name)
+            console.log(event.doneByMember.name);
+        }
     } else {
         document.getElementById("modal-title").innerHTML = "Maak nieuwe afspraak";
         document.getElementById("save-change-event").innerHTML = "Maak afspraak";
