@@ -1,5 +1,7 @@
 package com.wemakeitwork.allenvooreen.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,22 +14,33 @@ import java.util.*;
 public class Member implements UserDetails {
 
     @Id
+    @JsonProperty("id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer memberId = 0;
 
+    @JsonIgnore
     private String memberName;
 
+    @JsonIgnore
     private String password;
 
+    @JsonIgnore
     private String rol;
 
     @Transient
+    @JsonIgnore
     private String passwordConfirm;
 
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY, mappedBy = "doneByMember")
+    private List<Event> doneEvents;
+
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "team_membername", joinColumns = @JoinColumn(name = "membername_member_id"), inverseJoinColumns = @JoinColumn(name = "team_team_id"))
     private Set<Team> allTeamsOfMemberSet = new HashSet<>();
 
+    @JsonIgnore
     public Set<Team> getAllTeamsOfMemberSet() {
         return allTeamsOfMemberSet;
     }

@@ -37,8 +37,6 @@ public class GroceryListController {
     @Autowired
     MedicationRepository medicationRepository;
 
-    ObjectMapper mapper = new ObjectMapper();
-
     @GetMapping("/grocerylist/{teamId}")
     protected String showGrocerylist(@PathVariable("teamId") final Integer teamId, Model model) {
         httpSession.setAttribute("team", teamRepository.getOne(teamId));
@@ -48,17 +46,17 @@ public class GroceryListController {
     @GetMapping("/grocerylist/getAll")
     public ResponseEntity<Object> fillList(){
         int teamId = ((Team) httpSession.getAttribute("team")).getTeamId();
+
         Team team = teamRepository.getOne(teamId);
         GroceryList groceryList = team.getGroceryList();
-        for (GroceryItem groceryItem : groceryList.getAllItemsOnGroceryList()){
-            System.out.println(groceryItem.getGroceryName());
-        }
+
         ServiceResponse<GroceryList> response = new ServiceResponse<>("succes", groceryList);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping("/add/groceryitem")
     public ResponseEntity<Object> addGroceryItem(@RequestBody String newGroceryItem) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
         GroceryItem groceryItem = mapper.readValue(newGroceryItem, GroceryItem.class);
 
         Integer teamId = ((Team) httpSession.getAttribute("team")).getTeamId();
@@ -70,20 +68,22 @@ public class GroceryListController {
     }
 
     @GetMapping("/delete/groceryItem/{groceryItemId}")
-    public  ResponseEntity<Object> deleteGroceryItem(@PathVariable("groceryItemId") final Integer groceryItemid){
+    public  ResponseEntity<Object> deleteGroceryItemFromGroceryList(@PathVariable("groceryItemId") final Integer groceryItemid){
         groceryItemRepository.deleteById(groceryItemid);
         return new ResponseEntity<Object>("success!", HttpStatus.OK);
     }
 
     @GetMapping("/delete/allMedications/{medicationId}")
-    public  ResponseEntity<Object> deletemedicationItemFromGroceryList(@PathVariable("medicationId") final Integer medicationId){
+    public  ResponseEntity<Object> deleteMedicationItemFromGroceryList(@PathVariable("medicationId") final Integer medicationId){
         Medication medication = medicationRepository.getOne(medicationId);
         medication.setGroceryList(null);
+
         if(medication.getBought()){
             medication.upTheMedicationAmount(medication.getMedicationRefillAmount());
             medication.setMedicationRefillAmount(0);
             medication.setBought(true);
         }
+
         medication.setMedicationRefillAmount(0);
         medicationRepository.save(medication);
         return new ResponseEntity<Object>("success!", HttpStatus.OK);
@@ -92,21 +92,25 @@ public class GroceryListController {
     @GetMapping("/bought/groceryItem/{groceryItemId}")
     public  ResponseEntity<Object> boughtGroceryItem(@PathVariable("groceryItemId") final Integer groceryItemid){
         GroceryItem groceryItem = groceryItemRepository.getOne(groceryItemid);
+
         if(groceryItem != null) {
             groceryItem.setBought();
             System.out.println(groceryItem.getBought());
             groceryItemRepository.save(groceryItem);
         }
+
         return new ResponseEntity<Object>("success!", HttpStatus.OK);
     }
 
     @GetMapping("/bought/allMedications/{medicationid}")
     public  ResponseEntity<Object> boughtMedicationItem(@PathVariable("medicationid") final Integer medicationid){
         Medication medication = medicationRepository.getOne(medicationid);
+
         if(medication != null) {
             medication.toggleBought();
             medicationRepository.save(medication);
         }
+
         return new ResponseEntity<Object>("success!", HttpStatus.OK);
     }
 }
