@@ -39,10 +39,13 @@ public class RegistrationEmailListener implements ApplicationListener<OnRegistra
                 = event.getAppUrl() + "/confirmRegistration?token=" + token;
         //String message = messages.getMessage("message.registrationSuccessConfirmationLink", null, event.getLocale());
 
+        String message = "Bedankt voor je aanmelding. Je bent nog 1 stap van registratie vandaan. Klik op deze link om je profiel te bevestigen. ";
+
+
         SimpleMailMessage email = new SimpleMailMessage();
         email.setTo(recipient);
         email.setSubject("Welkom bij Allen voor Een");
-        email.setText( "Bedankt voor je aanmelding. Je bent nog 1 stap van registratie vandaan. Klik op deze link om je profiel te bevestigen." + "\nhttp://localhost:8080" + url);
+        email.setText( message + "\nhttp://localhost:8080" + url);
         System.out.println(url);
         mailSender.send(email);
     }

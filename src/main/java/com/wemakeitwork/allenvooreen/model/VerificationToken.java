@@ -19,7 +19,7 @@ public class VerificationToken {
     @Column(name="token")
     private String token;
 
-    @OneToOne(targetEntity = Member.class, fetch = FetchType.EAGER)
+    @OneToOne(targetEntity = Member.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "member_Id", nullable = false)
     private Member member;
 
@@ -35,7 +35,6 @@ public class VerificationToken {
 
     public VerificationToken(final String token) {
         super();
-
         this.token = token;
         this.expiryDate = calculateExpiryDate(EXPIRATION);
     }
@@ -50,6 +49,7 @@ public class VerificationToken {
         this.expiryDate = calculateExpiryDate(EXPIRATION);
     }
 
+
     public static int getEXPIRATION() {
         return EXPIRATION;
     }
@@ -58,8 +58,8 @@ public class VerificationToken {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(int memberId) {
+        this.id = memberId;
     }
 
     public String getToken() {

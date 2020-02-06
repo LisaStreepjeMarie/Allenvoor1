@@ -27,7 +27,7 @@ public class MemberValidator implements Validator {
         if (member.getUsername().length() < 3 || member.getUsername().length() > 32) {
             errors.rejectValue("memberName", "Size.userForm.username");
         }
-        if (memberServiceInterface.findByMembername(member.getUsername()).isPresent()) {
+        if (memberServiceInterface.findByMemberName(member.getUsername()).isPresent()) {
             errors.rejectValue("memberName", "Duplicate.userForm.username");
         }
 

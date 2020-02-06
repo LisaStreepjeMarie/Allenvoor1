@@ -6,6 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -17,6 +18,7 @@ import java.util.Set;
 public class Member implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull
     private Integer memberId = 0;
 
     private String memberName;
@@ -25,9 +27,6 @@ public class Member implements UserDetails{
 
     private String rol;
 
-    private String identifier;
-
-    @Column(unique = true)
     private String email;
 
     @Transient
@@ -35,7 +34,18 @@ public class Member implements UserDetails{
 
     private boolean enabled;
 
+    public Member(int memberId, String memberName, String password, String rol, String email, boolean enabled) {
+        this.memberId = memberId;
+        this.memberName = memberName;
+        this.password = password;
+        this.rol = rol;
+        this.email = email;
+        this.enabled = enabled;
+    }
+
     public Member(){
+        super();
+        this.enabled= false;
     }
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -142,19 +152,10 @@ public class Member implements UserDetails{
         this.email = email;
     }
 
-    public String getIdentifier() {
-        return identifier;
-    }
-
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
-    }
-
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
 }
-
 
 
 

@@ -1,5 +1,4 @@
 package com.wemakeitwork.allenvooreen.controller;
-
 import com.wemakeitwork.allenvooreen.model.Member;
 import com.wemakeitwork.allenvooreen.model.VerificationToken;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
@@ -11,6 +10,7 @@ import com.wemakeitwork.allenvooreen.validator.MemberValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -100,6 +100,8 @@ public class MemberController {
             System.out.println(member.getMemberName());
             member.setPassword(passwordEncoder.encode(member.getPassword()));
             member.setRol("gebruiker");
+            member.setEmail(member.getEmail());
+            member.setEnabled(member.isEnabled());
             memberServiceInterface.save(member);
             securityServiceInterface.autoLogin(member.getUsername(), member.getPasswordConfirm());
             try {
@@ -145,9 +147,10 @@ public class MemberController {
         }
         member.setEnabled(true);
         memberServiceInterface.enableRegisteredUser(member);
-        return "confirmRegistration";
+        return null;
     }
 }
+
 
 
 

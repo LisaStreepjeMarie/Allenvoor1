@@ -10,9 +10,13 @@ import java.util.Optional;
 
 public interface MemberServiceInterface {
 
+    /*public Member registerMember(Member member);
+
+     */
+
     void save(Member member);
 
-    Optional<Member> findByMembername(String membername);
+    Optional<Member> findByMemberName(String memberName);
 
     public void createVerificationToken(Member member, String token);
 
@@ -20,5 +24,4 @@ public interface MemberServiceInterface {
 
     public VerificationToken getVerificationToken(String verificationToken);
 }
-
 
