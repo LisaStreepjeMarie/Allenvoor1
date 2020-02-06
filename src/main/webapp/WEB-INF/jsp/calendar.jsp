@@ -150,7 +150,7 @@
 </form>
   <jsp:include page="home.jsp" />
 
-// Hack, needed to show clock icon in datetimepickers
+<!-- Hack, needed to show clock icon in datetimepickers -->
 <script>
 $(function () {
     $('#datetimepickerStart').datetimepicker({icons: {time: 'far fa-clock',},});

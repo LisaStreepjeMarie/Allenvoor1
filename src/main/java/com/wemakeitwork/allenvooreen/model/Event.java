@@ -143,6 +143,15 @@ public class Event {
         return team;
     }
 
+    @Nullable
+    public Member getDoneByMember() {
+        return doneByMember;
+    }
+
+    public void setDoneByMember(@Nullable Member doneByMember) {
+        this.doneByMember = doneByMember;
+    }
+
     public void setTeam(Team team) {
         this.team = team;
     }

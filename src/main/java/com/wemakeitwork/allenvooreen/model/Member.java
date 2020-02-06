@@ -129,6 +129,14 @@ public class Member implements UserDetails {
         }
     }
 
+    public List<Event> getDoneEvents() {
+        return doneEvents;
+    }
+
+    public void setDoneEvents(List<Event> doneEvents) {
+        this.doneEvents = doneEvents;
+    }
+
     public void removeTeamFromMember(Team team){
         allTeamsOfMemberSet.remove(team);
     }
