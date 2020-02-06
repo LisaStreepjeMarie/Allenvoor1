@@ -171,6 +171,9 @@ function getAllItemsFromDataBase(){
              },
              error : function(e) {
              console.log("ERROR: ", e);
+             complete: function() {
+             // Schedule the next request when the current one's complete
+             setInterval(sendRequest, 5000);
          }
     });
 }
