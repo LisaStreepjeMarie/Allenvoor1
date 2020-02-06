@@ -18,14 +18,14 @@
 
         <%@ taglib prefix="mytags" tagdir="/WEB-INF/tags" %>
     </head>
-    <body class= "webpage">
+    <body class="webpage">
         <mytags:navbar/>
-        <div class= "masthead">
-            <div class= "row">
-                <div class= "col-2">
-                    <br />
-                    <h1 class="dropdown-header"><strong>Welkom </h1>
-                    <br />
+        <div class="masthead">
+            <div class="row">
+                <div class="col-2">
+                    <div class="welcome_header">
+                        <h1 class="welcome">Welkom bij ${team.teamName}</h1>
+                    </div>
                     <h2 class="dropdown-header"><i class="fa fa-calendar" aria-hidden="true"></i> Kalender </h2>
                     <c:forEach items="${teamList}" var="team">
                       <tr>
@@ -45,9 +45,9 @@
                         </tr>
                     </c:forEach>
                 </div>
-                <br />
-                <br>
                 <div class="col-8">
+                    <br />
+                    <br />
                    <div id="calendar" style="width: 45rem;"></div>
                    <div id='datepicker'></div>
                 </div>
