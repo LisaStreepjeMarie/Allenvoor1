@@ -1,7 +1,7 @@
 
 // this creates a time interval to catch the items from the database every second
 $(document).ready(function(){
- setInterval(getAllItemsFromDataBase,1000);
+ setInterval(getAllItemsFromDataBase,5000);
 });
 
 // set up to send a CSRF token with ajax for postmapping
@@ -15,9 +15,6 @@ $.ajaxSetup({
 var ctx = $('#contextPathHolder').attr('data-contextPath');
 
 <!--getAllItemsFromDataBase();-->
-
-// create a "X" button and append it to each list item when opening the page
-// full function below in document
 
 // create a new list item when clicking on the "Add" button
 function newElement() {
