@@ -48,7 +48,7 @@ function fillModal(event) {
         if(event.interval != null) {
             document.getElementById("eventPeriodic").checked;
             //todo
-            alert($('.modal').find('#eventInterval').val(event.interval));
+            //alert($("#intervalDiv"));
             $("#intervalDiv").show();
             $("#maxNumberDiv").show();
             /* $("#eventMaxNumberLabel").show();

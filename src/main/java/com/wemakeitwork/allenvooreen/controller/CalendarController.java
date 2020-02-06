@@ -120,7 +120,7 @@ public class CalendarController {
                 event = mapper.readValue(newEventJson, Event.class);
                 event.setEventStartDate(startDateTimeExtraEvent);
                 event.setEventEndDate(endDateTimeExtraEvent);
-                event.setEventMaxNumber(maxNumber - i);
+                // event.setEventMaxNumber(maxNumber - i);
                 eventRepository.save(event);
             }
         }
