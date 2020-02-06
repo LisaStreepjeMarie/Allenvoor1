@@ -207,10 +207,10 @@ input {
     </div>
 
     <script>
-                // set up to send a CSRF token with ajax for postmapping
+// set up to send a CSRF token with ajax for postmapping
 
 $(document).ready(function(){
- setInterval(getAllItemsFromDataBase,5000);
+ setInterval(getAllItemsFromDataBase,1000);
 });
 
 $.ajaxSetup({
@@ -366,13 +366,14 @@ function getAllItemsFromDataBase(){
          url: ctx + "/grocerylist/getAll",
          success : function(result) {
                 $('#groceryItem').empty();
+                $('#allMedications').empty();
                 MedicationList = result.data.medications;
                 GroceryList = result.data.groceries;
                  for (i in MedicationList ) {
                      if (MedicationList[i].bought){
-                     $('#allMedications').append('<li class="checked listItem" value="' + MedicationList[i].id + '"><i class="fas fa-pills fa-lg" style="color:#e6b3ff;"></i>' + MedicationList[i].name + '<span class="badge badge-primary badge-pill">' + MedicationList[i].refillamount + '</span></li>');
+                     $('#allMedications').append('<li class="checked listItem" value="' + MedicationList[i].id + '"><i class="fas fa-pills fa-lg" style="color:#e6b3ff;"></i>&emsp;' + MedicationList[i].name + '&emsp;<span class="badge badge-primary badge-pill">' + MedicationList[i].refillamount + '</span></li>');
                      } else {
-                     $('#allMedications').append('<li class="listItem" value="' + MedicationList[i].id + '"><i class="fas fa-pills fa-lg" style="color:#e6b3ff;"></i>' + MedicationList[i].name +'<span class="badge badge-primary badge-pill">' + MedicationList[i].refillamount + '</span></li>');
+                     $('#allMedications').append('<li class="listItem" value="' + MedicationList[i].id + '"><i class="fas fa-pills fa-lg" style="color:#e6b3ff;"></i>&emsp;' + MedicationList[i].name +'&emsp;<span class="badge badge-primary badge-pill">' + MedicationList[i].refillamount + '</span></li>');
                      }
                  }
                  for (i in GroceryList){
