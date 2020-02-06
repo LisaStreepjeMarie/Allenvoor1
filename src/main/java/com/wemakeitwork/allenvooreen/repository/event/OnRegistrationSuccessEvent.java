@@ -35,6 +35,7 @@ public class OnRegistrationSuccessEvent extends ApplicationEvent {
     public void setLocale(Locale locale) {
         this.locale = locale;
     }
+
     public void setMember(Member member) {
         this.member = member;
     }

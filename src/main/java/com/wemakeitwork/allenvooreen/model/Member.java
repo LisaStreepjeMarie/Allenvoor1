@@ -25,9 +25,6 @@ public class Member implements UserDetails{
 
     private String rol;
 
-    private String identifier;
-
-    @Column(unique = true)
     private String email;
 
     @Transient
@@ -35,7 +32,18 @@ public class Member implements UserDetails{
 
     private boolean enabled;
 
+    public Member(int memberId, String memberName, String password, String rol, String email, boolean enabled) {
+        this.memberId = memberId;
+        this.memberName = memberName;
+        this.password = password;
+        this.rol = rol;
+        this.email = email;
+        this.enabled = enabled;
+    }
+
     public Member(){
+        super();
+        this.enabled=false;
     }
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -140,14 +148,6 @@ public class Member implements UserDetails{
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getIdentifier() {
-        return identifier;
-    }
-
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
     }
 
     public void setEnabled(boolean enabled) {

@@ -145,7 +145,7 @@ public class MemberController {
         }
         member.setEnabled(true);
         memberServiceInterface.enableRegisteredUser(member);
-        return "confirmRegistration";
+        return null;
     }
 }
 

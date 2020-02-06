@@ -35,9 +35,11 @@ public class MemberService implements MemberServiceInterface {
     @Override
     public void createVerificationToken(Member member, String token) {
         VerificationToken newUserToken = new VerificationToken(token, member);
+        tokenRepository.save(newUserToken);
     }
 
     @Override
+    @Transactional
     public void enableRegisteredUser(Member member) {
         memberRepository.save(member);
     }
