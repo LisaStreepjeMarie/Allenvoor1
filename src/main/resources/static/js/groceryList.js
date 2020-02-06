@@ -1,22 +1,28 @@
-        // set up to send a CSRF token with ajax for postmapping
+
+// this creates a time interval to catch the items from the database every second
+$(document).ready(function(){
+ setInterval(getAllItemsFromDataBase,1000);
+});
+
+// set up to send a CSRF token with ajax for postmapping
 $.ajaxSetup({
     beforeSend: function(xhr) {
         xhr.setRequestHeader('X-CSRF-TOKEN', $('#csrfToken').attr('data-csrfToken'));
     }
 });
 
-//setting the context url
+// setting the context url
 var ctx = $('#contextPathHolder').attr('data-contextPath');
 
-getAllItemsFromDataBase();
+<!--getAllItemsFromDataBase();-->
 
-// Create a "X" button and append it to each list item when opening the page
-//  full function below in document
+// create a "X" button and append it to each list item when opening the page
+// full function below in document
 
-// Create a new list item when clicking on the "Add" button
+// create a new list item when clicking on the "Add" button
 function newElement() {
 
-// Creating a new groceryItem to save
+// creating a new groceryItem to save
   newGroceryItem = {
         title: document.getElementById("newGroceryItem").value,
   }
@@ -136,6 +142,7 @@ for (i = 0; i < allChecked.length; i++) {
     }
 }
 
+
 function removeAllFromList(){
 var allGroceriesInList = document.getElementsByClassName("listItem");
 var i;
@@ -146,18 +153,23 @@ for (i = 0; i < allGroceriesInList.length; i++) {
       allGroceriesInList[i].style.display = "none";
     }
 }
+
+// this gets all the list items from the database. Atm it clears the whole list and then refills it
+// could be done cleaner with if result changes or something
 function getAllItemsFromDataBase(){
     $.ajax({
          type:'GET',
          url: ctx + "/grocerylist/getAll",
          success : function(result) {
+                $('#groceryItem').empty();
+                $('#allMedications').empty();
                 MedicationList = result.data.medications;
                 GroceryList = result.data.groceries;
                  for (i in MedicationList ) {
                      if (MedicationList[i].bought){
-                     $('#allMedications').append('<li class="checked listItem" value="' + MedicationList[i].id + '"><i class="fas fa-pills fa-lg" style="color:#e6b3ff;"></i>' + MedicationList[i].name + '<span class="badge badge-primary badge-pill">' + MedicationList[i].refillamount + '</span></li>');
+                     $('#allMedications').append('<li class="checked listItem" value="' + MedicationList[i].id + '"><i class="fas fa-pills fa-lg" style="color:#e6b3ff;"></i>&emsp;' + MedicationList[i].name + '&emsp;<span class="badge badge-primary badge-pill">' + MedicationList[i].refillamount + '</span></li>');
                      } else {
-                     $('#allMedications').append('<li class="listItem" value="' + MedicationList[i].id + '"><i class="fas fa-pills fa-lg" style="color:#e6b3ff;"></i>' + MedicationList[i].name +'<span class="badge badge-primary badge-pill">' + MedicationList[i].refillamount + '</span></li>');
+                     $('#allMedications').append('<li class="listItem" value="' + MedicationList[i].id + '"><i class="fas fa-pills fa-lg" style="color:#e6b3ff;"></i>&emsp;' + MedicationList[i].name +'&emsp;<span class="badge badge-primary badge-pill">' + MedicationList[i].refillamount + '</span></li>');
                      }
                  }
                  for (i in GroceryList){
@@ -171,9 +183,6 @@ function getAllItemsFromDataBase(){
              },
              error : function(e) {
              console.log("ERROR: ", e);
-             complete: function() {
-             // Schedule the next request when the current one's complete
-             setInterval(sendRequest, 5000);
          }
     });
 }
@@ -196,7 +205,7 @@ var i = allGroceriesInList.length - 1;
       span.appendChild(txt);
       allGroceriesInList[i].appendChild(span);
 
-// this part makes sure the item gets deleted when clicked and also the X dissapears
+// this part makes sure the item gets deleted when clicked and also the X disappears
 var close = document.getElementsByClassName("close");
 var i;
 for (i = 0; i < close.length; i++) {
