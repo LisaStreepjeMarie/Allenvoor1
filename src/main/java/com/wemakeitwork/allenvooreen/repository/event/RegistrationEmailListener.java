@@ -35,8 +35,7 @@ public class RegistrationEmailListener implements ApplicationListener<OnRegistra
 
         String recipient = member.getEmail();
         String subject = "Registration Confirmation";
-        String url
-                = event.getAppUrl() + "/confirmRegistration?token=" + token;
+        String url = event.getAppUrl() + "/confirmRegistration?token=" + token;
         //String message = messages.getMessage("message.registrationSuccessConfirmationLink", null, event.getLocale());
 
         String message = "Bedankt voor je aanmelding. Je bent nog 1 stap van registratie vandaan. Klik op deze link om je profiel te bevestigen. ";

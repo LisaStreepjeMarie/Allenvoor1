@@ -1,17 +1,12 @@
 package com.wemakeitwork.allenvooreen.model;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "members")
@@ -51,6 +46,10 @@ public class Member implements UserDetails{
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "team_membername", joinColumns = @JoinColumn(name = "membername_member_id"), inverseJoinColumns = @JoinColumn(name = "team_team_id"))
     private Set<Team> allTeamsOfMemberSet = new HashSet<>();
+
+    @OneToOne(targetEntity = Member.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "member_Id", nullable = false)
+    private VerificationToken verificationToken;
 
     public Set<Team> getAllTeamsOfMemberSet() {
         return allTeamsOfMemberSet;
@@ -154,6 +153,14 @@ public class Member implements UserDetails{
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public VerificationToken getVerificationToken() {
+        return verificationToken;
+    }
+
+    public void setVerificationToken(VerificationToken verificationToken) {
+        this.verificationToken = verificationToken;
     }
 }
 
