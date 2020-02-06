@@ -132,7 +132,7 @@
                         <div class="row" id ="doneByMemberDiv">
                             <label class="col-4" for="doneByMember" control-label>Gedaan door </label>
                             <select name="event.doneByMember" id="doneByMember" style="width:13.2em;" >
-                            <option disabled selected="doneByMember">Kies een teamlid</option>
+                            <option disabled selected="doneByMember">null</option>
                             </select>
                         </div>
                     </div>

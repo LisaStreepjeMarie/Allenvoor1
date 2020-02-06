@@ -36,7 +36,7 @@ public class Event {
     private java.util.Date eventStartDate;
 
     @Nullable
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "memberId", referencedColumnName = "memberId")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonProperty("doneByMember")

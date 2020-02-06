@@ -1,6 +1,7 @@
 package com.wemakeitwork.allenvooreen.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,6 +12,9 @@ import java.util.*;
 
 @Entity
 @Table(name = "members")
+@JsonIgnoreProperties({ "password", "rol", "passwordConfirm", "hibernateLazyInitializer", "doneEvents",
+        "allTeamsOfMemberSe", "enabled", "accountNonExpired", "credentialsNonExpired", "username", "authorities",
+        "authority", "accountNonLocked"})
 public class Member implements UserDetails {
 
     @Id
@@ -32,7 +36,7 @@ public class Member implements UserDetails {
     private String passwordConfirm;
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY, mappedBy = "doneByMember")
+    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, mappedBy = "doneByMember")
     private List<Event> doneEvents;
 
     @JsonIgnore

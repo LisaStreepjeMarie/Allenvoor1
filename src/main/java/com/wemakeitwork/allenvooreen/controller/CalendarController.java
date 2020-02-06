@@ -86,8 +86,12 @@ public class CalendarController {
     @PostMapping("/calendar/new/event")
     public ResponseEntity<Object> newEvent(@RequestBody String newEventJson) throws JsonProcessingException {
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        System.out.println(newEventJson);
         Event event = mapper.readValue(newEventJson, Event.class);
-        System.out.println(event.getEventId());
+
+        if(event.getDoneByMember().getMemberId() == null){
+            event.setDoneByMember(null);
+        }
 
         // this sets the activity to the medication from the activity
         if (event.getActivity() instanceof MedicationActivity){
