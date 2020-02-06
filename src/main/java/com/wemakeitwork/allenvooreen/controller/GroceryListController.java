@@ -50,9 +50,6 @@ public class GroceryListController {
         int teamId = ((Team) httpSession.getAttribute("team")).getTeamId();
         Team team = teamRepository.getOne(teamId);
         GroceryList groceryList = team.getGroceryList();
-        for (GroceryItem groceryItem : groceryList.getAllItemsOnGroceryList()){
-            System.out.println(groceryItem.getGroceryName());
-        }
         ServiceResponse<GroceryList> response = new ServiceResponse<>("succes", groceryList);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -94,7 +91,6 @@ public class GroceryListController {
         GroceryItem groceryItem = groceryItemRepository.getOne(groceryItemid);
         if(groceryItem != null) {
             groceryItem.setBought();
-            System.out.println(groceryItem.getBought());
             groceryItemRepository.save(groceryItem);
         }
         return new ResponseEntity<Object>("success!", HttpStatus.OK);

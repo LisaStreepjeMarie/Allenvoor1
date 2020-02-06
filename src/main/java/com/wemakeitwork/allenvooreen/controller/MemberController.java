@@ -75,12 +75,10 @@ public class MemberController {
 
     @PostMapping("/member/new")
     protected String newMember(@ModelAttribute("member") @Valid Member member, BindingResult result) {
-        System.out.println("is er output? " + member.getMemberName());
         memberValidator.validate(member, result);
         if (result.hasErrors()) {
             return "newMember";
         } else {
-            System.out.println(member.getMemberName());
             member.setPassword(passwordEncoder.encode(member.getPassword()));
             memberServiceInterface.save(member);
             securityServiceInterface.autoLogin(member.getUsername(), member.getPasswordConfirm());

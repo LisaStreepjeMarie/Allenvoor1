@@ -1,5 +1,5 @@
 <head>
-        <link href="${pageContext.request.contextPath}/webjars/font-awesome/5.12.0/css/all.css" rel='stylesheet'>
+    <link href="${pageContext.request.contextPath}/webjars/font-awesome/5.12.0/css/all.min.css" rel='stylesheet'>
 </head>
 
 <!-- Navigation -->
