@@ -22,7 +22,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
@@ -63,13 +62,6 @@ public class TeamController {
 
         return "teamOverview";
 
-    }
-
-    private Set<Team> teamList (Integer memberId){
-        Set<Team> teamList = null;
-        Member member = memberRepository.getOne(memberId);
-        teamList.add(new Team());
-        return teamList;
     }
 
     @GetMapping("/team/new")
@@ -155,35 +147,25 @@ public class TeamController {
         }
     }
 
-
     @GetMapping("/team/quitadmin/{teamId}")
-    public String toggleAdmin(@PathVariable("teamId") final Integer teamId, Model model) {
+    public String quitAdmin(@PathVariable("teamId") final Integer teamId, Model model) {
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Team team = teamRepository.getOne(teamId);
 
-        // Count number of admins in team
-        Integer numberOfAdminsInTeam = 0;
-        Set<TeamMembership> tmsList = team.getTeamMemberships();
-        for (TeamMembership tms : tmsList) {
-            if (tms.isAdmin()) {
-                numberOfAdminsInTeam++;
-            }
-        }
-
-        // Prevent admin from giving up admin rights when there are no other admins.
-        if (numberOfAdminsInTeam > 1) {
+        // Check if there are more than one teamadmins (otherwise quiting the admin role is not allowed)
+        if (teamMembershipRepository.findAll().stream()
+                .filter(x -> x.getTeam().equals(teamRepository.getOne(teamId)))
+                .filter(TeamMembership::isAdmin).count() > 1) {
+            // If there are more than one teamadmins, relinquish admin role.
             teamMembershipRepository.findAll().stream()
-                    // Find all memberships of member
+                    // Find all memberships of logged in member
                     .filter(x -> x.getMember().getMemberId().equals(member.getMemberId()))
                     // filter the team that is passed with the pathvariable (ignore other teams from member)
                     .filter(x -> x.getTeam().getTeamId().equals(teamId))
-                    // Toggle the boolean isAdmin in the detached object and save it to the database
-                    .map(x -> {
-                        x.setAdmin(!x.isAdmin());
-                        return x;
-                    }).forEach(teamMembershipRepository::save);
+                    // set admin role to false and save it to the database
+                    .peek(x -> x.setAdmin(false)).forEach(teamMembershipRepository::save);
             return "redirect:/team/all";
         } else {
+            // Otherwise, tell user that relinquishing teamadmin role is not possible
             model.addAttribute("statuscode", "Kan rol als groepsbeheerder niet opgeven omdat je de enige groepsbeheerder bent.");
             return "error";
         }
@@ -192,13 +174,9 @@ public class TeamController {
     @GetMapping("/team/grantadmin/{teamId}/{memberId}")
     public String grantAdmin(@PathVariable("teamId") final Integer teamId,
                               @PathVariable("memberId") final Integer memberId) {
-        Member member = memberRepository.getOne(memberId);
-        Team team = teamRepository.getOne(teamId);
-        TeamMembership tms = teamMembershipRepository.findByTeamAndMember(team, member);
-
+        TeamMembership tms = teamMembershipRepository.findByTeamTeamIdAndMemberMemberId(teamId, memberId);
         tms.setAdmin(true);
         teamMembershipRepository.save(tms);
-
         return "redirect:/team/select/" + teamId;
     }
 
@@ -212,7 +190,7 @@ public class TeamController {
                 .filter(x -> x.getMember().getMemberId().equals(member.getMemberId()))
                 // filter the team that is passed with the pathvariable (ignore other teams from member)
                 .filter(x -> x.getTeam().getTeamId().equals(teamId))
-                // Toggle the boolean isAdmin in the detached object and save it to the database
+                // delete membership to team
                 .forEach(teamMembershipRepository::delete);
 
         // Delete team if it has no members anymore. TODO: needs confirmation check
