@@ -47,9 +47,17 @@ public class Member implements UserDetails{
     @JoinTable(name = "team_membername", joinColumns = @JoinColumn(name = "membername_member_id"), inverseJoinColumns = @JoinColumn(name = "team_team_id"))
     private Set<Team> allTeamsOfMemberSet = new HashSet<>();
 
-    @OneToOne(targetEntity = Member.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "member_Id", nullable = false)
+    @OneToOne(mappedBy = "member")
     private VerificationToken verificationToken;
+
+
+    public VerificationToken getVerificationToken() {
+        return verificationToken;
+    }
+
+    public void setVerificationToken(VerificationToken verificationToken) {
+        this.verificationToken = verificationToken;
+    }
 
     public Set<Team> getAllTeamsOfMemberSet() {
         return allTeamsOfMemberSet;
@@ -153,14 +161,6 @@ public class Member implements UserDetails{
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
-    }
-
-    public VerificationToken getVerificationToken() {
-        return verificationToken;
-    }
-
-    public void setVerificationToken(VerificationToken verificationToken) {
-        this.verificationToken = verificationToken;
     }
 }
 
