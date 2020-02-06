@@ -18,7 +18,7 @@
             <div id="container">
                 <br />
                 <div class="ml-4 mt-4">
-                    <h3 class="font-weight-light">Wijzig gegevens groep ${team.teamName}</h3>
+                    <h3 class="font-weight-light">Wijzig gegevens groep ${teamName}</h3>
                     <table>
                         <tr>
                              <td colspan="2"><h5 class="font-weight-light">Groepsleden:</h5></td>

@@ -83,6 +83,7 @@ public class TeamController {
 
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (teamMembershipRepository.findByTeamAndMember(team, member).isAdmin()) {
+            model.addAttribute("teamName", team.getTeamName());
             model.addAttribute("teamMemberList", teamMemberList);
             model.addAttribute("teamAdminList", teamAdminList);
             model.addAttribute("teamMemberDTO", teamMemberDTO);

@@ -7,8 +7,8 @@ import com.wemakeitwork.allenvooreen.model.TeamMembership;
 import com.wemakeitwork.allenvooreen.repository.MedicationRepository;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
-import com.wemakeitwork.allenvooreen.service.ServiceResponse;
 import com.wemakeitwork.allenvooreen.service.MedicationServiceInterface;
+import com.wemakeitwork.allenvooreen.service.ServiceResponse;
 import com.wemakeitwork.allenvooreen.validator.MedicationValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
