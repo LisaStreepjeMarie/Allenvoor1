@@ -185,17 +185,16 @@ public class TeamController {
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Team team = teamRepository.findById(teamId).orElseThrow(() -> new InvalidPropertyException(this.getClass(), "team", "Dit team bestaat niet"));
 
-        teamMembershipRepository.findAll().stream()
-                // Find all memberships of member
-                .filter(x -> x.getMember().getMemberId().equals(member.getMemberId()))
-                // filter the team that is passed with the pathvariable (ignore other teams from member)
-                .filter(x -> x.getTeam().getTeamId().equals(teamId))
-                // delete membership to team
-                .forEach(teamMembershipRepository::delete);
-
-        // Delete team if it has no members anymore. TODO: needs confirmation check
-        if (teamMembershipRepository.findByTeam(team).isEmpty()) {
-            teamRepository.delete(team);
+        if (teamRepository.getOne(teamId).getTeamMemberships().size() <= 1) {
+            teamRepository.deleteById(teamId);
+        } else {
+            teamMembershipRepository.findAll().stream()
+                    // Find all memberships of member
+                    .filter(x -> x.getMember().getMemberId().equals(member.getMemberId()))
+                    // filter the team that is passed with the pathvariable (ignore other teams from member)
+                    .filter(x -> x.getTeam().getTeamId().equals(teamId))
+                    // delete membership to team
+                    .forEach(teamMembershipRepository::delete);
         }
         return "redirect:/team/all";
     }
