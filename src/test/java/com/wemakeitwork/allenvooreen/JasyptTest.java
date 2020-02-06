@@ -1,8 +1,10 @@
 package com.wemakeitwork.allenvooreen;
 
 import org.jasypt.encryption.StringEncryptor;
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
@@ -10,8 +12,8 @@ public class JasyptTest {
     @Autowired
     StringEncryptor jasyptStringEncryptor;
 
-    //@Value("${allenvooreen.sleutel}")
-    //private String sleutel;
+    @Value("${allenvooreen.sleutel}")
+    private String sleutel;
 
     @Test
     public void encryptieMetJasypt() {
@@ -34,5 +36,5 @@ public class JasyptTest {
     @Test
     public void werktJasypt() {
         String verwacht = "Sleutel";
-        //Assert.assertEquals(verwacht, sleutel);
+        Assert.assertEquals(verwacht, sleutel);
     }}
