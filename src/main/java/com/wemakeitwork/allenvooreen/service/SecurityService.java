@@ -35,15 +35,16 @@ public class SecurityService implements SecurityServiceInterface {
     }
 
     @Override
-    public void autoLogin(String membername, String password) {
-        UserDetails userDetails = memberDetailsService.loadUserByUsername(membername);
+    public void autoLogin(String memberName, String password) {
+        UserDetails userDetails = memberDetailsService.loadUserByUsername(memberName);
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
 
         authenticationManager.authenticate(usernamePasswordAuthenticationToken);
 
+
         if (usernamePasswordAuthenticationToken.isAuthenticated()) {
             SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-            logger.debug(String.format("Auto login %s successfully!", membername));
+            logger.debug(String.format("Auto login %s successfully!", memberName));
         }
     }
 }

@@ -19,8 +19,8 @@ public class VerificationToken {
     @Column(name="token")
     private String token;
 
-    @OneToOne(targetEntity = Member.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "member_Id", nullable = false)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
     @Column(name="created_date")

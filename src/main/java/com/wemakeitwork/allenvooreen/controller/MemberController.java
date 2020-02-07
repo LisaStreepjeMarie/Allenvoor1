@@ -101,7 +101,7 @@ public class MemberController {
             member.setPassword(passwordEncoder.encode(member.getPassword()));
             member.setRol("gebruiker");
             member.setEmail(member.getEmail());
-            member.setEnabled(member.isEnabled());
+            //member.setEnabled(member.isEnabled(false));
             memberServiceInterface.save(member);
             securityServiceInterface.autoLogin(member.getUsername(), member.getPasswordConfirm());
             try {
