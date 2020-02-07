@@ -52,12 +52,6 @@
             <div id='datepicker'></div>
         </div>
     </div>
-    <input type="hidden" name="teamId" value="${team.teamId}" id="teamId" />
 </div>
 </body>
-<script>
-    console.log(document.getElementById('#teamid'));
-    console.log("hallo");
-
-</script>
 </html>
