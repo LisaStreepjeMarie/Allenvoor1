@@ -109,7 +109,6 @@ public class MemberController {
             }catch(Exception re) {
                 re.printStackTrace();
             }
-            securityServiceInterface.autoLogin(member.getUsername(), member.getPasswordConfirm(), member.isEnabled());
             return "signup-success";
         }
     }
