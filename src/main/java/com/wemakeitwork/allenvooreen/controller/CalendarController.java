@@ -82,16 +82,12 @@ public class CalendarController {
     public ResponseEntity<Object> newEvent(@RequestBody String newEventJson) throws JsonProcessingException {
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         Event event = mapper.readValue(newEventJson, Event.class);
-
-        System.out.println(event.getEventId());
         Date startDateTime = event.getEventStartDate();
         Date endDateTime = event.getEventEndDate();
-        System.out.println("eventStartDate is " + startDateTime);
-        System.out.println("eventInterval is: " + endDateTime);
 
         int i = 0;
         Integer maxNumber = event.getEventMaxNumber();
-        System.out.println("maxNumber is " + maxNumber);
+        // case of periodic event
         if (maxNumber != null) {
             for (i = 0; i < maxNumber; i++) {
                 Date startDateTimeExtraEvent = null;
@@ -114,15 +110,14 @@ public class CalendarController {
                         break;
                     }
                 }
-                System.out.println("startDateTimeExtraEvent is: " + startDateTimeExtraEvent);
-                System.out.println("endDateTimeExtraEvent is: " + endDateTimeExtraEvent);
-
                 event = mapper.readValue(newEventJson, Event.class);
                 event.setEventStartDate(startDateTimeExtraEvent);
                 event.setEventEndDate(endDateTimeExtraEvent);
                 // event.setEventMaxNumber(maxNumber - i);
                 eventRepository.save(event);
             }
+        } else {
+            eventRepository.save(event);
         }
 
         // this sets the activity to the medication from the activity
@@ -135,7 +130,7 @@ public class CalendarController {
             removeMedicationAmountFromActivity(event);
         }
 
-        eventRepository.save(event);
+        // eventRepository.save(event);
         ServiceResponse<Event> result = new ServiceResponse<Event>("Succes", event);
         return new ResponseEntity<Object>(result, HttpStatus.OK);
     }
