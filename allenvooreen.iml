@@ -121,9 +121,9 @@
     <orderEntry type="library" name="Maven: org.webjars:tempusdominus-bootstrap-4:5.1.2" level="project" />
     <orderEntry type="library" name="Maven: org.webjars.bower:moment:2.24.0" level="project" />
     <orderEntry type="library" name="Maven: org.webjars:jquery:3.4.1" level="project" />
+    <orderEntry type="library" name="Maven: org.webjars:popper.js:1.16.0" level="project" />
     <orderEntry type="library" name="Maven: org.webjars:font-awesome:5.12.0" level="project" />
     <orderEntry type="library" name="Maven: org.webjars:bootstrap:4.4.1" level="project" />
-    <orderEntry type="library" name="Maven: org.webjars:popper.js:1.14.3" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.12" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.hamcrest:hamcrest-core:2.1" level="project" />
     <orderEntry type="library" name="Maven: org.json:json:20190722" level="project" />

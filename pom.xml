@@ -129,6 +129,14 @@
             <artifactId>jquery</artifactId>
             <version>3.4.1</version>
         </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>popper.js</artifactId>
+            <version>1.16.0</version>
+        </dependency>
+
+        <!-- popper -->
+
 
         <!-- font-awesome -->
         <dependency>
