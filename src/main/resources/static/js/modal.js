@@ -45,7 +45,7 @@ function fillModal(event) {
             $('#doneByMember').empty()
             console.log(event.doneByMember.name)
             $("#datetimepickerDone, #doneByMemberDiv").show()
-            filldoneByMembers()
+            filldoneByMembers(event.doneByMember.name)
             $('.modal').find('#doneByMember').val(event.doneByMember.name)
             console.log(event.doneByMember.name);
         }
@@ -60,7 +60,7 @@ function fillModal(event) {
     $("#eventDone").change(function () {
         if(document.getElementById("eventDone").checked == true) {
                 $("#datetimepickerDone, #doneByMemberDiv").show()
-                filldoneByMembers();
+                filldoneByMembers(null);
         } else {
                 document.getElementById("eventDoneDate").removeAttribute("required")
                 $("#datetimepickerDone, #doneByMemberDiv").hide();
@@ -73,16 +73,23 @@ function fillModal(event) {
 }
 
         // Cleans the modal upon closing
-function filldoneByMembers(){
-    console.log("hallo!");
+function filldoneByMembers(givenName){
+
+    if(givenName != null){
+    var first = '<option value="">'+ givenName + '</option>';
+    }else {
+    var first = '<option value="">Kies een teamlid</option>';
+    }
+
+
     $.ajax({
          type:'GET',
          url: ctx + "/calendar/" + $('#teamId').attr('data-teamId') + '/teamMembers',
          dataType: 'json',
          success : function(result) {
                  List = result.data
-                 $('#doneByMember').empty();
-                 $('#doneByMember').append('<option value="">Kies een teamlid</option>');
+                 $('#doneByMember').empty()
+                 $('#doneByMember').append(first);
                  for (i in List ) {
                     $('#doneByMember').append('<option value="' + List[i].id + '">' + List[i].name + '</option>');
                  }
