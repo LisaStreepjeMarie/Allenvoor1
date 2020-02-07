@@ -56,7 +56,7 @@
 </div>
 </body>
 <script>
-    console.log(document.getElementById('teamid'));
+    console.log(document.getElementById('#teamid'));
     console.log("hallo");
 
 </script>

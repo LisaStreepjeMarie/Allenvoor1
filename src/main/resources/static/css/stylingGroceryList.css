@@ -32,7 +32,7 @@ ul {
 
 /* Darker background-color on hover */
 .listItem:hover {
-  background: #e6f9ff;
+  background: #fce5ec;
 }
 
 /* When clicked on, add a background color and strike out text */
@@ -72,7 +72,8 @@ ul {
 /* Style the header */
 .header {
   width: 600px;
-  background-color: #99c2ff;
+  background-color: #b386b5;
+  border-radius: 30px 30px 0px 0px;
   padding: 20px 30px;
   color: white;
   text-align: center;
@@ -81,7 +82,8 @@ ul {
 /* Style the footer */
 .footer {
   width: 600px;
-  background-color: #99c2ff;
+  background-color: #b386b5;
+  border-radius: 0px 0px 15px 15px;
   padding: 20px 30px;
   color: white;
   text-align: center;
@@ -116,7 +118,7 @@ input {
 .addBtn {
   padding: 10px;
   width: 25%;
-  background: #66a3ff;
+  background: #92528f;
   color: #ffffff;
   float: left;
   text-align: center;
@@ -130,7 +132,7 @@ input {
 .checkDBtn {
   padding: 10px;
   width: 40%;
-  background: #66a3ff;
+  background: #c3a4cd;
   color: #ffffff;
   float: left;
   text-align: center;
@@ -144,7 +146,7 @@ input {
 .removeBtn {
   padding: 10px;
   width: 40%;
-  background: #6666ff;
+  background: #92528f;
   color: #ffffff;
   float: right;
   text-align: center;

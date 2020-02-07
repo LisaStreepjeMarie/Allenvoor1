@@ -21,7 +21,7 @@
 <body>
     <div id="WholeGroceryList">
         <div id="GroceryList" class="header">
-            <h2 style="margin:5px">Boodschappenlijst!</h2><br>
+            <br>
             <input type="text" id="newGroceryItem" placeholder="Nieuwe Boodschap...">
             <span onclick="newElement()" id="addButton" class="addBtn">Voeg toe!</span>
         </div>
