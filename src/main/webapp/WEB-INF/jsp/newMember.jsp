@@ -68,7 +68,7 @@
             <form action="${pageContext.request.contextPath}/logout" method="post" class="form-signin" >
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Inloggen</button>
-                <p class="mt-5 mb-3 text-muted">&copy; 2019 Allenvooreen</p>
+                <p class="mt-5 mb-3 text-muted">&copy; 2020 Allenvooreen</p>
             </form>
     </body>
 </html>

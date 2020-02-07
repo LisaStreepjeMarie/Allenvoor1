@@ -1,26 +1,27 @@
-<html>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-<div id="welcome-modal" class="modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-body">
-        <p>Welcome User.</p>
-      </div>
-    </div>
-  </div>
-</div>
-
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
-<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII"/>
-<title>home</title>
+<head>
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
+	<title>Verify Page</title>
 </head>
-<body>
-<div class="container">
-    <h1 class="alert alert-success">Hi! We zijn blij je te zien. Log hier in met je account</h1>
-    <a class="btn btn-primary" href="${pageContext.request.contextPath}/login">login</a>
+<body style="background-color: #f5f5f5;">
+	<div class="text-center p-5">
+	<br>
+	   <h1>Hi! <br> We zijn blij je weer te zien. </h1>
+	   <p class="lead"> Log hier in met je account</p>
+	   <a class="btn btn-primary" href="${pageContext.request.contextPath}/login">login</a>
+
+	<!-- FOOTER -->
+	<footer class="footer mt-5 text-muted text-center text-small">
+      <p> &copy; Allenvooreen 2020</p>
+    </footer>
 </div>
 </body>
 </html>

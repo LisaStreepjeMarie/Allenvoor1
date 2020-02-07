@@ -16,12 +16,11 @@
 	<br>
 	   <h1>Je bent succesvol geregistreerd!</h1>
 	   <p class="lead">Controleer je email en klik op de link om je aanmelding af te ronden.</p>
-	   <p class="lead"><a href="#" class="btn btn-lg btn-primary">Lees meer</a></p>
 	</div>
 
 	<!-- FOOTER -->
 	<footer class="footer mt-5 text-muted text-center text-small">
-      <p>Allen voor Een &copy; 2019</p>
+      <p>&copy; Allenvooreen 2020</p>
     </footer>
 </body>
 </html>
