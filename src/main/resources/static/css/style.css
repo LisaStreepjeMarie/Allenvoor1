@@ -1,6 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 body {
-
     margin: 0px 0px 0px 0px;
     padding: 0px 0px 0px 0px;
     background-repeat: no-repeat;
@@ -193,9 +192,9 @@ h2 {
 }
 
 .masthead {
+  background-image: url('/allenvooreen/images/background.jpg');
   height: 100vh;
   min-height: 500px;
-  background-image: url('/allenvooreen/images/background.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
