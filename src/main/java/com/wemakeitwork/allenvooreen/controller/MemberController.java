@@ -110,7 +110,7 @@ public class MemberController {
             }catch(Exception re) {
                 re.printStackTrace();
             }
-            return "redirect:/signup-success";
+            return "signup-success";
         }
     }
 

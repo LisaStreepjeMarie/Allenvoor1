@@ -21,7 +21,6 @@ public class IndexController {
     MemberRepository memberRepository;
 
 
-
     @GetMapping("/")
     public String index() {
         return "redirect:/home";

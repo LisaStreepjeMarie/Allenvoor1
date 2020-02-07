@@ -1,9 +1,11 @@
 package com.wemakeitwork.allenvooreen.model;
 
+import com.wemakeitwork.allenvooreen.validator.ValidEmail;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.management.relation.Role;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.*;
@@ -22,6 +24,7 @@ public class Member implements UserDetails{
 
     private String rol;
 
+    @ValidEmail
     private String email;
 
     @Transient
@@ -162,6 +165,7 @@ public class Member implements UserDetails{
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
+
 }
 
 

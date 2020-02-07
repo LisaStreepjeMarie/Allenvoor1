@@ -2,6 +2,7 @@ package com.wemakeitwork.allenvooreen.repository;
 
 import com.wemakeitwork.allenvooreen.model.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
