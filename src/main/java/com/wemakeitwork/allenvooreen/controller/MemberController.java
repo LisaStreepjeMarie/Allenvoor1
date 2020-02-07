@@ -101,15 +101,15 @@ public class MemberController {
             member.setPassword(passwordEncoder.encode(member.getPassword()));
             member.setRol("gebruiker");
             member.setEmail(member.getEmail());
-            //member.setEnabled(member.isEnabled(false));
+            member.setEnabled(false);
             memberServiceInterface.save(member);
-            securityServiceInterface.autoLogin(member.getUsername(), member.getPasswordConfirm());
             try {
                 String appUrl = request.getContextPath();
                 eventPublisher.publishEvent(new OnRegistrationSuccessEvent(member, appUrl));
             }catch(Exception re) {
                 re.printStackTrace();
             }
+            securityServiceInterface.autoLogin(member.getUsername(), member.getPasswordConfirm(), member.isEnabled());
             return "signup-success";
         }
     }
