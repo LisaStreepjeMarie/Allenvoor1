@@ -1,22 +1,21 @@
 package com.wemakeitwork.allenvooreen.model;
 
-import com.wemakeitwork.allenvooreen.validator.ValidEmail;
-import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.management.relation.Role;
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "members")
 public class Member implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
     private Integer memberId = 0;
 
     private String memberName;
@@ -78,6 +77,9 @@ public class Member implements UserDetails{
     public void setRol(String rol) {
         this.rol = rol;
     }
+    @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER, mappedBy = "member")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    Set<TeamMembership> teamMemberships;
 
     public String getPasswordConfirm() {
         return passwordConfirm;
@@ -151,8 +153,12 @@ public class Member implements UserDetails{
         }
     }
 
-    public void removeTeamFromMember(Team team){
-        allTeamsOfMemberSet.remove(team);
+    public Set<TeamMembership> getTeamMemberships() {
+        return teamMemberships;
+    }
+
+    public void setTeamMemberships(Set<TeamMembership> teamMemberships) {
+        this.teamMemberships = teamMemberships;
     }
 
     public String getEmail() {

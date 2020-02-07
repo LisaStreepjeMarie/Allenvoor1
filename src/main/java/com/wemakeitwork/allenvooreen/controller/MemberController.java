@@ -1,6 +1,6 @@
 package com.wemakeitwork.allenvooreen.controller;
+
 import com.wemakeitwork.allenvooreen.model.Member;
-import com.wemakeitwork.allenvooreen.model.VerificationToken;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import com.wemakeitwork.allenvooreen.repository.event.OnRegistrationSuccessEvent;
@@ -58,8 +58,9 @@ public class MemberController {
     private Object Locale;
 
     @GetMapping("member/current")
-    protected String showMember(Model model, Principal principal){
-        model.addAttribute("currentmember", memberRepository.findByMemberName(principal.getName()).orElse(new Member()));
+    protected String showMember(Model model){
+        Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("currentmember", member);
         return "memberProfile";
     }
 
@@ -100,8 +101,6 @@ public class MemberController {
             System.out.println(member.getMemberName());
             member.setPassword(passwordEncoder.encode(member.getPassword()));
             member.setRol("gebruiker");
-            member.setEmail(member.getEmail());
-            member.setEnabled(false);
             memberServiceInterface.save(member);
             try {
                 String appUrl = request.getContextPath();

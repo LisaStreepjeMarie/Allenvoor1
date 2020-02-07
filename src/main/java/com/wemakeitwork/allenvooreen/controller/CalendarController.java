@@ -57,13 +57,15 @@ public class CalendarController {
         httpSession.setAttribute("team", team);
 
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Set<Team> teamList = member.getAllTeamsOfMemberSet();
+        Set<TeamMembership> teamMembershipList = memberRepository.findByMemberName(member.getMemberName()).get().getTeamMemberships();
+        ArrayList<Team> teamList = new ArrayList<>();
+        for (TeamMembership tms: teamMembershipList) {
+            teamList.add(tms.getTeam());
+        }
 
         ArrayList<Team> sortedList = (ArrayList<Team>) teamList.stream()
                 .sorted(Comparator.comparing(Team::getTeamName))
                 .collect(Collectors.toList());
-
-        sortedList.forEach(x -> System.out.println(x.getTeamName()));
 
         model.addAttribute("teamList", sortedList);
 
@@ -72,6 +74,7 @@ public class CalendarController {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         String calendarData = mapper.writeValueAsString(sourceCalendarData);
+        System.out.println(calendarData);
 
         model.addAttribute("calendarData", calendarData);
         return "calendar";
@@ -81,7 +84,6 @@ public class CalendarController {
     public ResponseEntity<Object> newEvent(@RequestBody String newEventJson) throws JsonProcessingException {
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         Event event = mapper.readValue(newEventJson, Event.class);
-        System.out.println(event.getEventId());
 
         // this sets the activity to the medication from the activity
         if (event.getActivity() instanceof MedicationActivity){
@@ -134,7 +136,7 @@ public class CalendarController {
     private void removeMedicationAmountFromActivity(Event event){
         eventRepository.findById(event.getEventId()).stream()
                 .filter(x -> x.getActivity() instanceof MedicationActivity)
-                .forEach(x -> ((MedicationActivity) x.getActivity()).getMedication().removalActivityAddedAmount
+                .forEach(x -> ((MedicationActivity) x.getActivity()).getMedication().upTheMedicationAmount
                         (((MedicationActivity) x.getActivity()).getTakenMedication()));
     }
 }
