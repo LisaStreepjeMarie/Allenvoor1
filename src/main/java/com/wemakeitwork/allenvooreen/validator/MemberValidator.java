@@ -1,5 +1,6 @@
 package com.wemakeitwork.allenvooreen.validator;
 
+import com.wemakeitwork.allenvooreen.model.Medication;
 import com.wemakeitwork.allenvooreen.model.Member;
 import com.wemakeitwork.allenvooreen.service.MemberServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;

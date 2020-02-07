@@ -31,25 +31,6 @@ public class MemberService implements MemberServiceInterface {
     @Autowired
     private TokenRepository tokenRepository;
 
-
-    /*@Override
-    @Transactional
-    public Member registerMember(Member member) {
-        member = new Member();
-        member.setMemberName(member.getMemberName());
-        String hashedPassword = passwordEncoder.encode(member.getPassword());
-        member.setPassword(hashedPassword);
-        member.setEnabled(member.isEnabled());
-        member.setEmail(member.getEmail());
-
-        member.setRol(member.getRol());
-        memberRepository.save(member);
-        return member;
-    }
-
-
-     */
-
     @Override
     public void save(Member member) {
         memberRepository.save(member);

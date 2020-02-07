@@ -1,6 +1,7 @@
 package com.wemakeitwork.allenvooreen.model;
 
 import com.wemakeitwork.allenvooreen.validator.ValidEmail;
+import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
