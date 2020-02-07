@@ -55,6 +55,7 @@ public class CalendarController {
             throws JsonProcessingException {
         Team team = teamRepository.getOne(teamId);
         httpSession.setAttribute("team", team);
+        model.addAttribute("team", team);
 
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Set<TeamMembership> teamMembershipList = memberRepository.findByMemberName(member.getMemberName()).get().getTeamMemberships();
