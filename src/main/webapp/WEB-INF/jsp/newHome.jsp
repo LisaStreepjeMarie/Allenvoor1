@@ -24,9 +24,7 @@
 <mytags:navbar/>
 <div class= "masthead">
     <div class= "col-2">
-        <br />
-        <h1 class="dropdown-header"><strong>Welkom </h1>
-        <br />
+
         <c:forEach items="${teamList}" var="team">
             <br>
                 <button type="button" class="btn btn-lg btn-primary btn-block" data-toggle="collapse" data-target=#${team.teamName} >${team.teamName}</button>

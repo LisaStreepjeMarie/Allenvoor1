@@ -17,6 +17,7 @@ $(document).ready(function() {
                 right: 'month,agendaWeek,agendaDay,list'
             },
 
+            titleFormat: document.getElementById("teamName").value,
             weekNumbers: true,
             eventLimit: true, // allow "more" link when too many events
             navLinks: true, // can click day/week names to navigate views

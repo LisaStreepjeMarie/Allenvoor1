@@ -64,6 +64,7 @@
                             <input type="hidden" name="eventId" id="eventId" />
                             <input type="hidden" name="activityId" id="activityId" />
                             <input type="hidden" name="teamId" id="team.teamId"/>
+                            <input type="hidden" name="teamName" value="${team.teamName}" id="teamName"/>
                         </div>
                     </div>
 
@@ -137,9 +138,9 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 </form>
-  <jsp:include page="newHome.jsp" />
+  <jsp:include page="newHomeWithoutCalendarBreakingStuff.jsp" />
 
-// Hack, needed to show clock icon in datetimepickers
+
 <script>
 $(function () {
     $('#datetimepickerStart').datetimepicker({icons: {time: 'far fa-clock',},});
