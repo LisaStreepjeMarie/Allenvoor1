@@ -43,10 +43,12 @@
                                     <div id="collapse<c:out value="${team.teamId}" />" class="collapse" data-parent="#accordion">
                                     <div class="card-body">
                                         <label>Teamleden:</label>
+                                        <ul class="list-group">
                                         <c:forEach items="${team.teamMemberships}" var="membership">
-                                            <c:out value="${membership.member.memberName}" />
+                                            <li class="list-group-item"><c:out value="${membership.member.memberName}" /></li>
                                         </c:forEach>
-                                        <label>Acties:</label>
+                                        </ul>
+                                        <br><label>Acties:</label><br>
                                         <td><input class="btn btn-primary" type="submit" value="Schrijf jezelf uit" onclick="window.location='${pageContext.request.contextPath}/team/quit/${team.teamId}'" /></td>
                                         <td><input class="btn btn-primary" type="submit" value="Groepsdetails" onclick="window.location='${pageContext.request.contextPath}/team/select/<c:out value="${team.teamId}" />'" /></td>
                                         <td><input class="btn btn-primary" type="submit" value="Stop beheerderschap" onclick="window.location='${pageContext.request.contextPath}/team/quitadmin/${team.teamId}'" /></td>
@@ -66,10 +68,12 @@
                                     <div id="collapse<c:out value="${team.teamId}" />" class="collapse" data-parent="#accordion">
                                     <div class="card-body">
                                         <label>Teamleden:</label>
+                                        <ul class="list-group">
                                         <c:forEach items="${team.teamMemberships}" var="membership">
-                                            <c:out value="${membership.member.memberName}" />
+                                            <li class="list-group-item"><c:out value="${membership.member.memberName}" /></li>
                                         </c:forEach>
-                                        <label>Acties:</label>
+                                        </ul>
+                                        <br><label>Acties:</label><br>
                                         <td><input class="btn btn-primary" type="submit" value="Schrijf jezelf uit" onclick="window.location='${pageContext.request.contextPath}/team/quit/${team.teamId}'" /></td>
                                         <td><input class="btn btn-primary" type="submit" value="Groepsdetails" onclick="window.location='${pageContext.request.contextPath}/team/select/<c:out value="${team.teamId}" />'" /></td>
                                         <td><input class="btn btn-primary" type="submit" value="Stop beheerderschap" onclick="window.location='${pageContext.request.contextPath}/team/quitadmin/${team.teamId}'" /></td>
