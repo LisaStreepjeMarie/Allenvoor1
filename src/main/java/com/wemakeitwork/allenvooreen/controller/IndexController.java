@@ -40,7 +40,7 @@ public class IndexController {
                 .collect(Collectors.toList());
 
         model.addAttribute("teamList", sortedList);
-        return "home";
+        return "newHome";
     }
 
     @GetMapping("/login")
@@ -60,13 +60,14 @@ public class IndexController {
         ArrayList<Team> teamList = new ArrayList<>();
         for (TeamMembership tms: teamMembershipList) {
             teamList.add(tms.getTeam());
+            System.out.println(tms.getTeam().getTeamName());
         }
 
         ArrayList<Team> sortedList = (ArrayList<Team>) teamList.stream()
                 .sorted(Comparator.comparing(Team::getTeamName))
                 .collect(Collectors.toList());
 
-        model.addAttribute("teamList", sortedList);
+        model.addAttribute("teamList2", sortedList);
         return "newHome";
     }
 }

@@ -137,7 +137,7 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 </form>
-  <jsp:include page="home.jsp" />
+  <jsp:include page="newHome.jsp" />
 
 // Hack, needed to show clock icon in datetimepickers
 <script>

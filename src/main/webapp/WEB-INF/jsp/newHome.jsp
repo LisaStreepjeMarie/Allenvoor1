@@ -27,25 +27,26 @@
         <br />
         <h1 class="dropdown-header"><strong>Welkom </h1>
         <br />
-                <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo">Team naam komt hier</button>
-                <div id="demo" class="collapse">
+        <c:forEach items="${teamList}" var="team">
+            <br>
+                <button type="button" class="btn btn-lg btn-primary btn-block" data-toggle="collapse" data-target=#${team.teamName} >${team.teamName}</button>
+                <div id=${team.teamName} class="collapse">
                     <div class="card card-body">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        <tr>
+                           <a class="dropdown-item" href='${pageContext.request.contextPath}/calendar/${team.teamId}'> <i class="fa fa-calendar" ></i>&emsp;Kalender  </a>
+                        </tr>
+                        <tr>
+                            <a class="dropdown-item" href='${pageContext.request.contextPath}/medication/${team.teamId}'><i class=" fa fa-medkit"></i> &emsp;Medicatie  </a>
+                        </tr>
+                        <tr>
+                            <a class="dropdown-item" href='${pageContext.request.contextPath}/grocerylist/${team.teamId}'><i class="fa fa-shopping-basket"></i> &emsp;Boodschappenlijst  </a>
+                        </tr>
                     </div>
-                    <br>
                 </div>
             <br>
-        <br>
-            <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo2">Simple collapsible</button>
-            <div id="demo2" class="collapse">
-                <div class="card card-body">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </div>
-     </div>
+
+        </c:forEach>
+
 </div>
 
 
