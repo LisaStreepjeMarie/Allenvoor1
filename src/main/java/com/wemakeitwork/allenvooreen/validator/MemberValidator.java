@@ -39,5 +39,6 @@ public class MemberValidator implements Validator {
         if (!member.getPasswordConfirm().equals(member.getPassword())) {
             errors.rejectValue("passwordConfirm", "Diff.userForm.passwordConfirm");
         }
+
     }
 }

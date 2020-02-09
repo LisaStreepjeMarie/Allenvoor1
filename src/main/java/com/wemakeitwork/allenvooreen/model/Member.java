@@ -1,11 +1,10 @@
 package com.wemakeitwork.allenvooreen.model;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.management.relation.Role;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,15 +17,67 @@ public class Member implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer memberId;
+    private Integer memberId = 0;
 
     private String memberName;
 
     private String password;
 
+    private String rol;
+
+    @ValidEmail
+    private String email;
+
     @Transient
     private String passwordConfirm;
 
+    private boolean enabled;
+
+    public Member(int memberId, String memberName, String password, String rol, String email, boolean enabled) {
+        this.memberId = memberId;
+        this.memberName = memberName;
+        this.password = password;
+        this.rol = rol;
+        this.email = email;
+        this.enabled = enabled;
+    }
+
+    public Member(){
+        super();
+        this.enabled= false;
+    }
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "team_membername", joinColumns = @JoinColumn(name = "membername_member_id"), inverseJoinColumns = @JoinColumn(name = "team_team_id"))
+    private Set<Team> allTeamsOfMemberSet = new HashSet<>();
+
+    @OneToOne(mappedBy = "member")
+    private VerificationToken verificationToken;
+
+
+    public VerificationToken getVerificationToken() {
+        return verificationToken;
+    }
+
+    public void setVerificationToken(VerificationToken verificationToken) {
+        this.verificationToken = verificationToken;
+    }
+
+    public Set<Team> getAllTeamsOfMemberSet() {
+        return allTeamsOfMemberSet;
+    }
+
+    public void setAllTeamsOfMemberSet(Set<Team> allTeamsOfMemberSet) {
+        this.allTeamsOfMemberSet = allTeamsOfMemberSet;
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
     @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER, mappedBy = "member")
     @OnDelete(action = OnDeleteAction.CASCADE)
     Set<TeamMembership> teamMemberships;
@@ -68,7 +119,7 @@ public class Member implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 
     public Integer getMemberId() {
@@ -110,4 +161,20 @@ public class Member implements UserDetails {
     public void setTeamMemberships(Set<TeamMembership> teamMemberships) {
         this.teamMemberships = teamMemberships;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
 }
+
+
+
