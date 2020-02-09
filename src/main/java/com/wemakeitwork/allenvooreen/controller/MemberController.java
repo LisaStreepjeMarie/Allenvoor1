@@ -1,7 +1,6 @@
 package com.wemakeitwork.allenvooreen.controller;
 
 import com.wemakeitwork.allenvooreen.model.Member;
-import com.wemakeitwork.allenvooreen.model.VerificationToken;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import com.wemakeitwork.allenvooreen.repository.event.OnRegistrationSuccessEvent;
@@ -19,10 +18,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -116,6 +111,7 @@ public class MemberController {
             return "signup-success";
         }
     }
+
 
     @PostMapping("/member/change")
     protected String changeMember(@ModelAttribute("currentmember") Member newNameMember, BindingResult result) {

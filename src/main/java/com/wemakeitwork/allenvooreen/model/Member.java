@@ -13,8 +13,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "members")
-public class Member implements UserDetails {
-
+public class Member implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer memberId = 0;

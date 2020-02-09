@@ -51,7 +51,7 @@ public class MemberSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/member/new/**", "/images/**", "/css/**",
-                        "/webjars/bootstrap/**", "/webjars/jquery/**").permitAll()
+                        "/webjars/bootstrap/**", "/webjars/jquery/**", "/confirmRegistration/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
