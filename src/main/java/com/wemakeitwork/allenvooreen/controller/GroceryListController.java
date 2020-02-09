@@ -47,6 +47,7 @@ public class GroceryListController {
 
     @GetMapping("/grocerylist/{teamId}")
     protected String showGrocerylist(@PathVariable("teamId") final Integer teamId, Model model) {
+
         Team team = teamRepository.getOne(teamId);
         httpSession.setAttribute("team", team);
         model.addAttribute("team", team);

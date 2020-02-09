@@ -24,9 +24,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 public class MedicationController {
@@ -74,9 +73,18 @@ public class MedicationController {
         httpSession.setAttribute("team", team);
 
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Set<TeamMembership> teamList = member.getTeamMemberships();
+        Set<TeamMembership> teamMembershipList = memberRepository.findByMemberName(member.getMemberName()).get().getTeamMemberships();
+        ArrayList<Team> teamList = new ArrayList<>();
+        for (TeamMembership tms: teamMembershipList) {
+            teamList.add(tms.getTeam());
+        }
 
-        Medication medication = new Medication();
+        ArrayList<Team> sortedList = (ArrayList<Team>) teamList.stream()
+                .sorted(Comparator.comparing(Team::getTeamName))
+                .collect(Collectors.toList());
+
+
+        model.addAttribute("teamList", sortedList);
         model.addAttribute("medicationList", team.getMedicationList());
 
         return "medicationOverview";

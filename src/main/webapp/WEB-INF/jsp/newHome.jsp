@@ -23,7 +23,9 @@
 <body class= "webpage">
 <mytags:navbar/>
 <div class= "masthead">
-    <div class= "col-2">
+    <div class= "row">
+        <div class= "col-2">
+            <div class="ml-3 mt-3">
 
         <c:forEach items="${teamList}" var="team">
             <br>
@@ -31,19 +33,20 @@
                 <div id=${team.teamName} class="collapse">
                     <div class="card card-body">
                         <tr>
-                           <a class="dropdown-item" href='${pageContext.request.contextPath}/calendar/${team.teamId}'> <i class="fa fa-calendar" ></i>&emsp;Kalender  </a>
+                           <a class="dropdown-item" href='${pageContext.request.contextPath}/calendar/${team.teamId}'> <i class="fa fa-calendar" ></i>&emsp;Kalender</a>
                         </tr>
                         <tr>
-                            <a class="dropdown-item" href='${pageContext.request.contextPath}/medication/${team.teamId}'><i class=" fa fa-medkit"></i> &emsp;Medicatie  </a>
+                            <a class="dropdown-item" href='${pageContext.request.contextPath}/medication/${team.teamId}'><i class=" fa fa-medkit"></i>&emsp;Medicatie</a>
                         </tr>
                         <tr>
-                            <a class="dropdown-item" href='${pageContext.request.contextPath}/grocerylist/${team.teamId}'><i class="fa fa-shopping-basket"></i> &emsp;Boodschappenlijst  </a>
+                            <a class="dropdown-item" href='${pageContext.request.contextPath}/grocerylist/${team.teamId}'><i class="fa fa-shopping-basket"></i>&emsp;Boodschappenlijst</a>
                         </tr>
                     </div>
                 </div>
-            <br>
 
         </c:forEach>
+            </div>
+        </div>
 
 </div>
 
