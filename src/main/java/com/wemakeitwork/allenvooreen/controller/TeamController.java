@@ -79,8 +79,14 @@ public class TeamController {
     @GetMapping("/team/select/{teamId}")
     protected String showChangeTeam(@PathVariable("teamId") final Integer teamId, Model model) {
         Team team = teamRepository.getOne(teamId);
-        List<TeamMembership> teamMemberList = team.getTeamMemberships().stream().filter(x -> !x.isAdmin()).collect(Collectors.toList());
-        List<TeamMembership> teamAdminList = team.getTeamMemberships().stream().filter(x -> x.isAdmin()).collect(Collectors.toList());
+        List<TeamMembership> teamMemberList = team.getTeamMemberships().stream()
+                .filter(x -> !x.isAdmin())
+                .sorted(Comparator.comparing(x -> x.getMember().getMemberName()))
+                .collect(Collectors.toList());
+        List<TeamMembership> teamAdminList = team.getTeamMemberships().stream()
+                .filter(x -> x.isAdmin())
+                .sorted(Comparator.comparing(x -> x.getMember().getMemberName()))
+                .collect(Collectors.toList());
 
         TeamMemberDTO teamMemberDTO = new TeamMemberDTO();
         teamMemberDTO.setTeamId(teamId);

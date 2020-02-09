@@ -31,7 +31,7 @@
                     </div>
 
                     <div class="ml-3 mt-3">
-                        <div id="accordion">
+                        <div class="w-50 p-3" id="accordion">
                             <c:forEach items="${adminTeamList}" var="team">
                                 <div class="card">
                                     <div class="card-header"  aria-expanded="false">
@@ -44,13 +44,14 @@
                                     <div class="card-body">
                                         <label>Teamleden:</label>
                                         <ul class="list-group">
-                                        <c:forEach items="${team.teamMemberships}" var="membership">
-                                            <li class="list-group-item"><c:out value="${membership.member.memberName}" />
-                                                <c:if test="${membership.admin}">
-                                                    &emsp;<i class="far fa-star"></i>
-                                                </c:if>
-                                        </c:forEach>
+                                            <c:forEach items="${team.teamMemberships}" var="membership">
+                                                <li class="list-group-item list-group-item-action"><c:out value="${membership.member.memberName}" />
+                                                    <c:if test="${membership.admin}">
+                                                        &emsp;<i class="far fa-star"></i>
+                                                    </c:if>
+                                            </c:forEach>
                                         </ul>
+
                                         <br><label>Acties:</label><br>
                                         <td><input class="btn btn-primary" type="submit" value="Schrijf jezelf uit" onclick="window.location='${pageContext.request.contextPath}/team/quit/${team.teamId}'" /></td>
                                         <td><input class="btn btn-primary" type="submit" value="Groepsdetails" onclick="window.location='${pageContext.request.contextPath}/team/select/<c:out value="${team.teamId}" />'" /></td>
@@ -73,7 +74,7 @@
                                         <label>Teamleden:</label>
                                         <ul class="list-group">
                                         <c:forEach items="${team.teamMemberships}" var="membership">
-                                            <li class="list-group-item"><c:out value="${membership.member.memberName}" />
+                                            <li class="list-group-item list-group-item-action"><c:out value="${membership.member.memberName}" />
                                                 <c:if test="${membership.admin}">
                                                     &emsp;<i class="far fa-star"></i>
                                                 </c:if>
