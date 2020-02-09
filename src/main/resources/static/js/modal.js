@@ -42,12 +42,12 @@ function fillModal(event) {
         $('.modal').find('#eventName').val(event.title);
         $('.modal').find('#eventComment').val(event.comment);
         if(event.doneByMember){
+            console.log(event.donedate)
             $('#doneByMember').empty()
-            console.log(event.doneByMember.name)
             $("#datetimepickerDone, #doneByMemberDiv").show()
+            $("#eventDone").prop("checked", true);
             filldoneByMembers(event.doneByMember.name)
-            $('.modal').find('#doneByMember').val(event.doneByMember.name)
-            console.log(event.doneByMember.name);
+//            $('.modal').find('#doneByMember').val(event.doneByMember.name)
         }
     } else {
         document.getElementById("modal-title").innerHTML = "Maak nieuwe afspraak";
