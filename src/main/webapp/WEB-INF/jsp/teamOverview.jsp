@@ -45,7 +45,9 @@
                                         <label>Teamleden:</label>
                                         <ul class="list-group">
                                         <c:forEach items="${team.teamMemberships}" var="membership">
-                                            <li class="list-group-item"><c:out value="${membership.member.memberName}" /></li>
+                                            <li class="list-group-item"><c:out value="${membership.member.memberName}" />
+                                                <jsp:useBean id="membership" class="com.wemakeitwork.allenvooreen.model.TeamMembership"/>
+                                                <jsp:getProperty name="membership" property="admin"/>
                                         </c:forEach>
                                         </ul>
                                         <br><label>Acties:</label><br>
@@ -70,14 +72,13 @@
                                         <label>Teamleden:</label>
                                         <ul class="list-group">
                                         <c:forEach items="${team.teamMemberships}" var="membership">
-                                            <li class="list-group-item"><c:out value="${membership.member.memberName}" /></li>
+                                            <li class="list-group-item"><c:out value="${membership.member.memberName}" />
+                                                <jsp:useBean id="membership2" class="com.wemakeitwork.allenvooreen.model.TeamMembership"/>
+                                                <jsp:getProperty name="membership" property="admin"/>
                                         </c:forEach>
                                         </ul>
                                         <br><label>Acties:</label><br>
                                         <td><input class="btn btn-primary" type="submit" value="Schrijf jezelf uit" onclick="window.location='${pageContext.request.contextPath}/team/quit/${team.teamId}'" /></td>
-                                        <td><input class="btn btn-primary" type="submit" value="Groepsdetails" onclick="window.location='${pageContext.request.contextPath}/team/select/<c:out value="${team.teamId}" />'" /></td>
-                                        <td><input class="btn btn-primary" type="submit" value="Stop beheerderschap" onclick="window.location='${pageContext.request.contextPath}/team/quitadmin/${team.teamId}'" /></td>
-                                        <td><input class="btn btn-primary" type="submit" value="Verwijder groep" onclick="window.location='${pageContext.request.contextPath}/team/delete/${team.teamId}'" /></td>
                                     </div>
                                 </div>
                         </div>
