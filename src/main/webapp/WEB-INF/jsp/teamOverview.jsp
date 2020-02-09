@@ -23,7 +23,7 @@
         <mytags:navbar/>
         <div class= "masthead">
             <div id="container">
-
+                <br>
                 <div class="ml-3 mt-3">
                     <br>
                     <div class="ml-3 mt-3">
@@ -46,8 +46,9 @@
                                         <ul class="list-group">
                                         <c:forEach items="${team.teamMemberships}" var="membership">
                                             <li class="list-group-item"><c:out value="${membership.member.memberName}" />
-                                                <jsp:useBean id="membership" class="com.wemakeitwork.allenvooreen.model.TeamMembership"/>
-                                                <jsp:getProperty name="membership" property="admin"/>
+                                                <c:if test="${membership.admin}">
+                                                    &emsp;<i class="far fa-star"></i>
+                                                </c:if>
                                         </c:forEach>
                                         </ul>
                                         <br><label>Acties:</label><br>
@@ -73,8 +74,9 @@
                                         <ul class="list-group">
                                         <c:forEach items="${team.teamMemberships}" var="membership">
                                             <li class="list-group-item"><c:out value="${membership.member.memberName}" />
-                                                <jsp:useBean id="membership2" class="com.wemakeitwork.allenvooreen.model.TeamMembership"/>
-                                                <jsp:getProperty name="membership" property="admin"/>
+                                                <c:if test="${membership.admin}">
+                                                    &emsp;<i class="far fa-star"></i>
+                                                </c:if>
                                         </c:forEach>
                                         </ul>
                                         <br><label>Acties:</label><br>

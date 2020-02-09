@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -50,6 +51,8 @@ public class TeamController {
                 .filter(x -> x.getMember().getMemberId().equals(member.getMemberId()))
                 // Filter out teams where user is admin
                 .filter(TeamMembership::isAdmin).map(TeamMembership::getTeam)
+                // Sort the list by teamname
+                .sorted(Comparator.comparing(Team::getTeamName))
                 // Save resulting teams to adminTeamList
                 .collect(Collectors.toCollection(ArrayList::new)));
 
@@ -58,6 +61,7 @@ public class TeamController {
                 .findByMemberName(member.getMemberName()).get().getTeamMemberships().stream()
                 .filter(x -> x.getMember().getMemberId().equals(member.getMemberId()))
                 .filter(x -> !x.isAdmin()).map(TeamMembership::getTeam)
+                .sorted(Comparator.comparing(Team::getTeamName))
                 .collect(Collectors.toCollection(ArrayList::new)));
 
         return "teamOverview";
