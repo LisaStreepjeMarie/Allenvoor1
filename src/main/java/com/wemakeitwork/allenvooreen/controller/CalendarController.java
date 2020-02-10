@@ -123,6 +123,7 @@ public class CalendarController {
                     }
                 }
                 event = mapper.readValue(newEventJson, Event.class);
+                event.setDoneByMember(null);
                 event.setEventStartDate(startDateTimeExtraEvent);
                 event.setEventEndDate(endDateTimeExtraEvent);
                 // event.setEventMaxNumber(maxNumber - i);
