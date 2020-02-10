@@ -27,7 +27,7 @@
           <a class="nav-link" href='${pageContext.request.contextPath}/team/all'><i class="fas fa-users"></i> Mijn groepen</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href='${pageContext.request.contextPath}/logout'><i class="fas fa-sign-out"></i> Logout</a>
+          <a class="nav-link" href='${pageContext.request.contextPath}/logout'><i class="fas fa-sign-out-alt"></i> Logout</a>
         </li>
       </ul>
     </div>
