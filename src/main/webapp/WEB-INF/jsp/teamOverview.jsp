@@ -94,13 +94,6 @@
                     <p><input class="btn btn-primary" type="submit" value="Creëer nieuwe groep" onclick="window.location='${pageContext.request.contextPath}/team/new';" /></p>
                     <br>
                 </div>
-                <div class="ml-3 mt-3">
-                    <h3 class="font-weight-light">Word lid van een bestaande groep:</h3>
-                    <input type="text">
-                    <input class="btn btn-primary" type="submit" value="Meld je aan bij deze groep">
-                </div>
-
-
             </div>
         </div>
     <body>

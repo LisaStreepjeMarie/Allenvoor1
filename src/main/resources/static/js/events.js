@@ -83,6 +83,7 @@ function getMedication(event){
 
 // this function loads the calendar with all events between start and end
 function getEvents(start, end, callback) {
+    console.log("HOEVAAK ?");``
     $.ajax({
         type:'GET',
         url: ctx + '/calendar/get/' + $('#teamId').attr('data-teamId') + '/' + start + '/' + end + '/',
@@ -91,6 +92,7 @@ function getEvents(start, end, callback) {
         success : function(result) {
                 if (result.status == "success") {
                    var events = result.data;
+                   console.log(result.data);
                    callback(events);
                 } else {
                    console.log("ERROR: ", e);
