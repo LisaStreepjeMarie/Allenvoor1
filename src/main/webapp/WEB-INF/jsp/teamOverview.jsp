@@ -34,11 +34,9 @@
                 <div class="w-50 p-3" id="accordion">
                     <c:forEach items="${adminTeamList}" var="team">
                         <div class="card">
-                            <div class="card-header"  aria-expanded="false">
-                                <a class="card-link" data-toggle="collapse" href="#collapse<c:out value="${team.teamId}" />">
+                            <div class="card-header"  aria-expanded="false" data-toggle="collapse" data-target="#collapse<c:out value="${team.teamId}" />">
                                 <c:out value="${team.teamName}" />
                                 &emsp;&emsp;<span class="badge badge-secondary">Groepsbeheerder</span>
-                                </a>
                             </div>
                             <div id="collapse<c:out value="${team.teamId}" />" class="collapse" data-parent="#accordion">
                             <div class="card-body">
@@ -64,10 +62,8 @@
                 <div id="accordion">
                     <c:forEach items="${memberTeamList}" var="team">
                         <div class="card">
-                            <div class="card-header">
-                                <a class="card-link" data-toggle="collapse" href="#collapse<c:out value="${team.teamId}" />">
+                            <div class="card-header" data-toggle="collapse" data-target="#collapse<c:out value="${team.teamId}" />">
                                 <c:out value="${team.teamName}" />
-                                </a>
                             </div>
                             <div id="collapse<c:out value="${team.teamId}" />" class="collapse" data-parent="#accordion">
                             <div class="card-body">
