@@ -26,9 +26,9 @@ function saveEvent(eventId, activityId) {
             interval: document.getElementById("eventInterval").value,
             maxNumber: document.getElementById("eventMaxNumber").value,
             donedate: moment(document.getElementById("eventDoneDate").value, "DD-MM-YYYY H:mm").toDate(),
-            doneByMember: {
-                id: document.getElementById("doneByMember").value,
-            },
+//            doneByMember: {
+//                id: document.getElementById("doneByMember").value,
+//            },
             activity: {
                 type: activityType,
                 activityId: document.getElementById("activityId").value,
@@ -77,6 +77,8 @@ function getMedication(event){
                  for (i in List ) {
                     $('#medicationChoice').append('<option value="' + List[i].id + '">' + List[i].name + '</option>');
                  }
+//                 document.getElementById("medicationChoice").value = event.activity.medication.id;
+//                 $('.modal').find('#takenMedication').val(event.activity.takenmedication);
              },
              error : function(e) {
              alert("getMedication() error")
@@ -87,7 +89,6 @@ function getMedication(event){
 
 // this function loads the calendar with all events between start and end
 function getEvents(start, end, callback) {
-    console.log("HOEVAAK ?");``
     $.ajax({
         type:'GET',
         url: ctx + '/calendar/get/' + $('#teamId').attr('data-teamId') + '/' + start + '/' + end + '/',
@@ -96,7 +97,6 @@ function getEvents(start, end, callback) {
         success : function(result) {
                 if (result.status == "success") {
                    var events = result.data;
-                   console.log(result.data);
                    callback(events);
                 } else {
                    console.log("ERROR: ", e);

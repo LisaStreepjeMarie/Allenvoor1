@@ -64,6 +64,7 @@
                             <input type="hidden" name="eventId" id="eventId" />
                             <input type="hidden" name="activityId" id="activityId" />
                             <input type="hidden" name="teamId" id="team.teamId"/>
+                            <input type="hidden" name="teamName" value="${team.teamName}" id="teamName"/>
                         </div>
                     </div>
 
@@ -142,29 +143,19 @@
                     <div class="modal-body" >
                         <div class="modal-body" >
                             <div class="row" id="eventDoneDiv">
-                                <label class="col-4" for="eventDone">Uitgevoerd</label>
+                                <label class="col-xs-4" for="eventDone">Afspraak al uitgevoerd?&nbsp;</label>
                                 <input type="checkbox" id="eventDone" name="eventDone"/>
-                        </div>
-                    </div>
-                        <div class="form-group" >
-                            <div class="input-group date" id="datetimepickerDone" data-target-input="nearest">
-                                <label class="col-4" for="eventDoneDate">Op datum</label>
+                            </div>
+                            <div class="row input-group date" id="datetimepickerDone" data-target-input="nearest">
+                                <label class="col-xs-4" for="eventDoneDate">Op datum</label>
                                 <input id="eventDoneDate" name="eventDoneDate" type="text" class="form-control datetimepicker-input" data-target="#datetimepickerDone"/>
                                 <div class="input-group-append" style="width:8.3vw;" data-target="#datetimepickerDone" data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
                             </div>
-                            <div class="modal-body">
-                        <div class="row" id ="doneByMemberDiv">
-                            <label class="col-4" for="doneByMember" control-label>Gedaan door </label>
-                            <select name="event.doneByMember" id="doneByMember" style="width:13.2em;" >
-                            <option disabled selected="doneByMember">null</option>
-                            </select>
                         </div>
                     </div>
-                    </div>
-                    </div>
-
+                </div>
                     </span>
                 <div class="modal-footer" id="modal-footer">
                     <button type="button" id="delete-event" class="btn btn-danger" data-dismiss="modal">Verwijder Afspraak</button>
@@ -175,9 +166,9 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 </form>
-  <jsp:include page="home.jsp" />
+<jsp:include page="newHomeWithoutCalendarBreakingStuff.jsp" />
 
-<!-- Hack, needed to show clock icon in datetimepickers -->
+
 <script>
 $(function () {
     $('#datetimepickerStart').datetimepicker({icons: {time: 'far fa-clock',},});
