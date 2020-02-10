@@ -46,8 +46,9 @@ function fillModal(event) {
             $('#doneByMember').empty()
             $("#datetimepickerDone, #doneByMemberDiv").show()
             $("#eventDone").prop("checked", true);
+            $('.modal').find('#eventDoneDate').val(moment(event.donedate).format('DD-MM-YYYY H:mm'));
             filldoneByMembers(event.doneByMember.name)
-//            $('.modal').find('#doneByMember').val(event.doneByMember.name)
+            //$('.modal').find('#doneByMember').val(event.doneByMember.name)
         }
     } else {
         document.getElementById("modal-title").innerHTML = "Maak nieuwe afspraak";
