@@ -26,9 +26,9 @@ function saveEvent(eventId, activityId) {
             interval: document.getElementById("eventInterval").value,
             maxNumber: document.getElementById("eventMaxNumber").value,
             donedate: moment(document.getElementById("eventDoneDate").value, "DD-MM-YYYY H:mm").toDate(),
-//            doneByMember: {
-//                id: document.getElementById("doneByMember").value,
-//            },
+            doneByMember: {
+                id: document.getElementById("doneByMember").value,
+            },
             activity: {
                 type: activityType,
                 activityId: document.getElementById("activityId").value,
