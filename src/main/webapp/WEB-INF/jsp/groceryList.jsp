@@ -9,7 +9,6 @@
     <title>Boodschappenlijst</title>
 
     <script src="${pageContext.request.contextPath}/webjars/jquery/3.4.1/jquery.min.js"></script>
-    <link href="${pageContext.request.contextPath}/webjars/font-awesome/5.12.0/css/all.min.css" rel='stylesheet'>
     <script src="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
     <link id="contextPathHolder" data-contextPath="${pageContext.request.contextPath}"/>

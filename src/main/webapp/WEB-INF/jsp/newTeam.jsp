@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<html xmlns:form="http://www.w3.org/1999/xhtml">
+<html xmlns:form="http://www.w3.org/1999/xhtml" xmlns:mytags="">
     <head>
         <title>Voeg een groep toe</title>
 
@@ -33,7 +33,7 @@
                             <tr>
                                 <td><h6 class="font-weight-light">Groepslid:</h6></td>
                                 <td>
-                                    <form:input path="allMembersInThisTeamSet" value="${members.membername}" /></form>
+                                    <form:input path="teamMemberships" value="${members.membername}" /></form>
                                 </td>
                             </tr>
                             <tr><td colspan="2"><input class="btn btn-primary" type="submit" value="Bewaar" /></td></tr>

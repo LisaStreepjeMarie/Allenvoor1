@@ -37,6 +37,7 @@ public class GroceryListController {
     @Autowired
     MedicationRepository medicationRepository;
 
+
     @GetMapping("/grocerylist/{teamId}")
     protected String showGrocerylist(@PathVariable("teamId") final Integer teamId, Model model) {
         httpSession.setAttribute("team", teamRepository.getOne(teamId));
@@ -95,7 +96,6 @@ public class GroceryListController {
 
         if(groceryItem != null) {
             groceryItem.setBought();
-            System.out.println(groceryItem.getBought());
             groceryItemRepository.save(groceryItem);
         }
 

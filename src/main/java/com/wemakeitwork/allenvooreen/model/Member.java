@@ -1,8 +1,9 @@
 package com.wemakeitwork.allenvooreen.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.wemakeitwork.allenvooreen.validator.ValidEmail;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,9 +32,28 @@ public class Member implements UserDetails {
     @JsonIgnore
     private String rol;
 
+    @ValidEmail
+    private String email;
+
     @Transient
     @JsonIgnore
     private String passwordConfirm;
+
+    private boolean enabled;
+
+    public Member(int memberId, String memberName, String password, String rol, String email, boolean enabled) {
+        this.memberId = memberId;
+        this.memberName = memberName;
+        this.password = password;
+        this.rol = rol;
+        this.email = email;
+        this.enabled = enabled;
+    }
+
+    public Member(){
+        super();
+        this.enabled= false;
+    }
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, mappedBy = "doneByMember")
@@ -45,6 +65,18 @@ public class Member implements UserDetails {
     private Set<Team> allTeamsOfMemberSet = new HashSet<>();
 
     @JsonIgnore
+    @OneToOne(mappedBy = "member")
+    private VerificationToken verificationToken;
+
+
+    public VerificationToken getVerificationToken() {
+        return verificationToken;
+    }
+
+    public void setVerificationToken(VerificationToken verificationToken) {
+        this.verificationToken = verificationToken;
+    }
+
     public Set<Team> getAllTeamsOfMemberSet() {
         return allTeamsOfMemberSet;
     }
@@ -60,6 +92,9 @@ public class Member implements UserDetails {
     public void setRol(String rol) {
         this.rol = rol;
     }
+    @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER, mappedBy = "member")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    Set<TeamMembership> teamMemberships;
 
     public String getPasswordConfirm() {
         return passwordConfirm;
@@ -98,7 +133,7 @@ public class Member implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 
     public Integer getMemberId() {
@@ -133,6 +168,20 @@ public class Member implements UserDetails {
         }
     }
 
+    public Set<TeamMembership> getTeamMemberships() {
+        return teamMemberships;
+    }
+
+    public void setTeamMemberships(Set<TeamMembership> teamMemberships) {
+        this.teamMemberships = teamMemberships;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     public List<Event> getDoneEvents() {
         return doneEvents;
     }
@@ -144,4 +193,12 @@ public class Member implements UserDetails {
     public void removeTeamFromMember(Team team){
         allTeamsOfMemberSet.remove(team);
     }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
 }
+
+
+

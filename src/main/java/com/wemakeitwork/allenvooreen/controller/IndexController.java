@@ -2,6 +2,7 @@ package com.wemakeitwork.allenvooreen.controller;
 
 import com.wemakeitwork.allenvooreen.model.Member;
 import com.wemakeitwork.allenvooreen.model.Team;
+import com.wemakeitwork.allenvooreen.model.TeamMembership;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,6 +21,7 @@ public class IndexController {
     @Autowired
     MemberRepository memberRepository;
 
+
     @GetMapping("/")
     public String index() {
         return "redirect:/home";
@@ -28,15 +30,17 @@ public class IndexController {
     @GetMapping("/home")
     public String calendar(Model model){
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Set<Team> teamList = memberRepository.findByMemberName(member.getMemberName()).get().getAllTeamsOfMemberSet();
-        if (teamList != null) {
-            ArrayList<Team> sortedList = (ArrayList<Team>) teamList.stream()
-                    .sorted(Comparator.comparing(Team::getTeamName))
-                    .collect(Collectors.toList());
-
-            sortedList.forEach(x -> System.out.println(x.getTeamName()));
-            model.addAttribute("teamList", sortedList);
+        Set<TeamMembership> teamMembershipList = memberRepository.findByMemberName(member.getMemberName()).get().getTeamMemberships();
+        ArrayList<Team> teamList = new ArrayList<>();
+        for (TeamMembership tms: teamMembershipList) {
+            teamList.add(tms.getTeam());
         }
+
+        ArrayList<Team> sortedList = (ArrayList<Team>) teamList.stream()
+                .sorted(Comparator.comparing(Team::getTeamName))
+                .collect(Collectors.toList());
+
+        model.addAttribute("teamList", sortedList);
         return "home";
     }
 

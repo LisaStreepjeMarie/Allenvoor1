@@ -41,7 +41,6 @@ function removeGroceryItem(type, itemId){
          type:'GET',
          url: ctx + "/delete/" + type + "/" + itemId,
          success : function(result) {
-            console.log("woop wo0p")
              },
              error : function(e) {
              console.log("ERROR: ", e);
@@ -70,7 +69,6 @@ function addGroceryItem(newGroceryItem){
         success: function(result) {
             $('#groceryItem').append('<li class="listItem" value="' + result.data.id + '">' + result.data.title + '</li>');
             addCloseAndListener();
-            console.log("woop woop");
         },
         error: function(e) {
             alert("boodschappenerror")
@@ -120,7 +118,6 @@ function boughtBoolean(type, groceryItemId){
          type:'GET',
          url: ctx + "/bought/" + type + "/" + groceryItemId,
          success : function(result) {
-            console.log("woop woop")
              },
              error : function(e) {
              console.log("ERROR: ", e);

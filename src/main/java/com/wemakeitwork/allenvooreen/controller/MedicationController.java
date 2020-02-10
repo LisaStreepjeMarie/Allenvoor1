@@ -3,11 +3,12 @@ package com.wemakeitwork.allenvooreen.controller;
 import com.wemakeitwork.allenvooreen.model.Medication;
 import com.wemakeitwork.allenvooreen.model.Member;
 import com.wemakeitwork.allenvooreen.model.Team;
+import com.wemakeitwork.allenvooreen.model.TeamMembership;
 import com.wemakeitwork.allenvooreen.repository.MedicationRepository;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
-import com.wemakeitwork.allenvooreen.service.ServiceResponse;
 import com.wemakeitwork.allenvooreen.service.MedicationServiceInterface;
+import com.wemakeitwork.allenvooreen.service.ServiceResponse;
 import com.wemakeitwork.allenvooreen.validator.MedicationValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -61,18 +61,24 @@ public class MedicationController {
         if (result.hasErrors()) {
             return "newMedication";
         } else {
-            //System.out.println(medication.getMedicationName());
             Team team = (Team) httpSession.getAttribute("team");
             medication.setTeam(team);
             medicationRepository.save(medication);
-            return "redirect:/medication/"+ team.getTeamId();
+            return "redirect:/medication/" + team.getTeamId();
         }
     }
 
     @GetMapping("/medication/{teamId}")
-    public String showMedication(@PathVariable("teamId") final Integer teamId) {
+    public String showMedication(@PathVariable("teamId") final Integer teamId, Model model) {
         Team team = teamRepository.getOne(teamId);
         httpSession.setAttribute("team", team);
+
+        Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Set<TeamMembership> teamList = member.getTeamMemberships();
+
+        Medication medication = new Medication();
+        model.addAttribute("medicationList", team.getMedicationList());
+
         return "medicationOverview";
     }
 

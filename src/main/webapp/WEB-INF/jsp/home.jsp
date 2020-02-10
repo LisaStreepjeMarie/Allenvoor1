@@ -12,7 +12,6 @@
         <meta name="apple-mobile-web-app-capable" content="yes">
 
         <!-- Add icon library -->
-        <link href="${pageContext.request.contextPath}/webjars/font-awesome/5.12.0/css/all.css" rel='stylesheet'>
         <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
         <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
 

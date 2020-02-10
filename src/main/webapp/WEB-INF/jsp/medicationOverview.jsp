@@ -2,13 +2,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<html xmlns:c="">
+<html xmlns:mytags="">
     <head>
         <meta charset='utf-8' />
         <title>Medicatieoverzicht</title>
 
         <script src="${pageContext.request.contextPath}/webjars/jquery/3.4.1/jquery.min.js"></script>
-        <link href="${pageContext.request.contextPath}/webjars/font-awesome/5.12.0/css/all.min.css" rel='stylesheet'>
         <script src="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>
         <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
         <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
@@ -81,7 +80,6 @@
                   for (i in medicationList ) {
                      addMedication(medicationList[i])
                      }
-                     console.log("woop w00p")
                       },
                       error : function(e) {
                       console.log("ERROR: ", e);
@@ -111,9 +109,8 @@
          type:'GET',
          url: "${pageContext.request.contextPath}/medication/grocerylist/" + id + "/" + amount,
          success : function(result) {
-            console.log("woop w00p")
-             },
-             error : function(e) {
+         },
+         error : function(e) {
              console.log("ERROR: ", e);
          }
     });
