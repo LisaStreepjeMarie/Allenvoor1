@@ -86,7 +86,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
                         <button type="button" onclick="addMedicationToList()" class="btn btn-primary">Zet op de lijst!</button>
                     </div>
                 </div>
