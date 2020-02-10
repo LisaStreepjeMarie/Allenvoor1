@@ -21,7 +21,7 @@
 
 <body class= "webpage">
         <mytags:navbar/>
-        <div class= "row">
+        <div class= "masthead row">
             <div class= "col-2">
                 <div class="ml-3 mt-3">
                     <c:forEach items="${teamList}" var="team">
