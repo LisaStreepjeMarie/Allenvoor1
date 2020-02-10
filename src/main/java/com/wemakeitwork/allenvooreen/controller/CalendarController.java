@@ -95,9 +95,9 @@ public class CalendarController {
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         Event event = mapper.readValue(newEventJson, Event.class);
 
-//        if(event.getDoneByMember().getMemberId() == null){
-//            event.setDoneByMember(null);
-//        }
+        if(event.getDoneByMember().getMemberId() == null){
+            event.setDoneByMember(null);
+        }
 
         // this sets the activity to the medication from the activity
         if (event.getActivity() instanceof MedicationActivity){
