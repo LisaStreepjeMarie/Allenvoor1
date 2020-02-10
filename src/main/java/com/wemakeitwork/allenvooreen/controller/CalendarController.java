@@ -51,6 +51,15 @@ public class CalendarController {
         return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/calendar/{teamid}/teamMembers")
+    public ResponseEntity<Object> getTeamMembers(@PathVariable("teamid") final Integer teamId) {
+        Team team  = teamRepository.getOne(teamId);
+        List<TeamMembership> teamList = new ArrayList<>(team.getTeamMemberships());
+
+        ServiceResponse<List<TeamMembership>> response = new ServiceResponse<List<TeamMembership>>("success", teamList);
+        return new ResponseEntity<Object>(response, HttpStatus.OK);
+    }
+
     @GetMapping("/calendar/{teamId}")
     public String showCalender(@PathVariable("teamId") final Integer teamId, Model model)
             throws JsonProcessingException {
@@ -58,13 +67,15 @@ public class CalendarController {
         httpSession.setAttribute("team", team);
 
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Set<Team> teamList = member.getAllTeamsOfMemberSet();
+        Set<TeamMembership> teamMembershipList = memberRepository.findByMemberName(member.getMemberName()).get().getTeamMemberships();
+        ArrayList<Team> teamList = new ArrayList<>();
+        for (TeamMembership tms: teamMembershipList) {
+            teamList.add(tms.getTeam());
+        }
 
         ArrayList<Team> sortedList = (ArrayList<Team>) teamList.stream()
                 .sorted(Comparator.comparing(Team::getTeamName))
                 .collect(Collectors.toList());
-
-        sortedList.forEach(x -> System.out.println(x.getTeamName()));
 
         model.addAttribute("teamList", sortedList);
 
@@ -73,6 +84,7 @@ public class CalendarController {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         String calendarData = mapper.writeValueAsString(sourceCalendarData);
+        System.out.println(calendarData);
 
         model.addAttribute("calendarData", calendarData);
         return "calendar";
@@ -171,7 +183,7 @@ public class CalendarController {
     private void removeMedicationAmountFromActivity(Event event){
         eventRepository.findById(event.getEventId()).stream()
                 .filter(x -> x.getActivity() instanceof MedicationActivity)
-                .forEach(x -> ((MedicationActivity) x.getActivity()).getMedication().removalActivityAddedAmount
+                .forEach(x -> ((MedicationActivity) x.getActivity()).getMedication().upTheMedicationAmount
                         (((MedicationActivity) x.getActivity()).getTakenMedication()));
     }
 }

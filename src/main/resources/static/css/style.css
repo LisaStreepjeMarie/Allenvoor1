@@ -1,9 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 body {
-
     margin: 0px 0px 0px 0px;
     padding: 0px 0px 0px 0px;
-    background-image: url("wallpaper.jpg");
     background-repeat: no-repeat;
     background-color: #ffffff; /* fallback for old browsers */
   /* background: -webkit-linear-gradient(right, #76b852, #8DC26F);
@@ -194,9 +192,9 @@ h2 {
 }
 
 .masthead {
+  background-image: url('/allenvooreen/images/background.jpg');
   height: 100vh;
   min-height: 500px;
-  background-image: url('/allenvooreen/images/background.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

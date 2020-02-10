@@ -8,24 +8,6 @@ class MemberTest {
     Member testMember = new Member();
 
     @Test
-    void getRol() {
-        //arrange
-        testMember.setRol("testRol");
-
-        //assert
-        Assertions.assertThat(testMember.getRol()).isEqualTo("testRol");
-    }
-
-    @Test
-    void setRol(){
-        //arrange
-        testMember.setRol("testRol");
-
-        //assert
-        Assertions.assertThat(testMember.getRol()).isEqualTo("testRol");
-    }
-
-    @Test
     void getUsername() {
         //arrange
         testMember.setMemberName("testmember");
@@ -55,7 +37,7 @@ class MemberTest {
     @Test
     void isEnabled() {
         //assert
-        Assertions.assertThat(testMember.isEnabled()).isEqualTo(true);
+        Assertions.assertThat(testMember.isEnabled()).isEqualTo(false);
     }
 
     @Test

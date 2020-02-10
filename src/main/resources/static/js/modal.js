@@ -19,6 +19,7 @@ $('#datetimepickerDone').datetimepicker();
 // This function hides all modal options
 function hideAllModalInputFields() {
     $("#datetimepickerDone, #intervalDiv, #maxNumberDiv, #eventNameDiv, #eventCommentDiv, #medicationChoiceDiv, #eventDatesDiv, #takenMedicationDiv").css("display", "none");6
+    $("#doneByMemberDiv, #datetimepickerDone, #eventNameDiv, #eventCommentDiv, #medicationChoiceDiv, #eventDatesDiv, #takenMedicationDiv").css("display", "none");
 }
 
 // This function fills the modal with event info if it exist
@@ -54,6 +55,14 @@ function fillModal(event) {
             /* $("#eventMaxNumberLabel").show();
             $("#eventNumberToGoLabel").hide(); */
         }
+        if(event.doneByMember){
+            console.log(event.donedate)
+            $('#doneByMember').empty()
+            $("#datetimepickerDone, #doneByMemberDiv").show()
+            $("#eventDone").prop("checked", true);
+            filldoneByMembers(event.doneByMember.name)
+//            $('.modal').find('#doneByMember').val(event.doneByMember.name)
+        }
     } else {
         document.getElementById("modal-title").innerHTML = "Maak nieuwe afspraak";
         document.getElementById("save-change-event").innerHTML = "Maak afspraak";
@@ -79,10 +88,11 @@ function fillModal(event) {
     // this shows/hides the eventDone input field when the checkbox is toggled
     $("#eventDone").change(function () {
         if(document.getElementById("eventDone").checked == true) {
-                $("#datetimepickerDone").show()
+                $("#datetimepickerDone, #doneByMemberDiv").show()
+                filldoneByMembers(null);
         } else {
-                document.getElementById("eventDoneDate").removeAttribute("required");
-                $("#datetimepickerDone").hide()
+                document.getElementById("eventDoneDate").removeAttribute("required")
+                $("#datetimepickerDone, #doneByMemberDiv").hide();
         }
     });
 
@@ -90,3 +100,34 @@ function fillModal(event) {
     $('.modal').find('#eventEndDate').val(moment(event.end).format('DD-MM-YYYY H:mm'));
     $('.modal').modal('show');
 }
+
+        // Cleans the modal upon closing
+function filldoneByMembers(givenName){
+
+    if(givenName != null){
+    var first = '<option value="">'+ givenName + '</option>';
+    }else {
+    var first = '<option value="">Kies een teamlid</option>';
+    }
+
+
+    $.ajax({
+         type:'GET',
+         url: ctx + "/calendar/" + $('#teamId').attr('data-teamId') + '/teamMembers',
+         dataType: 'json',
+         success : function(result) {
+                 List = result.data
+                 $('#doneByMember').empty()
+                 $('#doneByMember').append(first);
+                 for (i in List ) {
+                    $('#doneByMember').append('<option value="' + List[i].member.id + '">' + List[i].member.name + '</option>');
+                 }
+             },
+             error : function(e) {
+             alert("getMedication() error")
+             console.log("ERROR: ", e);
+         }
+    });
+
+}
+

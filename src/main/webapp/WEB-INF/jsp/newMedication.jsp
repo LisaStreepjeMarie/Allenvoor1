@@ -10,8 +10,7 @@
         <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
 
         <!-- Add icon library -->
-        <link href="${pageContext.request.contextPath}/webjars/font-awesome/4.7.0/css/font-awesome.css" rel='stylesheet'>
-        <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
+         <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
         <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
         </head>
 
@@ -36,7 +35,7 @@
                         <a class="nav-link" href='${pageContext.request.contextPath}/medication/${team.teamId}'><i class=" fa fa-medkit"></i> Medicatieoverzicht</a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" href='${pageContext.request.contextPath}/logout'><i class="fa fa-sign-out"></i> Logout</a>
+                          <a class="nav-link" href='${pageContext.request.contextPath}/logout'><i class=c"></i> Logout</a>
                         </li>
                       </ul>
                     </div>
