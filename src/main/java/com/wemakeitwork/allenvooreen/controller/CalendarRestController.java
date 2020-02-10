@@ -29,10 +29,6 @@ public class CalendarRestController {
                 .filter(x -> x.getEventEndDate().before(new Date(endDateEpoch)))
                 .collect(Collectors.toSet());
 
-        /*for (Event event : allEvents) {
-            System.out.println("gebonden activiteit" + event.getActivity().getActivityName());
-        }*/
-
         ServiceResponse<Set<Event>> response = new ServiceResponse<Set<Event>>("success", allEvents);
         return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
