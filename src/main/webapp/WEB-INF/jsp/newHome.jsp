@@ -18,6 +18,7 @@
     <script src="${pageContext.request.contextPath}/webjars/jquery/3.4.1/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
+
     <%@ taglib prefix="mytags" tagdir="/WEB-INF/tags" %>
 </head>
 <body class= "webpage">
@@ -49,7 +50,7 @@
         </div>
 
 </div>
-
+</div>
 
 </body>
 </html>

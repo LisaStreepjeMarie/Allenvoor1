@@ -49,6 +49,7 @@
                             </tr>
                         </div>
                     </div>
+
                 </c:forEach>
             </div>
 
@@ -58,6 +59,7 @@
             <jsp:include page="groceryList.jsp" />
 
     </div>
+</div>
 </div>
 </body>
 </html>

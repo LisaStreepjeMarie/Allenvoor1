@@ -77,7 +77,7 @@ function addGroceryItem(newGroceryItem){
     });
 }
 
-// every item on the list gets the delete button with the first part of this function
+// adding a an X to each item and giving both the x and the item a click value
 function closeButtonOnAll(){
 var allGroceriesInList = document.getElementsByClassName("listItem");
 var i;
@@ -90,7 +90,7 @@ for (i = 0; i < allGroceriesInList.length; i++) {
       ev.target.classList.toggle('checked');
         }
       }, false);
-
+// every item on the list gets the delete button with this part of the function
       var span = document.createElement("SPAN");
       var txt = document.createTextNode("\u00D7");
       span.className = "close";
@@ -113,10 +113,10 @@ for (i = 0; i < close.length; i++) {
 }
 
 // sets the item to bought in the database
-function boughtBoolean(type, groceryItemId){
+function boughtBoolean(type, itemId){
     $.ajax({
          type:'GET',
-         url: ctx + "/bought/" + type + "/" + groceryItemId,
+         url: ctx + "/bought/" + type + "/" + itemId,
          success : function(result) {
              },
              error : function(e) {
