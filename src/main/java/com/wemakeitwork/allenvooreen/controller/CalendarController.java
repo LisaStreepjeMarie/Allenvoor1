@@ -127,7 +127,6 @@ public class CalendarController {
                 event.setDoneByMember(null);
                 event.setEventStartDate(startDateTimeExtraEvent);
                 event.setEventEndDate(endDateTimeExtraEvent);
-                // event.setEventMaxNumber(maxNumber - i);
                 eventRepository.save(event);
             }
         } else {
