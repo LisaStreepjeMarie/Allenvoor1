@@ -1,6 +1,7 @@
 package com.wemakeitwork.allenvooreen.controller;
 
 import com.wemakeitwork.allenvooreen.model.Member;
+import com.wemakeitwork.allenvooreen.model.VerificationToken;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import com.wemakeitwork.allenvooreen.repository.event.OnRegistrationSuccessEvent;
@@ -10,17 +11,18 @@ import com.wemakeitwork.allenvooreen.validator.MemberValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
-import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
 
 import javax.validation.Valid;
-import java.security.Principal;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.logging.Logger;
