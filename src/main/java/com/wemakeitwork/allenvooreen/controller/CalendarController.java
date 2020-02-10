@@ -50,6 +50,15 @@ public class CalendarController {
         return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/calendar/{teamid}/teamMembers")
+    public ResponseEntity<Object> getTeamMembers(@PathVariable("teamid") final Integer teamId) {
+        Team team  = teamRepository.getOne(teamId);
+        List<TeamMembership> teamList = new ArrayList<>(team.getTeamMemberships());
+
+        ServiceResponse<List<TeamMembership>> response = new ServiceResponse<List<TeamMembership>>("success", teamList);
+        return new ResponseEntity<Object>(response, HttpStatus.OK);
+    }
+
     @GetMapping("/calendar/{teamId}")
     public String showCalender(@PathVariable("teamId") final Integer teamId, Model model)
             throws JsonProcessingException {
@@ -85,6 +94,10 @@ public class CalendarController {
     public ResponseEntity<Object> newEvent(@RequestBody String newEventJson) throws JsonProcessingException {
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         Event event = mapper.readValue(newEventJson, Event.class);
+
+        if(event.getDoneByMember().getMemberId() == null){
+            event.setDoneByMember(null);
+        }
 
         // this sets the activity to the medication from the activity
         if (event.getActivity() instanceof MedicationActivity){

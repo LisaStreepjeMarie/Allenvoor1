@@ -8,6 +8,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -30,15 +31,15 @@ public class SecurityService implements SecurityServiceInterface {
     }
 
     @Override
-    public void autoLogin(String membername, String password) {
-        UserDetails userDetails = memberDetailsService.loadUserByUsername(membername);
+    public void autoLogin(String memberName, String password, boolean enabled) {
+        UserDetails userDetails = memberDetailsService.loadUserByUsername(memberName);
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
 
         authenticationManager.authenticate(usernamePasswordAuthenticationToken);
-
-        if (usernamePasswordAuthenticationToken.isAuthenticated()) {
+        if (usernamePasswordAuthenticationToken.isAuthenticated() && userDetails.isEnabled()) {
             SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-            logger.debug(String.format("Auto login %s successfully!", membername));
-        }
+            logger.debug(String.format("Auto login %s successfully!", memberName));
+        }else {
+        } throw new UsernameNotFoundException("Verifieer je account om door te gaan");
     }
 }

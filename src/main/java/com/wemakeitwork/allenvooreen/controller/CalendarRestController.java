@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -24,12 +24,12 @@ public class CalendarRestController {
                                                       @PathVariable("startdate") final long startDateEpoch,
                                                       @PathVariable("enddate") final long endDateEpoch) {
 
-        List<Event> allEvents =  teamRepository.getOne(teamId).getEventList().stream()
+        Set<Event> allEvents = teamRepository.getOne(teamId).getEventList().stream()
                 .filter(x -> x.getEventStartDate().after(new Date(startDateEpoch)))
                 .filter(x -> x.getEventEndDate().before(new Date(endDateEpoch)))
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
 
-        ServiceResponse<List<Event>> response = new ServiceResponse<List<Event>>("success", allEvents);
+        ServiceResponse<Set<Event>> response = new ServiceResponse<Set<Event>>("success", allEvents);
         return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
 }

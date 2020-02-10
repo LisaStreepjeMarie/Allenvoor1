@@ -3,6 +3,11 @@ $(document).ready(function() {
         // Hide model fields by default
         hideAllModalInputFields();
 
+        $('.modal').on("hide.bs.modal", function() {
+            $('#formID').trigger("reset");
+            hideAllModalInputFields();
+        });
+
         // Loads fullcalendar
         $('#calendar').fullCalendar({
             themeSystem: 'bootstrap4',

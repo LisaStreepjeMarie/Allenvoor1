@@ -1,28 +1,11 @@
 package com.wemakeitwork.allenvooreen.model;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.lang.Nullable;
 
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
@@ -51,6 +34,13 @@ public class Event {
     @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty("start")
     private java.util.Date eventStartDate;
+
+    @Nullable
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "memberId", referencedColumnName = "memberId")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonProperty("doneByMember")
+    private Member doneByMember;
 
     @Basic
     @Temporal(TemporalType.TIMESTAMP)
@@ -151,6 +141,15 @@ public class Event {
 
     public Team getTeam() {
         return team;
+    }
+
+    @Nullable
+    public Member getDoneByMember() {
+        return doneByMember;
+    }
+
+    public void setDoneByMember(@Nullable Member doneByMember) {
+        this.doneByMember = doneByMember;
     }
 
     public void setTeam(Team team) {

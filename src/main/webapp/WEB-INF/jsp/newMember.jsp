@@ -33,12 +33,20 @@
 
         <form:form action="${pageContext.request.contextPath}/member/new" modelAttribute="member">
             <spring:bind path="memberName">
+            <div th:if="${param.error != null}"
                 <div class="form-group ${status.error ? 'has-error' : ''}">
                     <form:input type="text" path="memberName" class="form-control" placeholder="Gebruikersnaam"
                                 autofocus="true"></form:input>
                     <form:errors path="memberName"></form:errors>
                 </div>
             </spring:bind>
+
+            <spring:bind path="email">
+                <div class="form-group ${status.error ? 'has-error' : ''}">
+                   <form:input type="email" path="email" class="form-control" placeholder="Email"></form:input>
+                   <form:errors path="email"></form:errors>
+               </div>
+         </spring:bind>
 
             <spring:bind path="password">
                 <div class="form-group ${status.error ? 'has-error' : ''}">
@@ -60,7 +68,7 @@
             <form action="${pageContext.request.contextPath}/logout" method="post" class="form-signin" >
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Inloggen</button>
-                <p class="mt-5 mb-3 text-muted">&copy; 2019 Allenvooreen</p>
+                <p class="mt-5 mb-3 text-muted">&copy; 2020 Allenvooreen</p>
             </form>
     </body>
 </html>
