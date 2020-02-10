@@ -15,7 +15,7 @@
         </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item active">
+        <li class="nav-item">
            <a class="nav-link" href='${pageContext.request.contextPath}/home'><i class="fas fa-home"></i> Home</a>
                 <span class="sr-only">(current)</span>
               </a>
