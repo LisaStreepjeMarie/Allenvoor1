@@ -144,7 +144,6 @@ public class CalendarController {
             removeMedicationAmountFromActivity(event);
         }
 
-        // eventRepository.save(event);
         ServiceResponse<Event> result = new ServiceResponse<Event>("Succes", event);
         return new ResponseEntity<Object>(result, HttpStatus.OK);
     }
