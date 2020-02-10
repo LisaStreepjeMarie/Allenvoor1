@@ -1,9 +1,11 @@
 package com.wemakeitwork.allenvooreen.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.wemakeitwork.allenvooreen.validator.ValidEmail;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -92,6 +94,8 @@ public class Member implements UserDetails {
     public void setRol(String rol) {
         this.rol = rol;
     }
+
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER, mappedBy = "member")
     @OnDelete(action = OnDeleteAction.CASCADE)
     Set<TeamMembership> teamMemberships;
@@ -182,6 +186,7 @@ public class Member implements UserDetails {
 
     public void setEmail(String email) {
         this.email = email;
+    }
     public List<Event> getDoneEvents() {
         return doneEvents;
     }

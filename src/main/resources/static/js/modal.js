@@ -91,7 +91,7 @@ function filldoneByMembers(givenName){
                  $('#doneByMember').empty()
                  $('#doneByMember').append(first);
                  for (i in List ) {
-                    $('#doneByMember').append('<option value="' + List[i].id + '">' + List[i].name + '</option>');
+                    $('#doneByMember').append('<option value="' + List[i].member.id + '">' + List[i].member.name + '</option>');
                  }
              },
              error : function(e) {
