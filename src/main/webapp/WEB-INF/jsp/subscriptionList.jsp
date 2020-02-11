@@ -23,7 +23,7 @@
 <div class= "masthead">
     <div class="w-25 p-3">
         <ul class="list-group">
-            <li  class="list-group-item list-group-item-action">Ingeschreven gebruikers:</li>
+            <li  class="list-group-item list-group-item-dark">Ingeschreven gebruikers:</li>
             <c:forEach items="${eventSubscriptionSet}" var="subscription">
                 <td><li class="list-group-item list-group-item-action">${subscription.member.memberName}</li></td>
             </c:forEach>
