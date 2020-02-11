@@ -103,7 +103,7 @@ public class Member implements UserDetails {
     @JsonIgnore
     @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER, mappedBy = "member")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    Set<EventSubscribers> eventSubscriptions;
+    Set<EventSubscription> eventSubscriptions;
 
     public String getPasswordConfirm() {
         return passwordConfirm;

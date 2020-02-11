@@ -73,7 +73,7 @@ public class Event {
     @JsonIgnore
     @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER, mappedBy = "event")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    Set<EventSubscribers> eventSubscriptions;
+    Set<EventSubscription> eventSubscriptions;
 
     public Event() {
     }
@@ -161,25 +161,6 @@ public class Event {
     public void setEventEndDate(Date eventEndDate) {
         this.eventEndDate = eventEndDate;
     }
-
-    //joda-time
-    /* @JsonGetter
-    public DateTime getEventStartDate() {
-        return eventStartDate;
-    }
-
-    public void setEventStartDate(DateTime eventStartDate) {
-        this.eventStartDate = eventStartDate;
-    }
-
-    @JsonGetter
-    public DateTime getEventEndDate() {
-        return eventEndDate;
-    }
-
-    public void setEventEndDate(DateTime eventEndDate) {
-        this.eventEndDate = eventEndDate;
-    } */
 
     @JsonGetter
     public String getEventComment() {

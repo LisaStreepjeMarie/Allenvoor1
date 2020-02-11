@@ -1,23 +1,30 @@
 package com.wemakeitwork.allenvooreen.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import javax.persistence.*;
 
 @Entity
-@JsonIgnoreProperties({ "event", "member" })
-public class EventSubscribers {
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = Event.class, name = "Event")
+})
+public class EventSubscription {
     @Id
     @Column(name = "subscription_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("id")
     private Integer subscriptionId;
 
-    @ManyToOne(fetch= FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonProperty("event")
     private Event event;
 
-    @JsonProperty("member")
-    @ManyToOne(fetch= FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Member member;
 
     public Integer getSubscriptionId() {

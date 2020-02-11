@@ -135,3 +135,29 @@ function dropResizeOrDeleteEvent(event, targetUrl) {
         }
     });
 }
+
+function subscribeEvent(eventId) {
+    subscribeEvent = {
+        type: "EventSubscription",
+        event: {
+            type: "Event",
+            id: eventId,
+        },
+    }
+
+    $.ajax({
+            url: ctx + '/calendar/subscribe/event',
+            method: "POST",
+            contentType: "application/json; charset=UTF-8",
+            data: JSON.stringify(subscribeEvent),
+            dataType: 'json',
+            async: true,
+            success: function(result) {
+                    $('#calendar').fullCalendar('refetchEvents');
+            },
+            error: function(e) {
+                alert("subscribeEvent() error")
+                console.log("ERROR: ",  e);
+            }
+        });
+}

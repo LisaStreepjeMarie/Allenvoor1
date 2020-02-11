@@ -45,6 +45,9 @@ public class CalendarController {
     @Autowired
     ActivityRepository activityRepository;
 
+    @Autowired
+    EventSubscriptionRepository eventSubscriptionRepository;
+
     @GetMapping("/calendar/{teamid}/medications")
     public ResponseEntity<Object> getMedications(@PathVariable("teamid") final Integer teamId) {
         ServiceResponse<List<Medication>> response = new ServiceResponse<>("success", teamRepository.getOne(teamId).getMedicationList());
@@ -132,6 +135,9 @@ public class CalendarController {
                 eventRepository.save(event);
             }
         } else {
+            if(event.getDoneByMember().getMemberId() == null){
+                event.setDoneByMember(null);
+            }
             eventRepository.save(event);
         }
 
@@ -187,5 +193,16 @@ public class CalendarController {
                 .filter(x -> x.getActivity() instanceof MedicationActivity)
                 .forEach(x -> ((MedicationActivity) x.getActivity()).getMedication().upTheMedicationAmount
                         (((MedicationActivity) x.getActivity()).getTakenMedication()));
+    }
+
+    @PostMapping("/calendar/subscribe/event")
+    public ResponseEntity<Object> subscribeToEvent(@RequestBody String subscribeEvent) throws JsonProcessingException {
+        Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        EventSubscription eventSubscription = mapper.readValue(subscribeEvent, EventSubscription.class);
+        eventSubscription.setMember(member);
+
+        ServiceResponse<EventSubscription> response =
+                new ServiceResponse<EventSubscription>("success", eventSubscriptionRepository.save(eventSubscription));
+        return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
 }
