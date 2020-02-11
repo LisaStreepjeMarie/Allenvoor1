@@ -2,8 +2,10 @@ package com.wemakeitwork.allenvooreen.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wemakeitwork.allenvooreen.model.Chat;
 import com.wemakeitwork.allenvooreen.model.Member;
 import com.wemakeitwork.allenvooreen.model.Message;
+import com.wemakeitwork.allenvooreen.model.Team;
 import com.wemakeitwork.allenvooreen.repository.MessageRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import com.wemakeitwork.allenvooreen.service.ServiceResponse;
@@ -37,6 +39,8 @@ public class ChatController {
         return "chat";
     }
 
+    //TODO all the team stuff is set to one, needs to be done sessionwise or pathvariable
+
     @PostMapping("/add/message")
     public ResponseEntity<Object> addMessage(@RequestBody String newMessage) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
@@ -53,6 +57,17 @@ public class ChatController {
 
         ServiceResponse<Message> response = new ServiceResponse<Message>("success", message);
         return new ResponseEntity<Object>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/chat/getAll")
+    public ResponseEntity<Object> getAllMessages() {
+
+
+        Team team = teamRepository.getOne(1);
+        Chat chat = team.getChat();
+
+        ServiceResponse<Chat> response = new ServiceResponse<>("succes", chat);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 }

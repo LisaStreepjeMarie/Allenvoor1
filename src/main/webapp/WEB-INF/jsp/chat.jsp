@@ -66,6 +66,8 @@
 </form>
 </body>
 <script>
+getAllMessages();
+
 $(document).ready(function() {
 // creating a CSRF token for postmapping ajax stuff
     $.ajaxSetup({
@@ -99,5 +101,24 @@ function newMessageForAjax(){
       });
 }
 
+function getAllMessages(){
+
+   $.ajax({
+      url: "${pageContext.request.contextPath}/chat/getAll",
+      method: "GET",
+      success: function(result) {
+      allMessages = result.data.messages;
+        for (i in allMessages ) {
+          $('#overViewMessages').append('<a class="list-group-item list-group-item-action"><div class="d-flex w-100 justify-content-between"><h5 class="mb-1">' + allMessages[i].member.name + '</h5><small class="text-muted">3 days ago</small></div><p class="mb-1">'
+          + allMessages[i].message + '</p><small class="text-muted">Donec id elit non mi porta.</small></a>');
+          $('#formNewMessage').trigger("reset");
+          }
+       },
+      error: function(e) {
+          alert("ERRRROOOOORRRR")
+          console.log("ERROR: ",  e);
+          }
+      });
+}
 
 </script>
