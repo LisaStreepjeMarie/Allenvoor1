@@ -27,7 +27,7 @@
 </head>
 <body>
 
-<div class="list-group">
+<div id="overViewMessages" class="list-group">
     <a href="#" class="list-group-item list-group-item-action active">
         <div class="d-flex w-100 justify-content-between">
             <h5 class="mb-1">List group item heading</h5>
@@ -52,7 +52,52 @@
         <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
         <small class="text-muted">Donec id elit non mi porta.</small>
     </a>
+    <br>
+
 </div>
 
+<form>
+    <div class="form-group">
+        <label for="messageBody">Typ hier je bericht!</label>
+        <textarea class="form-control" id="messageBody" rows="3"></textarea>
+    </div>
+    <button type="submit" onclick="newMessage()" class="btn btn-primary float-right">Versturen</button>
+</form>
 </body>
-</html>
+<script>
+
+    $.ajaxSetup({
+    beforeSend: function(xhr) {
+        xhr.setRequestHeader('X-CSRF-TOKEN', $('#csrfToken').attr('data-csrfToken'));
+    }
+});
+
+function newMessage() {
+
+var before =
+
+// creating a new message to save
+  newMessage = {
+        message: document.getElementById("messageBody").value,
+  }
+
+      $.ajax({
+        url: "${pageContext.request.contextPath}/add/message",
+        method: "POST",
+        contentType: "application/json; charset=UTF-8",
+        data: JSON.stringify(newMessage),
+        dataType: 'json',
+        async: true,
+        success: function(result) {
+            $('#overViewMessages').append('<a href="#" class="list-group-item list-group-item-action"><div class="d-flex w-100 justify-content-between"><h5 class="mb-1">List group item heading</h5><small class="text-muted">3 days ago</small></div><p class="mb-1">'
+            + result.data.message + '</p><small class="text-muted">Donec id elit non mi porta.</small></a>');
+        },
+        error: function(e) {
+            alert("ERRRROOOOORRRR")
+            console.log("ERROR: ",  e);
+        }
+    });
+}
+
+
+</script>

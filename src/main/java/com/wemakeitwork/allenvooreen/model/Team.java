@@ -102,4 +102,12 @@ public class Team {
     public void setGroceryList(GroceryList groceryList) {
         this.groceryList = groceryList;
     }
+
+    public Chat getChat() {
+        return chat;
+    }
+
+    public void setChat(Chat chat) {
+        this.chat = chat;
+    }
 }
