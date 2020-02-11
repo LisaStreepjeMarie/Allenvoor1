@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
 
 @Controller
 public class ChatController {
@@ -38,6 +39,9 @@ public class ChatController {
     public ResponseEntity<Object> addMessage(@RequestBody String newMessage) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         Message message = mapper.readValue(newMessage, Message.class);
+
+        LocalDate dateNow = LocalDate.now();
+        message.setDateTime(dateNow);
 
         message.setChat(teamRepository.findById(1).get().getChat());
         messageRepository.save(message);
