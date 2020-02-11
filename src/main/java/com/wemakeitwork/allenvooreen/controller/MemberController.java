@@ -184,12 +184,14 @@ public class MemberController {
 
     @PostMapping("/member/resetPassword")
     public GenericResponse resetPassword(HttpServletRequest request, @RequestParam("email") String email) {
+        System.out.println("hoi");
         Member member = memberRepository.findByEmail(email);
-        if (member != null) {
-            final String token = UUID.randomUUID().toString();
+        if (member == null) {
+            throw new UserNotFoundException();
+        }
+            String token = UUID.randomUUID().toString();
             memberService.createPasswordResetTokenForMember(member, token);
             mailSender.send(constructResetTokenEmail(getAppUrl(request), request.getLocale(), token, member));
-        }
         return new GenericResponse(messages.getMessage("message.resetPasswordEmail", null, request.getLocale()));
     }
 
