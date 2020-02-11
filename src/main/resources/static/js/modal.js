@@ -18,7 +18,8 @@ $('#datetimepickerDone').datetimepicker();
 
 // This function hides all modal options
 function hideAllModalInputFields() {
-    $("#doneByMemberDiv, #datetimepickerDone, #intervalDiv, #maxNumberDiv, #eventNameDiv, #eventCommentDiv, #medicationChoiceDiv, #eventDatesDiv, #takenMedicationDiv").css("display", "none");
+    $("#doneByMemberDiv, #datetimepickerDone, #intervalDiv, #maxNumberDiv, #eventNameDiv").css("display", "none");
+    $("#eventCommentDiv, #medicationChoiceDiv, #eventDatesDiv, #takenMedicationDiv").css("display", "none");
 }
 
 // This function fills the modal with event info if it exist
@@ -29,8 +30,6 @@ function showModalInputFields() {
     } else {
         $("#eventNameDiv, #eventDateStartEndDiv, #eventDatesDiv, #eventCommentDiv, #modal-footer").show();
     }
-    $("#eventInterval").css("display", "");
-    $("#eventMaxNumber").css("display", "");
     $("#eventDoneDiv").css("display", "");
 }
 
@@ -45,10 +44,8 @@ function fillModal(event) {
         $('.modal').find('#eventComment').val(event.comment);
         $('.modal').find('#eventInterval').val(event.interval);
         $('.modal').find('#eventMaxNumber').val(event.maxNumber);
-        if(event.interval != null) {
+        if(event.maxNumber != null) {
             document.getElementById("eventPeriodic").checked;
-            //todo
-            //alert($("#intervalDiv"));
             $("#intervalDiv").show();
             $("#maxNumberDiv").show();
             /* $("#eventMaxNumberLabel").show();
