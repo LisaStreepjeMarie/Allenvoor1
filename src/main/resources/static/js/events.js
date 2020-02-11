@@ -23,6 +23,8 @@ function saveEvent(eventId, activityId) {
             start: moment(document.getElementById("eventStartDate").value, "DD-MM-YYYY H:mm").toDate(),
             end: moment(document.getElementById("eventEndDate").value, "DD-MM-YYYY H:mm").toDate(),
             comment: document.getElementById("eventComment").value,
+            interval: document.getElementById("eventInterval").value,
+            maxNumber: document.getElementById("eventMaxNumber").value,
             donedate: moment(document.getElementById("eventDoneDate").value, "DD-MM-YYYY H:mm").toDate(),
             doneByMember: {
                 id: document.getElementById("doneByMember").value,

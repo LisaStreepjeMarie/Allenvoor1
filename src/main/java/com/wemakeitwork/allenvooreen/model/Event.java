@@ -51,6 +51,12 @@ public class Event {
     @JsonProperty("comment")
     private String eventComment;
 
+    @JsonProperty("interval")
+    private String eventInterval;
+
+    @JsonProperty("maxNumber")
+    private Integer eventMaxNumber;
+
     @JsonProperty("donedate")
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private java.util.Date eventDoneDate;
@@ -71,16 +77,36 @@ public class Event {
 
     public Event() {
     }
-
-    public Event(Integer eventId, @NotBlank(message = "veld mag niet blank zijn") String eventName, Date eventStartDate, Date eventEndDate, String eventComment, Date eventDoneDate, Activity activity, Team team) {
+    public Event(Integer eventId, @NotBlank(message = "veld mag niet blank zijn") String eventName, Date eventStartDate,
+                 Date eventEndDate, String eventComment, String eventInterval, Integer eventMaxNumber,
+                 Date eventDoneDate, Activity activity,
+                 Team team) {
         this.eventId = eventId;
         this.eventName = eventName;
         this.eventStartDate = eventStartDate;
         this.eventEndDate = eventEndDate;
         this.eventComment = eventComment;
+        this.eventInterval = eventInterval;
+        this.eventMaxNumber = eventMaxNumber;
         this.eventDoneDate = eventDoneDate;
         this.activity = activity;
         this.team = team;
+    }
+
+    public Integer getEventMaxNumber() {
+        return eventMaxNumber;
+    }
+
+    public void setEventMaxNumber(Integer eventMaxNumber) {
+        this.eventMaxNumber = eventMaxNumber;
+    }
+
+    public String getEventInterval() {
+        return eventInterval;
+    }
+
+    public void setEventInterval(String eventInterval) {
+        this.eventInterval = eventInterval;
     }
 
     public Date getEventDoneDate() {
@@ -135,6 +161,25 @@ public class Event {
     public void setEventEndDate(Date eventEndDate) {
         this.eventEndDate = eventEndDate;
     }
+
+    //joda-time
+    /* @JsonGetter
+    public DateTime getEventStartDate() {
+        return eventStartDate;
+    }
+
+    public void setEventStartDate(DateTime eventStartDate) {
+        this.eventStartDate = eventStartDate;
+    }
+
+    @JsonGetter
+    public DateTime getEventEndDate() {
+        return eventEndDate;
+    }
+
+    public void setEventEndDate(DateTime eventEndDate) {
+        this.eventEndDate = eventEndDate;
+    } */
 
     @JsonGetter
     public String getEventComment() {

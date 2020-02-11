@@ -18,7 +18,7 @@ $('#datetimepickerDone').datetimepicker();
 
 // This function hides all modal options
 function hideAllModalInputFields() {
-    $("#doneByMemberDiv, #datetimepickerDone, #eventNameDiv, #eventCommentDiv, #medicationChoiceDiv, #eventDatesDiv, #takenMedicationDiv").css("display", "none");
+    $("#doneByMemberDiv, #datetimepickerDone, #intervalDiv, #maxNumberDiv, #eventNameDiv, #eventCommentDiv, #medicationChoiceDiv, #eventDatesDiv, #takenMedicationDiv").css("display", "none");
 }
 
 // This function fills the modal with event info if it exist
@@ -29,6 +29,8 @@ function showModalInputFields() {
     } else {
         $("#eventNameDiv, #eventDateStartEndDiv, #eventDatesDiv, #eventCommentDiv, #modal-footer").show();
     }
+    $("#eventInterval").css("display", "");
+    $("#eventMaxNumber").css("display", "");
     $("#eventDoneDiv").css("display", "");
 }
 
@@ -41,6 +43,17 @@ function fillModal(event) {
         $("#delete-event").show();
         $('.modal').find('#eventName').val(event.title);
         $('.modal').find('#eventComment').val(event.comment);
+        $('.modal').find('#eventInterval').val(event.interval);
+        $('.modal').find('#eventMaxNumber').val(event.maxNumber);
+        if(event.interval != null) {
+            document.getElementById("eventPeriodic").checked;
+            //todo
+            //alert($("#intervalDiv"));
+            $("#intervalDiv").show();
+            $("#maxNumberDiv").show();
+            /* $("#eventMaxNumberLabel").show();
+            $("#eventNumberToGoLabel").hide(); */
+        }
         if(event.doneByMember){
             console.log(event.donedate)
             $('#doneByMember').empty()
@@ -56,6 +69,21 @@ function fillModal(event) {
         $("#delete-event").hide();
     }
     getMedication(event);
+
+    // this shows/hides the eventPeriodic input field when the checkbox is toggled
+    $("#eventPeriodic").change(function () {
+        if(document.getElementById("eventPeriodic").checked == true) {
+                $("#intervalDiv").show();
+                $("#maxNumberDiv").show();
+                /* $("#eventNumberToGoLabel").hide();
+                $("#eventMaxNumberLabel").show(); */
+
+        } else {
+                document.getElementById("eventPeriodic").removeAttribute("required");
+                $("#intervalDiv").hide();
+                $("#maxNumberDiv").hide()
+        }
+    });
 
     // this shows/hides the eventDone input field when the checkbox is toggled
     $("#eventDone").change(function () {

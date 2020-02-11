@@ -17,9 +17,15 @@
 
     <properties>
         <java.version>11</java.version>
+        <!-- <property type="org.joda.time.contrib.hibernate.PersistentDateTime" name="dateTime"/> -->
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+
         <!-- test dependencies -->
         <dependency>
             <groupId>com.google.code.gson</groupId>

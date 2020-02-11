@@ -112,6 +112,34 @@
                             </div>
                         </div>
                     </div>
+                    <div class="modal-body" id="eventPeriodicDiv">
+                        <div class="modal-body">
+                            <div class="row">
+                                <label class="col-xs-4" for="eventPeriodic">Periodieke afspraak?&nbsp;</label>
+                                <input type="checkbox" id="eventPeriodic" name="eventPeriodic"/>
+                            </div>
+                        </div>
+                        <!-- <div class="modal-body" id="eventIsPeriodic"> -->
+                            <div class="row" id="intervalDiv">
+                               <label class="col-4" for="eventInterval" control-label>Frequentie</label>
+                               <select name="event.eventInterval" id="eventInterval" >
+                                   <option disabled selected="selected" value="">Elke</option>
+                                   <option value="day">dag</option>
+                                   <option value="week">week</option>
+                                   <option value="month">maand</option>
+                               </select>
+                            </div>
+                         <!-- </div> -->
+                    </div>
+                    <div class="modal-body" id="maxNumberDiv">
+                        <div class="row">
+                            <!-- <label class="col-4" for="eventNumberToGoLabel" id="eventNumberToGoLabel" control-label>Aantal keer nog over</label>
+                            <label class="col-4" for="eventMaxNumberLabel" id="eventMaxNumberLabel" control-label>Aantal keer</label> -->
+                            <label class="col-4" for="eventMaxNumberLabel" id="eventMaxNumberLabel" control-label>Aantal keer</label>
+                            <input type="text" size="1" name="eventMaxNumber" id="eventMaxNumber" />
+                        </div>
+                    </div>
+                    <!-- </div> -->
                     <div class="modal-body" >
                             <div class="row" id="eventDoneDiv">
                                 <label class="col-4" for="eventDone">Uitgevoerd</label>

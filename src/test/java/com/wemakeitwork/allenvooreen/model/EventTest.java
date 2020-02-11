@@ -1,6 +1,7 @@
 package com.wemakeitwork.allenvooreen.model;
 
 import org.assertj.core.api.Assertions;
+// import org.joda.time.DateTime;
 import org.junit.jupiter.api.Test;
 
 import java.util.Date;
@@ -44,6 +45,42 @@ class EventTest {
 
         //assert
         Assertions.assertThat(testEvent.getEventId()).isEqualTo(2);
+    }
+
+    @Test
+    void getEventInterval() {
+        //arrange
+        testEvent.setEventInterval("day");
+
+        //assert
+        Assertions.assertThat(testEvent.getEventInterval()).isEqualTo("day");
+    }
+
+    @Test
+    void setEventEventInterval() {
+        //arrange
+        testEvent.setEventInterval("week");
+
+        //assert
+        Assertions.assertThat(testEvent.getEventInterval()).isEqualTo("week");
+    }
+
+    @Test
+    void getEventMaxNumber() {
+        //arrange
+        testEvent.setEventMaxNumber(5);
+
+        //assert
+        Assertions.assertThat(testEvent.getEventMaxNumber()).isEqualTo(5);
+    }
+
+    @Test
+    void setEventMaxNumber() {
+        //arrange
+        testEvent.setEventMaxNumber(5);
+
+        //assert
+        Assertions.assertThat(testEvent.getEventMaxNumber()).isEqualTo(5);
     }
 
 /*
