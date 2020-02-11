@@ -132,6 +132,9 @@ public class CalendarController {
                 eventRepository.save(event);
             }
         } else {
+            if(event.getDoneByMember().getMemberId() == null){
+                event.setDoneByMember(null);
+            }
             eventRepository.save(event);
         }
 
