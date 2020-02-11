@@ -23,6 +23,7 @@
     .list-group {
     width: 500px;
     }
+
 </style>
 </head>
 <body>
@@ -61,38 +62,41 @@
         <label for="messageBody">Typ hier je bericht!</label>
         <textarea class="form-control" id="messageBody" rows="3"></textarea>
     </div>
-    <button type="button" onclick="newMessage()" class="btn btn-primary float-right">Versturen</button>
+    <button type="button" onclick="newMessageForAjax()" class="btn btn-primary float-right">Versturen</button>
 </form>
 </body>
 <script>
-function newMessage(){
-
+$(document).ready(function() {
+// creating a CSRF token for postmapping ajax stuff
     $.ajaxSetup({
     beforeSend: function(xhr) {
         xhr.setRequestHeader('X-CSRF-TOKEN', $('#csrfToken').attr('data-csrfToken'));
     }
+    });
 });
 
-// creating a new message to save
-  newMessage = {
+function newMessageForAjax(){
+   // creating a new message to save
+   newMessage = {
         message: document.getElementById("messageBody").value,
-  }
-      $.ajax({
-        url: "${pageContext.request.contextPath}/add/message",
-        method: "POST",
-        contentType: "application/json; charset=UTF-8",
-        data: JSON.stringify(newMessage),
-        dataType: 'json',
-        success: function(result) {
-            $('#formNewMessage').trigger("reset");
-            $('#overViewMessages').append('<a class="list-group-item list-group-item-action"><div class="d-flex w-100 justify-content-between"><h5 class="mb-1">List group item heading</h5><small class="text-muted">3 days ago</small></div><p class="mb-1">'
-            + result.data.message + '</p><small class="text-muted">Donec id elit non mi porta.</small></a>');
-        },
-        error: function(e) {
-            alert("ERRRROOOOORRRR")
-            console.log("ERROR: ",  e);
         }
-    });
+
+   $.ajax({
+      url: "${pageContext.request.contextPath}/add/message",
+      method: "POST",
+      contentType: "application/json; charset=UTF-8",
+      data: JSON.stringify(newMessage),
+      dataType: 'json',
+      success: function(result) {
+          $('#overViewMessages').append('<a class="list-group-item list-group-item-action"><div class="d-flex w-100 justify-content-between"><h5 class="mb-1">' + result.data.member.name + '</h5><small class="text-muted">3 days ago</small></div><p class="mb-1">'
+          + result.data.message + '</p><small class="text-muted">Donec id elit non mi porta.</small></a>');
+          $('#formNewMessage').trigger("reset");
+          },
+      error: function(e) {
+          alert("ERRRROOOOORRRR")
+          console.log("ERROR: ",  e);
+          }
+      });
 }
 
 

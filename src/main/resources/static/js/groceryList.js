@@ -1,5 +1,5 @@
 
-// this creates a time interval to catch the items from the database every second
+// Creates a time interval to catch the items from the database every second
 $(document).ready(function(){
  setInterval(getAllItemsFromDataBase,1000);
 });
@@ -14,6 +14,7 @@ $.ajaxSetup({
 // setting the context url
 var ctx = $('#contextPathHolder').attr('data-contextPath');
 
+// since we use an interval below function isn't needed right now
 <!--getAllItemsFromDataBase();-->
 
 // create a new list item when clicking on the "Add" button
@@ -24,31 +25,17 @@ function newElement() {
         title: document.getElementById("newGroceryItem").value,
   }
 
-// checking if the input isn't zero otherwise adding an item to the DB and list
+// checking if the input isn't zero otherwise forwarding the item to a save ajax function
   if (newGroceryItem.title === '') {
     alert("Niks kan je niet kopen bij de supermarkt!");
   } else {
-    // sending the new item to the controller through ajax
     addGroceryItem(newGroceryItem);
   }
+  // resetting the field for next grocery item
     document.getElementById("newGroceryItem").value = "";
 }
 
-// deletes the chosen  item, isn't expecting anything back (besides success)
-// can be used for both medical and normal item (hence the type and Id)
-function removeGroceryItem(type, itemId){
-    $.ajax({
-         type:'GET',
-         url: ctx + "/delete/" + type + "/" + itemId,
-         success : function(result) {
-             },
-             error : function(e) {
-             console.log("ERROR: ", e);
-         }
-    });
-}
-
-// making sure the enter button works to add something to the list
+// giving the enter button the addbutton click function
 var input = document.getElementById("newGroceryItem");
 input.addEventListener("keyup", function(event) {
   if (event.keyCode === 13) {
@@ -68,6 +55,7 @@ function addGroceryItem(newGroceryItem){
         async: true,
         success: function(result) {
             $('#groceryItem').append('<li class="listItem" value="' + result.data.id + '">' + result.data.title + '</li>');
+            // giving it an X and a listener boolean function
             addCloseAndListener();
         },
         error: function(e) {
@@ -77,7 +65,7 @@ function addGroceryItem(newGroceryItem){
     });
 }
 
-// adding a an X to each item and giving both the x and the item a click value
+// adding a an X to all items and giving both the x and the item a click function
 function closeButtonOnAll(){
 var allGroceriesInList = document.getElementsByClassName("listItem");
 var i;
@@ -213,4 +201,18 @@ for (i = 0; i < close.length; i++) {
 
   }
 
+}
+
+// deletes the chosen  item, isn't expecting anything back (besides success)
+// can be used for both medical and normal item (hence the type and Id)
+function removeGroceryItem(type, itemId){
+    $.ajax({
+         type:'GET',
+         url: ctx + "/delete/" + type + "/" + itemId,
+         success : function(result) {
+             },
+             error : function(e) {
+             console.log("ERROR: ", e);
+         }
+    });
 }
