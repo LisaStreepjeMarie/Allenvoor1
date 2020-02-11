@@ -21,6 +21,7 @@ import java.util.Set;
 public class Team {
     public Team() {
         this.groceryList = new GroceryList();
+        this.chat = new Chat();
     }
 
     @JsonIgnore

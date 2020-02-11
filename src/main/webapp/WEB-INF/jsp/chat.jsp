@@ -45,14 +45,6 @@
         <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
         <small class="text-muted">Donec id elit non mi porta.</small>
     </a>
-    <a href="#" class="list-group-item list-group-item-action">
-        <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">List group item heading</h5>
-            <small class="text-muted">3 days ago</small>
-        </div>
-        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-        <small class="text-muted">Donec id elit non mi porta.</small>
-    </a>
     <br>
 
 </div>
@@ -110,8 +102,9 @@ function getAllMessages(){
       allMessages = result.data.messages;
         for (i in allMessages ) {
           $('#overViewMessages').append('<a class="list-group-item list-group-item-action"><div class="d-flex w-100 justify-content-between"><h5 class="mb-1">' + allMessages[i].member.name + '</h5><small class="text-muted">3 days ago</small></div><p class="mb-1">'
-          + allMessages[i].message + '</p><small class="text-muted">Donec id elit non mi porta.</small></a>');
+          + allMessages[i].message + '</p><small class="text-muted">hier komt een hartje?</small></a>');
           $('#formNewMessage').trigger("reset");
+          testData(allMessages[i].datePosted);
           }
        },
       error: function(e) {
@@ -119,6 +112,19 @@ function getAllMessages(){
           console.log("ERROR: ",  e);
           }
       });
+}
+
+function testData(date){
+
+var aDate = new Date(Date.parse(date));
+var hours = aDate.getHours();
+var month = aDate.getMinutes();
+var seconds = aDate.getSeconds();
+var day = aDate.getDay();
+
+
+console.log(aDate);
+
 }
 
 </script>

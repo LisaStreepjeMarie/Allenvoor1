@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpSession;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Controller
 public class ChatController {
@@ -46,7 +46,7 @@ public class ChatController {
         ObjectMapper mapper = new ObjectMapper();
         Message message = mapper.readValue(newMessage, Message.class);
 
-        LocalDate dateNow = LocalDate.now();
+        LocalDateTime dateNow = LocalDateTime.now();
         message.setDateTime(dateNow);
 
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
