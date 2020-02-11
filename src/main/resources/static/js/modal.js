@@ -18,15 +18,16 @@ $('#datetimepickerDone').datetimepicker();
 
 // This function hides all modal options
 function hideAllModalInputFields() {
-    $("#doneByMemberDiv, #datetimepickerDone, #intervalDiv, #maxNumberDiv, #eventNameDiv").css("display", "none");
-    $("#eventCommentDiv, #medicationChoiceDiv, #eventDatesDiv, #takenMedicationDiv").css("display", "none");
+    $("#eventNameDiv, #eventCommentDiv, #medicationChoiceDiv,  #takenMedicationDiv").css("display", "none");
+    $("#eventDatesDiv, #doneByMemberDiv, #datetimepickerDone, #intervalDiv, #maxNumberDiv").css("display", "none");
 }
 
 // This function fills the modal with event info if it exist
 function showModalInputFields() {
     hideAllModalInputFields();
     if ($('.modal').find('#activityCategory').val() == "Medisch") {
-        $("#eventNameDiv, #eventDateStartEndDiv, #medicationChoiceDiv, #takenMedicationDiv, #eventDatesDiv, #modal-footer").show();
+        $("#eventNameDiv, #eventDateStartEndDiv, #medicationChoiceDiv, #takenMedicationDiv").show();
+        $("#eventDatesDiv, #modal-footer").show();
     } else {
         $("#eventNameDiv, #eventDateStartEndDiv, #eventDatesDiv, #eventCommentDiv, #modal-footer").show();
     }
@@ -41,6 +42,7 @@ function fillModal(event) {
         document.getElementById("save-change-event").innerHTML = "Wijzig afspraak";
         $("#delete-event").show();
         $('.modal').find('#eventName').val(event.title);
+        $('.modal').find('#eventComment').val(event.comment);
         $('.modal').find('#eventComment').val(event.comment);
         $('.modal').find('#eventInterval').val(event.interval);
         $('.modal').find('#eventMaxNumber').val(event.maxNumber);
