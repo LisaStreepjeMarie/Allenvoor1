@@ -96,6 +96,7 @@ public class CalendarController {
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         Event event = mapper.readValue(newEventJson, Event.class);
         Date startDateTime = event.getEventStartDate();
+        System.out.println("getEventStartDate" + event.getEventStartDate());
         Date endDateTime = event.getEventEndDate();
 
         int i = 0;
