@@ -124,7 +124,7 @@ public class CalendarController {
                     }
                 }
                 event = mapper.readValue(newEventJson, Event.class);
-                //event.setDoneByMember(null);
+                event.setDoneByMember(null);
                 event.setEventStartDate(startDateTimeExtraEvent);
                 event.setEventEndDate(endDateTimeExtraEvent);
                 eventRepository.save(event);
@@ -133,9 +133,9 @@ public class CalendarController {
             eventRepository.save(event);
         }
 
-        if(event.getDoneByMember().getMemberId() == null){
+        /* if(event.getDoneByMember().getMemberId() == null){
             event.setDoneByMember(null);
-        }
+        } */
 
         // this sets the activity to the medication from the activity
         if (event.getActivity() instanceof MedicationActivity){
