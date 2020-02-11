@@ -19,7 +19,7 @@ $('#datetimepickerDone').datetimepicker();
 // This function hides all modal options
 function hideAllModalInputFields() {
     $("#eventNameDiv, #eventCommentDiv, #medicationChoiceDiv,  #takenMedicationDiv").css("display", "none");
-    $("#eventDatesDiv, #doneByMemberDiv, #datetimepickerDone, #intervalDiv, #maxNumberDiv").css("display", "none");
+    $("#eventDatesDiv, #doneByMemberDiv, #datetimepickerDone, #eventIsPeriodicDiv, #intervalDiv, #maxNumberDiv").css("display", "none");
 }
 
 // This function fills the modal with event info if it exist
@@ -27,9 +27,10 @@ function showModalInputFields() {
     hideAllModalInputFields();
     if ($('.modal').find('#activityCategory').val() == "Medisch") {
         $("#eventNameDiv, #eventDateStartEndDiv, #medicationChoiceDiv, #takenMedicationDiv").show();
-        $("#eventDatesDiv, #modal-footer").show();
+        $("#eventDatesDiv, #eventPeriodicCheckDiv, #modal-footer").show();
     } else {
-        $("#eventNameDiv, #eventDateStartEndDiv, #eventDatesDiv, #eventCommentDiv, #modal-footer").show();
+        $("#eventNameDiv, #eventDateStartEndDiv, #eventCommentDiv, #eventDatesDiv, #eventPeriodicCheckDiv").show();
+        $("#modal-footer").show();
     }
     $("#eventDoneDiv").css("display", "");
 }
@@ -43,15 +44,14 @@ function fillModal(event) {
         $("#delete-event").show();
         $('.modal').find('#eventName').val(event.title);
         $('.modal').find('#eventComment').val(event.comment);
-        $('.modal').find('#eventComment').val(event.comment);
         $('.modal').find('#eventInterval').val(event.interval);
         $('.modal').find('#eventMaxNumber').val(event.maxNumber);
         if(event.maxNumber != null) {
             document.getElementById("eventPeriodic").checked;
-            $("#intervalDiv").show();
-            $("#maxNumberDiv").show();
-            /* $("#eventMaxNumberLabel").show();
-            $("#eventNumberToGoLabel").hide(); */
+            $("#eventIsPeriodicDiv").show();
+            $("#eventPeriodicCheckDiv").hide();
+            $("#intervalDiv").hide();
+            $("#maxNumberDiv").hide();
         }
         if(event.doneByMember){
             console.log(event.donedate)
@@ -74,9 +74,6 @@ function fillModal(event) {
         if(document.getElementById("eventPeriodic").checked == true) {
                 $("#intervalDiv").show();
                 $("#maxNumberDiv").show();
-                /* $("#eventNumberToGoLabel").hide();
-                $("#eventMaxNumberLabel").show(); */
-
         } else {
                 document.getElementById("eventPeriodic").removeAttribute("required");
                 $("#intervalDiv").hide();
@@ -100,7 +97,7 @@ function fillModal(event) {
     $('.modal').modal('show');
 }
 
-        // Cleans the modal upon closing
+// Cleans the modal upon closing
 function filldoneByMembers(givenName){
 
     if(givenName != null){
