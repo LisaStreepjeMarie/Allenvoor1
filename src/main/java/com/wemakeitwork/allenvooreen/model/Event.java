@@ -8,6 +8,7 @@ import org.springframework.lang.Nullable;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @JsonPropertyOrder(value = {"id", "title", "description", "start", "end", "donedate"}, alphabetic = true)
@@ -62,6 +63,11 @@ public class Event {
     @JoinColumn(name = "teamId", referencedColumnName = "teamId", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Team team;
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER, mappedBy = "event")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    Set<EventSubscribers> eventSubscriptions;
 
     public Event() {
     }
