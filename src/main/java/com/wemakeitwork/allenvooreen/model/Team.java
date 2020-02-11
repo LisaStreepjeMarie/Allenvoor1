@@ -28,6 +28,11 @@ public class Team {
     @JoinColumn(name = "grocery_list_id", referencedColumnName = "id")
     private GroceryList groceryList;
 
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "chat_id", referencedColumnName = "id")
+    private Chat chat;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty("id")
