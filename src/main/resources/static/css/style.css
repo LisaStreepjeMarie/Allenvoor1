@@ -240,7 +240,9 @@ background-image: url('/allenvooreen/images/background.jpg');
     padding: 8px;
     margin: 0px;
  }
-
+.form-gap {
+    padding-top: 70px;
+}
 
 
 

@@ -5,10 +5,12 @@ import com.wemakeitwork.allenvooreen.service.MemberServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.MessageSource;
+import org.springframework.core.env.Environment;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Component;
 
+import java.util.Locale;
 import java.util.UUID;
 
 @Component
@@ -22,6 +24,9 @@ public class RegistrationEmailListener implements ApplicationListener<OnRegistra
 
     @Autowired
     private MessageSource messages;
+
+    @Autowired
+    private Environment env;
 
     @Override
     public void onApplicationEvent(OnRegistrationSuccessEvent event) {
@@ -47,5 +52,20 @@ public class RegistrationEmailListener implements ApplicationListener<OnRegistra
         email.setText( message + "\nhttp://localhost:8080" + url);
         System.out.println(url);
         mailSender.send(email);
+    }
+
+    private SimpleMailMessage constructResetTokenEmail(final String contextPath, final Locale locale, final String token, final Member member) {
+        final String url = contextPath + "/member/changePassword?id=" + member.getMemberId() + "&token=" + token;
+        final String message = messages.getMessage("message.resetPassword", null, locale);
+        return constructEmail("Reset Password", message + " \r\n" + url, member);
+    }
+
+    private SimpleMailMessage constructEmail(String subject, String body, Member member) {
+        final SimpleMailMessage email = new SimpleMailMessage();
+        email.setSubject(subject);
+        email.setText(body);
+        email.setTo(member.getEmail());
+        email.setFrom(env.getProperty("allenvooreenapplicatie@gmail.com"));
+        return email;
     }
 }

@@ -3,7 +3,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <html>
-<html>
 <head>
     <meta charset='utf-8' />
     <title>Boodschappenlijst</title>

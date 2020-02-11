@@ -5,4 +5,6 @@ public interface SecurityServiceInterface {
 
     void autoLogin(String memberName, String password, boolean enabled);
 
+    String validatePasswordResetToken(int id, String token);
+
 }

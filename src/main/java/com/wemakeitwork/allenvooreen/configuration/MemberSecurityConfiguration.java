@@ -51,7 +51,9 @@ public class MemberSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/member/new/**", "/images/**", "/css/**",
-                        "/webjars/bootstrap/**", "/webjars/jquery/**", "/confirmRegistration/**").permitAll()
+                        "/webjars/bootstrap/**", "/webjars/jquery/**", "/confirmRegistration/**", "/forgotPassword/**","/member/resetPassword/**","/member/changePassword/**" +
+                                "/member/updatePassword/**", "/member/savePassword")
+                .permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

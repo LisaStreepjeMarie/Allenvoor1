@@ -1,15 +1,23 @@
 package com.wemakeitwork.allenvooreen.service;
 
 
+import com.wemakeitwork.allenvooreen.model.Member;
+import com.wemakeitwork.allenvooreen.model.PasswordResetToken;
+import com.wemakeitwork.allenvooreen.repository.PasswordResetTokenRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
+import java.util.Calendar;
 
 @Service
 public class SecurityService implements SecurityServiceInterface {
@@ -18,6 +26,9 @@ public class SecurityService implements SecurityServiceInterface {
 
     @Autowired
     private MemberDetailsService memberDetailsService;
+
+    @Autowired
+    private PasswordResetTokenRepository passwordTokenRepository;
 
     private static final Logger logger = LoggerFactory.getLogger(SecurityService.class);
 
@@ -41,5 +52,23 @@ public class SecurityService implements SecurityServiceInterface {
             logger.debug(String.format("Auto login %s successfully!", memberName));
         }else {
         } throw new UsernameNotFoundException("Verifieer je account om door te gaan");
+    }
+
+    @Override
+    public String validatePasswordResetToken(int id, String token) {
+        final PasswordResetToken passToken = passwordTokenRepository.findByToken(token);
+        if ((passToken == null) || (passToken.getMember().getMemberId() != id)) {
+            return "invalidToken";
+        }
+
+        final Calendar cal = Calendar.getInstance();
+        if ((passToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
+            return "expired";
+        }
+
+        final Member member = passToken.getMember();
+        final Authentication auth = new UsernamePasswordAuthenticationToken(member, null, Arrays.asList(new SimpleGrantedAuthority("CHANGE_PASSWORD_PRIVILEGE")));
+        SecurityContextHolder.getContext().setAuthentication(auth);
+        return null;
     }
 }

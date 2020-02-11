@@ -1,28 +1,45 @@
 package com.wemakeitwork.allenvooreen.controller;
 
+import com.wemakeitwork.allenvooreen.dto.PasswordDto;
 import com.wemakeitwork.allenvooreen.model.Member;
+import com.wemakeitwork.allenvooreen.model.PasswordResetToken;
+import com.wemakeitwork.allenvooreen.model.VerificationToken;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import com.wemakeitwork.allenvooreen.repository.event.OnRegistrationSuccessEvent;
+import com.wemakeitwork.allenvooreen.repository.event.RegistrationEmailListener;
+import com.wemakeitwork.allenvooreen.service.MemberService;
 import com.wemakeitwork.allenvooreen.service.MemberServiceInterface;
 import com.wemakeitwork.allenvooreen.service.SecurityServiceInterface;
+import com.wemakeitwork.allenvooreen.util.GenericResponse;
 import com.wemakeitwork.allenvooreen.validator.MemberValidator;
+import com.wemakeitwork.allenvooreen.web.error.InvalidOldPasswordException;
+import com.wemakeitwork.allenvooreen.web.error.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
+import org.springframework.core.env.Environment;
+import org.springframework.mail.MailAuthenticationException;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.UnsatisfiedServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.UUID;
 import java.util.logging.Logger;
 
 
@@ -34,6 +51,9 @@ public class MemberController {
 
     @Autowired
     private TeamRepository teamRepository;
+
+    @Autowired
+    private MemberService memberService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -48,6 +68,12 @@ public class MemberController {
     private MemberValidator memberValidator;
 
     @Autowired
+    private JavaMailSender mailSender;
+
+    @Autowired
+    private Environment env;
+
+    @Autowired
     private ApplicationEventPublisher eventPublisher;
 
     @Autowired
@@ -58,14 +84,14 @@ public class MemberController {
     private Object Locale;
 
     @GetMapping("member/current")
-    protected String showMember(Model model){
+    protected String showMember(Model model) {
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("currentmember", member);
         return "memberProfile";
     }
 
     @GetMapping("/member/change")
-    protected String changeMember(Model model){
+    protected String changeMember(Model model) {
         model.addAttribute("member", new Member());
         return "changeMember";
     }
@@ -105,7 +131,7 @@ public class MemberController {
             try {
                 String appUrl = request.getContextPath();
                 eventPublisher.publishEvent(new OnRegistrationSuccessEvent(member, appUrl));
-            }catch(Exception re) {
+            } catch (Exception re) {
                 re.printStackTrace();
             }
             return "signup-success";
@@ -128,17 +154,17 @@ public class MemberController {
     }
 
     @GetMapping("/confirmRegistration")
-    public String confirmRegistration(WebRequest request, Model model,@RequestParam("token") String token) {
+    public String confirmRegistration(WebRequest request, Model model, @RequestParam("token") String token) {
         Locale locale = request.getLocale();
-        VerificationToken verificationToken =  memberServiceInterface.getVerificationToken(token);
-        if(verificationToken == null) {
+        VerificationToken verificationToken = memberServiceInterface.getVerificationToken(token);
+        if (verificationToken == null) {
             String message = messages.getMessage("auth.message.invalidToken", null, locale);
             model.addAttribute("message", message);
             return "redirect:access-denied";
         }
         Member member = verificationToken.getMember();
         Calendar calendar = Calendar.getInstance();
-        if((verificationToken.getExpiryDate().getTime()-calendar.getTime().getTime())<=0) {
+        if ((verificationToken.getExpiryDate().getTime() - calendar.getTime().getTime()) <= 0) {
             String message = messages.getMessage("auth.message.expired", null, locale);
             model.addAttribute("message", message);
             return "redirect:access-denied";
@@ -146,6 +172,77 @@ public class MemberController {
         member.setEnabled(true);
         memberServiceInterface.enableRegisteredUser(member);
         return null;
+    }
+
+    // Reset wachtwoord
+
+    @GetMapping("/forgotPassword")
+    protected String showForgetPage(Model model) {
+        return "forgotPassword";
+    }
+
+
+    @PostMapping("/member/resetPassword")
+    public GenericResponse resetPassword(HttpServletRequest request, @RequestParam("email") String email) {
+        Member member = memberRepository.findByEmail(email);
+        if (member != null) {
+            final String token = UUID.randomUUID().toString();
+            memberService.createPasswordResetTokenForMember(member, token);
+            mailSender.send(constructResetTokenEmail(getAppUrl(request), request.getLocale(), token, member));
+        }
+        return new GenericResponse(messages.getMessage("message.resetPasswordEmail", null, request.getLocale()));
+    }
+
+    @GetMapping("/member/changePassword")
+    public String showChangePasswordPage(Locale locale, Model model, @RequestParam("id") int id, @RequestParam("token") String token) {
+        String result = securityServiceInterface.validatePasswordResetToken(id, token);
+        if (result != null) {
+            model.addAttribute("message",
+                    messages.getMessage("auth.message." + result, null, locale));
+            return "redirect:/login?lang=" + locale.getLanguage();
+        }
+        return "redirect:/updatePassword.jsp?lang=" + locale.getLanguage();
+    }
+
+    @GetMapping("/member/savePassword")
+    public GenericResponse savePassword(final Locale locale, @Valid PasswordDto passwordDto) {
+        final Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        memberService.changeMemberPassword(member, passwordDto.getNewPassword());
+        return new GenericResponse(messages.getMessage("message.resetPasswordSuc", null, locale));
+    }
+
+
+    @PostMapping("/member/updatePassword")
+    public GenericResponse changeUserPassword(final Locale locale, @Valid PasswordDto passwordDto) {
+        final Member member = memberService.findMemberByEmail(((Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getEmail());
+        if (!memberService.checkIfValidOldPassword(member, passwordDto.getOldPassword())) {
+            throw new InvalidOldPasswordException();
+        }
+        memberService.changeMemberPassword(member, passwordDto.getNewPassword());
+        return new GenericResponse(messages.getMessage("message.updatePasswordSuc", null, locale));
+    }
+
+
+    private SimpleMailMessage constructResetTokenEmail(
+            String contextPath, Locale locale, String token, Member member) {
+        String url = contextPath + "/member/changePassword?id=" + member.getMemberId() + "&token=" + token;
+        String message = messages.getMessage("message.resetPassword",
+                null, locale);
+        return constructEmail("Reset Password", message + " \r\n" + url, member);
+    }
+
+    private String getAppUrl(HttpServletRequest request) {
+        return "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+    }
+
+    private SimpleMailMessage constructEmail(String subject, String body,
+                                             Member member) {
+        SimpleMailMessage email = new SimpleMailMessage();
+        email.setSubject("Reset wachtwoord");
+        email.setText("Hallo");
+        email.setTo(member.getEmail());
+        email.setFrom(env.getProperty("support.email"));
+        return email;
     }
 }
 

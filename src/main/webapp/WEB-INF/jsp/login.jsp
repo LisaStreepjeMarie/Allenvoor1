@@ -41,6 +41,8 @@
             <br>
             <label for="password" class="sr-only">Wachtwoord</label>
             <input type="password" id="password" name="password" class="form-control" placeholder="Wachtwoord" required>
+            <br/><br/>
+            <a class="btn btn-default" href="${pageContext.request.contextPath}/forgotPassword">Wachtwoord vergeten?</a>
             <div class="checkbox mb-3">
                 <label>
                     <input type="checkbox" value="remember-me">Onthoud mij
@@ -49,12 +51,40 @@
             <input name="_csrf" type="hidden" value="${_csrf.token}" />
             <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
         </form>
-
         <form class="form-signin" action="${pageContext.request.contextPath}/member/new">
             <input name="_csrf" type="hidden" value="${_csrf.token}" />
             <button class="btn btn-lg btn-primary btn-block" type="submit">Maak een account</button>
+            </form>
+
             <p class="mt-5 mb-3 text-muted">&copy; 2019 Allenvooreen</p>
         </form>
       </div>
     </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

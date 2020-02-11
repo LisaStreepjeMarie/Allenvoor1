@@ -1,15 +1,15 @@
 package com.wemakeitwork.allenvooreen.model;
 
+import com.wemakeitwork.allenvooreen.validator.ValidEmail;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.management.relation.Role;
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "members")
@@ -52,6 +52,9 @@ public class Member implements UserDetails{
 
     @OneToOne(mappedBy = "member")
     private VerificationToken verificationToken;
+
+    @OneToOne(mappedBy = "member")
+    private PasswordResetToken passwordResettoken;
 
 
     public VerificationToken getVerificationToken() {
