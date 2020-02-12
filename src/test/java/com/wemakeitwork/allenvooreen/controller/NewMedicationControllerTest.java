@@ -1,5 +1,6 @@
 package com.wemakeitwork.allenvooreen.controller;
 
+import com.wemakeitwork.allenvooreen.model.Activity;
 import com.wemakeitwork.allenvooreen.model.Medication;
 import com.wemakeitwork.allenvooreen.model.Team;
 import com.wemakeitwork.allenvooreen.repository.ActivityRepository;
@@ -28,7 +29,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import static org.mockito.ArgumentCaptor.forClass;
 import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -98,7 +101,7 @@ public class NewMedicationControllerTest {
                 .andExpect(view().name("redirect:/medication/\" + team.getTeamId()"))
                 .andExpect(redirectedUrl("/medication/\" + team.getTeamId()"));
 
-        ArgumentCaptor<Medication> formObjectArgument = formObjectArgument.forClass(Medication.class);
+        ArgumentCaptor<Medication> formObjectArgument = forClass(Medication.class);
         verify(medicationRepository, times(1)).save(formObjectArgument.capture());
         Mockito.verifyNoMoreInteractions(medicationRepository);
 
