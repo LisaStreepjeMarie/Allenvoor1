@@ -64,6 +64,7 @@
                             <input type="hidden" name="eventId" id="eventId" />
                             <input type="hidden" name="activityId" id="activityId" />
                             <input type="hidden" name="teamId" id="team.teamId"/>
+                            <input type="hidden" name="teamName" value="${team.teamName}" id="teamName"/>
                         </div>
                     </div>
 
@@ -111,23 +112,59 @@
                             </div>
                         </div>
                     </div>
-                    <div class="modal-body" >
-                        <div class="modal-body" >
-                            <div class="row" id="eventDoneDiv">
-                                <label class="col-xs-4" for="eventDone">Afspraak al uitgevoerd?&nbsp;</label>
-                                <input type="checkbox" id="eventDone" name="eventDone"/>
+                    <div class="modal-body" id="eventPeriodicDiv">
+                        <div class="modal-body">
+                            <div class="row" id="eventPeriodicCheckDiv">
+                                <label class="col-xs-4" for="eventPeriodic">Periodieke afspraak?&nbsp;</label>
+                                <input type="checkbox" id="eventPeriodic" name="eventPeriodic"/>
                             </div>
-                            <div class="row input-group date" id="datetimepickerDone" data-target-input="nearest">
-                                <label class="col-xs-4" for="eventDoneDate">Op datum</label>
+                            <div class="row" id="eventIsPeriodicDiv">
+                                <label class="col-xs-4" for="eventPeriodic">Periodieke afspraak</label>
+                            </div>
+                        </div>
+                        <div class="row" id="intervalDiv">
+                           <label class="col-4" for="eventInterval" control-label>Frequentie</label>
+                           <select name="event.eventInterval" id="eventInterval" >
+                               <option disabled selected="selected" value="">Elke</option>
+                               <option value="day">dag</option>
+                               <option value="week">week</option>
+                               <option value="month">maand</option>
+                           </select>
+                        </div>
+                    </div>
+                    <div class="modal-body" id="maxNumberDiv">
+                        <div class="row">
+                            <label class="col-4" for="eventMaxNumberLabel" id="eventMaxNumberLabel" control-label>Aantal keer</label>
+                            <input type="text" size="1" name="eventMaxNumber" id="eventMaxNumber" />
+                        </div>
+                    </div>
+                    <div class="modal-body" >
+                        <div class="row" id="eventDoneDiv">
+                            <label class="col-4" for="eventDone">Uitgevoerd</label>
+                            <input type="checkbox" id="eventDone" name="eventDone"/>
+                        </div>
+                    </div>
+
+                        <div class="form-group" >
+                            <div class="input-group date" id="datetimepickerDone" data-target-input="nearest">
+                                <label class="col-4" for="eventDoneDate">Op datum</label>
                                 <input id="eventDoneDate" name="eventDoneDate" type="text" class="form-control datetimepicker-input" data-target="#datetimepickerDone"/>
                                 <div class="input-group-append" style="width:8.3vw;" data-target="#datetimepickerDone" data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
                             </div>
+
+                            <div class="modal-body">
+                                <div class="row" id ="doneByMemberDiv">
+                                    <label class="col-4" for="doneByMember" control-label>Gedaan door </label>
+                                    <select name="event.doneByMember" id="doneByMember" style="width:13.2em;" >
+                                    <option disabled selected="doneByMember">null</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                    </span>
+                </span>
                 <div class="modal-footer" id="modal-footer">
                     <button type="button" id="delete-event" class="btn btn-danger" data-dismiss="modal">Verwijder Afspraak</button>
                     <button type="button" class="btn btn-light" data-dismiss="modal">Sluiten</button>
@@ -137,9 +174,9 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 </form>
-  <jsp:include page="home.jsp" />
+<jsp:include page="newHomeWithoutCalendarBreakingStuff.jsp" />
 
-// Hack, needed to show clock icon in datetimepickers
+
 <script>
 $(function () {
     $('#datetimepickerStart').datetimepicker({icons: {time: 'far fa-clock',},});

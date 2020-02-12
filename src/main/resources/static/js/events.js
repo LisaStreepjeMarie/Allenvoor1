@@ -23,6 +23,12 @@ function saveEvent(eventId, activityId) {
             start: moment(document.getElementById("eventStartDate").value, "DD-MM-YYYY H:mm").toDate(),
             end: moment(document.getElementById("eventEndDate").value, "DD-MM-YYYY H:mm").toDate(),
             comment: document.getElementById("eventComment").value,
+            interval: document.getElementById("eventInterval").value,
+            maxNumber: document.getElementById("eventMaxNumber").value,
+            donedate: moment(document.getElementById("eventDoneDate").value, "DD-MM-YYYY H:mm").toDate(),
+            doneByMember: {
+                id: document.getElementById("doneByMember").value,
+            },
             activity: {
                 type: activityType,
                 activityId: document.getElementById("activityId").value,
@@ -68,7 +74,7 @@ function getMedication(event){
                  List = result.data
                  $('#medicationChoice').empty();
                  $('#medicationChoice').append('<option value="">Kies een medicatie</option>');
-                 for (i in List ) {
+                 for (i in List) {
                     $('#medicationChoice').append('<option value="' + List[i].id + '">' + List[i].name + '</option>');
                  }
                  document.getElementById("medicationChoice").value = event.activity.medication.id;

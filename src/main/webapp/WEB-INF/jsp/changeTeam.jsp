@@ -17,31 +17,28 @@
         <div class= "masthead">
             <div id="container">
                 <br />
-                <div class="ml-4 mt-4">
+                <div class="w-50 p-3">
                     <h3 class="font-weight-light">Wijzig gegevens groep ${teamName}</h3>
-                    <table>
                         <tr>
                              <td colspan="2"><h5 class="font-weight-light">Groepsleden:</h5></td>
                         </tr>
+                        <ul class="list-group">
                          <c:forEach items="${teamMemberList}" var="membership">
                              <tr>
-                                 <td><c:out value="${membership.member.memberName}" /></td>
-                                 <td><input class="btn btn-primary" type="submit" value="Verwijder"
-                                            onclick="window.location='${pageContext.request.contextPath}/team/${membership.team.teamId}/delete/membership/${membership.membershipId}'" /></td>
-                                 <td><input class="btn btn-primary" type="submit" value="Geef beheerderrechten"
-                                            onclick="window.location='${pageContext.request.contextPath}/team/grantadmin/${membership.team.teamId}/${membership.member.memberId}'" /></td>
-
-                             </tr>
+                                 <td><li class="list-group-item"><c:out value="${membership.member.memberName}" />
+                                     <input class="btn btn-primary float-right" style="width: auto;padding:5px;margin-left:5px;" type="submit" value="Verwijder"
+                                                    onclick="window.location='${pageContext.request.contextPath}/team/${membership.team.teamId}/delete/membership/${membership.membershipId}'" /></td>
+                                 &emsp;
+                                 <input class="btn btn-primary float-right" style="width: auto;padding:5px;margin-left:5px;" type="submit" value="Geef beheerderrechten"
+                                            onclick="window.location='${pageContext.request.contextPath}/team/grantadmin/${membership.team.teamId}/${membership.member.memberId}'" />
+                                     </tr>
+                                 </li>
                         </c:forEach>
-                        <tr>
-                            <td colspan="2"><h5 class="font-weight-light">Groepsbeheerders:</h5></td>
-                        </tr>
                         <c:forEach items="${teamAdminList}" var="membership">
-                            <tr>
-                                <td><c:out value="${membership.member.memberName}" /></td>
-                            </tr>
+                            <li class="list-group-item"><c:out value="${membership.member.memberName}" />
+                            </li>
                         </c:forEach>
-                     </table>
+                        </ul>
 
                    <form:form action="${pageContext.request.contextPath}/team/addMember" modelAttribute="teamMemberDTO">
                         <form:input path="teamId" type="hidden" />

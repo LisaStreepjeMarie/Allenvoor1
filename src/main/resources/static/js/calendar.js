@@ -3,6 +3,11 @@ $(document).ready(function() {
         // Hide model fields by default
         hideAllModalInputFields();
 
+        $('.modal').on("hide.bs.modal", function() {
+            $('#formID').trigger("reset");
+            hideAllModalInputFields();
+        });
+
         // Loads fullcalendar
         $('#calendar').fullCalendar({
             themeSystem: 'bootstrap4',
@@ -16,7 +21,7 @@ $(document).ready(function() {
                 center: 'title',
                 right: 'month,agendaWeek,agendaDay,list'
             },
-
+            titleFormat: '[Agenda van: '+  document.getElementById("teamName").value + ']',
             weekNumbers: true,
             eventLimit: true, // allow "more" link when too many events
             navLinks: true, // can click day/week names to navigate views

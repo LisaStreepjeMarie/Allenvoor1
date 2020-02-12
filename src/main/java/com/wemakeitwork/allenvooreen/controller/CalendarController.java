@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.wemakeitwork.allenvooreen.model.*;
 import com.wemakeitwork.allenvooreen.repository.*;
 import com.wemakeitwork.allenvooreen.service.ServiceResponse;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,11 +51,21 @@ public class CalendarController {
         return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/calendar/{teamid}/teamMembers")
+    public ResponseEntity<Object> getTeamMembers(@PathVariable("teamid") final Integer teamId) {
+        Team team  = teamRepository.getOne(teamId);
+        List<TeamMembership> teamList = new ArrayList<>(team.getTeamMemberships());
+
+        ServiceResponse<List<TeamMembership>> response = new ServiceResponse<List<TeamMembership>>("success", teamList);
+        return new ResponseEntity<Object>(response, HttpStatus.OK);
+    }
+
     @GetMapping("/calendar/{teamId}")
     public String showCalender(@PathVariable("teamId") final Integer teamId, Model model)
             throws JsonProcessingException {
         Team team = teamRepository.getOne(teamId);
         httpSession.setAttribute("team", team);
+        model.addAttribute("team", team);
 
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Set<TeamMembership> teamMembershipList = memberRepository.findByMemberName(member.getMemberName()).get().getTeamMemberships();
@@ -84,6 +95,48 @@ public class CalendarController {
     public ResponseEntity<Object> newEvent(@RequestBody String newEventJson) throws JsonProcessingException {
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         Event event = mapper.readValue(newEventJson, Event.class);
+        Date startDateTime = event.getEventStartDate();
+        Date endDateTime = event.getEventEndDate();
+
+        int i = 0;
+        Integer maxNumber = event.getEventMaxNumber();
+        // case of periodic event
+        if ((maxNumber != null) && (event.getEventId() == null)) {
+            for (i = 0; i < maxNumber; i++) {
+                Date startDateTimeExtraEvent = null;
+                Date endDateTimeExtraEvent = null;
+                switch (event.getEventInterval()) {
+
+                    case "day": {
+                        startDateTimeExtraEvent = DateUtils.addDays(startDateTime, i);
+                        endDateTimeExtraEvent = DateUtils.addDays(endDateTime, i);
+                        break;
+                    }
+                    case "week": {
+                        startDateTimeExtraEvent = DateUtils.addWeeks(startDateTime, i);
+                        endDateTimeExtraEvent = DateUtils.addWeeks(endDateTime, i);
+                        break;
+                    }
+                    case "month": {
+                        startDateTimeExtraEvent = DateUtils.addMonths(startDateTime, i);
+                        endDateTimeExtraEvent = DateUtils.addMonths(endDateTime, i);
+                        break;
+                    }
+                }
+                event = mapper.readValue(newEventJson, Event.class);
+                if(event.getDoneByMember().getMemberId() == null){
+                    event.setDoneByMember(null);
+                }
+                event.setEventStartDate(startDateTimeExtraEvent);
+                event.setEventEndDate(endDateTimeExtraEvent);
+                eventRepository.save(event);
+            }
+        } else {
+            if(event.getDoneByMember().getMemberId() == null){
+                event.setDoneByMember(null);
+            }
+            eventRepository.save(event);
+        }
 
         // this sets the activity to the medication from the activity
         if (event.getActivity() instanceof MedicationActivity){
@@ -95,7 +148,6 @@ public class CalendarController {
             removeMedicationAmountFromActivity(event);
         }
 
-        eventRepository.save(event);
         ServiceResponse<Event> result = new ServiceResponse<Event>("Succes", event);
         return new ResponseEntity<Object>(result, HttpStatus.OK);
     }

@@ -1,6 +1,7 @@
 package com.wemakeitwork.allenvooreen.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 
@@ -16,6 +17,7 @@ public class TeamMembership {
     @ManyToOne(fetch= FetchType.EAGER)
     private Team team;
 
+    @JsonProperty("member")
     @ManyToOne(fetch= FetchType.EAGER)
     private Member member;
 

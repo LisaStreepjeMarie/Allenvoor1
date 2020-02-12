@@ -1,28 +1,11 @@
 package com.wemakeitwork.allenvooreen.model;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.lang.Nullable;
 
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
@@ -52,6 +35,13 @@ public class Event {
     @JsonProperty("start")
     private java.util.Date eventStartDate;
 
+    @Nullable
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "memberId", referencedColumnName = "memberId")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonProperty("doneByMember")
+    private Member doneByMember;
+
     @Basic
     @Temporal(TemporalType.TIMESTAMP)
     @JsonProperty("end")
@@ -59,6 +49,12 @@ public class Event {
 
     @JsonProperty("comment")
     private String eventComment;
+
+    @JsonProperty("interval")
+    private String eventInterval;
+
+    @JsonProperty("maxNumber")
+    private Integer eventMaxNumber;
 
     @JsonProperty("donedate")
     @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -75,16 +71,36 @@ public class Event {
 
     public Event() {
     }
-
-    public Event(Integer eventId, @NotBlank(message = "veld mag niet blank zijn") String eventName, Date eventStartDate, Date eventEndDate, String eventComment, Date eventDoneDate, Activity activity, Team team) {
+    public Event(Integer eventId, @NotBlank(message = "veld mag niet blank zijn") String eventName, Date eventStartDate,
+                 Date eventEndDate, String eventComment, String eventInterval, Integer eventMaxNumber,
+                 Date eventDoneDate, Activity activity,
+                 Team team) {
         this.eventId = eventId;
         this.eventName = eventName;
         this.eventStartDate = eventStartDate;
         this.eventEndDate = eventEndDate;
         this.eventComment = eventComment;
+        this.eventInterval = eventInterval;
+        this.eventMaxNumber = eventMaxNumber;
         this.eventDoneDate = eventDoneDate;
         this.activity = activity;
         this.team = team;
+    }
+
+    public Integer getEventMaxNumber() {
+        return eventMaxNumber;
+    }
+
+    public void setEventMaxNumber(Integer eventMaxNumber) {
+        this.eventMaxNumber = eventMaxNumber;
+    }
+
+    public String getEventInterval() {
+        return eventInterval;
+    }
+
+    public void setEventInterval(String eventInterval) {
+        this.eventInterval = eventInterval;
     }
 
     public Date getEventDoneDate() {
@@ -140,6 +156,25 @@ public class Event {
         this.eventEndDate = eventEndDate;
     }
 
+    //joda-time
+    /* @JsonGetter
+    public DateTime getEventStartDate() {
+        return eventStartDate;
+    }
+
+    public void setEventStartDate(DateTime eventStartDate) {
+        this.eventStartDate = eventStartDate;
+    }
+
+    @JsonGetter
+    public DateTime getEventEndDate() {
+        return eventEndDate;
+    }
+
+    public void setEventEndDate(DateTime eventEndDate) {
+        this.eventEndDate = eventEndDate;
+    } */
+
     @JsonGetter
     public String getEventComment() {
         return eventComment;
@@ -151,6 +186,15 @@ public class Event {
 
     public Team getTeam() {
         return team;
+    }
+
+    @Nullable
+    public Member getDoneByMember() {
+        return doneByMember;
+    }
+
+    public void setDoneByMember(@Nullable Member doneByMember) {
+        this.doneByMember = doneByMember;
     }
 
     public void setTeam(Team team) {

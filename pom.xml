@@ -17,9 +17,15 @@
 
     <properties>
         <java.version>11</java.version>
+        <!-- <property type="org.joda.time.contrib.hibernate.PersistentDateTime" name="dateTime"/> -->
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+
         <!-- test dependencies -->
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -141,6 +147,14 @@
             <artifactId>jquery</artifactId>
             <version>3.4.1</version>
         </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>popper.js</artifactId>
+            <version>1.16.0</version>
+        </dependency>
+
+        <!-- popper -->
+
 
         <!-- font-awesome -->
         <dependency>
