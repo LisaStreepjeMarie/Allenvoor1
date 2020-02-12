@@ -98,8 +98,12 @@ public class NewMedicationControllerTest {
                 .with(csrf())
         )
                 .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/medication/\" + team.getTeamId()"))
-                .andExpect(redirectedUrl("/medication/\" + team.getTeamId()"));
+                // .andExpect(view().name("redirect:/medication/\" + team.getTeamId()"))
+                // .andExpect(redirectedUrl("/medication/\" + team.getTeamId()"));
+                .andExpect(view().name("redirect:/medication/{teamId}"))
+                .andExpect(redirectedUrl("/medication/{teamId}"));
+
+        //mockMvc.perform(get("/calendar/{teamId}", 1))
 
         ArgumentCaptor<Medication> formObjectArgument = forClass(Medication.class);
         verify(medicationRepository, times(1)).save(formObjectArgument.capture());
