@@ -1,6 +1,5 @@
 package com.wemakeitwork.allenvooreen.controller;
 
-import com.wemakeitwork.allenvooreen.model.Activity;
 import com.wemakeitwork.allenvooreen.model.Medication;
 import com.wemakeitwork.allenvooreen.model.Team;
 import com.wemakeitwork.allenvooreen.repository.ActivityRepository;
@@ -32,14 +31,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import static org.mockito.Mockito.times;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+
+import org.springframework.web.bind.annotation.PathVariable;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = MedicationController.class)
@@ -66,8 +66,8 @@ public class NewMedicationControllerTest {
     @MockBean
     TeamRepository teamRepository;
 
-    /* @MockBean
-    ActivityRepository activityRepository; */
+    @MockBean
+    ActivityRepository activityRepository;
 
     @Test
     @WithMockUser(roles = "admin")
