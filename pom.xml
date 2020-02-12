@@ -48,6 +48,14 @@
             <scope>test</scope>
             <version>1.4.194</version>
         </dependency>
+
+        <!-- extra dependency needed for testing? -->
+        <!-- <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <version>2.4.0</version>
+            <scope>test</scope>
+        </dependency> -->
         <!-- above are test dependencies -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
