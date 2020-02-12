@@ -171,7 +171,7 @@ function addEventSubscription(eventId){
         dataType: 'json',
         async: true,
         success: function(result) {
-            $('#subscriptionList').append('<li class="list-group-item" value="' + result.data.member.id + '">' + result.data.member.name + '<input class="btn btn-primary float-right" style="width: auto;padding:5px;margin-left:5px;" type="submit" value="Schrijf uit" onClick="removeEventSubscription(' + result.data.event.id + ', ' + result.data.id + ')">')
+            $('#subscriptionList').append('<li class="list-group-item" id="subscription-id-'+ result.data.id + '" value="' + result.data.member.id + '">' + result.data.member.name + '<input class="btn btn-primary float-right" style="width: auto;padding:5px;margin-left:5px;" type="submit" value="Schrijf uit" onClick="removeEventSubscription(' + result.data.event.id + ', ' + result.data.id + ')">')
             $('#subscriptionList').append('</li>');
         },
         error: function(e) {
@@ -187,6 +187,7 @@ function removeEventSubscription(eventId, eventSubscriptionId){
          type:'GET',
          url: ctx + "/event/" + eventId + "/deletesubscription/" + eventSubscriptionId,
          success : function(result) {
+                $('#subscription-id-' + eventSubscriptionId).remove();
              },
              error : function(e) {
              console.log("ERROR: ", e);
