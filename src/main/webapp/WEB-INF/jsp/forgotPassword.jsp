@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
 <html>
 <head>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
@@ -10,42 +11,41 @@
 </head>
 <body>
 <div class="container">
-    <h1 text="{message.resetPassword}">reset</h1>
+    <h1>reset</h1>
     <br/>
     <div class="row">
-      <form method="post">
-       <label text="{label.user.email}">email</label>
-          <input id="email" name="email" type="email" value="" />
-          <button type="submit" onclick="resetPass()" text="{message.resetPassword}">reset</button>
+      <form action="${pageContext.request.contextPath}/member/resetPassword">
+        <label class="col-sm-1">email</label>
+        <span class="col-sm-5"><input class="form-control" id="email" name="email" type="email" value="" required="required"/></span>
+        <button class="btn btn-primary" type="submit">reset</button>
       </form>
     </div>
 
 <br/>
-<a class="btn btn-default" href="${pageContext.request.contextPath}/member/new" text="{label.form.loginSignUp}">registration</a>
+<a class="btn btn-default" href="${pageContext.request.contextPath}/newMember.jsp" >registration</a>
 <br/><br/>
-<a class="btn btn-default" href="${pageContext.request.contextPath}/login" text="{label.form.loginLink}">login</a>
+<a class="btn btn-default" href="${pageContext.request.contextPath}/login" >login</a>
 
 </div>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script inline="javascript">
-var serverContext = [$pageContext.request.contextPath{/}];
+<script>
+
 
 $(document).ready(function () {
-	$('form').submit(function(event) {
-		resetPass(event);
+		resetPass();
     });
 });
 
-function resetPass(event){
-    event;
+function resetPass(){
+
     var email = $("email");
-    $.post(serverContext + "member/resetPassword",{email: email} ,function(data){
+    $.post("allenvooreen/member/resetPassword", {email: email} ,function(data){
             window.location.href = serverContext + "login?message=" + data.message;
     })
     .fail(function(data) {
     	if(data.responseJSON.error.indexOf("MailError") > -1)
         {
-            window.location.href = serverContext + "emailError.jsp";
+            window.location.href = serverContext + "emailError.html";
         }
         else{
             window.location.href = serverContext + "login?message=" + data.responseJSON.message;
@@ -54,14 +54,14 @@ function resetPass(event){
 }
 
 $(document).ajaxStart(function() {
-    $("title").jsp("LOADING ...");
+    $("title").html("LOADING ...");
 });
+
+
 </script>
 </body>
 
 </html>
-
-
 
 
 

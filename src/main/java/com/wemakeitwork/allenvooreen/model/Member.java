@@ -53,10 +53,6 @@ public class Member implements UserDetails{
     @OneToOne(mappedBy = "member")
     private VerificationToken verificationToken;
 
-    @OneToOne(mappedBy = "member")
-    private PasswordResetToken passwordResettoken;
-
-
     public VerificationToken getVerificationToken() {
         return verificationToken;
     }

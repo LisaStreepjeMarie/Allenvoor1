@@ -56,18 +56,21 @@ public class SecurityService implements SecurityServiceInterface {
 
     @Override
     public String validatePasswordResetToken(int id, String token) {
-        final PasswordResetToken passToken = passwordTokenRepository.findByToken(token);
+        PasswordResetToken passToken = passwordTokenRepository.findByToken(token);
         if ((passToken == null) || (passToken.getMember().getMemberId() != id)) {
             return "invalidToken";
         }
 
-        final Calendar cal = Calendar.getInstance();
-        if ((passToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
+        Calendar cal = Calendar.getInstance();
+        if ((passToken.getExpiryDate()
+                .getTime() - cal.getTime()
+                .getTime()) <= 0) {
             return "expired";
         }
 
-        final Member member = passToken.getMember();
-        final Authentication auth = new UsernamePasswordAuthenticationToken(member, null, Arrays.asList(new SimpleGrantedAuthority("CHANGE_PASSWORD_PRIVILEGE")));
+        Member member = passToken.getMember();
+        Authentication auth = new UsernamePasswordAuthenticationToken(member, null, Arrays.asList(
+                new SimpleGrantedAuthority("CHANGE_PASSWORD_PRIVILEGE")));
         SecurityContextHolder.getContext().setAuthentication(auth);
         return null;
     }

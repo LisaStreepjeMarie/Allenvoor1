@@ -177,14 +177,14 @@ public class MemberController {
     // Reset wachtwoord
 
     @GetMapping("/forgotPassword")
-    protected String showForgetPage(Model model) {
+    protected String showForgotPage() {
         return "forgotPassword";
     }
 
-
-    @PostMapping("/member/resetPassword")
-    public GenericResponse resetPassword(HttpServletRequest request, @RequestParam("email") String email) {
-        System.out.println("hoi");
+    @RequestMapping(value= "/member/resetPassword")
+    @ResponseBody
+    public GenericResponse resetPassword(HttpServletRequest request, @ModelAttribute("email") String email) {
+        System.out.println("dag");
         Member member = memberRepository.findByEmail(email);
         if (member == null) {
             throw new UserNotFoundException();
@@ -195,33 +195,24 @@ public class MemberController {
         return new GenericResponse(messages.getMessage("message.resetPasswordEmail", null, request.getLocale()));
     }
 
-    @GetMapping("/member/changePassword")
+    @GetMapping(value = "/member/changePassword")
     public String showChangePasswordPage(Locale locale, Model model, @RequestParam("id") int id, @RequestParam("token") String token) {
         String result = securityServiceInterface.validatePasswordResetToken(id, token);
+        System.out.println("test");
         if (result != null) {
             model.addAttribute("message",
                     messages.getMessage("auth.message." + result, null, locale));
-            return "redirect:/login?lang=" + locale.getLanguage();
+            return "redirect:/login";
         }
-        return "redirect:/updatePassword.jsp?lang=" + locale.getLanguage();
+        return "updatePassword";
     }
 
-    @GetMapping("/member/savePassword")
-    public GenericResponse savePassword(final Locale locale, @Valid PasswordDto passwordDto) {
-        final Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    @PostMapping(value= "/member/savePassword")
+    @ResponseBody
+    public GenericResponse savePassword(Locale locale, @Valid PasswordDto passwordDto) {
+        Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         memberService.changeMemberPassword(member, passwordDto.getNewPassword());
         return new GenericResponse(messages.getMessage("message.resetPasswordSuc", null, locale));
-    }
-
-
-    @PostMapping("/member/updatePassword")
-    public GenericResponse changeUserPassword(final Locale locale, @Valid PasswordDto passwordDto) {
-        final Member member = memberService.findMemberByEmail(((Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getEmail());
-        if (!memberService.checkIfValidOldPassword(member, passwordDto.getOldPassword())) {
-            throw new InvalidOldPasswordException();
-        }
-        memberService.changeMemberPassword(member, passwordDto.getNewPassword());
-        return new GenericResponse(messages.getMessage("message.updatePasswordSuc", null, locale));
     }
 
 
@@ -233,18 +224,19 @@ public class MemberController {
         return constructEmail("Reset Password", message + " \r\n" + url, member);
     }
 
-    private String getAppUrl(HttpServletRequest request) {
-        return "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
-    }
 
     private SimpleMailMessage constructEmail(String subject, String body,
                                              Member member) {
         SimpleMailMessage email = new SimpleMailMessage();
-        email.setSubject("Reset wachtwoord");
-        email.setText("Hallo");
+        email.setSubject(subject);
+        email.setText(body);
         email.setTo(member.getEmail());
-        email.setFrom(env.getProperty("support.email"));
+        email.setFrom(env.getProperty("allenvooreenapplicatie@gmail.com"));
         return email;
+    }
+
+    private String getAppUrl(HttpServletRequest request) {
+        return "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
     }
 }
 
