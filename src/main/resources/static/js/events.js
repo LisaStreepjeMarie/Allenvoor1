@@ -143,9 +143,10 @@ function getEventSubscriptions(eventId){
          success : function(result) {
                 subscriptionList = result.data;
                  for (i in subscriptionList){
-                    $('#subscriptionList').append('<li class="list-group-item" value="' + subscriptionList[i].member.id + '">' +
-                    subscriptionList[i].member.name + '<input class="btn btn-primary float-right" style="width: auto;padding:5px;margin-left:5px;" type="submit" value="Schrijf uit" onClick="removeEventSubscription(' + subscriptionList[i].event.id + ', ' + subscriptionList[i].id + ')">')
-                    $('#subscriptionList').append('</li>');
+                    $('#subscriptionList').append('<li class="list-group-item" value="' +
+                    subscriptionList[i].member.id + '">' + subscriptionList[i].member.name + '<input class="btn btn-primary float-right"' +
+                    'style="width: auto;padding:5px;margin-left:5px;" type="submit" value="Schrijf uit"' +
+                    'onClick="removeEventSubscription(' + subscriptionList[i].event.id + ', ' + subscriptionList[i].id + ')"></li>');
                  }
              },
              error : function(e) {
@@ -171,8 +172,10 @@ function addEventSubscription(eventId){
         dataType: 'json',
         async: true,
         success: function(result) {
-            $('#subscriptionList').append('<li class="list-group-item" id="subscription-id-'+ result.data.id + '" value="' + result.data.member.id + '">' + result.data.member.name + '<input class="btn btn-primary float-right" style="width: auto;padding:5px;margin-left:5px;" type="submit" value="Schrijf uit" onClick="removeEventSubscription(' + result.data.event.id + ', ' + result.data.id + ')">')
-            $('#subscriptionList').append('</li>');
+            $('#subscriptionList').append('<li class="list-group-item" id="subscription-id-'+
+            result.data.id + '" value="' + result.data.member.id + '">' + result.data.member.name +
+            '<input class="btn btn-primary float-right" style="width: auto;padding:5px;margin-left:5px;" type="submit"' +
+            'value="Schrijf uit" onClick="removeEventSubscription(' + result.data.event.id + ', ' + result.data.id + ')"></li>');
         },
         error: function(e) {
             alert("addEventSubscription() error")
