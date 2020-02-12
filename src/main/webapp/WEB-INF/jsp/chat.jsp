@@ -9,17 +9,8 @@
     <meta charset='utf-8' />
     <title>Chat!</title>
 
-<!--    <script src="${pageContext.request.contextPath}/webjars/moment/2.24.0/min/moment.min.js"></script>-->
-<!--    <script src="${pageContext.request.contextPath}/webjars/jquery/3.4.1/jquery.min.js"></script>-->
-<!--    <script src="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>-->
-<!--    <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>-->
-
-<!--    <link id="contextPathHolder" data-contextPath="${pageContext.request.contextPath}"/>-->
-
-<!--    <link id="teamId" data-teamId="${team.teamId}"/>-->
-<!--    <link id="csrfToken" data-csrfToken="${_csrf.token}"/>-->
-<!--    <meta name="viewport" content="width=device-width, initial-scale=1">-->
 <style>
+
 .messagesOverView{
     max-height: 400px;
     margin-bottom: 10px;
@@ -37,15 +28,8 @@
 <body>
 <div class="wholeChat">
 <div id="overViewMessages" class="list-group messagesOverView">
-
-<!--    <a href="#" class="list-group-item list-group-item-action">-->
-<!--        <div class="d-flex w-100 justify-content-between">-->
-<!--            <h5 class="mb-1">List group item heading</h5>-->
-<!--            <small class="text-muted">3 days ago</small>-->
-<!--        </div>-->
-<!--        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>-->
-<!--        <small class="text-muted">Donec id elit non mi porta.</small>-->
-<!--    </a>-->
+    <br>
+    <br>
     <br>
 </div>
     <input type="hidden" name="memberName" value="${member.memberName}" id="memberName"/>
@@ -104,6 +88,7 @@ function newMessageForAjax(){
       });
 }
 
+// getting all messages with an ajax call
 function getAllMessages(){
 
 var memberName = document.getElementById("memberName").value;
@@ -126,6 +111,7 @@ var memberName = document.getElementById("memberName").value;
       });
 }
 
+// calculated the right "so many days ago" to put above the chat message
 function testData(date){
 var givenDate = new Date(Date.parse(date));
 var day = givenDate.getDay();
@@ -146,6 +132,7 @@ return (today - day) + " dagen geleden"
 }
 
 
+// function compares the list size every so often with ajax. If the list in database is bigger it will get the new messages
 function checkNewMessages(){
 
 var allMessages = document.getElementsByClassName("list-group-item");
@@ -160,8 +147,9 @@ $.ajax({
                      for (i in newMessageList ) {
                      appendNewMessage(newMessageList[i]);
                      }
+                     $('#overViewMessages').animate({scrollTop: $('#overViewMessages').prop("scrollHeight")}, 500);
                  }
-                 $('#overViewMessages').animate({scrollTop: $('#overViewMessages').prop("scrollHeight")}, 500);
+
              },
              error : function(e) {
              console.log("ERROR: ", e);
@@ -172,7 +160,7 @@ $.ajax({
 
 function appendNewMessage(message){
 if (message.member.name === "memberName"){
-      $('#overViewMessages').append('<a class="list-group-item list-group-item-action" ><div class="d-flex w-100 justify-content-between"><h5 class="mb-1">' + message.member.name + '</h5><small class="text-muted">' + testData(message.datePosted) + '</small></div><p class="mb-1">'
+      $('#overViewMessages').append('<a class="list-group-item list-group-item-action active" ><div class="d-flex w-100 justify-content-between"><h5 class="mb-1">' + message.member.name + '</h5><small class="text-muted">' + testData(message.datePosted) + '</small></div><p class="mb-1">'
       + message.message + '</p><small class="text-muted">hier komt een hartje?</small></a>');
        } else {
       $('#overViewMessages').append('<a class="list-group-item list-group-item-action"><div class="d-flex w-100 justify-content-between"><h5 class="mb-1">' + message.member.name + '</h5><small class="text-muted">' + testData(message.datePosted) + '</small></div><p class="mb-1">'

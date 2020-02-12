@@ -41,10 +41,14 @@ public class ChatController {
     @Autowired
     MessageRepository messageRepository;
 
-    @GetMapping("/chat")
-    protected String showEventForm(Model model) {
+    @GetMapping("/chat/{teamId}")
+    protected String showEventForm(@PathVariable ("teamId") Integer teamId, Model model) {
+        Team team = teamRepository.getOne(teamId);
+        httpSession.setAttribute("team", team);
+
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Set<TeamMembership> teamMembershipList = memberRepository.findByMemberName(member.getMemberName()).get().getTeamMemberships();
+
         ArrayList<Team> teamList = new ArrayList<>();
         for (TeamMembership tms: teamMembershipList) {
             teamList.add(tms.getTeam());
@@ -54,6 +58,7 @@ public class ChatController {
                 .sorted(Comparator.comparing(Team::getTeamName))
                 .collect(Collectors.toList());
 
+        model.addAttribute("member", member);
         model.addAttribute("teamList", sortedList);
         return "chatWebPage";
     }
@@ -71,7 +76,9 @@ public class ChatController {
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         message.setMember(member);
 
-        message.setChat(teamRepository.findById(1).get().getChat());
+        Integer teamId = ((Team) httpSession.getAttribute("team")).getTeamId();
+
+        message.setChat(teamRepository.findById(teamId).get().getChat());
         messageRepository.save(message);
 
         ServiceResponse<Message> response = new ServiceResponse<Message>("success", message);
@@ -80,9 +87,9 @@ public class ChatController {
 
     @GetMapping("/chat/getAll")
     public ResponseEntity<Object> getAllMessages() {
+        Integer teamId = ((Team) httpSession.getAttribute("team")).getTeamId();
 
-
-        Team team = teamRepository.getOne(1);
+        Team team = teamRepository.getOne(teamId);
         Chat chat = team.getChat();
 
         ServiceResponse<Chat> response = new ServiceResponse<>("succes", chat);
@@ -91,10 +98,8 @@ public class ChatController {
 
     @GetMapping("/chat/checkNewMessages/{sizeList}")
     public ResponseEntity<Object> checkNewMessages(@PathVariable("sizeList") Integer sizeList){
-        Chat chat = teamRepository.getOne(1).getChat();
-
-        System.out.println(sizeList);
-        System.out.println(chat.getMessages().size());
+        Integer teamId = ((Team) httpSession.getAttribute("team")).getTeamId();
+        Chat chat = teamRepository.getOne(teamId).getChat();
 
         if (chat.getMessages().size() == sizeList){
             return new ResponseEntity<>("nothingNew", HttpStatus.OK);

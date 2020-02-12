@@ -46,11 +46,15 @@
                             <tr>
                                 <a class="dropdown-item" href='${pageContext.request.contextPath}/grocerylist/${team.teamId}'><i class="fa fa-shopping-basket"></i>&emsp;Boodschappenlijst</a>
                             </tr>
+                            <tr>
+                                <a class="dropdown-item" href='${pageContext.request.contextPath}/chat/${team.teamId}'><i class="fas fa-comments"></i>&emsp;Chat</a>
+                            </tr>
                         </div>
                     </div>
                 </c:forEach>
             </div>
         </div>
+
         <jsp:include page="chat.jsp" />
     </div>
 </div>
