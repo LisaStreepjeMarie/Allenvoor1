@@ -194,15 +194,4 @@ public class CalendarController {
                 .forEach(x -> ((MedicationActivity) x.getActivity()).getMedication().upTheMedicationAmount
                         (((MedicationActivity) x.getActivity()).getTakenMedication()));
     }
-
-    @PostMapping("/calendar/subscribe/event")
-    public ResponseEntity<Object> subscribeToEvent(@RequestBody String subscribeEvent) throws JsonProcessingException {
-        Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        EventSubscription eventSubscription = mapper.readValue(subscribeEvent, EventSubscription.class);
-        eventSubscription.setMember(member);
-
-        ServiceResponse<EventSubscription> response =
-                new ServiceResponse<EventSubscription>("success", eventSubscriptionRepository.save(eventSubscription));
-        return new ResponseEntity<Object>(response, HttpStatus.OK);
-    }
 }

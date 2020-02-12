@@ -1,12 +1,15 @@
 package com.wemakeitwork.allenvooreen.controller;
 
-import com.wemakeitwork.allenvooreen.model.Event;
-import com.wemakeitwork.allenvooreen.model.EventSubscription;
-import com.wemakeitwork.allenvooreen.model.MedicationActivity;
-import com.wemakeitwork.allenvooreen.model.Team;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wemakeitwork.allenvooreen.model.*;
 import com.wemakeitwork.allenvooreen.repository.*;
+import com.wemakeitwork.allenvooreen.service.ServiceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +23,8 @@ import java.util.Set;
 
 @Controller
 public class EventController {
+    ObjectMapper mapper = new ObjectMapper();
+
     @Autowired
     MedicationRepository medicationRepository;
 
@@ -89,16 +94,33 @@ public class EventController {
     }
 
     @GetMapping("/event/{eventid}/subscriptionlist")
-    protected String showSubscriptionList(@PathVariable("eventid") final Integer eventId, Model model) {
-        Set<EventSubscription> eventSubscriptionSet = eventSubscriptionRepository.findByEventEventId(eventId);
-        model.addAttribute("eventSubscriptionSet", eventSubscriptionSet);
+    protected String showSubscriptionListPage(@PathVariable("eventid") final Integer eventId, Model model) {
         model.addAttribute("eventId", eventId);
         return "subscriptionList";
     }
 
+    @GetMapping("/event/{eventid}/getsubscriptionlist")
+    public ResponseEntity<Object> fillSubscriptionList(@PathVariable("eventid") final Integer eventId){
+        Set<EventSubscription> eventSubscriptionList = eventSubscriptionRepository.findByEventEventId(eventId);
+
+        ServiceResponse<Set<EventSubscription>> response = new ServiceResponse<>("succes", eventSubscriptionList);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PostMapping("/event/subscribe")
+    public ResponseEntity<Object> subscribeToEvent(@RequestBody String subscribeEvent) throws JsonProcessingException {
+        Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        EventSubscription eventSubscription = mapper.readValue(subscribeEvent, EventSubscription.class);
+        eventSubscription.setMember(member);
+
+        eventSubscriptionRepository.save(eventSubscription);
+        ServiceResponse<EventSubscription> response = new ServiceResponse<EventSubscription>("success", eventSubscription);
+        return new ResponseEntity<Object>(response, HttpStatus.OK);
+    }
+
     @GetMapping("/event/{eventid}/deletesubscription/{subscriptionid}")
-    protected String deleteSubscription(@PathVariable("subscriptionid") final Integer subscriptionId) {
+    protected ResponseEntity<Object> deleteSubscription(@PathVariable("subscriptionid") final Integer subscriptionId) {
         eventSubscriptionRepository.deleteById(subscriptionId);
-        return "subscriptionList";
+        return new ResponseEntity<Object>("success!", HttpStatus.OK);
     }
 }

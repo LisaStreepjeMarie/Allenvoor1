@@ -110,7 +110,7 @@ function deleteEvent(eventId, targetUrl) {
     dropResizeOrDeleteEvent(event, targetUrl)
 }
 
-// this function gives an event to the right end point for either changing the dates or deleting an event (through the targetUrl)
+// this function gives an event to the correct endpoint for either changing the dates or deleting an event (through the targetUrl)
 function dropResizeOrDeleteEvent(event, targetUrl) {
     eventToChange = {
         type: "Event",
@@ -136,7 +136,25 @@ function dropResizeOrDeleteEvent(event, targetUrl) {
     });
 }
 
-function subscribeEvent(eventId) {
+function getEventSubscriptions(eventId){
+    $.ajax({
+         type:'GET',
+         url: ctx + "/event/" + eventId + "/getsubscriptionlist",
+         success : function(result) {
+                subscriptionList = result.data;
+                 for (i in subscriptionList){
+                    $('#subscriptionList').append('<li class="list-group-item" value="' + subscriptionList[i].member.id + '">' +
+                    subscriptionList[i].member.name + '<input class="btn btn-primary float-right" style="width: auto;padding:5px;margin-left:5px;" type="submit" value="Schrijf uit" onClick="removeEventSubscription(' + subscriptionList[i].event.id + ', ' + subscriptionList[i].id + ')">')
+                    $('#subscriptionList').append('</li>');
+                 }
+             },
+             error : function(e) {
+             console.log("ERROR: ", e);
+         }
+    });
+}
+
+function addEventSubscription(eventId){
     subscribeEvent = {
         type: "EventSubscription",
         event: {
@@ -145,19 +163,33 @@ function subscribeEvent(eventId) {
         },
     }
 
+      $.ajax({
+        url: ctx + "/event/subscribe",
+        method: "POST",
+        contentType: "application/json; charset=UTF-8",
+        data: JSON.stringify(subscribeEvent),
+        dataType: 'json',
+        async: true,
+        success: function(result) {
+            $('#subscriptionList').append('<li class="list-group-item" value="' + result.data.member.id + '">' + result.data.member.name + '<input class="btn btn-primary float-right" style="width: auto;padding:5px;margin-left:5px;" type="submit" value="Schrijf uit" onClick="removeEventSubscription(' + result.data.event.id + ', ' + result.data.id + ')">')
+            $('#subscriptionList').append('</li>');
+        },
+        error: function(e) {
+            alert("addEventSubscription() error")
+            console.log("ERROR: ",  e);
+        }
+    });
+}
+
+// Removes members' event subscription
+function removeEventSubscription(eventId, eventSubscriptionId){
     $.ajax({
-            url: ctx + '/calendar/subscribe/event',
-            method: "POST",
-            contentType: "application/json; charset=UTF-8",
-            data: JSON.stringify(subscribeEvent),
-            dataType: 'json',
-            async: true,
-            success: function(result) {
-                    console.log("Succesvol ingeschreven bij afspraak");
-            },
-            error: function(e) {
-                alert("subscribeEvent() error")
-                console.log("ERROR: ",  e);
-            }
-        });
+         type:'GET',
+         url: ctx + "/event/" + eventId + "/deletesubscription/" + eventSubscriptionId,
+         success : function(result) {
+             },
+             error : function(e) {
+             console.log("ERROR: ", e);
+         }
+    });
 }

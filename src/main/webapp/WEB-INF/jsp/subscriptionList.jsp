@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<html xmlns:mytags="" xmlns:c="">
+<html xmlns:mytags="">
 <head>
     <title>Kalender</title>
     <meta charset='utf-8' />
@@ -26,20 +26,22 @@
 <mytags:navbar/>
 <div class= "masthead">
     <div class="w-25 p-3">
-        <ul class="list-group">
-            <li  class="list-group-item list-group-item-dark">Ingeschreven gebruikers:</li>
-            <c:forEach items="${eventSubscriptionSet}" var="subscription">
-                <td>
-                    <li class="list-group-item list-group-item-action">${subscription.member.memberName}
-                        <input class="btn btn-primary float-right" style="width: auto;padding:5px;margin-left:5px;" type="submit" value="Schrijf uit"
-                               onclick="window.location='${pageContext.request.contextPath}/event/${eventId}/deletesubscription/${subscription.subscriptionId}'" />
-                    </li>
-                </td>
-            </c:forEach>
+
+        <ul class="list-group" >
+            <li class="list-group-item list-group-item-dark">Ingeschreven gebruikers:</li>
+            <div id="subscriptionList">
+                <!-- this list is filled by getEventSubscriptions() in the events.js -->
+            </div>
         </ul>
-        <input class="btn btn-primary" type="submit" value="Schrijf je in" onclick="subscribeEvent(${eventId})">
+        <input class="btn btn-primary" type="submit" value="Schrijf je in" onclick="addEventSubscription(${eventId})">
     </div>
 </div>
 
 </body>
+<script>
+
+    $(document).ready(function(){
+        getEventSubscriptions(${eventId});
+    })
+    </script>
 </html>
