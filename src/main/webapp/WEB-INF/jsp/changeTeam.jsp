@@ -6,7 +6,7 @@
 <head>
     <title>Wijzig de gegevens van een groep</title>
         <!-- Add icon library -->
-         <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
+        <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
         <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
 
         <%@ taglib prefix="mytags" tagdir="/WEB-INF/tags" %>
@@ -25,7 +25,7 @@
                         <ul class="list-group">
                          <c:forEach items="${teamMemberList}" var="membership">
                              <tr>
-                                 <td><li class="list-group-item"><c:out value="${membership.member.memberName}" />
+                                 <td><li class="list-group-item list-group-item-action">${membership.member.memberName}
                                      <input class="btn btn-primary float-right" style="width: auto;padding:5px;margin-left:5px;" type="submit" value="Verwijder"
                                                     onclick="window.location='${pageContext.request.contextPath}/team/${membership.team.teamId}/delete/membership/${membership.membershipId}'" /></td>
                                  &emsp;
@@ -35,8 +35,7 @@
                                  </li>
                         </c:forEach>
                         <c:forEach items="${teamAdminList}" var="membership">
-                            <li class="list-group-item"><c:out value="${membership.member.memberName}" />
-                            </li>
+                            <li class="list-group-item list-group-item-action">${membership.member.memberName}</li>
                         </c:forEach>
                         </ul>
 

@@ -15,6 +15,9 @@
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
     <script src="${pageContext.request.contextPath}/webjars/jquery/3.4.1/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link id="contextPathHolder" data-contextPath="${pageContext.request.contextPath}"/>
+    <link id="csrfToken" data-csrfToken="${_csrf.token}"/>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/events.js"></script>
 
     <%@ taglib prefix="mytags" tagdir="/WEB-INF/tags" %>
 </head>
@@ -26,8 +29,10 @@
             <li  class="list-group-item list-group-item-dark">Ingeschreven gebruikers:</li>
             <c:forEach items="${eventSubscriptionSet}" var="subscription">
                 <td><li class="list-group-item list-group-item-action">${subscription.member.memberName}</li></td>
+                <c:set var="eventId" value="${subscription.event.eventId}"/>
             </c:forEach>
         </ul>
+        <input class="btn btn-primary" type="submit" value="Schrijf je in" onclick="subscribeEvent(${eventId})">
     </div>
 </div>
 

@@ -18,7 +18,7 @@
         <table>
             <c:forEach items="${allEvents}" var="event">
                 <tr>
-                    <td><a href="${pageContext.request.contextPath}/event/select/<c:out value="${event.eventId}" />"><c:out value="${event.eventName}" /></a></td>
+                    <td><a href="${pageContext.request.contextPath}/event/select/${event.eventId}">${event.eventName}</a></td>
                     <td><input class="btn btn-primary" type="submit" value="Verwijder afspraak" onclick="window.location='${pageContext.request.contextPath}/event/delete/${event.eventId}';" /></td>
                 </tr>
             </c:forEach>

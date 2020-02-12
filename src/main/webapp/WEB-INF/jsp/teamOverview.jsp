@@ -34,16 +34,15 @@
                 <div class="w-50 p-3" id="accordion">
                     <c:forEach items="${adminTeamList}" var="team">
                         <div class="card">
-                            <div class="card-header"  aria-expanded="false" data-toggle="collapse" data-target="#collapse<c:out value="${team.teamId}" />">
-                                <c:out value="${team.teamName}" />
-                                &emsp;&emsp;<span class="badge badge-secondary">Groepsbeheerder</span>
+                            <div class="card-header"  aria-expanded="false" data-toggle="collapse" data-target="#collapse${team.teamId}">
+                                ${team.teamName} &emsp;&emsp;<span class="badge badge-secondary">Groepsbeheerder</span>
                             </div>
-                            <div id="collapse<c:out value="${team.teamId}" />" class="collapse" data-parent="#accordion">
+                            <div id="collapse${team.teamId}" class="collapse" data-parent="#accordion">
                             <div class="card-body">
                                 <label>Teamleden:</label>
                                 <ul class="list-group">
                                     <c:forEach items="${team.teamMemberships}" var="membership">
-                                        <li class="list-group-item list-group-item-action"><c:out value="${membership.member.memberName}" />
+                                        <li class="list-group-item list-group-item-action">${membership.member.memberName}
                                             <c:if test="${membership.admin}">
                                                 &emsp;<i class="far fa-star"></i>
                                             </c:if>
@@ -52,7 +51,7 @@
 
                                 <br><label>Acties:</label><br>
                                 <td><input class="btn btn-primary" type="submit" value="Schrijf jezelf uit" onclick="window.location='${pageContext.request.contextPath}/team/quit/${team.teamId}'" /></td>
-                                <td><input class="btn btn-primary" type="submit" value="Groepsdetails" onclick="window.location='${pageContext.request.contextPath}/team/select/<c:out value="${team.teamId}" />'" /></td>
+                                <td><input class="btn btn-primary" type="submit" value="Groepsdetails" onclick="window.location='${pageContext.request.contextPath}/team/select/${team.teamId}'" /></td>
                                 <td><input class="btn btn-primary" type="submit" value="Stop beheerderschap" onclick="window.location='${pageContext.request.contextPath}/team/quitadmin/${team.teamId}'" /></td>
                                 <td><input class="btn btn-primary" type="submit" value="Verwijder groep" onclick="window.location='${pageContext.request.contextPath}/team/delete/${team.teamId}'" /></td>
                             </div>
@@ -62,15 +61,15 @@
                 <div id="accordion">
                     <c:forEach items="${memberTeamList}" var="team">
                         <div class="card">
-                            <div class="card-header" data-toggle="collapse" data-target="#collapse<c:out value="${team.teamId}" />">
-                                <c:out value="${team.teamName}" />
+                            <div class="card-header" data-toggle="collapse" data-target="#collapse${team.teamId}">
+                                ${team.teamName}
                             </div>
-                            <div id="collapse<c:out value="${team.teamId}" />" class="collapse" data-parent="#accordion">
+                            <div id="collapse${team.teamId}" class="collapse" data-parent="#accordion">
                             <div class="card-body">
                                 <label>Teamleden:</label>
                                 <ul class="list-group">
                                     <c:forEach items="${team.teamMemberships}" var="membership">
-                                        <li class="list-group-item list-group-item-action"><c:out value="${membership.member.memberName}" />
+                                        <li class="list-group-item list-group-item-action">${membership.member.memberName}
                                             <c:if test="${membership.admin}">
                                                 &emsp;<i class="far fa-star"></i>
                                             </c:if>

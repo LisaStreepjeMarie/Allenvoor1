@@ -17,7 +17,7 @@
             <table>
                 <c:forEach items="${allActivities}" var="activity">
                     <tr>
-                        <td><a href="${pageContext.request.contextPath}/activity/select/<c:out value="${activity.activityId}" />"><c:out value="${activity.activityName}" /></a></td>
+                        <td><a href="${pageContext.request.contextPath}/activity/select/${activity.activityId}">${activity.activityName}</a></td>
                         <td><input class="btn btn-primary" type="submit" value="Verwijder activity" onclick="window.location='${pageContext.request.contextPath}/activity/delete/${activity.activityId}';" /></td>
                     </tr>
                 </c:forEach>
