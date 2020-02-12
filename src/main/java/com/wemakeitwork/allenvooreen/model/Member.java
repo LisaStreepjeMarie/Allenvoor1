@@ -101,7 +101,7 @@ public class Member implements UserDetails {
     Set<TeamMembership> teamMemberships;
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER, mappedBy = "member")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "member")
     @OnDelete(action = OnDeleteAction.CASCADE)
     Set<EventSubscription> eventSubscriptions;
 

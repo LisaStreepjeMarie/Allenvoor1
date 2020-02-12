@@ -71,7 +71,7 @@ public class Event {
     private Team team;
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER, mappedBy = "event")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "event")
     @OnDelete(action = OnDeleteAction.CASCADE)
     Set<EventSubscription> eventSubscriptions;
 
