@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class MemberSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -55,10 +56,10 @@ public class MemberSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/member/new/**", "/images/**", "/css/**",
                         "/webjars/bootstrap/**", "/webjars/jquery/**", "/confirmRegistration/**", "/forgotPassword/**","/member/resetPassword/**","/member/changePassword/**",
-                                "/member/updatePassword/**", "/emailError/**", "/member/savePassword/**","/resources/**", "/updatePassword/**", "/login?message=/**")
+                        "/emailError/**")
                 .permitAll()
                 .antMatchers("/member/updatePassword/**","/member/savePassword/**","/updatePassword/**").hasAuthority("CHANGE_PASSWORD_PRIVILEGE")
-                .anyRequest().authenticated()
+                .anyRequest().hasAuthority("READ_PRIVILEGE")
                 .and()
                 .formLogin()
                 .loginPage("/login")

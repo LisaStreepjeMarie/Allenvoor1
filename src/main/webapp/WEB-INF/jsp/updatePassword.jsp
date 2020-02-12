@@ -21,10 +21,8 @@
           text="{message.updatePassword}">submit</button>
     </form>
 
-<script th:inline="javascript">
-var serverContext = [[@{/}]];
+<script>
 $(document).ready(function () {
-    $('form').submit(function(event) {
         savePass(event);
     });
 
@@ -44,8 +42,8 @@ function savePass(event){
         return;
     }
     var formData= $('form').serialize();
-    $.post( "allenvooreen/member/savePassword",formData ,function(data){
-        window.location.href = "allenvooreen/login?message="+data.message;
+    $.post("allenvooreen/member/savePassword",formData ,function(data){
+        window.location.href = "allenvooreen/login?message=" + data.message;
     })
     .fail(function(data) {
         if(data.responseJSON.error.indexOf("InternalError") > -1){
