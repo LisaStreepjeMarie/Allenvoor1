@@ -32,7 +32,7 @@
     <br>
     <br>
 </div>
-    <input type="hidden" name="memberName" value="${member.memberName}" id="memberName"/>
+    <input type="hidden" name="memberName" value="${member.memberName}" id="givenMemberName"/>
     <form id="formNewMessage">
         <div class="form-group">
             <label for="messageBody">Typ hier je bericht!</label>
@@ -77,8 +77,6 @@ function newMessageForAjax(){
       dataType: 'json',
       success: function(result) {
       $('#formNewMessage').trigger("reset");
-      $('#overViewMessages').append('<a class="list-group-item list-group-item-action"><div class="d-flex w-100 justify-content-between"><h5 class="mb-1">' + result.data.member.name + '</h5><small class="text-muted">' + testData(result.data.datePosted) + '</small></div><p class="mb-1">'
-          + allMessages[i].message + '</p><small class="text-muted">hier komt een hartje?</small></a>');
           $('#overViewMessages').animate({scrollTop: $('#overViewMessages').prop("scrollHeight")}, 500);
       },
       error: function(e) {
@@ -91,7 +89,7 @@ function newMessageForAjax(){
 // getting all messages with an ajax call
 function getAllMessages(){
 
-var memberName = document.getElementById("memberName").value;
+
 
    $.ajax({
       url: "${pageContext.request.contextPath}/chat/getAll",
@@ -159,13 +157,15 @@ $.ajax({
 }
 
 function appendNewMessage(message){
-if (message.member.name === "memberName"){
-      $('#overViewMessages').append('<a class="list-group-item list-group-item-action active" ><div class="d-flex w-100 justify-content-between"><h5 class="mb-1">' + message.member.name + '</h5><small class="text-muted">' + testData(message.datePosted) + '</small></div><p class="mb-1">'
+var memberName = document.getElementById("givenMemberName").value;
+
+if (message.member.name === memberName){
+      $('#overViewMessages').append('<a class="list-group-item " ><div class="d-flex w-100 justify-content-end"><h5 class="mb-1 float-right">' + message.member.name + '</h5><small class="text-muted float-left">' + testData(message.datePosted) + '</small></div><p class="mb-1">'
       + message.message + '</p><small class="text-muted">hier komt een hartje?</small></a>');
-       } else {
-      $('#overViewMessages').append('<a class="list-group-item list-group-item-action"><div class="d-flex w-100 justify-content-between"><h5 class="mb-1">' + message.member.name + '</h5><small class="text-muted">' + testData(message.datePosted) + '</small></div><p class="mb-1">'
-      + message.message + '</p><small class="text-muted">hier komt een hartje?</small></a>');
-       }
+    } else {
+    $('#overViewMessages').append('<a class="list-group-item list-group-item-action"><div class="d-flex w-100 justify-content-between"><h5 class="mb-1">' + message.member.name + '</h5><small class="text-muted">' + testData(message.datePosted) + '</small></div><p class="mb-1">'
+    + message.message + '</p><small class="text-muted">hier komt een hartje?</small></a>');
+    }
 }
 
 </script>
