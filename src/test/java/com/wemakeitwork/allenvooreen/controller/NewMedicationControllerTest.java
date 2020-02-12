@@ -99,8 +99,8 @@ public class NewMedicationControllerTest {
                 .andExpect(redirectedUrl("/medication/\" + team.getTeamId()"));
 
         ArgumentCaptor<Medication> formObjectArgument = formObjectArgument.forClass(Medication.class);
-        /* verify(medicationRepository, times(1)).save(formObjectArgument.capture());
-        Mockito.verifyNoMoreInteractions(medicationRepository); */
+        verify(medicationRepository, times(1)).save(formObjectArgument.capture());
+        Mockito.verifyNoMoreInteractions(medicationRepository);
 
         Medication formObject = formObjectArgument.getValue();
 
