@@ -90,15 +90,25 @@ public class ChatController {
     }
 
     @GetMapping("/chat/checkNewMessages/{sizeList}")
-    public ResponseEntity<Object> checkNewMessages(@PathVariable("sizeList") final Integer sizeList){
+    public ResponseEntity<Object> checkNewMessages(@PathVariable("sizeList") Integer sizeList){
         Chat chat = teamRepository.getOne(1).getChat();
+
         if (chat.getMessages().size() == sizeList){
             return new ResponseEntity<>("nothingNew", HttpStatus.OK);
-        }else {
+        } else {
             List<Message> newMessages = new ArrayList<>();
-            Integer amountNewMessages = chat.getMessages().size() - sizeList;
-            for (int i = 0; i < amountNewMessages; )
+
+            int amountNewMessages = chat.getMessages().size() - sizeList;
+
+            for (int i = 0; i < amountNewMessages; i++){
+                newMessages.add(chat.getMessages().get(sizeList));
+                sizeList++;
+            }
+
+            ServiceResponse<List<Message>> response = new ServiceResponse<>("newMessages", newMessages);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }
+
     }
 
 }
