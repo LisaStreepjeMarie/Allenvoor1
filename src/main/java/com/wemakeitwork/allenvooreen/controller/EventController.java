@@ -95,4 +95,10 @@ public class EventController {
         model.addAttribute("eventId", eventId);
         return "subscriptionList";
     }
+
+    @GetMapping("/event/{eventid}/deletesubscription/{subscriptionid}")
+    protected String deleteSubscription(@PathVariable("subscriptionid") final Integer subscriptionId) {
+        eventSubscriptionRepository.deleteById(subscriptionId);
+        return "subscriptionList";
+    }
 }
