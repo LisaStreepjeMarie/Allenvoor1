@@ -9,12 +9,12 @@
     <meta charset='utf-8' />
     <title>Chat!</title>
 
+    <script src="${pageContext.request.contextPath}/webjars/moment/2.24.0/min/moment.min.js"></script>
     <script src="${pageContext.request.contextPath}/webjars/jquery/3.4.1/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
 
     <link id="contextPathHolder" data-contextPath="${pageContext.request.contextPath}"/>
-
 
     <link id="teamId" data-teamId="${team.teamId}"/>
     <link id="csrfToken" data-csrfToken="${_csrf.token}"/>
@@ -58,6 +58,8 @@
 </form>
 </body>
 <script>
+
+
 getAllMessages();
 
 $(document).ready(function() {
@@ -82,10 +84,7 @@ function newMessageForAjax(){
       data: JSON.stringify(newMessage),
       dataType: 'json',
       success: function(result) {
-          $('#overViewMessages').append('<a class="list-group-item list-group-item-action"><div class="d-flex w-100 justify-content-between"><h5 class="mb-1">' + result.data.member.name + '</h5><small class="text-muted">3 days ago</small></div><p class="mb-1">'
-          + result.data.message + '</p><small class="text-muted">Donec id elit non mi porta.</small></a>');
-          $('#formNewMessage').trigger("reset");
-          },
+      },
       error: function(e) {
           alert("ERRRROOOOORRRR")
           console.log("ERROR: ",  e);
@@ -101,7 +100,7 @@ function getAllMessages(){
       success: function(result) {
       allMessages = result.data.messages;
         for (i in allMessages ) {
-          $('#overViewMessages').append('<a class="list-group-item list-group-item-action"><div class="d-flex w-100 justify-content-between"><h5 class="mb-1">' + allMessages[i].member.name + '</h5><small class="text-muted">3 days ago</small></div><p class="mb-1">'
+          $('#overViewMessages').append('<a class="list-group-item list-group-item-action"><div class="d-flex w-100 justify-content-between"><h5 class="mb-1">' + allMessages[i].member.name + '</h5><small class="text-muted">' + testData(allMessages[i].datePosted) + '</small></div><p class="mb-1">'
           + allMessages[i].message + '</p><small class="text-muted">hier komt een hartje?</small></a>');
           $('#formNewMessage').trigger("reset");
           testData(allMessages[i].datePosted);
@@ -115,16 +114,22 @@ function getAllMessages(){
 }
 
 function testData(date){
+console.log(moment().toDate());
+var givenDate = new Date(Date.parse(date));
+var day = givenDate.getDay();
 
-var aDate = new Date(Date.parse(date));
-var hours = aDate.getHours();
-var month = aDate.getMinutes();
-var seconds = aDate.getSeconds();
-var day = aDate.getDay();
+timestamp = moment().toDate();
+today = timestamp.getDay();
 
 
-console.log(aDate);
 
+if (day === today){
+return "vandaag ";
+
+} else {
+return (today - day) + " dag geleden"
+
+}
 }
 
 </script>
