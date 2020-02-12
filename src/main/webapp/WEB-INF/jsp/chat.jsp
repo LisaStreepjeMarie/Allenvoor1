@@ -28,27 +28,24 @@
 
 }
 
+.wholeChat{
+   width: 600px;
+}
+
 </style>
 </head>
 <body>
-<div id="wholeChat">
+<div class="wholeChat">
 <div id="overViewMessages" class="list-group messagesOverView">
-    <a href="#" class="list-group-item list-group-item-action active">
-        <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">List group item heading</h5>
-            <small>3 days ago</small>
-        </div>
-        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-        <small>Donec id elit non mi porta.</small>
-    </a>
-    <a href="#" class="list-group-item list-group-item-action">
-        <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">List group item heading</h5>
-            <small class="text-muted">3 days ago</small>
-        </div>
-        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-        <small class="text-muted">Donec id elit non mi porta.</small>
-    </a>
+
+<!--    <a href="#" class="list-group-item list-group-item-action">-->
+<!--        <div class="d-flex w-100 justify-content-between">-->
+<!--            <h5 class="mb-1">List group item heading</h5>-->
+<!--            <small class="text-muted">3 days ago</small>-->
+<!--        </div>-->
+<!--        <p class="mb-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>-->
+<!--        <small class="text-muted">Donec id elit non mi porta.</small>-->
+<!--    </a>-->
     <br>
 </div>
     <input type="hidden" name="memberName" value="${member.memberName}" id="memberName"/>
@@ -65,8 +62,12 @@
 </body>
 <script>
 
-
 $(document).ready(function() {
+
+ setInterval(checkNewMessages,1000);
+
+// setting the context url
+var ctx = $('#contextPathHolder').attr('data-contextPath');
 
 getAllMessages();
 
@@ -113,13 +114,7 @@ var memberName = document.getElementById("memberName").value;
       success: function(result) {
       allMessages = result.data.messages;
         for (i in allMessages ) {
-           if (allMessages[i].member.name === "memberName"){
-          $('#overViewMessages').append('<a class="list-group-item list-group-item-action" ><div class="d-flex w-100 justify-content-between"><h5 class="mb-1">' + allMessages[i].member.name + '</h5><small class="text-muted">' + testData(allMessages[i].datePosted) + '</small></div><p class="mb-1">'
-          + allMessages[i].message + '</p><small class="text-muted">hier komt een hartje?</small></a>');
-           } else {
-          $('#overViewMessages').append('<a class="list-group-item list-group-item-action"><div class="d-flex w-100 justify-content-between"><h5 class="mb-1">' + allMessages[i].member.name + '</h5><small class="text-muted">' + testData(allMessages[i].datePosted) + '</small></div><p class="mb-1">'
-          + allMessages[i].message + '</p><small class="text-muted">hier komt een hartje?</small></a>');
-           }
+          appendNewMessage(allMessages[i]);
           $('#formNewMessage').trigger("reset");
           }
           $('#overViewMessages').animate({scrollTop: $('#overViewMessages').prop("scrollHeight")}, 500);
@@ -154,7 +149,35 @@ return (today - day) + " dagen geleden"
 function checkNewMessages(){
 
 var allMessages = document.getElementsByClassName("list-group-item");
+console.log(allMessages.length);
 
+$.ajax({
+         type:'GET',
+         url: "${pageContext.request.contextPath}/chat/checkNewMessages/" + allMessages.length,
+         success : function(result) {
+                if (result.status == "newMessages") {
+                newMessageList = result.data;
+                     for (i in newMessageList ) {
+                     appendNewMessage(newMessageList[i]);
+                     }
+                 }
+                 $('#overViewMessages').animate({scrollTop: $('#overViewMessages').prop("scrollHeight")}, 500);
+             },
+             error : function(e) {
+             console.log("ERROR: ", e);
+         }
+    });
+
+}
+
+function appendNewMessage(message){
+if (message.member.name === "memberName"){
+      $('#overViewMessages').append('<a class="list-group-item list-group-item-action" ><div class="d-flex w-100 justify-content-between"><h5 class="mb-1">' + message.member.name + '</h5><small class="text-muted">' + testData(message.datePosted) + '</small></div><p class="mb-1">'
+      + message.message + '</p><small class="text-muted">hier komt een hartje?</small></a>');
+       } else {
+      $('#overViewMessages').append('<a class="list-group-item list-group-item-action"><div class="d-flex w-100 justify-content-between"><h5 class="mb-1">' + message.member.name + '</h5><small class="text-muted">' + testData(message.datePosted) + '</small></div><p class="mb-1">'
+      + message.message + '</p><small class="text-muted">hier komt een hartje?</small></a>');
+       }
 }
 
 </script>

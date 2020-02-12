@@ -93,6 +93,9 @@ public class ChatController {
     public ResponseEntity<Object> checkNewMessages(@PathVariable("sizeList") Integer sizeList){
         Chat chat = teamRepository.getOne(1).getChat();
 
+        System.out.println(sizeList);
+        System.out.println(chat.getMessages().size());
+
         if (chat.getMessages().size() == sizeList){
             return new ResponseEntity<>("nothingNew", HttpStatus.OK);
         } else {
