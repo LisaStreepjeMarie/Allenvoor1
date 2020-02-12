@@ -9,26 +9,30 @@
     <meta charset='utf-8' />
     <title>Chat!</title>
 
-    <script src="${pageContext.request.contextPath}/webjars/moment/2.24.0/min/moment.min.js"></script>
-    <script src="${pageContext.request.contextPath}/webjars/jquery/3.4.1/jquery.min.js"></script>
-    <script src="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
+<!--    <script src="${pageContext.request.contextPath}/webjars/moment/2.24.0/min/moment.min.js"></script>-->
+<!--    <script src="${pageContext.request.contextPath}/webjars/jquery/3.4.1/jquery.min.js"></script>-->
+<!--    <script src="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>-->
+<!--    <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>-->
 
-    <link id="contextPathHolder" data-contextPath="${pageContext.request.contextPath}"/>
+<!--    <link id="contextPathHolder" data-contextPath="${pageContext.request.contextPath}"/>-->
 
-    <link id="teamId" data-teamId="${team.teamId}"/>
-    <link id="csrfToken" data-csrfToken="${_csrf.token}"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--    <link id="teamId" data-teamId="${team.teamId}"/>-->
+<!--    <link id="csrfToken" data-csrfToken="${_csrf.token}"/>-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1">-->
 <style>
-    .list-group {
-    width: 500px;
-    }
+.messagesOverView{
+    max-height: 400px;
+    margin-bottom: 10px;
+    overflow:scroll;
+    -webkit-overflow-scrolling: touch;
+
+}
 
 </style>
 </head>
 <body>
-
-<div id="overViewMessages" class="list-group">
+<div id="wholeChat">
+<div id="overViewMessages" class="list-group messagesOverView">
     <a href="#" class="list-group-item list-group-item-action active">
         <div class="d-flex w-100 justify-content-between">
             <h5 class="mb-1">List group item heading</h5>
@@ -46,23 +50,26 @@
         <small class="text-muted">Donec id elit non mi porta.</small>
     </a>
     <br>
-
+</div>
+    <input type="hidden" name="memberName" value="${member.memberName}" id="memberName"/>
+    <form id="formNewMessage">
+        <div class="form-group">
+            <label for="messageBody">Typ hier je bericht!</label>
+            <textarea class="form-control" id="messageBody" rows="3"></textarea>
+        </div>
+        <button type="button" onclick="newMessageForAjax()" class="btn btn-primary float-right">Versturen</button>
+    </form>
 </div>
 
-<form id="formNewMessage">
-    <div class="form-group">
-        <label for="messageBody">Typ hier je bericht!</label>
-        <textarea class="form-control" id="messageBody" rows="3"></textarea>
-    </div>
-    <button type="button" onclick="newMessageForAjax()" class="btn btn-primary float-right">Versturen</button>
-</form>
+
 </body>
 <script>
 
 
+$(document).ready(function() {
+
 getAllMessages();
 
-$(document).ready(function() {
 // creating a CSRF token for postmapping ajax stuff
     $.ajaxSetup({
     beforeSend: function(xhr) {
@@ -84,6 +91,10 @@ function newMessageForAjax(){
       data: JSON.stringify(newMessage),
       dataType: 'json',
       success: function(result) {
+      $('#formNewMessage').trigger("reset");
+      $('#overViewMessages').append('<a class="list-group-item list-group-item-action"><div class="d-flex w-100 justify-content-between"><h5 class="mb-1">' + result.data.member.name + '</h5><small class="text-muted">' + testData(result.data.datePosted) + '</small></div><p class="mb-1">'
+          + allMessages[i].message + '</p><small class="text-muted">hier komt een hartje?</small></a>');
+          $('#overViewMessages').animate({scrollTop: $('#overViewMessages').prop("scrollHeight")}, 500);
       },
       error: function(e) {
           alert("ERRRROOOOORRRR")
@@ -94,17 +105,24 @@ function newMessageForAjax(){
 
 function getAllMessages(){
 
+var memberName = document.getElementById("memberName").value;
+
    $.ajax({
       url: "${pageContext.request.contextPath}/chat/getAll",
       method: "GET",
       success: function(result) {
       allMessages = result.data.messages;
         for (i in allMessages ) {
+           if (allMessages[i].member.name === "memberName"){
+          $('#overViewMessages').append('<a class="list-group-item list-group-item-action" ><div class="d-flex w-100 justify-content-between"><h5 class="mb-1">' + allMessages[i].member.name + '</h5><small class="text-muted">' + testData(allMessages[i].datePosted) + '</small></div><p class="mb-1">'
+          + allMessages[i].message + '</p><small class="text-muted">hier komt een hartje?</small></a>');
+           } else {
           $('#overViewMessages').append('<a class="list-group-item list-group-item-action"><div class="d-flex w-100 justify-content-between"><h5 class="mb-1">' + allMessages[i].member.name + '</h5><small class="text-muted">' + testData(allMessages[i].datePosted) + '</small></div><p class="mb-1">'
           + allMessages[i].message + '</p><small class="text-muted">hier komt een hartje?</small></a>');
+           }
           $('#formNewMessage').trigger("reset");
-          testData(allMessages[i].datePosted);
           }
+          $('#overViewMessages').animate({scrollTop: $('#overViewMessages').prop("scrollHeight")}, 500);
        },
       error: function(e) {
           alert("ERRRROOOOORRRR")
@@ -114,22 +132,29 @@ function getAllMessages(){
 }
 
 function testData(date){
-console.log(moment().toDate());
 var givenDate = new Date(Date.parse(date));
 var day = givenDate.getDay();
 
 timestamp = moment().toDate();
 today = timestamp.getDay();
 
-
-
 if (day === today){
 return "vandaag ";
 
-} else {
+} else if (today - day === 1) {
 return (today - day) + " dag geleden"
 
+} else {
+return (today - day) + " dagen geleden"
 }
+
+}
+
+
+function checkNewMessages(){
+
+var allMessages = document.getElementsByClassName("list-group-item");
+
 }
 
 </script>
