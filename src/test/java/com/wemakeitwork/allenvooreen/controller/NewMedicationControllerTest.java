@@ -91,7 +91,8 @@ public class NewMedicationControllerTest {
         int medicationRefillAmount = 0;
         String medicationComment = "dagelijks";
 
-        Team team = (Team) httpSession.getAttribute("team");
+        Team testTeam = new Team();
+        testTeam.setTeamId(1);
 
         mockMvc.perform(post("/medication/new")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -100,20 +101,12 @@ public class NewMedicationControllerTest {
                 .param("medicationRefillAmount", String.valueOf(medicationRefillAmount))
                 .param("medicationComment", medicationComment)
                 .flashAttr("medication", new Medication())
+                .sessionAttr("team", testTeam)
                 .with(csrf())
         )
                 .andExpect(status().is3xxRedirection())
-                // .andExpect(view().name("redirect:/medication/\" + team.getTeamId()"))
-                // .andExpect(redirectedUrl("/medication/\" + team.getTeamId()"));
-                .andExpect(view().name("redirect:/medication/" + team.getTeamId()))
-                .andExpect(redirectedUrl("/medication/1"));
-
-        //mockMvc.perform(get("/calendar/{teamId}", 1))
-
-        //Team team = (Team) httpSession.getAttribute("team");
-        //medication.setTeam(team);
-
-        //return "redirect:/medication/" + team.getTeamId();
+                .andExpect(view().name("redirect:/medication/" + testTeam.getTeamId()))
+                .andExpect(redirectedUrl("/medication/" + testTeam.getTeamId()));
 
         ArgumentCaptor<Medication> formObjectArgument = forClass(Medication.class);
         verify(medicationRepository, times(1)).save(formObjectArgument.capture());
@@ -125,8 +118,5 @@ public class NewMedicationControllerTest {
         Assertions.assertThat(formObject.getMedicationAmount()).isEqualTo(medicationAmount);
         Assertions.assertThat(formObject.getMedicationRefillAmount()).isEqualTo(medicationRefillAmount);
         Assertions.assertThat(formObject.getMedicationComment()).isEqualTo(medicationComment);
-
     }
-
-
 }
