@@ -40,7 +40,7 @@ function resetPass(){
 
     var email = $("email");
     $.post("allenvooreen/member/resetPassword", {email: email} ,function(data){
-            window.location.href = serverContext + "login?message=" + data.message;
+            window.location.href = "allenvooreen/login?message=" + data.message;
     })
     .fail(function(data) {
     	if(data.responseJSON.error.indexOf("MailError") > -1)

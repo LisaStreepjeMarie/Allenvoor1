@@ -200,14 +200,13 @@ public class MemberController {
         String result = securityServiceInterface.validatePasswordResetToken(id, token);
         System.out.println("test");
         if (result != null) {
-            model.addAttribute("message",
-                    messages.getMessage("auth.message." + result, null, locale));
+            model.addAttribute("message", messages.getMessage("auth.message." + result, null, locale));
             return "redirect:/login";
         }
         return "updatePassword";
     }
 
-    @PostMapping(value= "/member/savePassword")
+    @RequestMapping(value= "/member/savePassword")
     @ResponseBody
     public GenericResponse savePassword(Locale locale, @Valid PasswordDto passwordDto) {
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
