@@ -54,7 +54,7 @@ public class Member implements UserDetails {
 
     public Member(){
         super();
-        this.enabled= false;
+        this.enabled = true;
     }
 
     @JsonIgnore

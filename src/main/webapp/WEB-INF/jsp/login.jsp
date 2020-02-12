@@ -3,7 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 
-<html lang="en" xmlns:c="http://www.w3.org/1999/XSL/Transform" xmlns:fmt="" xmlns:spring="" xmlns:beans="">
+<html lang="en" xmlns:c="http://www.w3.org/1999/XSL/Transform">
     <head>
         <title>Allenvooréén - Login pagina</title>
         <meta charset="utf-8">
@@ -53,7 +53,7 @@
         <form class="form-signin" action="${pageContext.request.contextPath}/member/new">
             <input name="_csrf" type="hidden" value="${_csrf.token}" />
             <button class="btn btn-lg btn-primary btn-block" type="submit">Maak een account</button>
-            <p class="mt-5 mb-3 text-muted">&copy; 2019 Allenvooreen</p>
+            <p class="mt-5 mb-3 text-muted">&copy; 2020 Allenvooreen</p>
         </form>
       </div>
     </body>

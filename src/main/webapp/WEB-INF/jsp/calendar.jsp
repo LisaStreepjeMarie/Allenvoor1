@@ -171,7 +171,7 @@
                     <button type="button" id="delete-event" class="btn btn-danger" data-dismiss="modal">Verwijder Afspraak</button>
                     <button type="button" class="btn btn-light" data-dismiss="modal">Sluiten</button>
                     <button type="submit" class="btn btn-primary" id="save-change-event" data-dismiss="modal">Maak afspraak</button>
-                    <button type="button" class="btn btn-primary" id="subscribe-event" data-dismiss="modal">Teken in</button>
+                    <button type="button" class="btn btn-primary" id="subscribe-event" data-dismiss="modal">Intekenlijst</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

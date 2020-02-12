@@ -13,6 +13,10 @@ import javax.persistence.*;
 @JsonSubTypes({
         @JsonSubTypes.Type(value = Event.class, name = "Event")
 })
+@Table(
+        uniqueConstraints=
+        @UniqueConstraint(columnNames={"member_member_id", "event_id"})
+)
 public class EventSubscription {
     @Id
     @Column(name = "subscription_id")

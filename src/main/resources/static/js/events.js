@@ -153,7 +153,7 @@ function subscribeEvent(eventId) {
             dataType: 'json',
             async: true,
             success: function(result) {
-                    $('#calendar').fullCalendar('refetchEvents');
+                    console.log("Succesvol ingeschreven bij afspraak");
             },
             error: function(e) {
                 alert("subscribeEvent() error")
