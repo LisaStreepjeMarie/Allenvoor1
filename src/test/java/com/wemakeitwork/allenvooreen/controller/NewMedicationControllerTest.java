@@ -51,6 +51,9 @@ public class NewMedicationControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    private HttpSession httpSession;
+
     @MockBean
     MedicationRepository medicationRepository;
 
@@ -88,6 +91,8 @@ public class NewMedicationControllerTest {
         int medicationRefillAmount = 0;
         String medicationComment = "dagelijks";
 
+        Team team = (Team) httpSession.getAttribute("team");
+
         mockMvc.perform(post("/medication/new")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("medicationName", medicationName)
@@ -100,10 +105,15 @@ public class NewMedicationControllerTest {
                 .andExpect(status().is3xxRedirection())
                 // .andExpect(view().name("redirect:/medication/\" + team.getTeamId()"))
                 // .andExpect(redirectedUrl("/medication/\" + team.getTeamId()"));
-                .andExpect(view().name("redirect:/medication/{teamId}"))
-                .andExpect(redirectedUrl("/medication/{teamId}"));
+                .andExpect(view().name("redirect:/medication/" + team.getTeamId()))
+                .andExpect(redirectedUrl("/medication/1"));
 
         //mockMvc.perform(get("/calendar/{teamId}", 1))
+
+        //Team team = (Team) httpSession.getAttribute("team");
+        //medication.setTeam(team);
+
+        //return "redirect:/medication/" + team.getTeamId();
 
         ArgumentCaptor<Medication> formObjectArgument = forClass(Medication.class);
         verify(medicationRepository, times(1)).save(formObjectArgument.capture());
