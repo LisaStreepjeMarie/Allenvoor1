@@ -78,7 +78,7 @@ public class EventController {
             if (event.getActivity() instanceof MedicationActivity){
                 if (medicationActivity.getMedication() == null) {
                     return "redirect:/calendar/" + team.getTeamId();
-                }else {
+                } else {
                     event.setActivity(medicationActivity);
                     newEventWithMedicationActivity(event);
                 }

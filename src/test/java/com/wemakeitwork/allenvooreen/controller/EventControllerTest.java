@@ -1,6 +1,7 @@
 package com.wemakeitwork.allenvooreen.controller;
 
 import com.wemakeitwork.allenvooreen.model.Event;
+import com.wemakeitwork.allenvooreen.model.MedicationActivity;
 import com.wemakeitwork.allenvooreen.model.Team;
 import com.wemakeitwork.allenvooreen.repository.ActivityRepository;
 import com.wemakeitwork.allenvooreen.repository.EventRepository;
@@ -19,8 +20,6 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.util.Date;
 
 import static org.mockito.ArgumentCaptor.forClass;
 import static org.mockito.Mockito.verify;
@@ -56,7 +55,11 @@ class EventControllerTest {
     public void shouldReturnNewEventPost() throws Exception {
         Integer eventId = 20;
         String eventName = "testEventNaam";
-        Date eventStartDate = new Date(2323223232L);
+        Event testEvent = new Event();
+        MedicationActivity activity = new MedicationActivity();
+        testEvent.setActivity(activity);
+        testEvent.getActivity().setActivityName(eventName);
+
 
         Team testTeam = new Team();
         testTeam.setTeamId(1);
@@ -65,8 +68,7 @@ class EventControllerTest {
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                 .param("eventId", String.valueOf(eventId))
                 .param("eventName", eventName)
-                .param("eventStartDate", String.valueOf(eventStartDate))
-                .flashAttr("event", new Event())
+                .flashAttr("event", testEvent)
                 .sessionAttr("team", testTeam)
                 .with(csrf())
         )
@@ -81,10 +83,5 @@ class EventControllerTest {
         Event formObject = formObjectArgument.getValue();
         Assertions.assertThat(formObject.getEventId()).isEqualTo(eventId);
         Assertions.assertThat(formObject.getEventName()).isEqualTo(eventName);
-        Assertions.assertThat(formObject.getEventStartDate()).isEqualTo(eventStartDate);
-    }
-
-    @Test
-    void newEvent() {
     }
 }
