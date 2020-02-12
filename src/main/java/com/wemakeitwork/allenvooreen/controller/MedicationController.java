@@ -1,9 +1,8 @@
 package com.wemakeitwork.allenvooreen.controller;
 
-import com.wemakeitwork.allenvooreen.model.Medication;
-import com.wemakeitwork.allenvooreen.model.Member;
-import com.wemakeitwork.allenvooreen.model.Team;
-import com.wemakeitwork.allenvooreen.model.TeamMembership;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wemakeitwork.allenvooreen.model.*;
 import com.wemakeitwork.allenvooreen.repository.MedicationRepository;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
@@ -17,10 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -54,7 +50,7 @@ public class MedicationController {
         return "newMedication";
     }
 
-    @PostMapping("/medication/new")
+    /* @PostMapping("/medication/new")
     protected String saveOrUpdateMedication(@ModelAttribute("medication")@Valid Medication medication, BindingResult result){
         medicationValidator.validate(medication,result);
         if (result.hasErrors()) {
@@ -65,6 +61,18 @@ public class MedicationController {
             medicationRepository.save(medication);
             return "redirect:/medication/" + team.getTeamId();
         }
+    } */
+
+    @PostMapping("/medication/new")
+    public ResponseEntity<Object> addMedicationItem(@RequestBody String newMedicationItem) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        Medication medication = mapper.readValue(newMedicationItem, Medication.class);
+
+        Integer teamId = ((Team) httpSession.getAttribute("team")).getTeamId();
+        medication.setTeam(teamRepository.getOne(teamId));
+        medicationRepository.save(medication);
+        ServiceResponse<Medication> result = new ServiceResponse<>("success", medication);
+        return new ResponseEntity<Object>(result, HttpStatus.OK);
     }
 
     @GetMapping("/medication/{teamId}")
