@@ -12,7 +12,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
 
 
-    <!-- Add icon library -->
+    <!-- libraries -->
     <script src="${pageContext.request.contextPath}/webjars/moment/2.24.0/min/moment.min.js"></script>
     <script src="${pageContext.request.contextPath}/webjars/jquery/3.4.1/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>

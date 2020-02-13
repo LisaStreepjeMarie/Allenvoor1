@@ -78,7 +78,7 @@ for (i = 0; i < allGroceriesInList.length; i++) {
       ev.target.classList.toggle('checked');
         }
       }, false);
-// every item on the list gets the delete button with this part of the function
+// every item on the list gets the delete button with the correct className for later function use
       var span = document.createElement("SPAN");
       var txt = document.createTextNode("\u00D7");
       span.className = "close";
