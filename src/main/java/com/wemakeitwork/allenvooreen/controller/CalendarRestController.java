@@ -16,8 +16,6 @@ import java.util.Date;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-// import org.joda.time.DateTime;
-
 @RestController
 public class CalendarRestController {
     @Autowired
