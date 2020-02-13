@@ -1,20 +1,16 @@
 package com.wemakeitwork.allenvooreen.model;
 
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+
 public class ActivityTest {
-    /*private Activity testActivity = new Activity();
+    private Activity testActivity = new LeisureActivity();
+
+    private Event event = new Event();
 
     @Test
-    void testGetActivityId() {
-        //arrange
-        testActivity.setActivityId(1);
-
-        //assert
-        Assertions.assertThat(testActivity.getActivityId()).isEqualTo(1);
-    }
-
-
-    @Test
-    void setActivityId() {
+    void getAndSetActivityId() {
         //arrange
         testActivity.setActivityId(1);
 
@@ -23,7 +19,7 @@ public class ActivityTest {
     }
 
     @Test
-    void getActivityName() {
+    void getAndSetActivityName() {
         //arrange
         testActivity.setActivityName("wandelen");
 
@@ -32,35 +28,17 @@ public class ActivityTest {
     }
 
     @Test
-    void setActivityName() {
+    void getAndSetActivityEvent() {
         //arrange
-        testActivity.setActivityName("wandelen");
+        event.setEventName("TestEventNaam");
+        testActivity.setEvent(event);
 
-        //assert
-        Assertions.assertThat(testActivity.getActivityName()).isEqualTo("wandelen");
-    }
-
-    @Test
-    void getActivityCategory() {
-        //arrange
-        testActivity.setActivityCategory("Medisch");
-
-        //assert
-        Assertions.assertThat(testActivity.getActivityCategory()).isEqualTo("Medisch");
-    }
-
-    @Test
-    void setActivityCategory() {
-        //arrange
-        testActivity.setActivityCategory("Medisch");
-
-        //assert
-        Assertions.assertThat(testActivity.getActivityCategory()).isEqualTo("Medisch");
+        Assertions.assertThat(testActivity.getEvent().getEventName()).isEqualTo("TestEventNaam");
     }
 
     @AfterEach
     void cleanUp(){
         testActivity = null;
-    }*/
+    }
 
 }
