@@ -13,7 +13,8 @@
 .messagesOverView{
     max-height: 400px;
     margin-bottom: 10px;
-    overflow:scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
 
 }
