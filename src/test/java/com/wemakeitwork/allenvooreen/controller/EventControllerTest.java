@@ -1,7 +1,7 @@
 package com.wemakeitwork.allenvooreen.controller;
 
 import com.wemakeitwork.allenvooreen.model.Event;
-import com.wemakeitwork.allenvooreen.model.MedicationActivity;
+import com.wemakeitwork.allenvooreen.model.LeisureActivity;
 import com.wemakeitwork.allenvooreen.model.Team;
 import com.wemakeitwork.allenvooreen.repository.ActivityRepository;
 import com.wemakeitwork.allenvooreen.repository.EventRepository;
@@ -22,8 +22,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentCaptor.forClass;
+import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
-import static org.mockito.internal.verification.VerificationModeFactory.times;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -56,10 +56,7 @@ class EventControllerTest {
         Integer eventId = 20;
         String eventName = "testEventNaam";
         Event testEvent = new Event();
-        MedicationActivity activity = new MedicationActivity();
-        testEvent.setActivity(activity);
-        testEvent.getActivity().setActivityName(eventName);
-
+        testEvent.setActivity(new LeisureActivity());
 
         Team testTeam = new Team();
         testTeam.setTeamId(1);
@@ -77,7 +74,7 @@ class EventControllerTest {
                 .andExpect(redirectedUrl("/calendar/" + testTeam.getTeamId()));
 
         ArgumentCaptor<Event> formObjectArgument = forClass(Event.class);
-        verify(eventRepository, times(1)).save(formObjectArgument.capture());
+        verify(eventRepository, atLeastOnce()).save(formObjectArgument.capture());
         Mockito.verifyNoMoreInteractions(eventRepository);
 
         Event formObject = formObjectArgument.getValue();
