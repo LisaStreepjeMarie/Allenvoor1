@@ -3,7 +3,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <html>
-<html>
 <head>
     <meta charset='utf-8' />
     <title>Boodschappenlijst</title>
@@ -26,7 +25,6 @@
             <span onclick="newElement()" id="addButton" class="addBtn">Voeg toe!</span>
         </div>
 
-
         <ul id="allGroceries">
             <div id="allMedications">
                 <!-- this list is filled with ajax in the grocery.js -->
@@ -42,7 +40,7 @@
             <br>
         </div>
     </div>
- <script type="text/javascript" src="${pageContext.request.contextPath}/js/groceryList.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/js/groceryList.js"></script>
 
 </body>
 </html>
