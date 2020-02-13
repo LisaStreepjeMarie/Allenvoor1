@@ -3,10 +3,12 @@ package com.wemakeitwork.allenvooreen.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Chat {
+
 
     @Id
     @JsonProperty("id")
@@ -16,7 +18,7 @@ public class Chat {
 
     @JsonProperty("messages")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "chat")
-    private List<Message> messages;
+    private List<Message> messages = new ArrayList<>();
 
     public int getChatId() {
         return chatId;
