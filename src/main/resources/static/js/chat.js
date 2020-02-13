@@ -65,21 +65,21 @@ function getAllMessages(){
 
 // calculated the right "so many days ago" to put above the chat message using moment
 function testData(date){
-var givenDate = new Date(Date.parse(date));
-var day = givenDate.getDay();
+    var givenDate = new Date(Date.parse(date));
+    var day = givenDate.getDay();
 
-timestamp = moment().toDate();
-today = timestamp.getDay();
+    timestamp = moment().toDate();
+    today = timestamp.getDay();
 
-if (day === today){
-return "vandaag ";
+    if (day === today){
+    return "vandaag ";
 
-} else if (today - day === 1) {
-return (today - day) + " dag geleden"
+    } else if (today - day === 1) {
+    return (today - day) + " dag geleden"
 
-} else {
-return (today - day) + " dagen geleden"
-}
+    } else {
+    return (today - day) + " dagen geleden"
+    }
 
 }
 
