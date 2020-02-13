@@ -49,28 +49,28 @@ public class MedicationTest {
     @Test
     void getBought() {
         //arrange and act
-        testMedication.setMedicationId(1);
+        testMedication.setBought(true);
 
         //assert
-        Assertions.assertThat(testMedication.getBought()).isEqualTo(1);
+        Assertions.assertThat(testMedication.getBought()).isEqualTo(true);
     }
 
     @Test
     void setBought() {
         //arrange and act
-        testMedication.setMedicationId(1);
+        testMedication.setBought(true);
 
         //assert
-        Assertions.assertThat(testMedication.getBought()).isEqualTo(1);
+        Assertions.assertThat(testMedication.getBought()).isEqualTo(true);
     }
 
     /* public void toggleBought() {
         this.bought = !this.bought;
     } */
 
-    @Test
+    /* @Test
     // void getTakenMedications(List<MedicationActivity> testList) {
-    void getTakenMedications() {
+    /* void getTakenMedications() {
         //arrange and act
         testMedication.setTakenMedications(testMedicationActivity);
 
@@ -86,7 +86,7 @@ public class MedicationTest {
 
         //assert
         Assertions.assertThat(testMedication.getMedicationId()).isEqualTo(testMedicationActivity);
-    }
+    } */
 
     @Test
     void getMedication() {
