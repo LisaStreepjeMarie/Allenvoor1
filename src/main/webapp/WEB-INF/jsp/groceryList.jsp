@@ -36,10 +36,21 @@
 
         <div class="footer">
             <span onclick="removeAllCheckedFromList()" id="checkDBtn" class="checkDBtn">verwijder gekochte items</span>&nbsp;
-            <span onclick="removeAllFromList()" id="removeBtn" class="removeBtn">verwijder alle items</span>
+            <!-- <span onclick="removeAllFromList()" id="removeBtn" class="removeBtn">verwijder alle items</span> -->
+            <span onclick="confirmation()" id="removeBtn" class="removeBtn">verwijder alle items</span>
             <br>
         </div>
     </div>
+
+    <script>
+        function confirmation(){
+            var result = confirm("Weet je het zeker?");
+            if(result){
+                removeAllFromList();
+            }
+        }
+    </script>
+
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/groceryList.js"></script>
 
 </body>
