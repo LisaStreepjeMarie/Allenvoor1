@@ -56,13 +56,13 @@
                 </c:forEach>
             </div>
 
-         </div>
+        </div>
         <br />
-        <div id="container" class="groceryList">
+       <div id="container" class="groceryList">
             <jsp:include page="groceryList.jsp" />
 
-        </div>
     </div>
+</div>
 </div>
 </body>
 </html>

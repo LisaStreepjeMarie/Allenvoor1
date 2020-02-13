@@ -18,7 +18,6 @@
     <link id="csrfToken" data-csrfToken="${_csrf.token}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-
 <body>
     <div id="WholeGroceryList">
         <div id="GroceryList" class="header">
@@ -36,11 +35,12 @@
             </div>
         </ul>
 
-        <div class="footer"> moveAllFromList()" id="removeBtn" class="removeBtn">verwijder alle items</span>
+        <div class="footer">
+            <span onclick="removeAllCheckedFromList()" id="checkDBtn" class="checkDBtn">verwijder gekochte items</span>&nbsp;
+            <span onclick="removeAllFromList()" id="removeBtn" class="removeBtn">verwijder alle items</span>
             <br>
         </div>
     </div>
-
  <script type="text/javascript" src="${pageContext.request.contextPath}/js/groceryList.js"></script>
 
 </body>
