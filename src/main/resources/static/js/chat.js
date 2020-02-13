@@ -94,6 +94,7 @@ $.ajax({
          type:'GET',
          url: "${pageContext.request.contextPath}/chat/checkNewMessages/" + allMessages.length,
          success : function(result) {
+         // checking if the result status means there are new messages
                 if (result.status == "newMessages") {
                 newMessageList = result.data;
                      for (i in newMessageList ) {
