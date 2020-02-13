@@ -154,13 +154,26 @@
         }
 
         function addMedication(medication){
-            $('#allMedications').append('<tr><td id ="' +
-                 medication.name + '">' + medication.name + '</td><td>' +
-                 medication.amount + '</td><td>' + medication.comment +
-                 '</td><td><input class="btn btn-primary deleteButton" onclick="deleteMedication(' + medication.id
-                 + ')"  type="button" value="Verwijder medicatie" /><input type="hidden" name="medicationID" value="'
-                 + medication.id + ' id="medicationNumber" /></td><td><input onclick="addToGroceryListButton(' + medication.id
-                 + ',' + medication.name + '.innerHTML)" class="btn btn-primary" type="button" value="Zet op boodschappenlijst"  data-toggle="modal" /></td></tr>');
+            $('#allMedications').append('<tr><td id ="' + medication.name + '">' + medication.name + '</td><td>' +
+                medication.amount + '</td><td>' + medication.comment +
+                '</td><td><input class="btn btn-primary deleteButton" onclick="confirmation()"  type="button" value="Bevestig verwijder medicatie" /><input type="hidden" name="medicationID" value="' +
+                medication.id + ' id="medicationNumber" /></td><td><input class="btn btn-primary deleteButton" onclick="deleteMedication(' + medication.id +
+                ')"  type="button" value="Verwijder medicatie" /><input type="hidden" name="medicationID" value="' +
+                medication.id + ' id="medicationNumber" /></td><td><input onclick="addToGroceryListButton(' +
+                medication.id + ',' + medication.name +
+                '.innerHTML)" class="btn btn-primary" type="button" value="Zet op boodschappenlijst"  data-toggle="modal" /></td></tr>');
+        }
+
+        /* $('.confirm').on('click', function () {
+            return confirm('Are you sure?');
+        }); */
+
+        function confirmation(){
+            var result = confirm("Weet je het zeker?");
+            if(result){
+                // Delete logic goes here
+                $('#allMedications').append(deleteMedication('medication.id'));
+            }
         }
         </script>
     </body>
