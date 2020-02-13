@@ -92,16 +92,23 @@ public class TeamController {
         teamMemberDTO.setTeamId(teamId);
 
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (teamMembershipRepository.findByTeamAndMember(team, member).isAdmin()) {
-            model.addAttribute("teamName", team.getTeamName());
-            model.addAttribute("teamMemberList", teamMemberList);
-            model.addAttribute("teamAdminList", teamAdminList);
-            model.addAttribute("teamMemberDTO", teamMemberDTO);
-            return "changeTeam";
-        } else {
-            model.addAttribute("statuscode", "Geen toegang: je bent geen groepsbeheerder");
-            return "error";
+
+        // Check if principal(member) has a teammembership (tms) in team and is admin that team.
+        Optional<TeamMembership> tms = teamMembershipRepository.findByTeamAndMember(team, member);
+        if (tms.isPresent()) {
+            if (tms.get().isAdmin()) {
+                model.addAttribute("teamName", team.getTeamName());
+                model.addAttribute("teamMemberList", teamMemberList);
+                model.addAttribute("teamAdminList", teamAdminList);
+                model.addAttribute("teamMemberDTO", teamMemberDTO);
+                return "changeTeam";
+            } else {
+                model.addAttribute("statuscode", "Geen toegang: je bent geen groepsbeheerder");
+                return "error";
+            }
         }
+        model.addAttribute("statuscode", "Error: Missing teammembership");
+        return "error";
     }
 
     @GetMapping("/team/delete/{teamId}")
@@ -184,11 +191,17 @@ public class TeamController {
 
     @GetMapping("/team/grantadmin/{teamId}/{memberId}")
     public String grantAdmin(@PathVariable("teamId") final Integer teamId,
-                              @PathVariable("memberId") final Integer memberId) {
-        TeamMembership tms = teamMembershipRepository.findByTeamTeamIdAndMemberMemberId(teamId, memberId);
-        tms.setAdmin(true);
-        teamMembershipRepository.save(tms);
-        return "redirect:/team/select/" + teamId;
+                              @PathVariable("memberId") final Integer memberId, Model model) {
+
+        Optional<TeamMembership> tms = teamMembershipRepository.findByTeamTeamIdAndMemberMemberId(teamId, memberId);
+        if (tms.isPresent()) {
+            tms.get().setAdmin(true);
+            teamMembershipRepository.save(tms.get());
+            return "redirect:/team/select/" + teamId;
+        }
+        // No teammembership was found.
+        model.addAttribute("statuscode", "Error: Missing teammembership");
+        return "error";
     }
 
     @GetMapping("/team/quit/{teamId}")
