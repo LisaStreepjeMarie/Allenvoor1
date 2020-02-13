@@ -54,7 +54,7 @@
                 </c:forEach>
             </div>
         </div>
-
+        <br><br>
         <jsp:include page="chat.jsp" />
     </div>
 </div>

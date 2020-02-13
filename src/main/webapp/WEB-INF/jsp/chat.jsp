@@ -36,7 +36,7 @@
     <form id="formNewMessage">
         <div class="form-group">
             <label for="messageBody">Typ hier je bericht!</label>
-            <textarea class="form-control" id="messageBody" rows="3"></textarea>
+            <input class="form-control" id="messageBody"/>
         </div>
         <button type="button" onclick="newMessageForAjax()" class="btn btn-primary float-right">Versturen</button>
     </form>
@@ -160,12 +160,12 @@ function appendNewMessage(message){
 var memberName = document.getElementById("givenMemberName").value;
 
 if (message.member.name === memberName){
-      $('#overViewMessages').append('<a class="list-group-item " ><div class="d-flex w-100 justify-content-between"><small class="text-muted">'
-      + testData(message.datePosted) + '</small></div><div class="d-flex w-100 justify-content-end"><h5 class="mb-1">'
-      + message.member.name + '</h5></div><div class="d-flex w-100 justify-content-end"><p class="mb-1" style="color:#8c8c8c;">' + message.message + '</p>');
+      $('#overViewMessages').append('<a class="list-group-item"><div class="d-flex w-100 justify-content-between"><small class="text-muted"><nobr>'
+      + testData(message.datePosted) + '</nobr></small><div class="d-flex w-100 justify-content-end"><h5 class="mb-1" style="color:#0077b3;">'
+      + message.member.name + '</h5></div></div><div class="d-flex w-100 justify-content-end"><p class="mb-1" >' + message.message + '</p>');
     } else {
-    $('#overViewMessages').append('<a class="list-group-item list-group-item-action"><div class="d-flex w-100 justify-content-between"><h5 class="mb-1">'
-    + message.member.name + '</h5><small class="text-muted">' + testData(message.datePosted) + '</small></div><p class="mb-1 style="color:#8c8c8c;">'
+    $('#overViewMessages').append('<a class="list-group-item"><div class="d-flex w-100 justify-content-between"><h5 class="mb-1" style="color:#993399;">'
+    + message.member.name + '</h5><small class="text-muted">' + testData(message.datePosted) + '</small></div><p class="mb-1" >'
     + message.message + '</p>');
     }
 }
