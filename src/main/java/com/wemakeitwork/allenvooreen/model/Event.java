@@ -156,25 +156,6 @@ public class Event {
         this.eventEndDate = eventEndDate;
     }
 
-    //joda-time
-    /* @JsonGetter
-    public DateTime getEventStartDate() {
-        return eventStartDate;
-    }
-
-    public void setEventStartDate(DateTime eventStartDate) {
-        this.eventStartDate = eventStartDate;
-    }
-
-    @JsonGetter
-    public DateTime getEventEndDate() {
-        return eventEndDate;
-    }
-
-    public void setEventEndDate(DateTime eventEndDate) {
-        this.eventEndDate = eventEndDate;
-    } */
-
     @JsonGetter
     public String getEventComment() {
         return eventComment;

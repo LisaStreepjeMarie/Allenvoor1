@@ -1,18 +1,16 @@
 package com.wemakeitwork.allenvooreen.model;
 
 import org.assertj.core.api.Assertions;
-// import org.joda.time.DateTime;
 import org.junit.jupiter.api.Test;
 
 import java.util.Date;
 
 class EventTest {
     Event testEvent = new Event();
-    //Activity testActivity = new Activity();
-
+    Date dateNow = new Date(System.currentTimeMillis());
 
     @Test
-    void getEventName() {
+    void getAndSetEventName() {
         //arrange
         testEvent.setEventName("test");
 
@@ -21,16 +19,7 @@ class EventTest {
     }
 
     @Test
-    void setEventName() {
-        //arrange
-        testEvent.setEventName("test");
-
-        //assert
-        Assertions.assertThat(testEvent.getEventName()).isEqualTo("test");
-    }
-
-    @Test
-    void getEventId() {
+    void getAndSetEventId() {
         //arrange
         testEvent.setEventId(2);
 
@@ -39,16 +28,7 @@ class EventTest {
     }
 
     @Test
-    void setEventId() {
-        //arrange
-        testEvent.setEventId(2);
-
-        //assert
-        Assertions.assertThat(testEvent.getEventId()).isEqualTo(2);
-    }
-
-    @Test
-    void getEventInterval() {
+    void getAndSetEventInterval() {
         //arrange
         testEvent.setEventInterval("day");
 
@@ -57,16 +37,7 @@ class EventTest {
     }
 
     @Test
-    void setEventEventInterval() {
-        //arrange
-        testEvent.setEventInterval("week");
-
-        //assert
-        Assertions.assertThat(testEvent.getEventInterval()).isEqualTo("week");
-    }
-
-    @Test
-    void getEventMaxNumber() {
+    void getAndSetEventMaxNumber() {
         //arrange
         testEvent.setEventMaxNumber(5);
 
@@ -75,56 +46,26 @@ class EventTest {
     }
 
     @Test
-    void setEventMaxNumber() {
+    void getAndSetActivity() {
         //arrange
-        testEvent.setEventMaxNumber(5);
+        Activity activity = new MedicationActivity();
+        testEvent.setActivity(activity);
 
         //assert
-        Assertions.assertThat(testEvent.getEventMaxNumber()).isEqualTo(5);
-    }
-
-/*
-    @Test
-    void getActivity() {
-        //arrange
-        testEvent.setActivity(testActivity);
-
-        //assert
-        Assertions.assertThat(testEvent.getActivity()).isEqualTo(testActivity);
+        Assertions.assertThat(testEvent.getActivity()).isEqualTo(activity);
     }
 
     @Test
-    void setActivity() {
+    void getAndSetEventDate() {
         //arrange
-        testEvent.setActivity(testActivity);
+        testEvent.setEventStartDate(dateNow);
 
         //assert
-        Assertions.assertThat(testEvent.getActivity()).isEqualTo(testActivity);
-    }
-*/
-
-    @Test
-    void getEventDate() {
-        //arrange
-        Date testdate = new Date(2323223232L);
-        testEvent.setEventStartDate(testdate);
-
-        //assert
-        Assertions.assertThat(testEvent.getEventStartDate()).isEqualTo(testdate);
+        Assertions.assertThat(testEvent.getEventStartDate()).isEqualTo(dateNow);
     }
 
     @Test
-    void setEventDate() {
-        //arrange
-        Date testdate = new Date(2323223232L);
-        testEvent.setEventStartDate(testdate);
-
-        //assert
-        Assertions.assertThat(testEvent.getEventStartDate()).isEqualTo(testdate);
-    }
-
-    @Test
-    void getEventComment() {
+    void getAndSetEventComment() {
         //arrange
         testEvent.setEventComment("hallo");
 
@@ -133,11 +74,39 @@ class EventTest {
     }
 
     @Test
-    void setEventComment() {
+    void getAndSetEventDoneDate() {
         //arrange
-        testEvent.setEventComment("hallo");
+        testEvent.setEventDoneDate(dateNow);
 
         //assert
-        Assertions.assertThat(testEvent.getEventComment()).isEqualTo("hallo");
+        Assertions.assertThat(testEvent.getEventDoneDate().equals(dateNow));
+    }
+
+    @Test
+    void getEventEndDate() {
+        //arrange
+        testEvent.setEventEndDate(dateNow);
+
+        //assert
+        Assertions.assertThat(testEvent.getEventEndDate().equals(dateNow));
+    }
+
+    @Test
+    void getAndSetTeam() {
+        //arrange
+        Team team = new Team();
+        testEvent.setTeam(team);
+
+        //assert
+        testEvent.getTeam().equals(team);
+    }
+
+    @Test
+    void getDoneByMember() {
+        //arrange
+        Member member = new Member();
+        testEvent.setDoneByMember(member);
+
+        testEvent.getDoneByMember().equals(member);
     }
 }
