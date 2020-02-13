@@ -63,8 +63,6 @@ public class ChatController {
         return "chatWebPage";
     }
 
-    //TODO all the team stuff is set to one, needs to be done sessionwise or pathvariable
-
     @PostMapping("/add/message")
     public ResponseEntity<Object> addMessage(@RequestBody String newMessage) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
@@ -96,23 +94,34 @@ public class ChatController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+
     @GetMapping("/chat/checkNewMessages/{sizeList}")
     public ResponseEntity<Object> checkNewMessages(@PathVariable("sizeList") Integer sizeList){
         Integer teamId = ((Team) httpSession.getAttribute("team")).getTeamId();
         Chat chat = teamRepository.getOne(teamId).getChat();
 
+        // checking if the given list size is the same as the database one from the team
         if (chat.getMessages().size() == sizeList){
+
+            // if it is, nothing needs to be done
             return new ResponseEntity<>("nothingNew", HttpStatus.OK);
         } else {
+
+            // else we need to get the new messages in the array list below
             List<Message> newMessages = new ArrayList<>();
 
+            //checking how many new messages we need
             int amountNewMessages = chat.getMessages().size() - sizeList;
-
             for (int i = 0; i < amountNewMessages; i++){
+
+                // the given list size is the correct array place for the newest we need, so we can start there
                 newMessages.add(chat.getMessages().get(sizeList));
+
+                // adding 1 to the list size so we can get the next one if needed
                 sizeList++;
             }
 
+            // making a new service response with the text newMessages so we can check for this on the Ajax side
             ServiceResponse<List<Message>> response = new ServiceResponse<>("newMessages", newMessages);
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
