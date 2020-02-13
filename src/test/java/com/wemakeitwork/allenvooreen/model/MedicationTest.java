@@ -105,6 +105,37 @@ public class MedicationTest {
         Assertions.assertThat(testMedication.getMedicationComment()).isEqualTo("test2");
     }
 
+    /* public void setTakenMedications(MedicationActivity medicationActivity) {
+        this.takenMedications.add(medicationActivity);
+        this.medicationAmount -= medicationActivity.getTakenMedication();
+    } */
+
+    @Test
+    void getTakenMedications() {
+        //arrange
+        int takenMedications = 2;
+        int medicationAmount = 20;
+
+        //act
+        medicationAmount -= takenMedications;
+
+        //assert
+        Assertions.assertThat(medicationAmount).isEqualTo(18);
+    }
+
+    @Test
+    void setTakenMedications() {
+        //arrange
+        int takenMedications = 2;
+        int medicationAmount = 20;
+
+        //act
+        medicationAmount -= takenMedications;
+
+        //assert
+        Assertions.assertThat(medicationAmount).isEqualTo(18);
+    }
+
     @Test
     void upTheMedicationAmount(){
         //arrange
@@ -127,10 +158,18 @@ public class MedicationTest {
         Assertions.assertThat(testMedication.getMedicationRefillAmount()).isEqualTo(20);
     }
 
-    /* public void upTheRefillAmount(Integer integer){
-        this.medicationRefillAmount += integer;
+    @Test
+    void upTheRefillAmount(){
+        //arrange
+        int integer = 5;
+        int medicationRefillAmount = 20;
+
+        //act
+        medicationRefillAmount += integer;
+
+        //assert
+        Assertions.assertThat(medicationRefillAmount).isEqualTo(25);
     }
-    */
 
     @Test
     void setMedicationRefillAmount() {
@@ -140,26 +179,6 @@ public class MedicationTest {
         //assert
         Assertions.assertThat(testMedication.getMedicationRefillAmount()).isEqualTo(30);
     }
-
-    /* @Test
-    // void getTakenMedications(List<MedicationActivity> testList) {
-    /* void getTakenMedications() {
-        //arrange and act
-        testMedication.setTakenMedications(testMedicationActivity);
-
-        //assert
-        Assertions.assertThat(testMedication.getTakenMedications()).isEqualTo(testMedicationActivity);
-    }
-
-    @Test
-    // void setTakenMedications(MedicationActivity medicationActivity) {
-    void setTakenMedications() {
-        //arrange and act
-        testMedication.setTakenMedications(testMedicationActivity);
-
-        //assert
-        Assertions.assertThat(testMedication.getMedicationId()).isEqualTo(testMedicationActivity);
-    } */
 
     @Test
     void getMedication() {
