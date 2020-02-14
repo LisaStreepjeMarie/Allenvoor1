@@ -29,9 +29,11 @@
 <body>
 <div class="wholeChat">
 <div id="overViewMessages" class="list-group messagesOverView">
+
     <br>
     <br>
     <br>
+    <a class="list-group-item"><div class="d-flex w-100 justify-content-center"><h5 class="mb-1" >Start hier de chat!</h5></div></a>
 </div>
     <input type="hidden" name="memberName" value="${member.memberName}" id="givenMemberName"/>
     <form id="formNewMessage">
