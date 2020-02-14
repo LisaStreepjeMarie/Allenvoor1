@@ -25,7 +25,7 @@ function hideAllModalInputFields() {
 // This function fills the modal with event info if it exist
 function showModalInputFields() {
     hideAllModalInputFields();
-    if ($('.modal').find('#activityCategory').val() == "Medisch") {
+    if ($('#formDiv').find('#activityCategory').val() == "Medisch") {
         $("#eventNameDiv, #eventDateStartEndDiv, #medicationChoiceDiv, #takenMedicationDiv").show();
         $("#eventDatesDiv, #eventPeriodicCheckDiv, #modal-footer").show();
     } else {
@@ -42,10 +42,10 @@ function fillModal(event) {
         document.getElementById("modal-title").innerHTML = "Wijzig of verwijder afspraak";
         document.getElementById("save-change-event").innerHTML = "Wijzig afspraak";
         $("#delete-event").show();
-        $('.modal').find('#eventName').val(event.title);
-        $('.modal').find('#eventComment').val(event.comment);
-        $('.modal').find('#eventInterval').val(event.interval);
-        $('.modal').find('#eventMaxNumber').val(event.maxNumber);
+        $('#formDiv').find('#eventName').val(event.title);
+        $('#formDiv').find('#eventComment').val(event.comment);
+        $('#formDiv').find('#eventInterval').val(event.interval);
+        $('#formDiv').find('#eventMaxNumber').val(event.maxNumber);
         if(event.maxNumber != null) {
             document.getElementById("eventPeriodic").checked;
             $("#eventIsPeriodicDiv").show();
@@ -58,7 +58,7 @@ function fillModal(event) {
             $('#doneByMember').empty()
             $("#datetimepickerDone, #doneByMemberDiv").show()
             $("#eventDone").prop("checked", true);
-            $('.modal').find('#eventDoneDate').val(moment(event.donedate).format('DD-MM-YYYY H:mm'));
+            $('#formDiv').find('#eventDoneDate').val(moment(event.donedate).format('DD-MM-YYYY H:mm'));
             filldoneByMembers(event.doneByMember.name)
             //$('.modal').find('#doneByMember').val(event.doneByMember.name)
         }
@@ -92,9 +92,9 @@ function fillModal(event) {
         }
     });
 
-    $('.modal').find('#eventStartDate').val(moment(event.start).format('DD-MM-YYYY H:mm'));
-    $('.modal').find('#eventEndDate').val(moment(event.end).format('DD-MM-YYYY H:mm'));
-    $('.modal').modal('show');
+    $('#formDiv').find('#eventStartDate').val(moment(event.start).format('DD-MM-YYYY H:mm'));
+    $('#formDiv').find('#eventEndDate').val(moment(event.end).format('DD-MM-YYYY H:mm'));
+    $('#formDiv').modal('show');
 }
 
 // Cleans the modal upon closing

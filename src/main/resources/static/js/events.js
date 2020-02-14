@@ -78,7 +78,7 @@ function getMedication(event){
                     $('#medicationChoice').append('<option value="' + List[i].id + '">' + List[i].name + '</option>');
                  }
                  document.getElementById("medicationChoice").value = event.activity.medication.id;
-                 $('.modal').find('#takenMedication').val(event.activity.takenmedication);
+                 $('#formDiv').find('#takenMedication').val(event.activity.takenmedication);
              },
              error : function(e) {
              alert("getMedication() error")

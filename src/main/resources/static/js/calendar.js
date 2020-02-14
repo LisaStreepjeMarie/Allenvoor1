@@ -3,7 +3,7 @@ $(document).ready(function() {
         // Hide model fields by default
         hideAllModalInputFields();
 
-        $('.modal').on("hide.bs.modal", function() {
+        $('#formDiv').on("hide.bs.modal", function() {
             $('#formID').trigger("reset");
             hideAllModalInputFields();
         });
@@ -49,9 +49,9 @@ $(document).ready(function() {
                 });
 
                 if (event.activity.type === "MedicationActivity") {
-                    $('.modal').find('#activityCategory').val("Medisch")
+                    $('#formDiv').find('#activityCategory').val("Medisch")
                 } else if (event.activity.type === "LeisureActivity") {
-                    $('.modal').find('#activityCategory').val("Vrije tijd")
+                    $('#formDiv').find('#activityCategory').val("Vrije tijd")
                 }
 
                 document.getElementById('delete-event').setAttribute( "onClick", "deleteEvent('"+ event.id +"','" +  ctx + "/event/delete/" + "')" );
