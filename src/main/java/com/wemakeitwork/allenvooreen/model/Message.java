@@ -24,6 +24,7 @@ public class Message {
     private Chat chat;
 
     @JsonProperty("message")
+    @Column(columnDefinition="text")
     private String messageBody;
 
     @JsonProperty("datePosted")
