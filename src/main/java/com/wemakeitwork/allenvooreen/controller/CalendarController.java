@@ -3,7 +3,6 @@ package com.wemakeitwork.allenvooreen.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.wemakeitwork.allenvooreen.model.*;
 import com.wemakeitwork.allenvooreen.repository.*;
 import com.wemakeitwork.allenvooreen.service.ServiceResponse;
@@ -20,8 +19,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpSession;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class CalendarController {
@@ -45,6 +46,9 @@ public class CalendarController {
     @Autowired
     ActivityRepository activityRepository;
 
+    @Autowired
+    TeamMembershipRepository teamMembershipRepository;
+
     @GetMapping("/calendar/{teamid}/medications")
     public ResponseEntity<Object> getMedications(@PathVariable("teamid") final Integer teamId) {
         ServiceResponse<List<Medication>> response = new ServiceResponse<>("success", teamRepository.getOne(teamId).getMedicationList());
@@ -61,34 +65,20 @@ public class CalendarController {
     }
 
     @GetMapping("/calendar/{teamId}")
-    public String showCalender(@PathVariable("teamId") final Integer teamId, Model model)
-            throws JsonProcessingException {
-        Team team = teamRepository.getOne(teamId);
-        httpSession.setAttribute("team", team);
-        model.addAttribute("team", team);
-
+    public String showCalender(@PathVariable("teamId") final Integer teamId, Model model) {
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Set<TeamMembership> teamMembershipList = memberRepository.findByMemberName(member.getMemberName()).get().getTeamMemberships();
-        ArrayList<Team> teamList = new ArrayList<>();
-        for (TeamMembership tms: teamMembershipList) {
-            teamList.add(tms.getTeam());
+        Optional<TeamMembership> tms = teamMembershipRepository.findByTeamTeamIdAndMemberMemberId(teamId, member.getMemberId());
+
+        // Check if principal is member of team (and authorized to view calendar)
+        if (tms.isPresent()) {
+            Team team = teamRepository.getOne(teamId);
+            httpSession.setAttribute("team", team);
+            model.addAttribute("team", team);
+            return "calendar";
+        } else {
+            model.addAttribute("statuscode", "Je hebt geen autorisatie om deze calender te bekijken omdat je geen lid bent van het team");
+            return "error";
         }
-
-        ArrayList<Team> sortedList = (ArrayList<Team>) teamList.stream()
-                .sorted(Comparator.comparing(Team::getTeamName))
-                .collect(Collectors.toList());
-
-        model.addAttribute("teamList", sortedList);
-
-        List<Event> sourceCalendarData = team.getEventList();
-
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.enable(SerializationFeature.INDENT_OUTPUT);
-        String calendarData = mapper.writeValueAsString(sourceCalendarData);
-        System.out.println(calendarData);
-
-        model.addAttribute("calendarData", calendarData);
-        return "calendar";
     }
 
     @PostMapping("/calendar/new/event")

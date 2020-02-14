@@ -43,11 +43,12 @@ public class CalendarRestController {
                     .filter(x -> x.getEventEndDate().before(new Date(endDateEpoch)))
                     .collect(Collectors.toSet());
             ServiceResponse<Set<Event>> response = new ServiceResponse<Set<Event>>("success", allEvents);
-            System.out.println("HAHAHAHAHA");
             return new ResponseEntity<Object>(response, HttpStatus.OK);
 
         } else {
-            return new ResponseEntity<Object>(new Event(), HttpStatus.FORBIDDEN);
+            ServiceResponse<String> response = new ServiceResponse<String>("error",
+                    "Je hebt geen autorisatie om deze calender te bekijken omdat je geen lid bent van het team");
+            return new ResponseEntity<Object>(response, HttpStatus.FORBIDDEN);
         }
     }
 }
