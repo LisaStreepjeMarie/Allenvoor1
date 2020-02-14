@@ -59,7 +59,7 @@ public class MemberSecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/emailError/**")
                 .permitAll()
                 .antMatchers("/member/updatePassword/**","/member/savePassword/**","/updatePassword/**").hasAuthority("CHANGE_PASSWORD_PRIVILEGE")
-                .anyRequest().hasAuthority("READ_PRIVILEGE")
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
