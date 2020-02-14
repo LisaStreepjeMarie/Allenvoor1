@@ -32,7 +32,6 @@ public class Member implements UserDetails {
     @ManyToMany
     @JoinTable(name = "team_membername", joinColumns = @JoinColumn(name = "membername_member_id"), inverseJoinColumns = @JoinColumn(name = "team_team_id"))
     private Set<Team> allTeamsOfMemberSet = new HashSet<>();
-
     public Set<Team> getAllTeamsOfMemberSet() {
         return allTeamsOfMemberSet;
     }
