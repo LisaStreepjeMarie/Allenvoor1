@@ -19,10 +19,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 public class CalendarController {
@@ -67,12 +65,18 @@ public class CalendarController {
     @GetMapping("/calendar/{teamId}")
     public String showCalender(@PathVariable("teamId") final Integer teamId, Model model) {
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Optional<TeamMembership> tms = teamMembershipRepository.findByTeamTeamIdAndMemberMemberId(teamId, member.getMemberId());
 
         // Check if principal is member of team (and authorized to view calendar)
-        if (tms.isPresent()) {
+        if (teamMembershipRepository.findByTeamTeamIdAndMemberMemberId(teamId, member.getMemberId()).isPresent()) {
             Team team = teamRepository.getOne(teamId);
             httpSession.setAttribute("team", team);
+
+            // Get and sort all teams of member.
+            ArrayList<Team> sortedTeamList = teamMembershipRepository.findByMember(member)
+                    .stream().map(TeamMembership::getTeam)
+                    .sorted(Comparator.comparing(Team::getTeamName))
+                    .collect(Collectors.toCollection(ArrayList::new));
+            model.addAttribute("teamList", sortedTeamList);
             model.addAttribute("team", team);
             return "calendar";
         } else {
@@ -88,11 +92,10 @@ public class CalendarController {
         Date startDateTime = event.getEventStartDate();
         Date endDateTime = event.getEventEndDate();
 
-        int i = 0;
         Integer maxNumber = event.getEventMaxNumber();
         // case of periodic event
         if ((maxNumber != null) && (event.getEventId() == null)) {
-            for (i = 0; i < maxNumber; i++) {
+            for (int i = 0; i < maxNumber; i++) {
                 Date startDateTimeExtraEvent = null;
                 Date endDateTimeExtraEvent = null;
                 switch (event.getEventInterval()) {
