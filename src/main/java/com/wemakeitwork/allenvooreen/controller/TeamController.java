@@ -45,7 +45,7 @@ public class TeamController {
             model.addAttribute("teamList", teamList);
         } else {
             //Temporary sysout to see if there are cases where this happens, if so: fix it.
-            System.out.println("!!!     teamList is null        !!!");
+            System.out.println("teamList is null");
         }
         return "teamOverview";
     }
@@ -67,8 +67,6 @@ public class TeamController {
 
     @GetMapping("/team/select/{teamId}")
     protected String showTeamData(@PathVariable("teamId") final Integer teamId, Model model) {
-        // extra regel om te testen:
-        model.addAttribute("team", new Team());
         Optional<Team> teamOpt = teamRepository.findById(teamId);
         Team team;
         team = teamOpt.orElseGet(Team::new);
@@ -85,7 +83,6 @@ public class TeamController {
 
     @GetMapping("/team/delete/{teamId}")
     public String deleteTeam(@PathVariable("teamId") final Integer teamId) {
-
         Team team = teamRepository.getOne(teamId);
         Set<Member> membersToRemoveSet = new HashSet<>();
         membersToRemoveSet.addAll(team.getAllMembersInThisTeamSet());
@@ -94,7 +91,6 @@ public class TeamController {
             member.removeTeamFromMember(team);
             team.removeTeamMember(member);
         }
-
         teamRepository.save(team);
         teamRepository.delete(team);
 
