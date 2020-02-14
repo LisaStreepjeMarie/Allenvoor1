@@ -19,13 +19,13 @@
         <%@ taglib prefix="mytags" tagdir="/WEB-INF/tags" %>
     </head>
 
-<body class= "webpage">
+    <body class= "webpage">
         <mytags:navbar/>
         <div class= "masthead row">
             <div class= "col-2">
                 <div class="ml-3 mt-3">
                     <c:forEach items="${teamList}" var="team">
-                        <br>
+                        <br />
                         <button type="button" class="btn btn-lg btn-primary btn-block" data-toggle="collapse" data-target=#${team.teamName} >${team.teamName}</button>
                         <div id=${team.teamName} class="collapse">
                             <div class="card card-body">
@@ -49,23 +49,30 @@
             </div>
 
             <div id="container">
-                <br>
+                <br />
                 <div class="mt-3 col-12">
-                   <h3 class="font-weight-light"> Overzicht medicatie ${team.teamName}</h3>
+                    <h3 class="font-weight-light"> Overzicht medicatie ${team.teamName}</h3>
                     <table>
-                      <th><h5 class="font-weight-light">Naam</h5></th><th><h5 class="font-weight-light">Hoeveelheid</h5></th><th><h5 class="font-weight-light">Beschrijving</h5></th></th>
+                            <tr><td><h5 class="font-weight-light">Naam</h5></td>
+                                <td><h5 class="font-weight-light">Hoeveelheid</h5></td>
+                                <td colspan="3"><h5 class="font-weight-light">Beschrijving</h5></td>
+                            </tr>
                     </table>
-                    <p>
-                     <div id="allMedications">
+                    <div id="allMedications">
                     </div>
-                    <br>
-                    <input class="btn btn-primary" type="button" value="Voer medicatie in" onclick="window.location='${pageContext.request.contextPath}/medication/new';" />
+                    <p>
+                    <br />
+                    <tr>
+                        <td colspan="5"><input class="btn btn-primary" type="button" value="Voer medicatie in"
+                            onclick="window.location='${pageContext.request.contextPath}/medication/new';" />
+                        </td>
+                    </tr>
                     </p>
                 </div>
             </div>
         </div>
 
-    </div>
+        </div>
         <!-- Modal -->
         <form role="form" id="refillForm" >
         <div class="modal fade" id="refillMedication" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -79,10 +86,10 @@
                     </div>
                     <div class="modal-body" id="medicationName">
                         Welke hoeveelheid moet er gekocht worden?
-                        <br>
-                        <br>
+                        <br />
+                        <br />
                         <div class="row">
-                            <br>
+                            <br />
                             <input type="hidden" name="medicationID" id="medicationID" />
                             <label class="col-4" for="refillAmount" control-label>Hoeveelheid</label>
                             <input type="number" name="refillAmount" id="refillAmount" />
@@ -97,67 +104,67 @@
         </div>
         </form>
 
-    <script>
-     $.ajax({
+        <script>
+        $.ajax({
             type:'GET',
-                  url: "${pageContext.request.contextPath}/medication/getList",
-                  success : function(result) {
-                  medicationList = result.data;
-                  for (i in medicationList ) {
-                     addMedication(medicationList[i])
-                     }
-                      },
-                      error : function(e) {
-                      console.log("ERROR: ", e);
-                  }
-             });
-
-<!-- function to open the modal and pass along/fill out some info -->
-    function addToGroceryListButton(id, name){
-    $('#refillMedication').modal('show');
-    $('.modal').find('#medicationID').val(id);
-    document.getElementById("refillMedicationHeader").innerHTML = name
-}
-
-<!-- function to open the modal and pass along/fill out some info -->
-   function addToGroceryListButton(id, name){
-    $('#refillMedication').modal('show');
-    $('.modal').find('#medicationID').val(id);
-    document.getElementById("refillMedicationHeader").innerHTML = name;
-}
-
-<!-- ajax call to pass along a medication to the grocerylist including the needed amount -->
-   function addMedicationToList(){
-   id = document.getElementById("medicationID").value;
-   amount = document.getElementById("refillAmount").value;
-
-    $.ajax({
-         type:'GET',
-         url: "${pageContext.request.contextPath}/medication/grocerylist/" + id + "/" + amount,
-         success : function(result) {
-         },
-         error : function(e) {
-             console.log("ERROR: ", e);
-         }
-    });
-
-    $('#refillMedication').modal('toggle');
-    $('#refillForm').trigger("reset");
-}
-
-       function deleteMedication(medicationNumber){
-       window.location="${pageContext.request.contextPath}/medication/delete/" + medicationNumber;
-}
-
-       function addMedication(medication){
-        $('#allMedications').append('<table><tr><td id ="' +
-             medication.name + '">' + medication.name + '</td><td>' +
-             medication.amount + '</td><td>' + medication.comment +
-             '</td><td><input class="btn btn-primary deleteButton" onclick="deleteMedication(' + medication.id
-             + ')"  type="button" value="Verwijder medicatie" /><input type="hidden" name="medicationID" value="'
-             + medication.id + ' id="medicationNumber" /></td><td><input onclick="addToGroceryListButton(' + medication.id
-             + ',' + medication.name + '.innerHTML)" class="btn btn-primary" type="button" value="Zet op boodschappenlijst"  data-toggle="modal" /></td></tr></table>');
+            url: "${pageContext.request.contextPath}/medication/getList",
+            success : function(result) {
+                medicationList = result.data;
+                for (i in medicationList ) {
+                    addMedication(medicationList[i])
+                }
+            },
+            error : function(e) {
+                console.log("ERROR: ", e);
             }
-    </script>
-   </body>
+        });
+
+        <!-- function to open the modal and pass along/fill out some info -->
+        function addToGroceryListButton(id, name){
+            $('#refillMedication').modal('show');
+            $('.modal').find('#medicationID').val(id);
+            document.getElementById("refillMedicationHeader").innerHTML = name
+        }
+
+        <!-- function to open the modal and pass along/fill out some info -->
+        function addToGroceryListButton(id, name){
+            $('#refillMedication').modal('show');
+            $('.modal').find('#medicationID').val(id);
+            document.getElementById("refillMedicationHeader").innerHTML = name;
+        }
+
+        <!-- ajax call to pass along a medication to the grocerylist including the needed amount -->
+        function addMedicationToList(){
+           id = document.getElementById("medicationID").value;
+           amount = document.getElementById("refillAmount").value;
+
+            $.ajax({
+                 type:'GET',
+                 url: "${pageContext.request.contextPath}/medication/grocerylist/" + id + "/" + amount,
+                 success : function(result) {
+                 },
+                 error : function(e) {
+                     console.log("ERROR: ", e);
+                 }
+            });
+
+            $('#refillMedication').modal('toggle');
+            $('#refillForm').trigger("reset");
+        }
+
+        function deleteMedication(medicationNumber){
+            window.location="${pageContext.request.contextPath}/medication/delete/" + medicationNumber;
+        }
+
+        function addMedication(medication){
+            $('#allMedications').append('<tr><td id ="' +
+                 medication.name + '">' + medication.name + '</td><td>' +
+                 medication.amount + '</td><td>' + medication.comment +
+                 '</td><td><input class="btn btn-primary deleteButton" onclick="deleteMedication(' + medication.id
+                 + ')"  type="button" value="Verwijder medicatie" /><input type="hidden" name="medicationID" value="'
+                 + medication.id + ' id="medicationNumber" /></td><td><input onclick="addToGroceryListButton(' + medication.id
+                 + ',' + medication.name + '.innerHTML)" class="btn btn-primary" type="button" value="Zet op boodschappenlijst"  data-toggle="modal" /></td></tr>');
+        }
+        </script>
+    </body>
 </html>

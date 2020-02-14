@@ -37,7 +37,8 @@ class MemberTest {
     @Test
     void isEnabled() {
         //assert
-        Assertions.assertThat(testMember.isEnabled()).isEqualTo(false);
+        //TODO: set to false before last presentation demo)
+        Assertions.assertThat(testMember.isEnabled()).isEqualTo(true);
     }
 
     @Test

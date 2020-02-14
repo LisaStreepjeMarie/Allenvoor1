@@ -122,6 +122,11 @@ body {
 #container {
 }
 
+.logout {
+	position: absolute;
+	top: 240px;
+}
+
 table tr td, table tr th {
     font-family: $navbar-brand-font-family;
 	padding: 4px 10px 4px 0px;

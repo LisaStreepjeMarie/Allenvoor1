@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.wemakeitwork.allenvooreen.model.*;
 import com.wemakeitwork.allenvooreen.repository.*;
 import com.wemakeitwork.allenvooreen.service.ServiceResponse;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -94,9 +95,47 @@ public class CalendarController {
     public ResponseEntity<Object> newEvent(@RequestBody String newEventJson) throws JsonProcessingException {
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         Event event = mapper.readValue(newEventJson, Event.class);
+        Date startDateTime = event.getEventStartDate();
+        Date endDateTime = event.getEventEndDate();
 
-        if(event.getDoneByMember().getMemberId() == null){
-            event.setDoneByMember(null);
+        int i = 0;
+        Integer maxNumber = event.getEventMaxNumber();
+        // case of periodic event
+        if ((maxNumber != null) && (event.getEventId() == null)) {
+            for (i = 0; i < maxNumber; i++) {
+                Date startDateTimeExtraEvent = null;
+                Date endDateTimeExtraEvent = null;
+                switch (event.getEventInterval()) {
+
+                    case "day": {
+                        startDateTimeExtraEvent = DateUtils.addDays(startDateTime, i);
+                        endDateTimeExtraEvent = DateUtils.addDays(endDateTime, i);
+                        break;
+                    }
+                    case "week": {
+                        startDateTimeExtraEvent = DateUtils.addWeeks(startDateTime, i);
+                        endDateTimeExtraEvent = DateUtils.addWeeks(endDateTime, i);
+                        break;
+                    }
+                    case "month": {
+                        startDateTimeExtraEvent = DateUtils.addMonths(startDateTime, i);
+                        endDateTimeExtraEvent = DateUtils.addMonths(endDateTime, i);
+                        break;
+                    }
+                }
+                event = mapper.readValue(newEventJson, Event.class);
+                if(event.getDoneByMember().getMemberId() == null){
+                    event.setDoneByMember(null);
+                }
+                event.setEventStartDate(startDateTimeExtraEvent);
+                event.setEventEndDate(endDateTimeExtraEvent);
+                eventRepository.save(event);
+            }
+        } else {
+            if(event.getDoneByMember().getMemberId() == null){
+                event.setDoneByMember(null);
+            }
+            eventRepository.save(event);
         }
 
         // this sets the activity to the medication from the activity
@@ -109,7 +148,6 @@ public class CalendarController {
             removeMedicationAmountFromActivity(event);
         }
 
-        eventRepository.save(event);
         ServiceResponse<Event> result = new ServiceResponse<Event>("Succes", event);
         return new ResponseEntity<Object>(result, HttpStatus.OK);
     }
