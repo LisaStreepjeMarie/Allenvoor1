@@ -119,7 +119,6 @@ public class MemberController {
 
     @PostMapping("/member/new")
     protected String newMember(@ModelAttribute("member") @Valid Member member, BindingResult result, WebRequest request, Model model) {
-        System.out.println("is er output? " + member.getMemberName());
         memberValidator.validate(member, result);
         if (result.hasErrors()) {
             return "newMember";
