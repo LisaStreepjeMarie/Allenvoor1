@@ -84,8 +84,7 @@ public class TeamController {
     @GetMapping("/team/delete/{teamId}")
     public String deleteTeam(@PathVariable("teamId") final Integer teamId) {
         Team team = teamRepository.getOne(teamId);
-        Set<Member> membersToRemoveSet = new HashSet<>();
-        membersToRemoveSet.addAll(team.getAllMembersInThisTeamSet());
+        Set<Member> membersToRemoveSet = new HashSet<>(team.getAllMembersInThisTeamSet());
 
         for (Member member : membersToRemoveSet){
             member.removeTeamFromMember(team);
