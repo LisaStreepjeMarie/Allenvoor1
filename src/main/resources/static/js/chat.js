@@ -1,9 +1,13 @@
+
+// setting the context for the URL links
+var ctx = $('#contextPathHolder').attr('data-contextPath');
+
 $(document).ready(function() {
 
-//loading all messages when you start the page
+// loading all messages when you start the page
 getAllMessages();
 
-//interval command to check for new messages
+// interval command to check for new messages
 setInterval(checkNewMessages,1000);
 
 // creating a CSRF token for postmapping ajax commands
@@ -24,7 +28,7 @@ function newMessageForAjax(){
 
 // ajax call to send it to the controller side
    $.ajax({
-      url: "${pageContext.request.contextPath}/add/message",
+      url: ctx + "/add/message",
       method: "POST",
       contentType: "application/json; charset=UTF-8",
       data: JSON.stringify(newMessage),
@@ -45,7 +49,7 @@ function newMessageForAjax(){
 function getAllMessages(){
 
    $.ajax({
-      url: "${pageContext.request.contextPath}/chat/getAll",
+      url: ctx + "/chat/getAll",
       method: "GET",
       success: function(result) {
       allMessages = result.data.messages;
@@ -65,21 +69,21 @@ function getAllMessages(){
 
 // calculated the right "so many days ago" to put above the chat message using moment
 function testData(date){
-    var givenDate = new Date(Date.parse(date));
-    var day = givenDate.getDay();
+var givenDate = new Date(Date.parse(date));
+var day = givenDate.getDay();
 
-    timestamp = moment().toDate();
-    today = timestamp.getDay();
+timestamp = moment().toDate();
+today = timestamp.getDay();
 
-    if (day === today){
-    return "vandaag ";
+if (day === today){
+return "vandaag ";
 
-    } else if (today - day === 1) {
-    return (today - day) + " dag geleden"
+} else if (today - day === 1) {
+return (today - day) + " dag geleden"
 
-    } else {
-    return (today - day) + " dagen geleden"
-    }
+} else {
+return (today - day) + " dagen geleden"
+}
 
 }
 
@@ -92,9 +96,8 @@ var allMessages = document.getElementsByClassName("list-group-item");
 
 $.ajax({
          type:'GET',
-         url: "${pageContext.request.contextPath}/chat/checkNewMessages/" + allMessages.length,
+         url: ctx + "/chat/checkNewMessages/" + allMessages.length,
          success : function(result) {
-         // checking if the result status means there are new messages
                 if (result.status == "newMessages") {
                 newMessageList = result.data;
                      for (i in newMessageList ) {

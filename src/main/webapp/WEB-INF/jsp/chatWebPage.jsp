@@ -18,6 +18,7 @@
     <script src="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
     <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
+    <link href="${pageContext.request.contextPath}/css/chat.css" rel="stylesheet" type="text/css"/>
 
     <link id="contextPathHolder" data-contextPath="${pageContext.request.contextPath}"/>
     <link id="teamId" data-teamId="${team.teamId}"/>
