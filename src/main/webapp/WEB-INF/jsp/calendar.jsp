@@ -114,36 +114,34 @@
                     </div>
                     <div class="modal-body" id="eventPeriodicDiv">
                         <div class="modal-body">
-                            <div class="row">
+                            <div class="row" id="eventPeriodicCheckDiv">
                                 <label class="col-xs-4" for="eventPeriodic">Periodieke afspraak?&nbsp;</label>
                                 <input type="checkbox" id="eventPeriodic" name="eventPeriodic"/>
                             </div>
-                        </div>
-                        <!-- <div class="modal-body" id="eventIsPeriodic"> -->
-                            <div class="row" id="intervalDiv">
-                               <label class="col-4" for="eventInterval" control-label>Frequentie</label>
-                               <select name="event.eventInterval" id="eventInterval" >
-                                   <option disabled selected="selected" value="">Elke</option>
-                                   <option value="day">dag</option>
-                                   <option value="week">week</option>
-                                   <option value="month">maand</option>
-                               </select>
+                            <div class="row" id="eventIsPeriodicDiv">
+                                <label class="col-xs-4" for="eventPeriodic">Periodieke afspraak</label>
                             </div>
-                         <!-- </div> -->
+                        </div>
+                        <div class="row" id="intervalDiv">
+                           <label class="col-4" for="eventInterval" control-label>Frequentie</label>
+                           <select name="event.eventInterval" id="eventInterval" >
+                               <option disabled selected="selected" value="">Elke</option>
+                               <option value="day">dag</option>
+                               <option value="week">week</option>
+                               <option value="month">maand</option>
+                           </select>
+                        </div>
                     </div>
                     <div class="modal-body" id="maxNumberDiv">
                         <div class="row">
-                            <!-- <label class="col-4" for="eventNumberToGoLabel" id="eventNumberToGoLabel" control-label>Aantal keer nog over</label>
-                            <label class="col-4" for="eventMaxNumberLabel" id="eventMaxNumberLabel" control-label>Aantal keer</label> -->
                             <label class="col-4" for="eventMaxNumberLabel" id="eventMaxNumberLabel" control-label>Aantal keer</label>
                             <input type="text" size="1" name="eventMaxNumber" id="eventMaxNumber" />
                         </div>
                     </div>
-                    <!-- </div> -->
                     <div class="modal-body" >
-                            <div class="row" id="eventDoneDiv">
-                                <label class="col-4" for="eventDone">Uitgevoerd</label>
-                                <input type="checkbox" id="eventDone" name="eventDone"/>
+                        <div class="row" id="eventDoneDiv">
+                            <label class="col-4" for="eventDone">Uitgevoerd</label>
+                            <input type="checkbox" id="eventDone" name="eventDone"/>
                         </div>
                     </div>
 
@@ -157,16 +155,16 @@
                             </div>
 
                             <div class="modal-body">
-                        <div class="row" id ="doneByMemberDiv">
-                            <label class="col-4" for="doneByMember" control-label>Gedaan door </label>
-                            <select name="event.doneByMember" id="doneByMember" style="width:13.2em;" >
-                            <option disabled selected="doneByMember">null</option>
-                            </select>
+                                <div class="row" id ="doneByMemberDiv">
+                                    <label class="col-4" for="doneByMember" control-label>Gedaan door </label>
+                                    <select name="event.doneByMember" id="doneByMember" style="width:13.2em;" >
+                                    <option disabled selected="doneByMember">null</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    </div>
-                    </div>
-                    </span>
+                </span>
                 <div class="modal-footer" id="modal-footer">
                     <button type="button" id="delete-event" class="btn btn-danger" data-dismiss="modal">Verwijder Afspraak</button>
                     <button type="button" class="btn btn-light" data-dismiss="modal">Sluiten</button>

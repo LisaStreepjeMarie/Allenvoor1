@@ -12,7 +12,7 @@
     <script src="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
     <link id="contextPathHolder" data-contextPath="${pageContext.request.contextPath}"/>
-    <link href="${pageContext.request.contextPath}/css/stylingGroceryList.css" rel="stylesheet" type="text/css"/>
+    <link href="${pageContext.request.contextPath}/css/groceryList.css" rel="stylesheet" type="text/css"/>
 
     <link id="teamId" data-teamId="${team.teamId}"/>
     <link id="csrfToken" data-csrfToken="${_csrf.token}"/>
@@ -25,7 +25,6 @@
             <input type="text" id="newGroceryItem" placeholder="Nieuwe Boodschap...">
             <span onclick="newElement()" id="addButton" class="addBtn">Voeg toe!</span>
         </div>
-
 
         <ul id="allGroceries">
             <div id="allMedications">

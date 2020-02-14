@@ -74,11 +74,11 @@ function getMedication(event){
                  List = result.data
                  $('#medicationChoice').empty();
                  $('#medicationChoice').append('<option value="">Kies een medicatie</option>');
-                 for (i in List ) {
+                 for (i in List) {
                     $('#medicationChoice').append('<option value="' + List[i].id + '">' + List[i].name + '</option>');
                  }
-//                 document.getElementById("medicationChoice").value = event.activity.medication.id;
-//                 $('.modal').find('#takenMedication').val(event.activity.takenmedication);
+                 document.getElementById("medicationChoice").value = event.activity.medication.id;
+                 $('.modal').find('#takenMedication').val(event.activity.takenmedication);
              },
              error : function(e) {
              alert("getMedication() error")

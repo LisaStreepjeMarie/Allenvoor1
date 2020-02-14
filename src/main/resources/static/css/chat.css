@@ -1,0 +1,13 @@
+.messagesOverView{
+    max-height: 400px;
+    margin-bottom: 10px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+
+}
+
+.wholeChat{
+  padding-top: 40px;
+   width: 600px;
+}

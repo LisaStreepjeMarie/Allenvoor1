@@ -41,6 +41,10 @@ public class Member implements UserDetails {
     @JsonIgnore
     private String passwordConfirm;
 
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "member")
+    private List<Message> messagesFromMember;
+
     private boolean enabled;
 
     public Member(int memberId, String memberName, String password, String rol, String email, boolean enabled) {
@@ -54,6 +58,7 @@ public class Member implements UserDetails {
 
     public Member(){
         super();
+        //TODO: set to false during last presentation demo)
         this.enabled = true;
     }
 

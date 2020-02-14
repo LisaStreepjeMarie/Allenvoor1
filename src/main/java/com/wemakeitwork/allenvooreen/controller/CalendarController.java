@@ -104,7 +104,7 @@ public class CalendarController {
         int i = 0;
         Integer maxNumber = event.getEventMaxNumber();
         // case of periodic event
-        if (maxNumber != null) {
+        if ((maxNumber != null) && (event.getEventId() == null)) {
             for (i = 0; i < maxNumber; i++) {
                 Date startDateTimeExtraEvent = null;
                 Date endDateTimeExtraEvent = null;
