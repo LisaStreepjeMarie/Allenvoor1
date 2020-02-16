@@ -1,6 +1,7 @@
 package com.wemakeitwork.allenvooreen.model;
 
 import org.assertj.core.api.Assertions;
+import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -78,6 +79,35 @@ class MemberTest {
         Assertions.assertThat(testMember.getMemberName()).isEqualTo("testmember");
     }
 
+    // Test builder pattern
+    @Test
+    public void testMemberBuilder() {
+        // Arrange: set testvalues
+        Integer memberId = 1;
+        String memberName = "testMember";
+        String password = "password123456";
+        String rol = "admin";
+        String email = "testmember@allenvooreen.ddns.net";
+        boolean enabled = true;
+
+        // Act: Create testmember using builder pattern
+        Member testMember = new Member.Builder()
+                .setMemberId(memberId)
+                .setMemberName(memberName)
+                .setPassword(password)
+                .setRol(rol)
+                .setEmail(email)
+                .setEnabled(enabled)
+                .build();
+
+        // Assert: check values of created testmember
+        Assert.assertEquals(testMember.getMemberId(), memberId);
+        Assert.assertEquals(testMember.getMemberName(), memberName);
+        Assert.assertEquals(testMember.getPassword(), password);
+        Assert.assertEquals(testMember.getRol(), rol);
+        Assert.assertEquals(testMember.getEmail(), email);
+        Assert.assertEquals(testMember.isEnabled(), enabled);
+    }
 
     @AfterEach
     void cleanUp(){

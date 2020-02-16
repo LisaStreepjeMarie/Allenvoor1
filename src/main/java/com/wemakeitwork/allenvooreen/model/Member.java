@@ -62,6 +62,53 @@ public class Member implements UserDetails {
         this.enabled = true;
     }
 
+    // Builder
+    public static class Builder {
+        private Integer memberId;
+        private String memberName;
+        private String password;
+        private String rol;
+        private String email;
+        private boolean enabled;
+
+        public Builder() {}
+
+        public Builder setMemberId(Integer memberId) {
+            this.memberId = memberId;
+            return this;
+        }
+
+        public Builder setMemberName(String memberName) {
+            this.memberName = memberName;
+            return this;
+        }
+
+        public Builder setPassword(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public Builder setRol(String rol) {
+            this.rol = rol;
+            return this;
+        }
+
+        public Builder setEmail(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder setEnabled(boolean enabled) {
+            this.enabled = enabled;
+            return this;
+        }
+
+        public Member build() {
+            return new Member(memberId, memberName, password, rol, email, enabled);
+        }
+    }
+    // End of Builder
+
     @JsonIgnore
     @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, mappedBy = "doneByMember")
     private List<Event> doneEvents;
@@ -74,31 +121,6 @@ public class Member implements UserDetails {
     @JsonIgnore
     @OneToOne(mappedBy = "member")
     private VerificationToken verificationToken;
-
-
-    public VerificationToken getVerificationToken() {
-        return verificationToken;
-    }
-
-    public void setVerificationToken(VerificationToken verificationToken) {
-        this.verificationToken = verificationToken;
-    }
-
-    public Set<Team> getAllTeamsOfMemberSet() {
-        return allTeamsOfMemberSet;
-    }
-
-    public void setAllTeamsOfMemberSet(Set<Team> allTeamsOfMemberSet) {
-        this.allTeamsOfMemberSet = allTeamsOfMemberSet;
-    }
-
-    public String getRol() {
-        return rol;
-    }
-
-    public void setRol(String rol) {
-        this.rol = rol;
-    }
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER, mappedBy = "member")
@@ -206,6 +228,30 @@ public class Member implements UserDetails {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public VerificationToken getVerificationToken() {
+        return verificationToken;
+    }
+
+    public void setVerificationToken(VerificationToken verificationToken) {
+        this.verificationToken = verificationToken;
+    }
+
+    public Set<Team> getAllTeamsOfMemberSet() {
+        return allTeamsOfMemberSet;
+    }
+
+    public void setAllTeamsOfMemberSet(Set<Team> allTeamsOfMemberSet) {
+        this.allTeamsOfMemberSet = allTeamsOfMemberSet;
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 
 }
