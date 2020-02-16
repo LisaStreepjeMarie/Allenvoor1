@@ -21,12 +21,18 @@ import java.util.Set;
 public class Team {
     public Team() {
         this.groceryList = new GroceryList();
+        this.chat = new Chat();
     }
 
     @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "grocery_list_id", referencedColumnName = "id")
     private GroceryList groceryList;
+
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "chat_id", referencedColumnName = "id")
+    private Chat chat;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -96,5 +102,13 @@ public class Team {
 
     public void setGroceryList(GroceryList groceryList) {
         this.groceryList = groceryList;
+    }
+
+    public Chat getChat() {
+        return chat;
+    }
+
+    public void setChat(Chat chat) {
+        this.chat = chat;
     }
 }
