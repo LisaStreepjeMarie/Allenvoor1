@@ -40,7 +40,7 @@ public class MedicationController {
     }
 
     @GetMapping("/medication/{teamId}")
-    public String showMedication(@PathVariable("teamId") final Integer teamId, Model model, Principal principal) {
+    public String showMedication2(@PathVariable("teamId") final Integer teamId, Model model, Principal principal) {
         Team team = teamRepository.getOne(teamId);
         httpSession.setAttribute("team", team);
 
