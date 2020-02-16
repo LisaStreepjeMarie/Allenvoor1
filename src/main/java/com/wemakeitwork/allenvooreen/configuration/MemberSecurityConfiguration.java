@@ -56,9 +56,8 @@ public class MemberSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/member/new/**", "/images/**", "/css/**",
                         "/webjars/bootstrap/**", "/webjars/jquery/**", "/confirmRegistration/**", "/forgotPassword/**","/member/resetPassword/**","/member/changePassword/**",
-                        "/emailError/**")
+                        "/emailError/**", "/member/updatePassword/**","/member/savePassword/**","/updatePassword/**", "/resetLinkSend/**")
                 .permitAll()
-                .antMatchers("/member/updatePassword/**","/member/savePassword/**","/updatePassword/**").hasAuthority("CHANGE_PASSWORD_PRIVILEGE")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

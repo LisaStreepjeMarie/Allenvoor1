@@ -3,6 +3,7 @@ package com.wemakeitwork.allenvooreen.controller;
 import com.wemakeitwork.allenvooreen.dto.PasswordDto;
 import com.wemakeitwork.allenvooreen.model.Member;
 import com.wemakeitwork.allenvooreen.model.PasswordResetToken;
+import com.wemakeitwork.allenvooreen.model.Privilege;
 import com.wemakeitwork.allenvooreen.model.VerificationToken;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
@@ -24,6 +25,10 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -38,9 +43,11 @@ import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -175,14 +182,14 @@ public class MemberController {
 
     // Reset wachtwoord
 
-    @GetMapping("/forgotPassword")
-    protected String showForgotPage() {
+    @GetMapping("/member/resetPassword")
+    protected String showForgotPage(Model model) {
+        model.addAttribute("member", new Member());
         return "forgotPassword";
     }
 
-    @RequestMapping(value= "/member/resetPassword")
-    @ResponseBody
-    public GenericResponse resetPassword(HttpServletRequest request, @ModelAttribute("email") String email) {
+    @PostMapping("/member/resetPassword")
+    public String resetPassword(HttpServletRequest request, @ModelAttribute("email") String email) {
         System.out.println("dag");
         Member member = memberRepository.findByEmail(email);
         if (member == null) {
@@ -191,28 +198,24 @@ public class MemberController {
             String token = UUID.randomUUID().toString();
             memberService.createPasswordResetTokenForMember(member, token);
             mailSender.send(constructResetTokenEmail(getAppUrl(request), request.getLocale(), token, member));
-        return new GenericResponse(messages.getMessage("message.resetPasswordEmail", null, request.getLocale()));
+        return "resetLinkSend";
     }
 
-    @GetMapping(value = "/member/changePassword")
-    public String showChangePasswordPage(Locale locale, Model model, @RequestParam("id") int id, @RequestParam("token") String token) {
+    @GetMapping("/member/changePassword")
+    public String showChangePasswordPage(Model model, @RequestParam("id") int id, @RequestParam("token") String token) {
         String result = securityServiceInterface.validatePasswordResetToken(id, token);
-        System.out.println("test");
         if (result != null) {
-            model.addAttribute("message", messages.getMessage("auth.message." + result, null, locale));
             return "redirect:/login";
         }
         return "updatePassword";
     }
 
-    @RequestMapping(value= "/member/savePassword")
-    @ResponseBody
-    public GenericResponse savePassword(Locale locale, @Valid PasswordDto passwordDto) {
+    @PostMapping("/member/changePassword")
+    public String savePassword(@Valid PasswordDto passwordDto) {
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         memberService.changeMemberPassword(member, passwordDto.getNewPassword());
-        return new GenericResponse(messages.getMessage("message.resetPasswordSuc", null, locale));
+        return "PasswordResetSuccess";
     }
-
 
     private SimpleMailMessage constructResetTokenEmail(
             String contextPath, Locale locale, String token, Member member) {

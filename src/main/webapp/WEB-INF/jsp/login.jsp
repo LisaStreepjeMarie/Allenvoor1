@@ -42,7 +42,7 @@
             <label for="password" class="sr-only">Wachtwoord</label>
             <input type="password" id="password" name="password" class="form-control" placeholder="Wachtwoord" required>
             <br/><br/>
-            <a class="btn btn-default" href="${pageContext.request.contextPath}/forgotPassword">Wachtwoord vergeten?</a>
+            <a class="btn btn-default" href="${pageContext.request.contextPath}/member/resetPassword">Wachtwoord vergeten?</a>
             <div class="checkbox mb-3">
                 <label>
                     <input type="checkbox" value="remember-me">Onthoud mij

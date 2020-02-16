@@ -1,67 +1,71 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
-<html>
-<head>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
-<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII"/>
-<title text="message.resetPassword">reset</title>
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-</head>
-<body>
-<div class="container">
-    <h1>reset</h1>
-    <br/>
-    <div class="row">
-      <form action="${pageContext.request.contextPath}/member/resetPassword">
-        <label class="col-sm-1">email</label>
-        <span class="col-sm-5"><input class="form-control" id="email" name="email" type="email" value="" required="required"/></span>
-        <button class="btn btn-primary" type="submit">reset</button>
-      </form>
-    </div>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 
-<br/>
-<a class="btn btn-default" href="${pageContext.request.contextPath}/newMember.jsp" >registration</a>
-<br/><br/>
-<a class="btn btn-default" href="${pageContext.request.contextPath}/login" >login</a>
+<html xmlns:form="http://www.w3.org/1999/xhtml" xmlns:spring="">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="shortcut icon" href="${pageContext.request.contextPath}/images/favicon.ico" type="image/x-icon" />
+        <title>Maak een nieuwe gebruiker aan</title>
 
-</div>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script>
+        <script src="${pageContext.request.contextPath}/webjars/jquery/3.4.1/jquery.min.js"></script>
+
+        <!-- Bootstrap core CSS -->
+        <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
+        <script src="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+        <!-- Custom styles for this template -->
+        <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
+        <link href="${pageContext.request.contextPath}/css/signin.css" rel="stylesheet" type="text/css"/>
+    </head>
+
+    <body class="text-center">
+        <div class="text-center p-5">
+            <h1 class="h3 mb-3 font-weight-light"><strong>Wachtwoord vergeten?</strong><br> Voer hier je emailadres in:</h1>
+            <form class="form-signin" method="post" action="${pageContext.request.contextPath}/member/resetPassword">
 
 
-$(document).ready(function () {
-		resetPass();
-    });
-});
-
-function resetPass(){
-
-    var email = $("email");
-    $.post("allenvooreen/member/resetPassword", {email: email} ,function(data){
-            window.location.href = "allenvooreen/login?message=" + data.message;
-    })
-    .fail(function(data) {
-    	if(data.responseJSON.error.indexOf("MailError") > -1)
-        {
-            window.location.href = serverContext + "emailError.html";
-        }
-        else{
-            window.location.href = serverContext + "login?message=" + data.responseJSON.message;
-        }
-    });
-}
-
-$(document).ajaxStart(function() {
-    $("title").html("LOADING ...");
-});
+                <form:form action="${pageContext.request.contextPath}/member/resetPassword" modelAttribute="member">
+                <div class="form-group ${status.error ? 'has-error' : ''}">
+                   <form:input type="email" name= "email" class="form-control" path= "email" placeholder="Email"></form:input>
+                   <form:errors path="email"></form:errors>
+               </div>
 
 
-</script>
-</body>
 
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Stuur email</button>
+            </form:form>
+
+            <form action="${pageContext.request.contextPath}/logout" method="post" class="form-signin" >
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Terug naar inloggen</button>
+                <p class="mt-5 mb-3 text-muted">&copy; 2020 Allenvooreen</p>
+            </form>
+    </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
