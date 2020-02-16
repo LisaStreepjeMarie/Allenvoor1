@@ -63,7 +63,6 @@ public class GroceryListController {
                 .sorted(Comparator.comparing(Team::getTeamName))
                 .collect(Collectors.toList());
 
-
         model.addAttribute("teamList", sortedList);
         return "groceryListWebpage";
     }
