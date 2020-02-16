@@ -22,12 +22,12 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
 public class TeamController {
-
     @Autowired
     TeamRepository teamRepository;
 
@@ -37,35 +37,37 @@ public class TeamController {
     @Autowired
     TeamMembershipRepository teamMembershipRepository;
 
-    int membershipId;
-
     @GetMapping("/team/all")
-    protected String showTeamsPerMember(Model model){
+    protected String showTeamsPerMember(Model model) {
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        // List of teams where current user is an admin
-        model.addAttribute("adminTeamList", memberRepository
-                // Find all teams where current user is a member
-                .findByMemberName(member.getMemberName()).get().getTeamMemberships().stream()
-                // Filter out the member (and leave out the rest of the teammembers)
-                .filter(x -> x.getMember().getMemberId().equals(member.getMemberId()))
-                // Filter out teams where user is admin
-                .filter(TeamMembership::isAdmin).map(TeamMembership::getTeam)
-                // Sort the list by teamname
-                .sorted(Comparator.comparing(Team::getTeamName))
-                // Save resulting teams to adminTeamList
-                .collect(Collectors.toCollection(ArrayList::new)));
+        if (memberRepository.findByMemberName(member.getMemberName()).isPresent()) {
+            // List of teams where current user is an admin
+            model.addAttribute("adminTeamList", Objects.requireNonNull(memberRepository
+                    // Find all teams where current user is a member
+                    .findByMemberName(member.getMemberName()).orElse(null)).getTeamMemberships().stream()
+                    // Filter out the member (and leave out the rest of the teammembers)
+                    .filter(x -> x.getMember().getMemberId().equals(member.getMemberId()))
+                    // Filter out teams where user is admin
+                    .filter(TeamMembership::isAdmin).map(TeamMembership::getTeam)
+                    // Sort the list by teamname
+                    .sorted(Comparator.comparing(Team::getTeamName))
+                    // Save resulting teams to adminTeamList
+                    .collect(Collectors.toCollection(ArrayList::new)));
 
-        // list of teams where current user is NOT an admin
-        model.addAttribute("memberTeamList", memberRepository
-                .findByMemberName(member.getMemberName()).get().getTeamMemberships().stream()
-                .filter(x -> x.getMember().getMemberId().equals(member.getMemberId()))
-                .filter(x -> !x.isAdmin()).map(TeamMembership::getTeam)
-                .sorted(Comparator.comparing(Team::getTeamName))
-                .collect(Collectors.toCollection(ArrayList::new)));
+            // list of teams where current user is NOT an admin
+            model.addAttribute("memberTeamList", Objects.requireNonNull(memberRepository
+                    .findByMemberName(member.getMemberName()).orElse(null)).getTeamMemberships().stream()
+                    .filter(x -> x.getMember().getMemberId().equals(member.getMemberId()))
+                    .filter(x -> !x.isAdmin()).map(TeamMembership::getTeam)
+                    .sorted(Comparator.comparing(Team::getTeamName))
+                    .collect(Collectors.toCollection(ArrayList::new)));
+        } /*else {
+            model.addAttribute("statuscode", "Er zijn geen groepen gevonden voor deze gebruiker");
+            return "error";
+        }*/
 
         return "teamOverview";
-
     }
 
     @GetMapping("/team/new")
