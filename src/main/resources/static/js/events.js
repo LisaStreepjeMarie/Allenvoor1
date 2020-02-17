@@ -206,6 +206,7 @@ function unsubscribeFromEvent(eventSubscriptionId) {
          dataType: 'json',
          async: true,
          success: function(result) {
+            $('#subscription-id-' + eventSubscriptionId).remove();
          },
          error: function(e) {
              alert("unsubscribeFromEvent() error")
