@@ -18,7 +18,7 @@ setInterval(checkNewMessages,1000);
     });
 });
 
-// function which gets called when you click the new message submit buttonn
+// function which gets called when you click the new message submit button
 function newMessageForAjax(){
 
    // creating a new message to save
@@ -70,10 +70,10 @@ function getAllMessages(){
 // calculated the right "so many days ago" to put above the chat message using moment
 function testData(date){
 var givenDate = new Date(Date.parse(date));
-var day = givenDate.getDay();
+var day = givenDate.getDate();
 
 timestamp = moment().toDate();
-today = timestamp.getDay();
+today = timestamp.getDate();
 
 if (day === today){
 return "vandaag ";
@@ -86,7 +86,6 @@ return (today - day) + " dagen geleden"
 }
 
 }
-
 
 // function compares the list size every so often with ajax. If the list in database is bigger it will get the new messages and append these
 function checkNewMessages(){
@@ -101,8 +100,10 @@ $.ajax({
                 if (result.status == "newMessages") {
                 newMessageList = result.data;
                      for (i in newMessageList ) {
+                     // each message needs to be appended to the list, this is done with the function below
                      appendNewMessage(newMessageList[i]);
                      }
+                     // after the messages are loaded, scroll to the bottem for the latest message
                      $('#overViewMessages').animate({scrollTop: $('#overViewMessages').prop("scrollHeight")}, 500);
                  }
 

@@ -50,9 +50,11 @@ public class GroceryListController {
         Team team = teamRepository.getOne(teamId);
         httpSession.setAttribute("team", team);
         model.addAttribute("team", team);
+
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Set<TeamMembership> teamMembershipList = memberRepository.findByMemberName(member.getMemberName()).get().getTeamMemberships();
         ArrayList<Team> teamList = new ArrayList<>();
+
         for (TeamMembership tms: teamMembershipList) {
             teamList.add(tms.getTeam());
         }
@@ -60,7 +62,6 @@ public class GroceryListController {
         ArrayList<Team> sortedList = (ArrayList<Team>) teamList.stream()
                 .sorted(Comparator.comparing(Team::getTeamName))
                 .collect(Collectors.toList());
-
 
         model.addAttribute("teamList", sortedList);
         return "groceryListWebpage";
