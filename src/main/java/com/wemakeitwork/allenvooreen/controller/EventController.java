@@ -123,6 +123,7 @@ public class EventController {
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         EventSubscription eventUnsubscription = mapper.readValue(unsubscribeEvent, EventSubscription.class);
         eventSubscriptionRepository.delete(eventUnsubscription);
-        return new ResponseEntity<Object>("success!", HttpStatus.OK);
+        ServiceResponse<EventSubscription> response = new ServiceResponse<EventSubscription>("success", eventUnsubscription);
+        return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
 }
