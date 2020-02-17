@@ -1,8 +1,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
-<html xmlns:mytags="">
+<html xmlns:mytags="" xmlns:security="" xmlns:c="http://www.w3.org/1999/XSL/Transform">
 <head>
     <title>Kalender</title>
     <meta charset='utf-8' />
@@ -16,8 +17,16 @@
     <script src="${pageContext.request.contextPath}/webjars/jquery/3.4.1/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
+    <!-- Setup variables which can be read from external javascript file -->
     <link id="contextPathHolder" data-contextPath="${pageContext.request.contextPath}"/>
     <link id="csrfToken" data-csrfToken="${_csrf.token}"/>
+    <security:authorize access="isAuthenticated()">
+        <c:set var="principalUsername">
+            <security:authentication property="principal.username" />
+        </c:set>
+        <link id="principalUsername" data-principalUsername="${principalUsername}"/>
+    </security:authorize>
+
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/events.js"></script>
 
     <%@ taglib prefix="mytags" tagdir="/WEB-INF/tags" %>
@@ -33,13 +42,14 @@
                 <!-- this list is filled by getEventSubscriptions() in the events.js -->
             </div>
         </ul>
+    </div>
+    <div class="w-25 p-3" id="subscribe">
         <input class="btn btn-primary" type="submit" value="Schrijf je in" onclick="addEventSubscription(${eventId})">
     </div>
 </div>
 
 </body>
 <script>
-
     $(document).ready(function(){
         getEventSubscriptions(${eventId});
     })

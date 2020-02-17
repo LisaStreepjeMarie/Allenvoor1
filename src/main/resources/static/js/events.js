@@ -141,16 +141,22 @@ function getEventSubscriptions(eventId){
          type:'GET',
          url: ctx + "/event/" + eventId + "/getsubscriptionlist",
          success : function(result) {
-                subscriptionList = result.data;
-                 for (i in subscriptionList){
+            subscriptionList = result.data;
+             for (i in subscriptionList){
+                if ($('#principalUsername').attr('data-principalUsername') === subscriptionList[i].member.name) {
                     $('#subscriptionList').append('<li class="list-group-item" value="' +
-                    subscriptionList[i].member.id + '">' + subscriptionList[i].member.name + '<input class="btn btn-primary float-right"' +
-                    'style="width: auto;padding:5px;margin-left:5px;" type="submit" value="Schrijf uit"' +
-                    'onClick="removeEventSubscription(' + subscriptionList[i].event.id + ', ' + subscriptionList[i].id + ')"></li>');
-                 }
-             },
-             error : function(e) {
-             console.log("ERROR: ", e);
+                        subscriptionList[i].member.id + '">' + subscriptionList[i].member.name + '<input class="btn btn-primary float-right"' +
+                        'style="width: auto;padding:0px;" type="submit" value="   Schrijf uit   "' +
+                        'onClick="removeEventSubscription(' + subscriptionList[i].event.id + ', ' + subscriptionList[i].id + ')"></li>');
+                    $('#subscribe').remove();
+                } else {
+                    $('#subscriptionList').append('<li class="list-group-item" value="' +
+                        subscriptionList[i].member.id + '">' + subscriptionList[i].member.name + '</li>');
+                }
+             }
+         },
+         error : function(e) {
+         console.log("ERROR: ", e);
          }
     });
 }
