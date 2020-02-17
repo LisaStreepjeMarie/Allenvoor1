@@ -118,9 +118,11 @@ public class EventController {
         return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/event/{eventid}/deletesubscription/{subscriptionid}")
-    protected ResponseEntity<Object> deleteSubscription(@PathVariable("subscriptionid") final Integer subscriptionId) {
-        eventSubscriptionRepository.deleteById(subscriptionId);
+    @PostMapping("/event/unsubscribe")
+    public ResponseEntity<Object> unsubscribeFromEvent(@RequestBody String unsubscribeEvent) throws JsonProcessingException {
+        Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        EventSubscription eventUnsubscription = mapper.readValue(unsubscribeEvent, EventSubscription.class);
+        eventSubscriptionRepository.delete(eventUnsubscription);
         return new ResponseEntity<Object>("success!", HttpStatus.OK);
     }
 }
