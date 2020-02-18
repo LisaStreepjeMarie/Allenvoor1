@@ -30,15 +30,17 @@ $(document).ready(function() {
 
             // This function is executed when an empty date/time is clicked
             select: function(start, end) {
-                $("#modal-footer").hide();
-                /*$("#datetimepickerDone").hide();*/
-                $("#activityCategory").change(function () {
-                    showModalInputFields();
-                });
-
-                document.getElementById('save-change-event').setAttribute( "onClick", "saveEvent('"+ null + "','" + null + "')" );
-                event = {type: "Event", id: null, start: start, end: end,};
-                fillModal(event);
+            $('#newModal').modal('show');
+            //removing the action below to test a new modal,
+//                $("#modal-footer").hide();
+//                /*$("#datetimepickerDone").hide();*/
+//                $("#activityCategory").change(function () {
+//                    showModalInputFields();
+//                });
+//
+//                document.getElementById('save-change-event').setAttribute( "onClick", "saveEvent('"+ null + "','" + null + "')" );
+//                event = {type: "Event", id: null, start: start, end: end,};
+//                fillModal(event);
             },
 
             // This function is executed when an already planned event is clicked

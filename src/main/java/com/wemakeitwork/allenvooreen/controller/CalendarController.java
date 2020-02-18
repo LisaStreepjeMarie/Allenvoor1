@@ -191,4 +191,9 @@ public class CalendarController {
                 .forEach(x -> ((MedicationActivity) x.getActivity()).getMedication().upTheMedicationAmount
                         (((MedicationActivity) x.getActivity()).getTakenMedication()));
     }
+
+    @GetMapping("/newModal")
+    public String testNewModal(){
+        return "newModal";
+    }
 }
