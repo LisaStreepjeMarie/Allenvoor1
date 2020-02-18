@@ -19,19 +19,17 @@
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Nieuwe activiteit</h5>
-            </div>
+        <div class="modal-content" style="background-color: coral;">
+
 
 
 <ul class="nav nav-tabs" id="tabContent">
-    <li class="active"><a href="#details" data-toggle="tab">Vrije tijd</a></li>
+    <li class="active"><a href="#details" style="background-color: coral;" data-toggle="tab">Vrije tijd</a></li>
     <li><a href="#access-security" data-toggle="tab">Medisch</a></li>
 </ul>
 
 <div class="tab-content">
-    <div class="tab-pane active" id="details">
+    <div class="tab-pane active" style="background-color: coral;" id="details">
 
         Details tab
 
@@ -46,7 +44,7 @@
 
 </div>
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer" style="background-color: coral;">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="button" class="btn btn-primary">Save changes</button>
         </div>
