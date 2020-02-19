@@ -8,40 +8,86 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
+    <link href="${pageContext.request.contextPath}/webjars/font-awesome/5.12.0/css/all.min.css" rel='stylesheet'>
 <style>
 
-
+.modal-footer {
+    border: 0;
+    }
 
     .tabs {
 
     position: fixed;
-    width: 200px;
-    height: 80px;
+    width: 90px;
+    height: 90px;
 
 }
 
 @media (min-width: 768px) {
   .tabs {
-    top: calc(10px + 5%);
+    top: calc(12px + 9%);
     right: calc(234.5px + 50%);
     left: auto;
   }
-
-      .memberTab {
-
-    position: fixed;
-    width: 150px;
-    height: 80px;
 
 }
 
-  @media (min-width: 768px) {
-  .memberTab {
-    top: calc(13px + 20%);
-    right: calc(234.5px + 50%);
-    left: auto;
-  }
+.modal-header {
+    background: #4a4a4a;
+    padding: 0p;
+    height: 57px;
+    border: 0;
+}
+
+.tabs-top {
+    margin-bottom: 1px;
+    margin-top: 1px;
+}
+
+.nav-tabs {
+    border: 0;
+
+}
+
+.tabs-4 .nav-tabs > li {
+    width: 200px;
+    border: 0;
+
+}
+
+.nav-tabs > li > a {
+    width: 230px;
+
+    background: #4a4a4a;
+    color: #fff;
+
+    text-align: center;
+}
+
+.nav-tabs > li > a:hover,
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus {
+    border: 0;
+    background: #4a4a4a;
+    color: #ffd800;
+}
+
+.nav-tabs > li.active > a {
+    border: 0;
+    background: #4a4a4a;
+    color: #fff;
+}
+
+.nav-tabs > li.active > a.active {
+    border: 0;
+    background: #4a4a4a;
+    color: #ffd800;
+}
+
+
+.nav-item {
+    vertical-align:top;
 }
 </style>
 </head>
@@ -56,55 +102,63 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
 
-            <div class="modal-body">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                    <!-- Nav tabs -->
-                    <div class="row mt-4">
+            <div class="modal-header">
+                <div class="tabbable">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li >
+                            <a class="nav-link" href="#LeasureActivity" data-toggle="tab">
+                                Vrije tijd
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="#MedicationActivity" data-toggle="tab">
+                                Medisch
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
 
-                        <div class="col-8">
-                            <div class="tab-content" id="nav-tabContent">
-                                <div class="tab-pane fade" id="LeasureActivity" role="tabpanel" aria-labelledby="list-messages-list">
-                                    <div class="modal-body" id="eventNameDiv">
-                                        <div class="row">
-                                            <label class="col-4" for="eventName">Onderwerp</label>
-                                            <input type="text" name="eventName" id="eventName" />
-                                            <input type="hidden" name="eventId" id="eventId" />
-                                            <input type="hidden" name="activityId" id="activityId" />
-                                            <input type="hidden" name="teamId" id="team.teamId"/>
-                                            <input type="hidden" name="teamName" value="${team.teamName}" id="teamName"/>
-                                        </div>
-                                    </div>
-
-                                    <!-- event with activity modal input fields -->
-                                    <div class="modal-body" id="eventCommentDiv">
-                                        <div class="row">
-                                            <label class="col-4" for="eventComment">Beschrijving</label>
-                                            <input type="text" name="eventComment" id="eventComment" />
-                                        </div>
-                                    </div>
+            <div class="row mt-4">
+                <div class="col-8">
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade" id="LeasureActivity" role="tabpanel" aria-labelledby="list-messages-list">
+                            <div class="modal-body" id="eventNameDiv">
+                                <div class="row">
+                                    <label class="col-4" for="eventName">Onderwerp</label>
+                                    <input type="text" name="eventName" id="eventName" />
+                                    <input type="hidden" name="eventId" id="eventId" />
+                                    <input type="hidden" name="activityId" id="activityId" />
+                                    <input type="hidden" name="teamId" id="team.teamId"/>
+                                    <input type="hidden" name="teamName" value="${team.teamName}" id="teamName"/>
                                 </div>
-                                <div class="tab-pane fade" id="MedicationActivity" role="tabpanel" aria-labelledby="list-settings-list">
-                                    <div class="modal-body" id="medicationChoiceDiv">
-                                        <div class="row">
-                                            <label class="col-4" for="medicationChoice" control-label>Medicijn</label>
-                                            <select name="medication.medicationId" id="medicationChoice" >
-                                                <option disabled selected="selected">Kies een medicijn</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="modal-body" id="takenMedicationDiv">
-                                        <div class="row">
-                                            <label class="col-4" for="takenMedication" control-label>Hoeveelheid</label>
-                                            <input type="number" name="takenMedication" id="takenMedication" />
-                                        </div>
-                                    </div>
-
+                            </div>
+                            <!-- event with activity modal input fields -->
+                            <div class="modal-body" id="eventCommentDiv">
+                                <div class="row">
+                                    <label class="col-4" for="eventComment">Beschrijving</label>
+                                    <input type="text" name="eventComment" id="eventComment" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="MedicationActivity" role="tabpanel" aria-labelledby="list-settings-list">
+                            <div class="modal-body" id="medicationChoiceDiv">
+                                <div class="row">
+                                    <label class="col-4" for="medicationChoice" control-label>Medicijn</label>
+                                    <select name="medication.medicationId" id="medicationChoice" >
+                                        <option disabled selected="selected">Kies een medicijn</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="modal-body" id="takenMedicationDiv">
+                                <div class="row">
+                                    <label class="col-4" for="takenMedication" control-label>Hoeveelheid</label>
+                                    <input type="number" name="takenMedication" id="takenMedication" />
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -114,13 +168,7 @@
         </div>
     </div>
     <div class="col-4 tabs">
-        <div class="list-group " id="list-tab" role="tablist">
-            <a class="list-group-item  list-group-item-action" style="background-color:#cce6ff;" id="list-messages-list" data-toggle="list" href="#LeasureActivity" role="tab" aria-controls="messages">Vrije tijd</a>
-            <a class="list-group-item  list-group-item-action" style="background-color:#ccb3ff;" id="list-settings-list" data-toggle="list" href=#MedicationActivity role="tab" aria-controls="settings">Medisch</a>
-        </div>
-    </div>
-    <div class="col-4 memberTab">
-    <a class="list-group-item  list-group-item-action" style="background-color:#ccb3ff;" id="Memberlist" data-toggle="list" href=#MedicationActivity role="tab" aria-controls="settings">Personen</a>
+    <a class="list-group-item  list-group-item-action" style="background-color:#ccb3ff;" id="Memberlist" data-toggle="list" href=#MedicationActivity role="tab" aria-controls="settings"><i class="fas fa-user float-center"></i></a>
     </div>
 </div>
 <script>
