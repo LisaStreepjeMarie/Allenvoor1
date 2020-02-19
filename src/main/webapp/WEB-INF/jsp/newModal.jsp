@@ -12,24 +12,34 @@
 <style>
 
 
-.btn {
-  margin-top: 30px;
-  display: block;
-}
 
     .tabs {
-    top: 20vh;
-    left: 1.2em;
+
     position: fixed;
-    width: 47px;
-    height: 20px;
+    width: 200px;
+    height: 80px;
 
 }
 
 @media (min-width: 768px) {
   .tabs {
     top: calc(10px + 5%);
-    right: calc(259px + 50%);
+    right: calc(234.5px + 50%);
+    left: auto;
+  }
+
+      .memberTab {
+
+    position: fixed;
+    width: 150px;
+    height: 80px;
+
+}
+
+  @media (min-width: 768px) {
+  .memberTab {
+    top: calc(13px + 20%);
+    right: calc(234.5px + 50%);
     left: auto;
   }
 }
@@ -42,7 +52,7 @@
 </button>
 
 <!-- Modal -->
-<div class="modal fade newModal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade newModal" id="exampleModal"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
 
@@ -105,31 +115,17 @@
     </div>
     <div class="col-4 tabs">
         <div class="list-group " id="list-tab" role="tablist">
-            <a class="list-group-item  list-group-item-action" id="list-messages-list" data-toggle="list" href="#LeasureActivity" role="tab" aria-controls="messages">Vrije tijd</a>
-            <a class="list-group-item  list-group-item-action" id="list-settings-list" data-toggle="list" href=#MedicationActivity role="tab" aria-controls="settings">Medisch</a>
+            <a class="list-group-item  list-group-item-action" style="background-color:#cce6ff;" id="list-messages-list" data-toggle="list" href="#LeasureActivity" role="tab" aria-controls="messages">Vrije tijd</a>
+            <a class="list-group-item  list-group-item-action" style="background-color:#ccb3ff;" id="list-settings-list" data-toggle="list" href=#MedicationActivity role="tab" aria-controls="settings">Medisch</a>
         </div>
     </div>
+    <div class="col-4 memberTab">
+    <a class="list-group-item  list-group-item-action" style="background-color:#ccb3ff;" id="Memberlist" data-toggle="list" href=#MedicationActivity role="tab" aria-controls="settings">Personen</a>
+    </div>
 </div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.5/popper.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
 <script>
-        function equalHeight(group) {
-            tallest = 0;
-            group.each(function() {
-                thisHeight = $(this).height();
-                if (thisHeight > tallest) {
-                    tallest = thisHeight;
-                }
-            });
-            group.height(tallest);
-        }
 
-        $(document).ready(function() {
-            equalHeight($(".equalHeight"));
-        });
-        //# sourceURL=pen.js
-    </script>
+</script>
+
 </body>
 </html>
