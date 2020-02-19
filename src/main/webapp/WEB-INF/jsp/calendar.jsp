@@ -33,48 +33,6 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/events.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/calendar.js"></script>
 
-    <style>
-        /*** PANEL SUCCESS ***/
-.with-nav-tabs.panel-success .nav-tabs > li > a,
-.with-nav-tabs.panel-success .nav-tabs > li > a:hover,
-.with-nav-tabs.panel-success .nav-tabs > li > a:focus {
-	color: #3c763d;
-}
-.with-nav-tabs.panel-success .nav-tabs > .open > a,
-.with-nav-tabs.panel-success .nav-tabs > .open > a:hover,
-.with-nav-tabs.panel-success .nav-tabs > .open > a:focus,
-.with-nav-tabs.panel-success .nav-tabs > li > a:hover,
-.with-nav-tabs.panel-success .nav-tabs > li > a:focus {
-	color: #3c763d;
-	background-color: #d6e9c6;
-	border-color: transparent;
-}
-.with-nav-tabs.panel-success .nav-tabs > li.active > a,
-.with-nav-tabs.panel-success .nav-tabs > li.active > a:hover,
-.with-nav-tabs.panel-success .nav-tabs > li.active > a:focus {
-	color: #3c763d;
-	background-color: #fff;
-	border-color: #d6e9c6;
-	border-bottom-color: transparent;
-}
-.with-nav-tabs.panel-success .nav-tabs > li.dropdown .dropdown-menu {
-    background-color: #dff0d8;
-    border-color: #d6e9c6;
-}
-.with-nav-tabs.panel-success .nav-tabs > li.dropdown .dropdown-menu > li > a {
-    color: #3c763d;
-}
-.with-nav-tabs.panel-success .nav-tabs > li.dropdown .dropdown-menu > li > a:hover,
-.with-nav-tabs.panel-success .nav-tabs > li.dropdown .dropdown-menu > li > a:focus {
-    background-color: #d6e9c6;
-}
-.with-nav-tabs.panel-success .nav-tabs > li.dropdown .dropdown-menu > .active > a,
-.with-nav-tabs.panel-success .nav-tabs > li.dropdown .dropdown-menu > .active > a:hover,
-.with-nav-tabs.panel-success .nav-tabs > li.dropdown .dropdown-menu > .active > a:focus {
-    color: #fff;
-    background-color: #3c763d;
-}
-    </style>
 </head>
 
 <body>
@@ -218,70 +176,6 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 </form>
-<div class="modal fade bd-example-modal-lg" tabindex="-1" id="newModal" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="panel with-nav-tabs panel-success">
-                            <div class="panel-heading">
-                                <ul class="nav nav-tabs">
-                                    <li class="active"><a href="#tab1success" data-toggle="tab">Success 1</a></li>
-                                    <li><a href="#tab2success" data-toggle="tab">Success 2</a></li>
-                                    <li><a href="#tab3success" data-toggle="tab">Success 3</a></li>
-                                    <li class="dropdown">
-                                        <a href="#" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li><a href="#tab4success" data-toggle="tab">Success 4</a></li>
-                                            <li><a href="#tab5success" data-toggle="tab">Success 5</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="panel-body">
-                                <div class="tab-content">
-                                    <div class="tab-pane fade in active" id="tab1success">Success 1</div>
-                                    <div class="tab-pane fade" id="tab2success">Success 2</div>
-                                    <div class="tab-pane fade" id="tab3success">Success 3</div>
-                                    <div class="tab-pane fade" id="tab4success">Success 4</div>
-                                    <div class="tab-pane fade" id="tab5success">Success 5</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="panel with-nav-tabs panel-info">
-                            <div class="panel-heading">
-                                <ul class="nav nav-tabs">
-                                    <li class="active"><a href="#tab1info" data-toggle="tab">Info 1</a></li>
-                                    <li><a href="#tab2info" data-toggle="tab">Info 2</a></li>
-                                    <li><a href="#tab3info" data-toggle="tab">Info 3</a></li>
-                                    <li class="dropdown">
-                                        <a href="#" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li><a href="#tab4info" data-toggle="tab">Info 4</a></li>
-                                            <li><a href="#tab5info" data-toggle="tab">Info 5</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="panel-body">
-                                <div class="tab-content">
-                                    <div class="tab-pane fade in active" id="tab1info">Info 1</div>
-                                    <div class="tab-pane fade" id="tab2info">Info 2</div>
-                                    <div class="tab-pane fade" id="tab3info">Info 3</div>
-                                    <div class="tab-pane fade" id="tab4info">Info 4</div>
-                                    <div class="tab-pane fade" id="tab5info">Info 5</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <jsp:include page="newHomeWithoutCalendarBreakingStuff.jsp" />
 
 
