@@ -44,7 +44,7 @@
         </ul>
     </div>
     <div class="w-25 p-3" id="subscribe">
-        <input class="btn btn-primary" type="submit" value="Schrijf je in" onclick="addEventSubscription(${eventId})">
+        <!-- placeholder for subscribe-button; is filled by getEventSubscriptions() in the events.js -->
     </div>
 </div>
 
@@ -53,5 +53,5 @@
     $(document).ready(function(){
         getEventSubscriptions(${eventId});
     })
-    </script>
+</script>
 </html>

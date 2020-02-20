@@ -2,9 +2,18 @@ package com.wemakeitwork.allenvooreen.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wemakeitwork.allenvooreen.model.*;
-import com.wemakeitwork.allenvooreen.repository.*;
+import com.wemakeitwork.allenvooreen.model.Event;
+import com.wemakeitwork.allenvooreen.model.EventSubscription;
+import com.wemakeitwork.allenvooreen.model.MedicationActivity;
+import com.wemakeitwork.allenvooreen.model.Member;
+import com.wemakeitwork.allenvooreen.model.Team;
+import com.wemakeitwork.allenvooreen.repository.ActivityRepository;
+import com.wemakeitwork.allenvooreen.repository.EventRepository;
+import com.wemakeitwork.allenvooreen.repository.EventSubscriptionRepository;
+import com.wemakeitwork.allenvooreen.repository.MedicationRepository;
+import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import com.wemakeitwork.allenvooreen.service.ServiceResponse;
+import org.springframework.beans.InvalidPropertyException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.HttpStatus;
@@ -14,7 +23,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
@@ -119,11 +133,18 @@ public class EventController {
     }
 
     @PostMapping("/event/unsubscribe")
-    public ResponseEntity<Object> unsubscribeFromEvent(@RequestBody String unsubscribeEvent) throws JsonProcessingException {
+    public ResponseEntity<Object> unsubscribeFromEvent(@RequestBody String unsubscribeFromEvent) throws JsonProcessingException {
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        EventSubscription eventUnsubscription = mapper.readValue(unsubscribeEvent, EventSubscription.class);
-        eventSubscriptionRepository.delete(eventUnsubscription);
-        ServiceResponse<EventSubscription> response = new ServiceResponse<EventSubscription>("success", eventUnsubscription);
+
+        // Convert eventSubscription json to object, lookup event that it belongs to, and set that event to the eventSubscription.
+        EventSubscription eventSubscriptionToDelete = mapper.readValue(unsubscribeFromEvent, EventSubscription.class);
+        eventSubscriptionToDelete.setEvent(eventSubscriptionRepository
+                .findById(eventSubscriptionToDelete.getSubscriptionId())
+                .orElseThrow(() -> new InvalidPropertyException(this.getClass(), "eventSubscriptionToDelete", "Deze inschrijving bestaat niet"))
+                .getEvent());
+        eventSubscriptionRepository.delete(eventSubscriptionToDelete);
+
+        ServiceResponse<EventSubscription> response = new ServiceResponse<EventSubscription>("success", eventSubscriptionToDelete);
         return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
 }
