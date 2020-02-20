@@ -98,7 +98,7 @@
 </button>
 
 <!-- Modal -->
-<div class="modal fade newModal" id="exampleModal"  role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade newModal" id="exampleModal" style="widh: 200px;" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
 
@@ -122,11 +122,10 @@
             <div class="row mt-4">
                 <div class="col-8">
                     <div class="tab-content" id="nav-tabContent">
-                        <div class="tab-pane fade" id="LeasureActivity" role="tabpanel" aria-labelledby="list-messages-list">
+                        <div class="tab-pane fade" id="LeasureActivity" role="tabpanel" >
                             <div class="modal-body" id="eventNameDiv">
-                                <div class="row">
-                                    <label class="col-4" for="eventName">Onderwerp</label>
-                                    <input type="text" name="eventName" id="eventName" />
+                                <div class="row col-4">
+                                    <input type="text" placeholder="Titel"name="eventName" id="eventName" />
                                     <input type="hidden" name="eventId" id="eventId" />
                                     <input type="hidden" name="activityId" id="activityId" />
                                     <input type="hidden" name="teamId" id="team.teamId"/>
@@ -135,25 +134,31 @@
                             </div>
                             <!-- event with activity modal input fields -->
                             <div class="modal-body" id="eventCommentDiv">
-                                <div class="row">
-                                    <label class="col-4" for="eventComment">Beschrijving</label>
-                                    <input type="text" name="eventComment" id="eventComment" />
+                                <div class="row col-4">
+                                    <input type="text" placeholder="Beschrijving" name="eventComment" id="eventComment" />
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="MedicationActivity" role="tabpanel" aria-labelledby="list-settings-list">
+                        <div class="tab-pane fade" id="MedicationActivity" role="tabpanel" >
                             <div class="modal-body" id="medicationChoiceDiv">
-                                <div class="row">
-                                    <label class="col-4" for="medicationChoice" control-label>Medicijn</label>
+                                <div class="row col-4">
                                     <select name="medication.medicationId" id="medicationChoice" >
-                                        <option disabled selected="selected">Kies een medicijn</option>
+                                        <option disabled selected="selected">Medicijn</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="modal-body" id="takenMedicationDiv">
-                                <div class="row">
-                                    <label class="col-4" for="takenMedication" control-label>Hoeveelheid</label>
-                                    <input type="number" name="takenMedication" id="takenMedication" />
+                                <div class="row col-4">
+                                    <input type="number" placeholder="aantal" name="takenMedication" id="takenMedication" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="memberOptions" role="tabpanel" aria-labelledby="list-settings-list">
+                            <div class="modal-body">
+                                <div class="row col-4" id ="doneByMemberDiv">
+                                    <select name="event.doneByMember" id="doneByMember" style="width:13.2em;" >
+                                        <option disabled selected="doneByMember">Gedaan door</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -167,8 +172,8 @@
 
         </div>
     </div>
-    <div class="col-4 tabs">
-    <a class="list-group-item  list-group-item-action" style="background-color:#ccb3ff;" id="Memberlist" data-toggle="list" href=#MedicationActivity role="tab" aria-controls="settings"><i class="fas fa-user float-center"></i></a>
+    <div class="nav nav-tabs col-4 tabs" role="tablist">
+    <a class="list-group-item  list-group-item-action nav-link" style="background-color:#ccb3ff;" id="Memberlist" data-toggle="tab" href=#memberOptions role="tab" aria-controls="settings"><i class="fas fa-user float-center"></i></a>
     </div>
 </div>
 <script>
