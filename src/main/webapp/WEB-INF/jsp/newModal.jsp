@@ -102,6 +102,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
 
+            <!-- tab options on top -->
             <div class="modal-header">
                 <div class="tabbable">
                     <ul class="nav nav-tabs" role="tablist">
@@ -119,9 +120,14 @@
                 </div>
             </div>
 
+            <!-- model content divs -->
             <div class="row mt-4">
                 <div class="col-8">
                     <div class="tab-content" id="nav-tabContent">
+                        <!-- event titel starts here, same for leasureActivity and medicationActivity -->
+                        <!-- TODO -->
+
+                        <!-- leasureActivity options start here -->
                         <div class="tab-pane fade" id="LeasureActivity" role="tabpanel" >
                             <div class="modal-body" id="eventNameDiv">
                                 <div class="row col-4">
@@ -132,13 +138,14 @@
                                     <input type="hidden" name="teamName" value="${team.teamName}" id="teamName"/>
                                 </div>
                             </div>
-                            <!-- event with activity modal input fields -->
                             <div class="modal-body" id="eventCommentDiv">
                                 <div class="row col-4">
                                     <input type="text" placeholder="Beschrijving" name="eventComment" id="eventComment" />
                                 </div>
                             </div>
                         </div>
+
+                        <!-- medicationActivity options start here -->
                         <div class="tab-pane fade" id="MedicationActivity" role="tabpanel" >
                             <div class="modal-body" id="medicationChoiceDiv">
                                 <div class="row col-4">
@@ -153,6 +160,11 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- date options start here, leasureActivity and medicationActivity -->
+                        <!-- TODO -->
+
+                        <!-- memberOptions start here -->
                         <div class="tab-pane fade" id="memberOptions" role="tabpanel" aria-labelledby="list-settings-list">
                             <div class="modal-body">
                                 <div class="row col-4" id ="doneByMemberDiv">
@@ -172,6 +184,7 @@
 
         </div>
     </div>
+    <!-- memberOption side tab -->
     <div class="nav nav-tabs col-4 tabs" role="tablist">
     <a class="list-group-item  list-group-item-action nav-link" style="background-color:#ccb3ff;" id="Memberlist" data-toggle="tab" href=#memberOptions role="tab" aria-controls="settings"><i class="fas fa-user float-center"></i></a>
     </div>
