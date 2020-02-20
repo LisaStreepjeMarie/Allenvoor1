@@ -16,6 +16,15 @@ $("#datetimepickerEnd").on("change.datetimepicker", function (e) {
 });
 $('#datetimepickerDone').datetimepicker();
 
+function optionLeisureActivity(){
+        $("#eventNameDiv, #eventCommentDiv").show();
+}
+
+function optionsMedicationActivity(){
+        $("#eventNameDiv, #medicationChoiceDiv, #takenMedicationDiv").show();
+}
+
+
 // This function hides all modal options
 function hideAllModalInputFields() {
     $("#eventNameDiv, #eventCommentDiv, #medicationChoiceDiv,  #takenMedicationDiv").css("display", "none");

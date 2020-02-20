@@ -107,7 +107,7 @@
                 <div class="tabbable">
                     <ul class="nav nav-tabs" role="tablist">
                         <li >
-                            <a class="nav-link" href="#LeasureActivity" data-toggle="tab">
+                            <a class="nav-link" onclick="optionLeisureActivity()" href="#leisureActivity" data-toggle="tab">
                                 Vrije tijd
                             </a>
                         </li>
@@ -124,20 +124,20 @@
             <div class="row mt-4">
                 <div class="col-8">
                     <div class="tab-content" id="nav-tabContent">
-                        <!-- event titel starts here, same for leasureActivity and medicationActivity -->
-                        <!-- TODO -->
-
-                        <!-- leasureActivity options start here -->
-                        <div class="tab-pane fade" id="LeasureActivity" role="tabpanel" >
-                            <div class="modal-body" id="eventNameDiv">
-                                <div class="row col-4">
-                                    <input type="text" placeholder="Titel"name="eventName" id="eventName" />
-                                    <input type="hidden" name="eventId" id="eventId" />
-                                    <input type="hidden" name="activityId" id="activityId" />
-                                    <input type="hidden" name="teamId" id="team.teamId"/>
-                                    <input type="hidden" name="teamName" value="${team.teamName}" id="teamName"/>
-                                </div>
+                        <!-- event titel starts here, same for leisureActivity and medicationActivity -->
+                        <div class="modal-body" id="eventNameDiv">
+                            <div class="row col-4">
+                                <input type="text" placeholder="Titel"name="eventName" id="eventName" />
+                                <input type="hidden" name="eventId" id="eventId" />
+                                <input type="hidden" name="activityId" id="activityId" />
+                                <input type="hidden" name="teamId" id="team.teamId"/>
+                                <input type="hidden" name="teamName" value="${team.teamName}" id="teamName"/>
                             </div>
+                        </div>
+
+                        <!-- leisureActivity options start here -->
+                        <div class="tab-pane fade" id="leisureActivity" role="tabpanel" >
+                            <!-- TODO needs to be more then 1 line, maybe a text box -->
                             <div class="modal-body" id="eventCommentDiv">
                                 <div class="row col-4">
                                     <input type="text" placeholder="Beschrijving" name="eventComment" id="eventComment" />
@@ -161,7 +161,7 @@
                             </div>
                         </div>
 
-                        <!-- date options start here, leasureActivity and medicationActivity -->
+                        <!-- date options start here, leisureActivity and medicationActivity -->
                         <!-- TODO -->
 
                         <!-- memberOptions start here -->
@@ -189,9 +189,5 @@
     <a class="list-group-item  list-group-item-action nav-link" style="background-color:#ccb3ff;" id="Memberlist" data-toggle="tab" href=#memberOptions role="tab" aria-controls="settings"><i class="fas fa-user float-center"></i></a>
     </div>
 </div>
-<script>
-
-</script>
-
 </body>
 </html>
