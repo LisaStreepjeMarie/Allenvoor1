@@ -28,6 +28,9 @@ import java.util.stream.Collectors;
 @Controller
 public class TeamController {
 
+    final int MINIMUM_MEMBERS_IN_TEAM = 1;
+    final int MINIMUM_ADMINS_IN_TEAM = 1;
+
     @Autowired
     TeamRepository teamRepository;
 
@@ -172,7 +175,7 @@ public class TeamController {
         // Check if there are more than one teamadmins (otherwise quiting the admin role is not allowed)
         if (teamMembershipRepository.findAll().stream()
                 .filter(x -> x.getTeam().equals(teamRepository.getOne(teamId)))
-                .filter(TeamMembership::isAdmin).count() > 1) {
+                .filter(TeamMembership::isAdmin).count() > MINIMUM_ADMINS_IN_TEAM) {
             // If there are more than one teamadmins, relinquish admin role.
             teamMembershipRepository.findAll().stream()
                     // Find all memberships of logged in member
@@ -209,7 +212,7 @@ public class TeamController {
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Team team = teamRepository.findById(teamId).orElseThrow(() -> new InvalidPropertyException(this.getClass(), "team", "Dit team bestaat niet"));
 
-        if (teamRepository.getOne(teamId).getTeamMemberships().size() <= 1) {
+        if (teamRepository.getOne(teamId).getTeamMemberships().size() <= MINIMUM_MEMBERS_IN_TEAM) {
             teamRepository.deleteById(teamId);
         } else {
             teamMembershipRepository.findAll().stream()
