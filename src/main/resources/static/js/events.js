@@ -112,7 +112,7 @@ function deleteEvent(eventId, targetUrl) {
     dropResizeOrDeleteEvent(event, targetUrl)
 }
 
-// this function gives an event to the right end point for either changing the dates or deleting an event (through the targetUrl)
+// this function gives an event to the correct endpoint for either changing the dates or deleting an event (through the targetUrl)
 function dropResizeOrDeleteEvent(event, targetUrl) {
     eventToChange = {
         type: "Event",
@@ -135,5 +135,94 @@ function dropResizeOrDeleteEvent(event, targetUrl) {
             alert("changeEvent() error")
             console.log("ERROR: ",  e);
         }
+    });
+}
+
+function getEventSubscriptions(eventId){
+    $.ajax({
+         type:'GET',
+         url: ctx + "/event/" + eventId + "/getsubscriptionlist",
+         success : function(result) {
+            subscriptionList = result.data;
+            var alreadySubscribed = false;
+            for (i in subscriptionList){
+                if ($('#principalUsername').attr('data-principalUsername') === subscriptionList[i].member.name) {
+                    $('#subscriptionList').append('<li class="list-group-item" id="subscription-id-'+ subscriptionList[i].id + '" value="' +
+                        subscriptionList[i].member.id + '">' + subscriptionList[i].member.name + '<input class="btn btn-primary float-right"' +
+                        'style="width: auto;padding:0px;" type="submit" value="   Schrijf uit   "' +
+                        'onClick="unsubscribeFromEvent(' + subscriptionList[i].id + ')"></li>');
+                    alreadySubscribed = true;
+                } else {
+                    $('#subscriptionList').append('<li class="list-group-item" value="' +
+                        subscriptionList[i].member.id + '">' + subscriptionList[i].member.name + '</li>');
+                }
+            }
+            if (alreadySubscribed === false) {
+                $('#subscribe').append('<input class="btn btn-primary" id="subscribe-button" type="submit" value="Schrijf je in" onclick="addEventSubscription('+ eventId + ')">');
+            }
+         },
+         error : function(e) {
+         console.log("ERROR: ", e);
+         }
+    });
+}
+
+// Adds members' subscription to event
+function addEventSubscription(eventId){
+    subscribeEvent = {
+        type: "EventSubscription",
+        event: {
+            type: "Event",
+            id: eventId,
+        },
+    }
+
+    $.ajax({
+    url: ctx + "/event/subscribe",
+    method: "POST",
+    contentType: "application/json; charset=UTF-8",
+    data: JSON.stringify(subscribeEvent),
+    dataType: 'json',
+    async: true,
+    success: function(result) {
+        $('#subscriptionList').append('<li class="list-group-item" id="subscription-id-'+
+            result.data.id + '" value="' + result.data.member.id + '">' + result.data.member.name +
+            '<input class="btn btn-primary float-right" style="width: auto;padding:0px;" type="submit"' +
+            'value="   Schrijf uit   " onClick="unsubscribeFromEvent(' + result.data.id + ')"></li>');
+        $('#subscribe-button').remove();
+    },
+    error: function(e) {
+        alert("addEventSubscription() error")
+        console.log("ERROR: ",  e);
+    }
+    });
+}
+
+// Removes members' event subscription
+function unsubscribeFromEvent(eventSubscriptionId, eventId) {
+    unsubscribeEvent = {
+        type: "EventSubscription",
+        id: eventSubscriptionId,
+        event: {
+            type: "Event",
+            id: eventId,
+        }
+    },
+
+    $.ajax({
+         url: ctx + "/event/unsubscribe",
+         method: "POST",
+         contentType: "application/json; charset=UTF-8",
+         data: JSON.stringify(unsubscribeEvent),
+         dataType: 'json',
+         async: true,
+         success: function(result) {
+            $('#subscription-id-' + eventSubscriptionId).remove();
+            $('#subscribe').append('<input class="btn btn-primary" id="subscribe-button" type="submit" value="Schrijf je in" onclick="addEventSubscription('+ result.data.event.id + ')">');
+         },
+         error: function(e) {
+             alert("unsubscribeFromEvent() error")
+             console.log("ERROR: ",  e);
+         }
     });
 }

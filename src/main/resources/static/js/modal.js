@@ -18,7 +18,7 @@ $('#datetimepickerDone').datetimepicker();
 
 // This function hides all modal options
 function hideAllModalInputFields() {
-    $("#eventNameDiv, #eventCommentDiv, #medicationChoiceDiv,  #takenMedicationDiv").css("display", "none");
+    $("#eventNameDiv, #eventCommentDiv, #medicationChoiceDiv, #takenMedicationDiv, #subscribe-event").css("display", "none");
     $("#eventDatesDiv, #doneByMemberDiv, #datetimepickerDone, #eventIsPeriodicDiv, #intervalDiv, #maxNumberDiv").css("display", "none");
 }
 
@@ -41,7 +41,7 @@ function fillModal(event) {
         showModalInputFields();
         document.getElementById("modal-title").innerHTML = "Wijzig of verwijder afspraak";
         document.getElementById("save-change-event").innerHTML = "Wijzig afspraak";
-        $("#delete-event").show();
+        $("#delete-event, #subscribe-event").show();
         $('.modal').find('#eventName').val(event.title);
         $('.modal').find('#eventComment').val(event.comment);
         $('.modal').find('#eventInterval').val(event.interval);

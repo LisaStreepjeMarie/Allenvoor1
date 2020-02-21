@@ -41,6 +41,10 @@ public class Member implements UserDetails {
     @JsonIgnore
     private String passwordConfirm;
 
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "member")
+    private List<Message> messagesFromMember;
+
     private boolean enabled;
 
     public Member(int memberId, String memberName, String password, String rol, String email, boolean enabled) {
@@ -100,6 +104,11 @@ public class Member implements UserDetails {
     @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER, mappedBy = "member")
     @OnDelete(action = OnDeleteAction.CASCADE)
     Set<TeamMembership> teamMemberships;
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "member")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    Set<EventSubscription> eventSubscriptions;
 
     public String getPasswordConfirm() {
         return passwordConfirm;
