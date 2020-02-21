@@ -17,11 +17,11 @@ $("#datetimepickerEnd").on("change.datetimepicker", function (e) {
 $('#datetimepickerDone').datetimepicker();
 
 function optionLeisureActivity(){
-        $("#eventNameDiv, #eventCommentDiv").show();
+        $("#eventNameDiv, #eventCommentDiv, #eventDatesDiv").show();
 }
 
 function optionsMedicationActivity(){
-        $("#eventNameDiv, #medicationChoiceDiv, #takenMedicationDiv").show();
+        $("#eventNameDiv, #medicationChoiceDiv, #takenMedicationDiv, #eventDatesDiv").show();
 }
 
 

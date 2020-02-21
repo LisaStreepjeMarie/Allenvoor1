@@ -125,12 +125,12 @@
                 <div class="tabbable">
                     <ul class="nav nav-tabs" role="tablist">
                         <li >
-                            <a class="nav-link" onclick="optionLeisureActivity()" href="#leisureActivity" data-toggle="tab">
+                            <a class="nav-link" onclick="optionLeisureActivity()" data-toggle="tab">
                                 Vrije tijd
                             </a>
                         </li>
                         <li>
-                            <a class="nav-link"  onclick="optionsMedicationActivity()" href="#MedicationActivity" data-toggle="tab">
+                            <a class="nav-link"  onclick="optionsMedicationActivity()" data-toggle="tab">
                                 Medisch
                             </a>
                         </li>
@@ -140,7 +140,7 @@
             <!-- model content divs -->
             <div class="row mt-4">
                 <div class="col-8">
-                    <div class="tab-content" id="nav-tabContent">
+
                         <!-- event titel starts here, same for leisureActivity and medicationActivity -->
                         <div class="modal-body" id="eventNameDiv">
                             <div class="row col-4">
@@ -153,17 +153,14 @@
                         </div>
 
                         <!-- leisureActivity options start here -->
-                        <div class="tab-pane fade" id="leisureActivity" role="tabpanel" >
                             <!-- TODO needs to be more then 1 line, maybe a text box -->
                             <div class="modal-body" id="eventCommentDiv">
                                 <div class="row col-4">
                                     <input type="text" placeholder="Beschrijving" name="eventComment" id="eventComment" />
                                 </div>
                             </div>
-                        </div>
 
                         <!-- medicationActivity options start here -->
-                        <div class="tab-pane fade" id="MedicationActivity" role="tabpanel" >
                             <div class="modal-body" id="medicationChoiceDiv">
                                 <div class="row col-4">
                                     <select name="medication.medicationId" id="medicationChoice" >
@@ -176,12 +173,40 @@
                                     <input type="number" placeholder="aantal" name="takenMedication" id="takenMedication" />
                                 </div>
                             </div>
+
+                        <!-- date options start here, leisureActivity and medicationActivity have the same options -->
+                        <div class="modal-body" id="eventDatesDiv">
+                            <div class="form-group">
+                                <div class="input-group date" id="datetimepickerStart" data-target-input="nearest">
+                                    <label class="col-4" for="eventStartDate">Starttijd </label>
+                                    <input id="eventStartDate" name="eventStartDate" type="text" class="form-control datetimepicker-input" data-target="#datetimepickerStart"/>
+                                    <div class="input-group-append" style="width:8.3vw;" data-target="#datetimepickerStart" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group date" id="datetimepickerEnd" data-target-input="nearest">
+                                    <label class="col-4" for="eventEndDate">Eindtijd </label>
+                                    <input id="eventEndDate" name="eventEndDate" type="text" class="form-control datetimepicker-input" data-target="#datetimepickerEnd"/>
+                                    <div class="input-group-append" style="width:8.3vw;"  data-target="#datetimepickerEnd" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
 
-                        <!-- date options start here, leisureActivity and medicationActivity -->
-                        <!-- TODO -->
-
                         <!-- memberOptions start here -->
+                        <div class="form-group" >
+                            <div class="input-group date" id="datetimepickerDone" data-target-input="nearest">
+                                <label class="col-4" for="eventDoneDate">Op datum</label>
+                                <input id="eventDoneDate" name="eventDoneDate" type="text" class="form-control datetimepicker-input" data-target="#datetimepickerDone"/>
+                                <div class="input-group-append" style="width:8.3vw;" data-target="#datetimepickerDone" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="tab-pane fade" id="memberOptions" role="tabpanel" aria-labelledby="list-settings-list">
                             <div class="modal-body">
                                 <div class="row col-4" id ="doneByMemberDiv">
@@ -191,7 +216,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+
                 </div>
             </div>
             <div class="modal-footer">
