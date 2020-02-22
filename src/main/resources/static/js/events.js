@@ -162,7 +162,14 @@ function getEventSubscriptions(eventId){
             }
          },
          error : function(e) {
-         console.log("ERROR: ", e);
+            console.log("ERROR: ", e);
+            $('#errorModalHeader').append('<h4 class="modal-title">Foutmelding</h4><button type="button" class="close" data-dismiss="modal">&times;</button>');
+            if (e.status != 500) {
+                $('#errorModalBody').append('<p>' + e.responseJSON.data + '</p>');
+            } else {
+                $('#errorModalBody').append('<p>' + e.statusText + ": " + e.status + '</p>');
+            }
+            $('#errorModal').modal('show');
          }
     });
 }

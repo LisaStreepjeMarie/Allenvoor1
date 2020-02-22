@@ -11,6 +11,7 @@ import com.wemakeitwork.allenvooreen.repository.ActivityRepository;
 import com.wemakeitwork.allenvooreen.repository.EventRepository;
 import com.wemakeitwork.allenvooreen.repository.EventSubscriptionRepository;
 import com.wemakeitwork.allenvooreen.repository.MedicationRepository;
+import com.wemakeitwork.allenvooreen.repository.TeamMembershipRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import com.wemakeitwork.allenvooreen.service.ServiceResponse;
 import org.springframework.beans.InvalidPropertyException;
@@ -33,6 +34,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Controller
@@ -50,6 +52,9 @@ public class EventController {
 
     @Autowired
     TeamRepository teamRepository;
+
+    @Autowired
+    TeamMembershipRepository teamMembershipRepository;
 
     @Autowired
     private HttpSession httpSession;
@@ -96,7 +101,7 @@ public class EventController {
             if (event.getActivity() instanceof MedicationActivity){
                 if (medicationActivity.getMedication() == null) {
                     return "redirect:/calendar/" + team.getTeamId();
-                }else {
+                } else {
                     event.setActivity(medicationActivity);
                     newEventWithMedicationActivity(event);
                 }
@@ -114,8 +119,29 @@ public class EventController {
     }
 
     @GetMapping("/event/{eventid}/getsubscriptionlist")
-    public ResponseEntity<Object> fillSubscriptionList(@PathVariable("eventid") final Integer eventId){
-        Set<EventSubscription> eventSubscriptionList = eventSubscriptionRepository.findByEventEventId(eventId);
+    public ResponseEntity<Object> fillSubscriptionList(@PathVariable("eventid") final Integer eventId) throws InvalidPropertyException {
+        // Get logged in user
+        Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        // Get event from eventId
+        Event event = eventRepository
+                .findById(eventId)
+                .orElseThrow(() -> new InvalidPropertyException(this.getClass(), "Event", "Dit event bestaat niet"));
+
+        // Check if logged in user is authorized to view subscriptionlist of event
+        if ( teamMembershipRepository.findByTeamAndMember(event.getTeam(), member).isEmpty() ) {
+            ServiceResponse<String> response = new ServiceResponse<>("Foutmelding", "Je bent niet bevoegd de intekenlijst te bezichtigen");
+            return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+        }
+
+        // Show modal with error if
+        Set<EventSubscription> eventSubscriptionList = new HashSet<>();
+        try {
+            eventSubscriptionList = eventSubscriptionRepository.findByEventEventId(eventId);
+        } catch (Exception e) {
+            ServiceResponse<String> response = new ServiceResponse<>("Foutmelding", "De intekenlijst kon niet worden geladen");
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
         ServiceResponse<Set<EventSubscription>> response = new ServiceResponse<>("succes", eventSubscriptionList);
         return new ResponseEntity<>(response, HttpStatus.OK);
