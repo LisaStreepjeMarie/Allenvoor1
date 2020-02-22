@@ -32,6 +32,9 @@ $(document).ready(function() {
             select: function(start, end) {
             $('#newModal').modal('show');
             optionLeisureActivity();
+            $('#formDiv').find('#eventStartDate').val(moment(start).format('DD-MM-YYYY H:mm'));
+            $('#formDiv').find('#eventEndDate').val(moment(end).format('DD-MM-YYYY H:mm'));
+
             //removing the action below to test a new modal,
 //                $("#modal-footer").hide();
 //                /*$("#datetimepickerDone").hide();*/
@@ -39,7 +42,7 @@ $(document).ready(function() {
 //                    showModalInputFields();
 //                });
 //
-//                document.getElementById('save-change-event').setAttribute( "onClick", "saveEvent('"+ null + "','" + null + "')" );
+
 //                event = {type: "Event", id: null, start: start, end: end,};
 //                fillModal(event);
             },

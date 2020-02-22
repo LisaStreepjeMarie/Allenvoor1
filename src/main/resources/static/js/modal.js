@@ -17,6 +17,7 @@ $("#datetimepickerEnd").on("change.datetimepicker", function (e) {
 $('#datetimepickerDone').datetimepicker();
 
 function optionLeisureActivity(){
+        document.getElementById('save-change-event').setAttribute( "onClick", "saveEvent('"+ null + "','" + null + "', 'LeisureActivity')" );
         hideAllModalInputFields();
         $("#eventNameDiv, #eventCommentDiv, #eventDatesDiv").show();
         $("#delete-event").hide();
@@ -26,9 +27,11 @@ function optionLeisureActivity(){
 }
 
 function optionsMedicationActivity(){
+        document.getElementById('save-change-event').setAttribute( "onClick", "saveEvent('"+ null + "','" + null + "', 'MedicationActivity')" );
         hideAllModalInputFields();
         $("#eventNameDiv, #medicationChoiceDiv, #takenMedicationDiv, #eventDatesDiv").show();
-        $("#delete-event").hide();
+        event = {type: "Event", id: null, };
+        getMedication(event);
         if (event.id != null) {
         //TODO make a function that fills the correct old MedicationActivity + member stuff
         }

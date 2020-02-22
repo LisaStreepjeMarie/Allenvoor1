@@ -8,13 +8,8 @@ $.ajaxSetup({
     }
 });
 
-function saveEvent(eventId, activityId) {
+function saveEvent(eventId, activityId, activityType) {
     // Fill the object currentEvent with values from input fields in the modal
-    if ($("#activityCategory").val() === "Medisch") {
-        activityType = "MedicationActivity"
-    } else if ($("#activityCategory").val() === "Vrije tijd") {
-        activityType = "LeisureActivity"
-    }
 
     eventToSave = {
             id: eventId,
