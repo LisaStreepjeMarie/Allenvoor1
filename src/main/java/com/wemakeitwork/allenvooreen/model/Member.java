@@ -105,6 +105,11 @@ public class Member implements UserDetails {
     @OnDelete(action = OnDeleteAction.CASCADE)
     Set<TeamMembership> teamMemberships;
 
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "member")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    Set<EventSubscription> eventSubscriptions;
+
     public String getPasswordConfirm() {
         return passwordConfirm;
     }

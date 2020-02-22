@@ -40,7 +40,7 @@ function optionsMemberTab(){
 
 // This function hides all modal options
 function hideAllModalInputFields() {
-    $("#eventNameDiv, #eventCommentDiv, #medicationChoiceDiv,  #takenMedicationDiv").css("display", "none");
+    $("#eventNameDiv, #eventCommentDiv, #medicationChoiceDiv, #takenMedicationDiv, #subscribe-event").css("display", "none");
     $("#eventDatesDiv, #doneByMemberDiv, #datetimepickerDone, #eventIsPeriodicDiv, #intervalDiv, #maxNumberDiv").css("display", "none");
 }
 

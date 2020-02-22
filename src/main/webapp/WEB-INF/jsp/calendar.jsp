@@ -220,7 +220,6 @@ border: 0;
                         </div>
                     </div>
 
-                        <!-- memberOptions start here -->
                         <div class="form-group" >
                             <div class="input-group date" id="datetimepickerDone" data-target-input="nearest">
                                 <label class="col-4" for="eventDoneDate">Op datum</label>
@@ -241,27 +240,25 @@ border: 0;
                         <div class="tab-pane fade" id="memberOptions" role="tabpanel" aria-labelledby="list-settings-list">
 
                         </div>
-
+                    </div>
+            </div>
+                <div class="modal-footer" id="modal-footer">
+                    <button type="button" id="delete-event" class="btn btn-danger" data-dismiss="modal">Verwijder Afspraak</button>
+                    <button type="button" class="btn btn-light" data-dismiss="modal">Sluiten</button>
+                    <button type="submit" class="btn btn-primary" id="save-change-event" data-dismiss="modal">Maak afspraak</button>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-
+            </div><!-- /.modal-content -->
         </div>
-    </div>
-    <!-- memberOption side tab -->
-    <div class="tabs" role="tablist">
-        <a class="list-group-item  list-group-item-action nav-link" style="background-color:#98639C;" id="Memberlist" data-toggle="tab" onclick="optionsMemberTab()" role="tab" aria-controls="settings"><i class="fas fa-user float-center"></i></a>
-    </div>
-</div>
+        <!-- memberOption side tab -->
+        <div class="tabs" role="tablist">
+            <a class="list-group-item  list-group-item-action nav-link" style="background-color:#98639C;" id="Memberlist" data-toggle="tab" onclick="optionsMemberTab()" role="tab" aria-controls="settings"><i class="fas fa-user float-center"></i></a>
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</form>
 <jsp:include page="newHomeWithoutCalendarBreakingStuff.jsp" />
 
 
 <script>
-
-
 $(function () {
     $('#datetimepickerStart').datetimepicker({icons: {time: 'far fa-clock',},});
     $('#datetimepickerEnd').datetimepicker({icons: {time: 'far fa-clock',},});
