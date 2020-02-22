@@ -31,6 +31,7 @@ $(document).ready(function() {
             // This function is executed when an empty date/time is clicked
             select: function(start, end) {
             $('#newModal').modal('show');
+            optionLeisureActivity();
             //removing the action below to test a new modal,
 //                $("#modal-footer").hide();
 //                /*$("#datetimepickerDone").hide();*/
@@ -45,23 +46,25 @@ $(document).ready(function() {
 
             // This function is executed when an already planned event is clicked
             eventClick: function(event, element) {
-                $("#modal-footer").hide();
-                $("#activityCategory").change(function () {
-                    showModalInputFields();
-                });
+                $('#newModal').modal('show');
+                preFillSharedFields(event);
+//                $("#modal-footer").hide();
+//                $("#activityCategory").change(function () {
+//                    showModalInputFields();
+//                });
 
-                if (event.activity.type === "MedicationActivity") {
-                    $('#formDiv').find('#activityCategory').val("Medisch")
-                } else if (event.activity.type === "LeisureActivity") {
-                    $('#formDiv').find('#activityCategory').val("Vrije tijd")
-                }
+//                if (event.activity.type === "MedicationActivity") {
+//                    $('#formDiv').find('#activityCategory').val("Medisch")
+//                } else if (event.activity.type === "LeisureActivity") {
+//                    $('#formDiv').find('#activityCategory').val("Vrije tijd")
+//                }
 
                 document.getElementById('delete-event').setAttribute( "onClick", "deleteEvent('"+ event.id +"','" +  ctx + "/event/delete/" + "')" );
                 document.getElementById('save-change-event').setAttribute( "onClick", "saveEvent('"+ event.id + "','" + event.activity.id + "')" );
                 //document.getElementById('subscribe-event').setAttribute( "onClick", "subscribeEvent('"+ event.id + "')" );
-                document.getElementById('subscribe-event').setAttribute( "onClick", "window.location='" + ctx + "/event/" + event.id + "/subscriptionlist'" );
+//                document.getElementById('subscribe-event').setAttribute( "onClick", "window.location='" + ctx + "/event/" + event.id + "/subscriptionlist'" );
 
-                fillModal(event);
+//                fillModal(event);
             },
 
             // This function is executed when an event is dragged to another date

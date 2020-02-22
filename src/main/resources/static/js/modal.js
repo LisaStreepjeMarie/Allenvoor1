@@ -19,14 +19,16 @@ $('#datetimepickerDone').datetimepicker();
 function optionLeisureActivity(){
         hideAllModalInputFields();
         $("#eventNameDiv, #eventCommentDiv, #eventDatesDiv").show();
+        $("#delete-event").hide();
         if (event.id != null) {
         //TODO make a function that fills the correct old leisureActivity + member stuff
-        }
+        };
 }
 
 function optionsMedicationActivity(){
         hideAllModalInputFields();
         $("#eventNameDiv, #medicationChoiceDiv, #takenMedicationDiv, #eventDatesDiv").show();
+        $("#delete-event").hide();
         if (event.id != null) {
         //TODO make a function that fills the correct old MedicationActivity + member stuff
         }
@@ -35,9 +37,56 @@ function optionsMedicationActivity(){
 function optionsMemberTab(){
         hideAllModalInputFields();
         $("#doneByMemberDiv, #datetimepickerDone").show();
+        $("#delete-event").hide();
+}
+function preFillDateFields(event){
+    if(event.maxNumber != null) {
+        document.getElementById("eventPeriodic").checked;
+        $("#eventIsPeriodicDiv").show();
+        $("#eventPeriodicCheckDiv").hide();
+        $("#intervalDiv").hide();
+        $("#maxNumberDiv").hide();
+        }
+
+    // this shows/hides the eventPeriodic input field when the checkbox is toggled
+    $("#eventPeriodic").change(function () {
+        if(document.getElementById("eventPeriodic").checked == true) {
+                $("#intervalDiv").show();
+                $("#maxNumberDiv").show();
+        } else {
+                document.getElementById("eventPeriodic").removeAttribute("required");
+                $("#intervalDiv").hide();
+                $("#maxNumberDiv").hide()
+        }
+    });
 }
 
+function preFillSharedFields(event){
+//        document.getElementById("modal-title").innerHTML = "Wijzig of verwijder afspraak";
+        document.getElementById("save-change-event").innerHTML = "Wijzig afspraak";
+        $("#delete-event").show();
+        $('#newModal').find('#eventName').val(event.title);
+        $('#newModal').find('#eventInterval').val(event.interval);
+        $('#newModal').find('#eventMaxNumber').val(event.maxNumber);
+        $("#delete-event").show();
 
+        if(event.doneByMember){
+            $('#doneByMember').empty()
+            $("#datetimepickerDone, #doneByMemberDiv").show()
+            $("#eventDone").prop("checked", true);
+            $('#formDiv').find('#eventDoneDate').val(moment(event.donedate).format('DD-MM-YYYY H:mm'));
+            filldoneByMembers(event.doneByMember.name)
+            }
+
+        }
+
+function preFillLeisureActivityFields(event){
+        $('#newModal').find('#eventComment').val(event.comment);
+}
+
+function preFillMedicationActivityFields(event){
+        getMedication(event);
+}
 // This function hides all modal options
 function hideAllModalInputFields() {
     $("#eventNameDiv, #eventCommentDiv, #medicationChoiceDiv, #takenMedicationDiv, #subscribe-event").css("display", "none");
@@ -76,7 +125,6 @@ function fillModal(event) {
             $("#maxNumberDiv").hide();
         }
         if(event.doneByMember){
-            console.log(event.donedate)
             $('#doneByMember').empty()
             $("#datetimepickerDone, #doneByMemberDiv").show()
             $("#eventDone").prop("checked", true);

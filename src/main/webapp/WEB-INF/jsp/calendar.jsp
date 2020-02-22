@@ -249,6 +249,7 @@ border: 0;
                 </div>
             </div><!-- /.modal-content -->
         </div>
+
         <!-- memberOption side tab -->
         <div class="tabs" role="tablist">
             <a class="list-group-item  list-group-item-action nav-link" style="background-color:#98639C;" id="Memberlist" data-toggle="tab" onclick="optionsMemberTab()" role="tab" aria-controls="settings"><i class="fas fa-user float-center"></i></a>
