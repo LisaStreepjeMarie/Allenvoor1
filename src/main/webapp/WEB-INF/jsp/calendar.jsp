@@ -37,19 +37,15 @@
 .modal-footer {
     border: 0;
     }
-
     .tabs {
-
     position: fixed;
-    width: 90px;
-    height: 90px;
-
+    width: 65px;
+    height: 65px;
 }
-
 @media (min-width: 768px) {
   .tabs {
     top: calc(12px + 9%);
-    right: calc(234.5px + 50%);
+    right: calc(249px + 50%);
     left: auto;
   }
 
@@ -80,10 +76,8 @@
 
 .nav-tabs > li > a {
     width: 230px;
-
     background: #98639C;
     color: #fff;
-
     text-align: center;
 }
 
@@ -108,9 +102,8 @@
     color: #ffd800;
 }
 
-
-.nav-item {
-    vertical-align:top;
+.modal-dialog {
+border: 0;
 }
 </style>
 </head>
@@ -156,7 +149,7 @@
                             <!-- TODO needs to be more then 1 line, maybe a text box -->
                             <div class="modal-body" id="eventCommentDiv">
                                 <div class="row col-4">
-                                    <input type="text" placeholder="Beschrijving" name="eventComment" id="eventComment" />
+                                    <textarea type="text"  placeholder="Beschrijving" name="eventComment" id="eventComment"></textarea>
                                 </div>
                             </div>
 
@@ -175,27 +168,57 @@
                             </div>
 
                         <!-- date options start here, leisureActivity and medicationActivity have the same options -->
-                        <div class="modal-body" id="eventDatesDiv">
-                            <div class="form-group">
-                                <div class="input-group date" id="datetimepickerStart" data-target-input="nearest">
-                                    <label class="col-4" for="eventStartDate">Starttijd </label>
-                                    <input id="eventStartDate" name="eventStartDate" type="text" class="form-control datetimepicker-input" data-target="#datetimepickerStart"/>
-                                    <div class="input-group-append" style="width:8.3vw;" data-target="#datetimepickerStart" data-toggle="datetimepicker">
-                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                    </div>
+                    <div class="modal-body" id="eventDatesDiv">
+                        <div class="form-group">
+                            <!-- start date -->
+                            <div class="input-group date" id="datetimepickerStart" data-target-input="nearest">
+                                <label class="col-4" for="eventStartDate">Starttijd </label>
+                                <input id="eventStartDate" name="eventStartDate" type="text" class="form-control datetimepicker-input" data-target="#datetimepickerStart"/>
+                                <div class="input-group-append" style="width:8.3vw;" data-target="#datetimepickerStart" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="input-group date" id="datetimepickerEnd" data-target-input="nearest">
-                                    <label class="col-4" for="eventEndDate">Eindtijd </label>
-                                    <input id="eventEndDate" name="eventEndDate" type="text" class="form-control datetimepicker-input" data-target="#datetimepickerEnd"/>
-                                    <div class="input-group-append" style="width:8.3vw;"  data-target="#datetimepickerEnd" data-toggle="datetimepicker">
-                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                    </div>
-                                </div>
-                            </div>
-
                         </div>
+                        <div class="form-group">
+                            <!-- end date -->
+                            <div class="input-group date" id="datetimepickerEnd" data-target-input="nearest">
+                                <label class="col-4" for="eventEndDate">Eindtijd </label>
+                                <input id="eventEndDate" name="eventEndDate" type="text" class="form-control datetimepicker-input" data-target="#datetimepickerEnd"/>
+                                <div class="input-group-append" style="width:8.3vw;"  data-target="#datetimepickerEnd" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-body" id="eventPeriodicDiv">
+                            <div class="modal-body">
+                                <!-- interval checkbox -->
+                                <div class="row" id="eventPeriodicCheckDiv">
+                                    <label class="col-xs-4" for="eventPeriodic">Periodieke afspraak?&nbsp;</label>
+                                    <input type="checkbox" id="eventPeriodic" name="eventPeriodic"/>
+                                </div>
+                                <div class="row" id="eventIsPeriodicDiv">
+                                    <label class="col-xs-4" for="eventPeriodic">Periodieke afspraak</label>
+                                </div>
+                            </div>
+                            <!-- interval options day/month/week -->
+                            <div class="row" id="intervalDiv">
+                                <label class="col-4" for="eventInterval" control-label>Frequentie</label>
+                                <select name="event.eventInterval" id="eventInterval" >
+                                    <option disabled selected="selected" value="">Elke</option>
+                                    <option value="day">dag</option>
+                                    <option value="week">week</option>
+                                    <option value="month">maand</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-body" id="maxNumberDiv">
+                            <!-- interval options amount -->
+                            <div class="row">
+                                <label class="col-4" for="eventMaxNumberLabel" id="eventMaxNumberLabel" control-label>Aantal keer</label>
+                                <input type="text" size="1" name="eventMaxNumber" id="eventMaxNumber" />
+                            </div>
+                        </div>
+                    </div>
 
                         <!-- memberOptions start here -->
                         <div class="form-group" >
@@ -207,14 +230,16 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="memberOptions" role="tabpanel" aria-labelledby="list-settings-list">
-                            <div class="modal-body">
-                                <div class="row col-4" id ="doneByMemberDiv">
-                                    <select name="event.doneByMember" id="doneByMember" style="width:13.2em;" >
-                                        <option disabled selected="doneByMember">Gedaan door</option>
-                                    </select>
-                                </div>
+                        <div class="modal-body">
+                            <div class="row" id ="doneByMemberDiv">
+                                <label class="col-4" for="doneByMember" control-label>Gedaan door </label>
+                                <select name="event.doneByMember" id="doneByMember" style="width:13.2em;" >
+                                    <option disabled selected="doneByMember">null</option>
+                                </select>
                             </div>
+                        </div>
+                        <div class="tab-pane fade" id="memberOptions" role="tabpanel" aria-labelledby="list-settings-list">
+
                         </div>
 
                 </div>
@@ -228,7 +253,7 @@
     </div>
     <!-- memberOption side tab -->
     <div class="tabs" role="tablist">
-        <a class="list-group-item  list-group-item-action nav-link" style="background-color:#98639C;" id="Memberlist" data-toggle="tab" href=#memberOptions role="tab" aria-controls="settings"><i class="fas fa-user float-center"></i></a>
+        <a class="list-group-item  list-group-item-action nav-link" style="background-color:#98639C;" id="Memberlist" data-toggle="tab" onclick="optionsMemberTab()" role="tab" aria-controls="settings"><i class="fas fa-user float-center"></i></a>
     </div>
 </div>
 <jsp:include page="newHomeWithoutCalendarBreakingStuff.jsp" />

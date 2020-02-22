@@ -17,11 +17,24 @@ $("#datetimepickerEnd").on("change.datetimepicker", function (e) {
 $('#datetimepickerDone').datetimepicker();
 
 function optionLeisureActivity(){
+        hideAllModalInputFields();
         $("#eventNameDiv, #eventCommentDiv, #eventDatesDiv").show();
+        if (event.id != null) {
+        //TODO make a function that fills the correct old leisureActivity + member stuff
+        }
 }
 
 function optionsMedicationActivity(){
+        hideAllModalInputFields();
         $("#eventNameDiv, #medicationChoiceDiv, #takenMedicationDiv, #eventDatesDiv").show();
+        if (event.id != null) {
+        //TODO make a function that fills the correct old MedicationActivity + member stuff
+        }
+}
+
+function optionsMemberTab(){
+        hideAllModalInputFields();
+        $("#doneByMemberDiv, #datetimepickerDone").show();
 }
 
 
