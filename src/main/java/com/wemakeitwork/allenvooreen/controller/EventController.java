@@ -34,7 +34,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 @Controller
@@ -134,8 +133,8 @@ public class EventController {
             return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
         }
 
-        // Show modal with error if
-        Set<EventSubscription> eventSubscriptionList = new HashSet<>();
+        // Show modal with generic error message if an exception is thrown.
+        Set<EventSubscription> eventSubscriptionList;
         try {
             eventSubscriptionList = eventSubscriptionRepository.findByEventEventId(eventId);
         } catch (Exception e) {
@@ -147,15 +146,21 @@ public class EventController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PostMapping("/event/subscribe")
-    public ResponseEntity<Object> subscribeToEvent(@RequestBody String subscribeEvent) throws JsonProcessingException {
+    @PostMapping("/event/subscribe/{isConfirmed}")
+    public ResponseEntity<Object> subscribeToEvent(@PathVariable("isConfirmed") final boolean isConfirmed, @RequestBody String subscribeEvent) throws JsonProcessingException {
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        EventSubscription eventSubscription = mapper.readValue(subscribeEvent, EventSubscription.class);
-        eventSubscription.setMember(member);
 
-        eventSubscriptionRepository.save(eventSubscription);
-        ServiceResponse<EventSubscription> response = new ServiceResponse<EventSubscription>("success", eventSubscription);
-        return new ResponseEntity<Object>(response, HttpStatus.OK);
+        EventSubscription eventSubscription = mapper.readValue(subscribeEvent, EventSubscription.class);
+        if (isConfirmed) {
+            eventSubscription.setMember(member);
+
+            eventSubscriptionRepository.save(eventSubscription);
+            ServiceResponse<EventSubscription> response = new ServiceResponse<EventSubscription>("success", eventSubscription);
+            return new ResponseEntity<Object>(response, HttpStatus.OK);
+        } else {
+            ServiceResponse<EventSubscription> responseGetConfirmation = new ServiceResponse<EventSubscription>("pleaseConfirm", eventSubscription);
+            return new ResponseEntity<Object>(responseGetConfirmation, HttpStatus.OK);
+        }
     }
 
     @PostMapping("/event/unsubscribe")

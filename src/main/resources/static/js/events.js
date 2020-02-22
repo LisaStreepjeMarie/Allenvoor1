@@ -158,7 +158,8 @@ function getEventSubscriptions(eventId){
                 }
             }
             if (alreadySubscribed === false) {
-                $('#subscribe').append('<input class="btn btn-primary" id="subscribe-button" type="submit" value="Schrijf je in" onclick="addEventSubscription('+ eventId + ')">');
+                var actionConfirmed = false;
+                $('#subscribe').append('<input class="btn btn-primary" id="subscribe-button" type="submit" value="Schrijf je in" onclick="addEventSubscription('+ eventId + ', ' + actionConfirmed + ')">');
             }
          },
          error : function(e) {
@@ -175,7 +176,7 @@ function getEventSubscriptions(eventId){
 }
 
 // Adds members' subscription to event
-function addEventSubscription(eventId){
+function addEventSubscription(eventId, isSubscriptionConfirmed){
     subscribeEvent = {
         type: "EventSubscription",
         event: {
@@ -185,22 +186,33 @@ function addEventSubscription(eventId){
     }
 
     $.ajax({
-    url: ctx + "/event/subscribe",
+    url: ctx + "/event/subscribe/" + isSubscriptionConfirmed,
     method: "POST",
     contentType: "application/json; charset=UTF-8",
     data: JSON.stringify(subscribeEvent),
     dataType: 'json',
     async: true,
     success: function(result) {
-        $('#subscriptionList').append('<li class="list-group-item" id="subscription-id-'+
-            result.data.id + '" value="' + result.data.member.id + '">' + result.data.member.name +
-            '<input class="btn btn-primary float-right" style="width: auto;padding:0px;" type="submit"' +
-            'value="   Schrijf uit   " onClick="unsubscribeFromEvent(' + result.data.id + ')"></li>');
-        $('#subscribe-button').remove();
+        console.log(result);
+        if (result.status === "pleaseConfirm") {
+            var subscriptionConfirmed = true;
+            $('#errorModalHeader').empty();
+            $('#errorModalBody').empty();
+
+            $('#errorModalHeader').append('<h4 class="modal-title">Bevestig keuze</h4><button type="button" class="close" data-dismiss="modal">&times;</button>');
+            $('#errorModalBody').append('<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuleer inschrijving</button>   ');
+            $('#errorModalBody').append('<button type="button" class="btn btn-success" data-dismiss="modal" onClick="addEventSubscription(' +
+                result.data.event.id + ', ' + subscriptionConfirmed + ')">Schrijf je in</button>');
+            $('#errorModal').modal('show');
+        } else {
+            $('#subscriptionList').append('<li class="list-group-item" id="subscription-id-'+
+                result.data.id + '" value="' + result.data.member.id + '">' + result.data.member.name +
+                '<input class="btn btn-primary float-right" style="width: auto;padding:0px;" type="submit"' +
+                'value="   Schrijf uit   " onClick="unsubscribeFromEvent(' + result.data.id + ')"></li>');
+            $('#subscribe-button').remove();
+        }
     },
     error: function(e) {
-        alert("addEventSubscription() error")
-        console.log("ERROR: ",  e);
     }
     });
 }
@@ -225,7 +237,8 @@ function unsubscribeFromEvent(eventSubscriptionId, eventId) {
          async: true,
          success: function(result) {
             $('#subscription-id-' + eventSubscriptionId).remove();
-            $('#subscribe').append('<input class="btn btn-primary" id="subscribe-button" type="submit" value="Schrijf je in" onclick="addEventSubscription('+ result.data.event.id + ')">');
+            var actionConfirmed = false;
+            $('#subscribe').append('<input class="btn btn-primary" id="subscribe-button" type="submit" value="Schrijf je in" onclick="addEventSubscription('+ result.data.event.id + ', ' + actionConfirmed + ')">');
          },
          error: function(e) {
              alert("unsubscribeFromEvent() error")

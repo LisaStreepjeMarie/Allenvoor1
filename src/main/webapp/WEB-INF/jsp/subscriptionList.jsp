@@ -59,7 +59,7 @@
                 <!-- Error body message is filled by the error clause in getEventSubscriptions() in the events.js -->
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Sluiten</button>
             </div>
         </div>
     </div>
