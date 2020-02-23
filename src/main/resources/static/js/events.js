@@ -185,40 +185,41 @@ function addEventSubscription(eventId, isSubscriptionConfirmed){
         },
     }
 
-    $.ajax({
-    url: ctx + "/event/subscribe/" + isSubscriptionConfirmed,
-    method: "POST",
-    contentType: "application/json; charset=UTF-8",
-    data: JSON.stringify(subscribeEvent),
-    dataType: 'json',
-    async: true,
-    success: function(result) {
-        console.log(result);
-        if (result.status === "pleaseConfirm") {
-            var subscriptionConfirmed = true;
-            $('#errorModalHeader').empty();
-            $('#errorModalBody').empty();
+    // Clear errorModal
+    $('#errorModalHeader').empty();
+    $('#errorModalBody').empty();
+    $('#errorModal').modal('hide');
 
-            $('#errorModalHeader').append('<h4 class="modal-title">Bevestig keuze</h4><button type="button" class="close" data-dismiss="modal">&times;</button>');
-            $('#errorModalBody').append('<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuleer inschrijving</button>   ');
-            $('#errorModalBody').append('<button type="button" class="btn btn-success" data-dismiss="modal" onClick="addEventSubscription(' +
-                result.data.event.id + ', ' + subscriptionConfirmed + ')">Schrijf je in</button>');
-            $('#errorModal').modal('show');
-        } else {
+    if (isSubscriptionConfirmed) { // Write eventSubscription to database
+        $.ajax({
+        url: ctx + "/event/subscribe",
+        method: "POST",
+        contentType: "application/json; charset=UTF-8",
+        data: JSON.stringify(subscribeEvent),
+        dataType: 'json',
+        async: true,
+        success: function(result) {
             $('#subscriptionList').append('<li class="list-group-item" id="subscription-id-'+
-                result.data.id + '" value="' + result.data.member.id + '">' + result.data.member.name +
+            result.data.id + '" value="' + result.data.member.id + '">' + result.data.member.name +
                 '<input class="btn btn-primary float-right" style="width: auto;padding:0px;" type="submit"' +
                 'value="   Schrijf uit   " onClick="unsubscribeFromEvent(' + result.data.id + ')"></li>');
             $('#subscribe-button').remove();
+        },
+        error: function(e) {
         }
-    },
-    error: function(e) {
+        });
+    } else { // Or ask for confirmation first (by showing the errorModal)
+        var isSubscriptionConfirmed = true;
+        $('#errorModalHeader').append('<h4 class="modal-title">Bevestig keuze</h4><button type="button" class="close" data-dismiss="modal">&times;</button>');
+        $('#errorModalBody').append('<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuleer inschrijving</button>   ');
+        $('#errorModalBody').append('<button type="button" class="btn btn-success" data-dismiss="modal" onClick="addEventSubscription(' +
+            eventId + ', ' + isSubscriptionConfirmed + ')">Schrijf je in</button>');
+        $('#errorModal').modal('show');
     }
-    });
 }
 
 // Removes members' event subscription
-function unsubscribeFromEvent(eventSubscriptionId, eventId) {
+function unsubscribeFromEvent(eventSubscriptionId, eventId, isUnsubscriptionConfirmed) {
     unsubscribeEvent = {
         type: "EventSubscription",
         id: eventSubscriptionId,
@@ -226,23 +227,37 @@ function unsubscribeFromEvent(eventSubscriptionId, eventId) {
             type: "Event",
             id: eventId,
         }
-    },
+    }
 
-    $.ajax({
-         url: ctx + "/event/unsubscribe",
-         method: "POST",
-         contentType: "application/json; charset=UTF-8",
-         data: JSON.stringify(unsubscribeEvent),
-         dataType: 'json',
-         async: true,
-         success: function(result) {
-            $('#subscription-id-' + eventSubscriptionId).remove();
-            var actionConfirmed = false;
-            $('#subscribe').append('<input class="btn btn-primary" id="subscribe-button" type="submit" value="Schrijf je in" onclick="addEventSubscription('+ result.data.event.id + ', ' + actionConfirmed + ')">');
-         },
-         error: function(e) {
-             alert("unsubscribeFromEvent() error")
-             console.log("ERROR: ",  e);
-         }
-    });
+    // Clear errorModal
+    $('#errorModalHeader').empty();
+    $('#errorModalBody').empty();
+    $('#errorModal').modal('hide');
+
+    if (isUnsubscriptionConfirmed) { // Delete eventSubscription from database
+        $.ajax({
+             url: ctx + "/event/unsubscribe",
+             method: "POST",
+             contentType: "application/json; charset=UTF-8",
+             data: JSON.stringify(unsubscribeEvent),
+             dataType: 'json',
+             async: true,
+             success: function(result) {
+                $('#subscription-id-' + eventSubscriptionId).remove();
+                var actionConfirmed = false;
+                $('#subscribe').append('<input class="btn btn-primary" id="subscribe-button" type="submit" value="Schrijf je in" onclick="addEventSubscription('+ result.data.event.id + ', ' + actionConfirmed + ')">');
+             },
+             error: function(e) {
+                 alert("unsubscribeFromEvent() error")
+                 console.log("ERROR: ",  e);
+             }
+        });
+    } else { // Or ask for confirmation first (by showing the errorModal)
+        var isUnsubscriptionConfirmed = true;
+        $('#errorModalHeader').append('<h4 class="modal-title">Bevestig keuze</h4><button type="button" class="close" data-dismiss="modal">&times;</button>');
+        $('#errorModalBody').append('<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuleer uitschrijving</button>   ');
+        $('#errorModalBody').append('<button type="button" class="btn btn-success" data-dismiss="modal" onClick="unsubscribeFromEvent(' +
+            eventSubscriptionId + ', ' + eventId + ', ' + isUnsubscriptionConfirmed + ')">Schrijf je uit</button>');
+        $('#errorModal').modal('show');
+    }
 }

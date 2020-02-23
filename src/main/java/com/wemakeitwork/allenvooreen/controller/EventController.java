@@ -146,21 +146,17 @@ public class EventController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PostMapping("/event/subscribe/{isConfirmed}")
-    public ResponseEntity<Object> subscribeToEvent(@PathVariable("isConfirmed") final boolean isConfirmed, @RequestBody String subscribeEvent) throws JsonProcessingException {
+    @PostMapping("/event/subscribe")
+    public ResponseEntity<Object> subscribeToEvent(@RequestBody String subscribeEvent) throws JsonProcessingException {
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
         EventSubscription eventSubscription = mapper.readValue(subscribeEvent, EventSubscription.class);
-        if (isConfirmed) {
-            eventSubscription.setMember(member);
 
-            eventSubscriptionRepository.save(eventSubscription);
-            ServiceResponse<EventSubscription> response = new ServiceResponse<EventSubscription>("success", eventSubscription);
-            return new ResponseEntity<Object>(response, HttpStatus.OK);
-        } else {
-            ServiceResponse<EventSubscription> responseGetConfirmation = new ServiceResponse<EventSubscription>("pleaseConfirm", eventSubscription);
-            return new ResponseEntity<Object>(responseGetConfirmation, HttpStatus.OK);
-        }
+        eventSubscription.setMember(member);
+        eventSubscriptionRepository.save(eventSubscription);
+
+        ServiceResponse<EventSubscription> response = new ServiceResponse<EventSubscription>("success", eventSubscription);
+        return new ResponseEntity<Object>(response, HttpStatus.OK);
+
     }
 
     @PostMapping("/event/unsubscribe")
