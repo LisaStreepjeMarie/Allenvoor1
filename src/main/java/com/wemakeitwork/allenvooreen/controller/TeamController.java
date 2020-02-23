@@ -1,5 +1,7 @@
 package com.wemakeitwork.allenvooreen.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wemakeitwork.allenvooreen.dto.TeamMemberDTO;
 import com.wemakeitwork.allenvooreen.model.Member;
 import com.wemakeitwork.allenvooreen.model.Team;
@@ -7,8 +9,11 @@ import com.wemakeitwork.allenvooreen.model.TeamMembership;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamMembershipRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
+import com.wemakeitwork.allenvooreen.service.ServiceResponse;
 import org.springframework.beans.InvalidPropertyException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +22,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -27,9 +33,10 @@ import java.util.stream.Collectors;
 
 @Controller
 public class TeamController {
-
     final int MINIMUM_MEMBERS_IN_TEAM = 1;
     final int MINIMUM_ADMINS_IN_TEAM = 1;
+
+    ObjectMapper mapper = new ObjectMapper();
 
     @Autowired
     TeamRepository teamRepository;
@@ -168,27 +175,32 @@ public class TeamController {
         }
     }
 
-    @GetMapping("/team/quitadmin/{teamId}")
-    public String quitAdmin(@PathVariable("teamId") final Integer teamId, Model model) {
+    @PostMapping("/team/quitadmin")
+    public ResponseEntity<Object> quitAdmin(@RequestBody String teamMembership) throws JsonProcessingException {
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
+        // Get complete TeamMembership info from database (json only carries partial info like teamId and memberName)
+        TeamMembership tms = mapper.readValue(teamMembership, TeamMembership.class);
+        tms.setMember(memberRepository
+                .findByMemberName(tms.getMember().getMemberName())
+                .orElseThrow(() -> new InvalidPropertyException(this.getClass(), "member", "Dit teamlid bestaat niet")));
+        tms.setTeam(teamRepository
+                .findById(tms.getTeam().getTeamId())
+                .orElseThrow(() -> new InvalidPropertyException(this.getClass(), "team", "Dit team bestaat niet")));
+
         // Check if there are more than one teamadmins (otherwise quiting the admin role is not allowed)
-        if (teamMembershipRepository.findAll().stream()
-                .filter(x -> x.getTeam().equals(teamRepository.getOne(teamId)))
-                .filter(TeamMembership::isAdmin).count() > MINIMUM_ADMINS_IN_TEAM) {
+        if (tms.getTeam().getTeamMemberships().stream().filter(TeamMembership::isAdmin).count() > MINIMUM_ADMINS_IN_TEAM) {
             // If there are more than one teamadmins, relinquish admin role.
-            teamMembershipRepository.findAll().stream()
-                    // Find all memberships of logged in member
-                    .filter(x -> x.getMember().getMemberId().equals(member.getMemberId()))
-                    // filter the team that is passed with the pathvariable (ignore other teams from member)
-                    .filter(x -> x.getTeam().getTeamId().equals(teamId))
-                    // set admin role to false and save it to the database
-                    .peek(x -> x.setAdmin(false)).forEach(teamMembershipRepository::save);
-            return "redirect:/team/all";
+            teamMembershipRepository.findByTeamAndMember(tms.getTeam(), tms.getMember()).stream()
+                    .peek(x -> x.setAdmin(false))
+                    .forEach(teamMembershipRepository::save);
+            ServiceResponse<String> response = new ServiceResponse<String>("succes", "Je bent geen groepsbeheerder meer");
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
             // Otherwise, tell user that relinquishing teamadmin role is not possible
-            model.addAttribute("statuscode", "Kan rol als groepsbeheerder niet opgeven omdat je de enige groepsbeheerder bent.");
-            return "error";
+            ServiceResponse<String> response = new ServiceResponse<String>("failure",
+                    "Je kunt je niet uitschrijven als groepsbeheerder, omdat je de enige groepsbeheerder bent.");
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }
     }
 
