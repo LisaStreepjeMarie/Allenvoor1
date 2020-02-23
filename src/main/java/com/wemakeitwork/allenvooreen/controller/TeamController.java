@@ -176,11 +176,12 @@ public class TeamController {
     }
 
     @PostMapping("/team/quitadmin")
-    public ResponseEntity<Object> quitAdmin(@RequestBody String teamMembership) throws JsonProcessingException {
+    public ResponseEntity<Object> quitAdmin(@RequestBody String quitAdminJson) throws JsonProcessingException {
+        // TODO: Implement guard to check if principal is part of team
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         // Get complete TeamMembership info from database (json only carries partial info like teamId and memberName)
-        TeamMembership tms = mapper.readValue(teamMembership, TeamMembership.class);
+        TeamMembership tms = mapper.readValue(quitAdminJson, TeamMembership.class);
         tms.setMember(memberRepository
                 .findByMemberName(tms.getMember().getMemberName())
                 .orElseThrow(() -> new InvalidPropertyException(this.getClass(), "member", "Dit teamlid bestaat niet")));
@@ -219,22 +220,36 @@ public class TeamController {
         return "error";
     }
 
-    @GetMapping("/team/quit/{teamId}")
-    public String quitTeam(@PathVariable("teamId") final Integer teamId) {
+    @PostMapping("/team/quit")
+    public ResponseEntity<Object> quitTeam(@RequestBody String quitTeamJson) throws JsonProcessingException {
+        // TODO: Implement guard to check if principal is part of team
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Team team = teamRepository.findById(teamId).orElseThrow(() -> new InvalidPropertyException(this.getClass(), "team", "Dit team bestaat niet"));
 
-        if (teamRepository.getOne(teamId).getTeamMemberships().size() <= MINIMUM_MEMBERS_IN_TEAM) {
-            teamRepository.deleteById(teamId);
+        TeamMembership tms = mapper.readValue(quitTeamJson, TeamMembership.class);
+        tms.setMember(memberRepository
+                .findByMemberName(tms.getMember().getMemberName())
+                .orElseThrow(() -> new InvalidPropertyException(this.getClass(), "member", "Dit teamlid bestaat niet")));
+        tms.setTeam(teamRepository
+                .findById(tms.getTeam().getTeamId())
+                .orElseThrow(() -> new InvalidPropertyException(this.getClass(), "team", "Dit team bestaat niet")));
+
+        if ((long) tms.getTeam().getTeamMemberships().size() <= MINIMUM_MEMBERS_IN_TEAM) {
+            // If logged in user is only member of team, delete team.
+            // TODO: ask for confirmation first
+            teamRepository.delete(tms.getTeam());
+            ServiceResponse<String> response = new ServiceResponse<String>("success",
+                    "Het team is verwijderd omdat je het enige groepslid was.");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else if (tms.getTeam().getTeamMemberships().stream().filter(TeamMembership::isAdmin).count() <= MINIMUM_ADMINS_IN_TEAM) {
+            // Tell user that quiting team is not possible, because (s)he is the only teamadmin
+            ServiceResponse<String> response = new ServiceResponse<String>("failure",
+                    "Je kunt je niet uitschrijven, omdat je de enige groepsbeheerder bent.");
+            return new ResponseEntity<>(response, HttpStatus.NOT_ACCEPTABLE);
         } else {
-            teamMembershipRepository.findAll().stream()
-                    // Find all memberships of member
-                    .filter(x -> x.getMember().getMemberId().equals(member.getMemberId()))
-                    // filter the team that is passed with the pathvariable (ignore other teams from member)
-                    .filter(x -> x.getTeam().getTeamId().equals(teamId))
-                    // delete membership to team
-                    .forEach(teamMembershipRepository::delete);
+            teamMembershipRepository.delete(tms);
+            ServiceResponse<String> response = new ServiceResponse<String>("success",
+                    "Je bent geen lid meer van het team");
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }
-        return "redirect:/team/all";
     }
 }

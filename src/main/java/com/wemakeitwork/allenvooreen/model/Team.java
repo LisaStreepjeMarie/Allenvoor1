@@ -55,7 +55,6 @@ public class Team {
     @JsonProperty("name")
     private String teamName;
 
-    @JsonProperty("teammemberships")
     @OneToMany(cascade = CascadeType.DETACH, fetch = FetchType.EAGER, mappedBy = "team")
     @OnDelete(action = OnDeleteAction.CASCADE)
     Set<TeamMembership> teamMemberships;

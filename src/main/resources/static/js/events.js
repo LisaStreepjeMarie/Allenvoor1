@@ -150,7 +150,7 @@ function getEventSubscriptions(eventId){
                     $('#subscriptionList').append('<li class="list-group-item" id="subscription-id-'+ subscriptionList[i].id + '" value="' +
                         subscriptionList[i].member.id + '">' + subscriptionList[i].member.name + '<input class="btn btn-primary float-right"' +
                         'style="width: auto;padding:0px;" type="submit" value="   Schrijf uit   "' +
-                        'onClick="unsubscribeFromEvent(' + subscriptionList[i].id + ')"></li>');
+                        'onclick="unsubscribeFromEvent(' + subscriptionList[i].id + ')"></li>');
                     alreadySubscribed = true;
                 } else {
                     $('#subscriptionList').append('<li class="list-group-item" value="' +
@@ -202,7 +202,7 @@ function addEventSubscription(eventId, isSubscriptionConfirmed){
             $('#subscriptionList').append('<li class="list-group-item" id="subscription-id-'+
             result.data.id + '" value="' + result.data.member.id + '">' + result.data.member.name +
                 '<input class="btn btn-primary float-right" style="width: auto;padding:0px;" type="submit"' +
-                'value="   Schrijf uit   " onClick="unsubscribeFromEvent(' + result.data.id + ')"></li>');
+                'value="   Schrijf uit   " onclick="unsubscribeFromEvent(' + result.data.id + ')"></li>');
             $('#subscribe-button').remove();
         },
         error: function(e) {
@@ -212,7 +212,7 @@ function addEventSubscription(eventId, isSubscriptionConfirmed){
         var isSubscriptionConfirmed = true;
         $('#errorModalHeader').append('<h4 class="modal-title">Bevestig keuze</h4><button type="button" class="close" data-dismiss="modal">&times;</button>');
         $('#errorModalBody').append('<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuleer inschrijving</button>   ');
-        $('#errorModalBody').append('<button type="button" class="btn btn-success" data-dismiss="modal" onClick="addEventSubscription(' +
+        $('#errorModalBody').append('<button type="button" class="btn btn-success" data-dismiss="modal" onclick="addEventSubscription(' +
             eventId + ', ' + isSubscriptionConfirmed + ')">Schrijf je in</button>');
         $('#errorModal').modal('show');
     }
@@ -256,7 +256,7 @@ function unsubscribeFromEvent(eventSubscriptionId, eventId, isUnsubscriptionConf
         var isUnsubscriptionConfirmed = true;
         $('#errorModalHeader').append('<h4 class="modal-title">Bevestig keuze</h4><button type="button" class="close" data-dismiss="modal">&times;</button>');
         $('#errorModalBody').append('<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuleer uitschrijving</button>   ');
-        $('#errorModalBody').append('<button type="button" class="btn btn-success" data-dismiss="modal" onClick="unsubscribeFromEvent(' +
+        $('#errorModalBody').append('<button type="button" class="btn btn-success" data-dismiss="modal" onclick="unsubscribeFromEvent(' +
             eventSubscriptionId + ', ' + eventId + ', ' + isUnsubscriptionConfirmed + ')">Schrijf je uit</button>');
         $('#errorModal').modal('show');
     }
