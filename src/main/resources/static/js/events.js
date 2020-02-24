@@ -27,6 +27,7 @@ function saveEvent(eventId, activityId) {
             maxNumber: document.getElementById("eventMaxNumber").value,
             donedate: moment(document.getElementById("eventDoneDate").value, "DD-MM-YYYY H:mm").toDate(),
             doneByMember: {
+                type: "Member",
                 id: document.getElementById("doneByMember").value,
             },
             activity: {
@@ -41,6 +42,7 @@ function saveEvent(eventId, activityId) {
                 },
             },
             team: {
+                type: "Team",
                 id: parseInt($('#teamId').attr('data-teamId'), 10),
             }
         }

@@ -31,7 +31,6 @@ $(document).ready(function() {
             // This function is executed when an empty date/time is clicked
             select: function(start, end) {
                 $("#modal-footer").hide();
-                /*$("#datetimepickerDone").hide();*/
                 $("#activityCategory").change(function () {
                     showModalInputFields();
                 });
@@ -56,7 +55,6 @@ $(document).ready(function() {
 
                 document.getElementById('delete-event').setAttribute( "onclick", "deleteEvent('"+ event.id +"','" +  ctx + "/event/delete/" + "')" );
                 document.getElementById('save-change-event').setAttribute( "onclick", "saveEvent('"+ event.id + "','" + event.activity.id + "')" );
-                //document.getElementById('subscribe-event').setAttribute( "onclick", "subscribeEvent('"+ event.id + "')" );
                 document.getElementById('subscribe-event').setAttribute( "onclick", "window.location='" + ctx + "/event/" + event.id + "/subscriptionlist'" );
 
                 fillModal(event);
