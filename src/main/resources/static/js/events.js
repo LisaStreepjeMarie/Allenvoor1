@@ -10,7 +10,8 @@ $.ajaxSetup({
 
 function saveEvent(eventId, activityId, activityType) {
     // Fill the object currentEvent with values from input fields in the modal
-
+    console.log(eventId);
+    console.log("hallo");
     eventToSave = {
             id: eventId,
             type: "Event",
@@ -60,7 +61,7 @@ function saveEvent(eventId, activityId, activityType) {
 }
 
 // This function gets a medicationlist.
-function getMedication(event){
+function getMedication(){
     $.ajax({
          type:'GET',
          url: ctx + "/calendar/" + $('#teamId').attr('data-teamId') + '/medications',

@@ -41,8 +41,7 @@ function optionsMedicationActivity(){
         document.getElementById('save-change-event').setAttribute( "onClick", "saveEvent('"+ null + "','" + null + "', 'MedicationActivity')" );
         hideAllModalInputFields();
         $("#eventNameDiv, #medicationChoiceDiv, #takenMedicationDiv, #eventDatesDiv").show();
-        event = {type: "Event", id: null, };
-        getMedication(event);
+        getMedication(null);
         $("#eventPeriodic").change(function () {
             if(document.getElementById("eventPeriodic").checked == true) {
                     $("#intervalDiv").show();
@@ -95,7 +94,6 @@ function preFillLeisureActivityFields(event){
 }
 
 function preFillMedicationActivityFields(event){
-        getMedication(event);
         document.getElementById("medicationChoice").value = event.activity.medication.id;
         $('#newModal').find('#takenMedication').val(event.activity.takenmedication);
 }
