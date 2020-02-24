@@ -91,7 +91,7 @@ public class GroceryListController {
     }
 
     @GetMapping("/delete/groceryItem/{groceryItemId}")
-    public  ResponseEntity<Object> deleteGroceryItemFromGroceryList(@PathVariable("groceryItemId") final Integer groceryItemid){
+    public ResponseEntity<Object> deleteGroceryItemFromGroceryList(@PathVariable("groceryItemId") final Integer groceryItemid){
         groceryItemRepository.deleteById(groceryItemid);
         return new ResponseEntity<Object>("success!", HttpStatus.OK);
     }

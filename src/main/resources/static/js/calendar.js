@@ -56,6 +56,8 @@ $(document).ready(function() {
 
                 document.getElementById('delete-event').setAttribute( "onClick", "deleteEvent('"+ event.id +"','" +  ctx + "/event/delete/" + "')" );
                 document.getElementById('save-change-event').setAttribute( "onClick", "saveEvent('"+ event.id + "','" + event.activity.id + "')" );
+                //document.getElementById('subscribe-event').setAttribute( "onClick", "subscribeEvent('"+ event.id + "')" );
+                document.getElementById('subscribe-event').setAttribute( "onClick", "window.location='" + ctx + "/event/" + event.id + "/subscriptionlist'" );
 
                 fillModal(event);
             },

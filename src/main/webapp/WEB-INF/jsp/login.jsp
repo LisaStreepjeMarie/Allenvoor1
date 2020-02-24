@@ -54,8 +54,6 @@
         <form class="form-signin" action="${pageContext.request.contextPath}/member/new">
             <input name="_csrf" type="hidden" value="${_csrf.token}" />
             <button class="btn btn-lg btn-primary btn-block" type="submit">Maak een account</button>
-            </form>
-
             <p class="mt-5 mb-3 text-muted">&copy; 2019 Allenvooreen</p>
         </form>
       </div>

@@ -8,6 +8,7 @@ import org.springframework.lang.Nullable;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @JsonPropertyOrder(value = {"id", "title", "description", "start", "end", "donedate"}, alphabetic = true)
@@ -68,6 +69,11 @@ public class Event {
     @JoinColumn(name = "teamId", referencedColumnName = "teamId", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Team team;
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "event")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    Set<EventSubscription> eventSubscriptions;
 
     public Event() {
     }
@@ -155,25 +161,6 @@ public class Event {
     public void setEventEndDate(Date eventEndDate) {
         this.eventEndDate = eventEndDate;
     }
-
-    //joda-time
-    /* @JsonGetter
-    public DateTime getEventStartDate() {
-        return eventStartDate;
-    }
-
-    public void setEventStartDate(DateTime eventStartDate) {
-        this.eventStartDate = eventStartDate;
-    }
-
-    @JsonGetter
-    public DateTime getEventEndDate() {
-        return eventEndDate;
-    }
-
-    public void setEventEndDate(DateTime eventEndDate) {
-        this.eventEndDate = eventEndDate;
-    } */
 
     @JsonGetter
     public String getEventComment() {
