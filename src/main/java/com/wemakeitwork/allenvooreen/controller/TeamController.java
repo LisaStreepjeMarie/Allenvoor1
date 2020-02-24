@@ -18,11 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -121,10 +117,15 @@ public class TeamController {
         return "error";
     }
 
-    @GetMapping("/team/delete/{teamId}")
-    public String deleteTeam(@PathVariable("teamId") final Integer teamId) {
-        teamRepository.deleteById(teamId);
-        return "redirect:/team/all";
+    @PostMapping("/team/delete")
+    public ResponseEntity<Object> deleteTeam(@RequestBody String deleteTeamJson) throws JsonProcessingException {
+        Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Team team = mapper.readValue(deleteTeamJson, Team.class);
+
+        // TODO: check if principal is allowed to delete team
+        teamRepository.deleteById(team.getTeamId());
+        ServiceResponse<String> response = new ServiceResponse<String>("succes", "Team is verwijderd");
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/team/{teamId}/delete/membership/{membershipId}")
@@ -220,8 +221,8 @@ public class TeamController {
         return "error";
     }
 
-    @PostMapping("/team/quit")
-    public ResponseEntity<Object> quitTeam(@RequestBody String quitTeamJson) throws JsonProcessingException {
+    @PostMapping("/team/quit/{deleteTeamIfEmpty}")
+    public ResponseEntity<Object> quitTeam(@RequestBody String quitTeamJson, @PathVariable final boolean deleteTeamIfEmpty) throws JsonProcessingException, InterruptedException {
         // TODO: Implement guard to check if principal is part of team
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -235,11 +236,17 @@ public class TeamController {
 
         if ((long) tms.getTeam().getTeamMemberships().size() <= MINIMUM_MEMBERS_IN_TEAM) {
             // If logged in user is only member of team, delete team.
-            // TODO: ask for confirmation first
-            teamRepository.delete(tms.getTeam());
-            ServiceResponse<String> response = new ServiceResponse<String>("success",
-                    "Het team is verwijderd omdat je het enige groepslid was.");
-            return new ResponseEntity<>(response, HttpStatus.OK);
+            if (deleteTeamIfEmpty) {
+                // Delete team because it is empty
+                teamRepository.delete(tms.getTeam());
+                ServiceResponse<String> response = new ServiceResponse<String>("success",
+                        "Het team is verwijderd omdat je het enige groepslid was.");
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            } else {
+                // Before deleting, ask for confirmation first
+                ServiceResponse<TeamMembership> response = new ServiceResponse<TeamMembership>("pleaseConfirm", tms);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
         } else if (tms.getTeam().getTeamMemberships().stream().filter(TeamMembership::isAdmin).count() <= MINIMUM_ADMINS_IN_TEAM) {
             // Tell user that quiting team is not possible, because (s)he is the only teamadmin
             ServiceResponse<String> response = new ServiceResponse<String>("failure",

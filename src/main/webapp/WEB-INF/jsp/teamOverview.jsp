@@ -69,10 +69,10 @@
                                     </ul>
 
                                     <br><label>Acties:</label><br>
-                                    <td><input class="btn btn-primary" type="submit" value="Schrijf jezelf uit" onclick="quitTeam(${principalMembership.membershipId}, '${principalMembership.member.memberName}', ${principalMembership.team.teamId}, false)" /></td>
+                                    <td><input class="btn btn-primary" type="submit" value="Schrijf jezelf uit" onclick="quitTeam(${principalMembership.membershipId}, '${principalMembership.member.memberName}', ${principalMembership.team.teamId}, false, false)" /></td>
                                     <td><input class="btn btn-primary" id="teamDetailsButton" type="submit" value="Groepsdetails" onclick="window.location='${pageContext.request.contextPath}/team/select/${team.teamId}'" /></td>
                                     <td><input class="btn btn-primary" id="quitAdminButton"  type="submit" value="Stop beheerderschap" onclick="quitAdmin(${principalMembership.membershipId}, '${principalMembership.member.memberName}', ${principalMembership.team.teamId}, false)" /></td>
-                                    <td><input class="btn btn-primary" id="deleteTeamButton"  type="submit" value="Verwijder groep" onclick="window.location='${pageContext.request.contextPath}/team/delete/${team.teamId}'" /></td>
+                                    <td><input class="btn btn-primary" id="deleteTeamButton"  type="submit" value="Verwijder groep" onclick="deleteTeam(${team.teamId}, false)" /></td>
                                 </div>
                             </div>
                         </div>

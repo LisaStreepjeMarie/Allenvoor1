@@ -48,15 +48,15 @@ function quitAdmin(teamMembershipId, memberName, teamId, isQuitAdminConfirmed) {
         });
     } else {
         var isQuitAdminConfirmed = true;
-        $('#errorModalHeader').append('<h4 class="modal-title">Bevestig keuze</h4><button type="button" class="close" data-dismiss="modal">&times;</button>');
-        $('#errorModalBody').append('<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuleer opzeggen groepsbeheerder</button>   ');
+        $('#errorModalHeader').append('<h4 class="modal-title">Groepsbeheerderschap opzeggen ?</h4><button type="button" class="close" data-dismiss="modal">&times;</button>');
+        $('#errorModalBody').append('<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuleer</button>   ');
         $('#errorModalBody').append('<button type="button" class="btn btn-success" data-dismiss="modal" onclick="quitAdmin(' +
-            teamMembershipId + ', \'' + memberName + '\', ' + teamId + ', ' + isQuitAdminConfirmed + ')">Zeg groepsbeheerderschap op</button>');
+            teamMembershipId + ', \'' + memberName + '\', ' + teamId + ', ' + isQuitAdminConfirmed + ')">Stop groepsbeheerderschap</button>');
         $('#errorModal').modal('show');
     }
 }
 
-function quitTeam(teamMembershipId, memberName, teamId, isQuitTeamConfirmed) {
+function quitTeam(teamMembershipId, memberName, teamId, isQuitTeamConfirmed, deleteTeamIfEmpty) {
         teammembership = {
             type: "TeamMembership",
             membershipId: teamMembershipId,
@@ -77,17 +77,26 @@ function quitTeam(teamMembershipId, memberName, teamId, isQuitTeamConfirmed) {
 
         if (isQuitTeamConfirmed) {
                 $.ajax({
-                    url: ctx + "/team/quit",
+                    url: ctx + "/team/quit/" + deleteTeamIfEmpty,
                     method: "POST",
                     contentType: "application/json; charset=UTF-8",
                     data: JSON.stringify(teammembership),
                     dataType: 'json',
                     async: true,
                     success: function(result) {
-                        $('#card-' + teamId).remove();
+                        if (deleteTeamIfEmpty) {
+                            $('#card-' + teamId).remove();
+                        } else {
+                            var deleteTeamIfEmpty = true;
+                            setTimeout(function(){$('#errorModal').modal('show')}, 350);
+                            $('#errorModalHeader').append('<h4 class="modal-title">Je bent het laatste groepslid:<br>Groep verwijderen ?</h4><button type="button" class="close" data-dismiss="modal">&times;</button>');
+                            $('#errorModalBody').append('<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuleer</button>   ');
+                            $('#errorModalBody').append('<button type="button" class="btn btn-danger" data-dismiss="modal" onclick="quitTeam(' +
+                                teamMembershipId + ', \'' + memberName + '\', ' + teamId + ', ' + isQuitTeamConfirmed + ', ' + deleteTeamIfEmpty + ')">Verwijder groep</button>');
+                        }
                     },
                     error: function(e) {
-                        alert("quitAdmin() error")
+                        alert("quitTeam() error")
                         console.log("ERROR: ",  e);
                     }
                 });
@@ -96,7 +105,44 @@ function quitTeam(teamMembershipId, memberName, teamId, isQuitTeamConfirmed) {
                 $('#errorModalHeader').append('<h4 class="modal-title">Wil je de groep echt verlaten ?</h4><button type="button" class="close" data-dismiss="modal">&times;</button>');
                 $('#errorModalBody').append('<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuleer</button>   ');
                 $('#errorModalBody').append('<button type="button" class="btn btn-success" data-dismiss="modal" onclick="quitTeam(' +
-                    teamMembershipId + ', \'' + memberName + '\', ' + teamId + ', ' + isQuitTeamConfirmed + ')">Verlaat groep</button>');
+                    teamMembershipId + ', \'' + memberName + '\', ' + teamId + ', ' + isQuitTeamConfirmed + ', ' + deleteTeamIfEmpty +')">Verlaat groep</button>');
+                $('#errorModal').modal('show');
+            }
+}
+
+function deleteTeam(teamId, isDeleteTeamConfirmed) {
+        teamToDelete = {
+            type: "Team",
+            id: teamId,
+        }
+
+        // Clear errorModal
+        $('#errorModalHeader').empty();
+        $('#errorModalBody').empty();
+        $('#errorModal').modal('hide');
+
+        if (isDeleteTeamConfirmed) {
+                $.ajax({
+                    url: ctx + "/team/delete",
+                    method: "POST",
+                    contentType: "application/json; charset=UTF-8",
+                    data: JSON.stringify(teamToDelete),
+                    dataType: 'json',
+                    async: true,
+                    success: function(result) {
+                        $('#card-' + teamId).remove();
+                    },
+                    error: function(e) {
+                        alert("deleteTeam() error")
+                        console.log("ERROR: ",  e);
+                    }
+                });
+            } else {
+                var isDeleteTeamConfirmed = true;
+                $('#errorModalHeader').append('<h4 class="modal-title">Wil je de groep echt verwijderen ?</h4><button type="button" class="close" data-dismiss="modal">&times;</button>');
+                $('#errorModalBody').append('<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuleer</button>   ');
+                $('#errorModalBody').append('<button type="button" class="btn btn-danger" data-dismiss="modal" onclick="deleteTeam(' +
+                    teamId + ', ' + isDeleteTeamConfirmed + ')">Verwijder groep</button>');
                 $('#errorModal').modal('show');
             }
 }
