@@ -17,12 +17,13 @@ $("#datetimepickerEnd").on("change.datetimepicker", function (e) {
 $('#datetimepickerDone').datetimepicker();
 
 function optionLeisureActivity(){
+        document.getElementById("save-change-event").innerHTML = "Nieuwe afpraak";
         document.getElementById('save-change-event').setAttribute( "onClick", "saveEvent('"+ null + "','" + null + "', 'LeisureActivity')" );
         hideAllModalInputFields();
         $("#eventNameDiv, #eventCommentDiv, #eventDatesDiv").show();
         $("#delete-event").hide();
         $("#eventPeriodic").change(function () {
-            if(document.getElementById("eventPeriodic").checked == true) {
+            if (document.getElementById("eventPeriodic").checked == true) {
                     $("#intervalDiv").show();
                     $("#maxNumberDiv").show();
             } else {
@@ -31,6 +32,7 @@ function optionLeisureActivity(){
                     $("#maxNumberDiv").hide()
             }
         });
+        event = {type: "Event", id: null, };
 }
 
 function optionsMedicationActivity(){
@@ -55,9 +57,12 @@ function optionsMemberTab(){
         hideAllModalInputFields();
         $("#doneByMemberDiv, #datetimepickerDone").show();
         $("#delete-event").hide();
+        filldoneByMembers(null)
 }
 
 function preFillDateFields(event){
+    $('#newModal').find('#eventStartDate').val(moment(event.start).format('DD-MM-YYYY H:mm'));
+    $('#newModal').find('#eventEndDate').val(moment(event.end).format('DD-MM-YYYY H:mm'));
     if(event.maxNumber != null) {
         document.getElementById("eventPeriodic").checked;
         $("#eventIsPeriodicDiv").show();
@@ -68,7 +73,6 @@ function preFillDateFields(event){
 }
 
 function preFillSharedFields(event){
-//        document.getElementById("modal-title").innerHTML = "Wijzig of verwijder afspraak";
         document.getElementById("save-change-event").innerHTML = "Wijzig afspraak";
         $("#delete-event").show();
         $('#newModal').find('#eventName').val(event.title);
@@ -79,17 +83,8 @@ function preFillSharedFields(event){
         if(event.doneByMember){
             $('#doneByMember').empty()
             $("#datetimepickerDone, #doneByMemberDiv").show()
-            $("#eventDone").prop("checked", true);
-            $('#formDiv').find('#eventDoneDate').val(moment(event.donedate).format('DD-MM-YYYY H:mm'));
+            $('#newModal').find('#eventDoneDate').val(moment(event.donedate).format('DD-MM-YYYY H:mm'));
             filldoneByMembers(event.doneByMember.name)
-            }
-
-        if (event.activity.type === "LeisureActivity"){
-            optionLeisureActivity();
-            preFillLeisureActivityFields(event);
-            } else {
-            optionsMedicationActivity();
-            preFillMedicationActivityFields(event);
             }
         }
 
@@ -102,82 +97,9 @@ function preFillMedicationActivityFields(event){
 }
 // This function hides all modal options
 function hideAllModalInputFields() {
+    $('#formID').trigger("reset");
     $("#eventNameDiv, #eventCommentDiv, #medicationChoiceDiv, #takenMedicationDiv, #subscribe-event").css("display", "none");
     $("#eventDatesDiv, #doneByMemberDiv, #datetimepickerDone, #eventIsPeriodicDiv, #intervalDiv, #maxNumberDiv").css("display", "none");
-}
-
-// This function fills the modal with event info if it exist
-function showModalInputFields() {
-    hideAllModalInputFields();
-    if ($('#formDiv').find('#activityCategory').val() == "Medisch") {
-        $("#eventNameDiv, #eventDateStartEndDiv, #medicationChoiceDiv, #takenMedicationDiv").show();
-        $("#eventDatesDiv, #eventPeriodicCheckDiv, #modal-footer").show();
-    } else {
-        $("#eventNameDiv, #eventDateStartEndDiv, #eventCommentDiv, #eventDatesDiv, #eventPeriodicCheckDiv").show();
-        $("#modal-footer").show();
-    }
-    $("#eventDoneDiv").css("display", "");
-}
-
-// Modify modal fields/buttons/labels with values depending on event/activity type
-function fillModal(event) {
-    if (event.id != null) {
-        showModalInputFields();
-        document.getElementById("modal-title").innerHTML = "Wijzig of verwijder afspraak";
-        document.getElementById("save-change-event").innerHTML = "Wijzig afspraak";
-        $("#delete-event").show();
-        $('#formDiv').find('#eventName').val(event.title);
-        $('#formDiv').find('#eventComment').val(event.comment);
-        $('#formDiv').find('#eventInterval').val(event.interval);
-        $('#formDiv').find('#eventMaxNumber').val(event.maxNumber);
-        if(event.maxNumber != null) {
-            document.getElementById("eventPeriodic").checked;
-            $("#eventIsPeriodicDiv").show();
-            $("#eventPeriodicCheckDiv").hide();
-            $("#intervalDiv").hide();
-            $("#maxNumberDiv").hide();
-        }
-        if(event.doneByMember){
-            $('#doneByMember').empty()
-            $("#datetimepickerDone, #doneByMemberDiv").show()
-            $("#eventDone").prop("checked", true);
-            $('#formDiv').find('#eventDoneDate').val(moment(event.donedate).format('DD-MM-YYYY H:mm'));
-            filldoneByMembers(event.doneByMember.name)
-            //$('.modal').find('#doneByMember').val(event.doneByMember.name)
-        }
-    } else {
-        document.getElementById("modal-title").innerHTML = "Maak nieuwe afspraak";
-        document.getElementById("save-change-event").innerHTML = "Maak afspraak";
-        $("#delete-event").hide();
-    }
-    getMedication(event);
-
-    // this shows/hides the eventPeriodic input field when the checkbox is toggled
-    $("#eventPeriodic").change(function () {
-        if(document.getElementById("eventPeriodic").checked == true) {
-                $("#intervalDiv").show();
-                $("#maxNumberDiv").show();
-        } else {
-                document.getElementById("eventPeriodic").removeAttribute("required");
-                $("#intervalDiv").hide();
-                $("#maxNumberDiv").hide()
-        }
-    });
-
-    // this shows/hides the eventDone input field when the checkbox is toggled
-    $("#eventDone").change(function () {
-        if(document.getElementById("eventDone").checked == true) {
-                $("#datetimepickerDone, #doneByMemberDiv").show()
-                filldoneByMembers(null);
-        } else {
-                document.getElementById("eventDoneDate").removeAttribute("required")
-                $("#datetimepickerDone, #doneByMemberDiv").hide();
-        }
-    });
-
-    $('#formDiv').find('#eventStartDate').val(moment(event.start).format('DD-MM-YYYY H:mm'));
-    $('#formDiv').find('#eventEndDate').val(moment(event.end).format('DD-MM-YYYY H:mm'));
-    $('#formDiv').modal('show');
 }
 
 // Cleans the modal upon closing

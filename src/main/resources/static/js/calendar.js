@@ -4,7 +4,6 @@ $(document).ready(function() {
         hideAllModalInputFields();
 
         $('.modal').on("hide.bs.modal", function() {
-            $('#formID').trigger("reset");
             hideAllModalInputFields();
         });
 
@@ -35,40 +34,25 @@ $(document).ready(function() {
             $('#newModal').find('#eventStartDate').val(moment(start).format('DD-MM-YYYY H:mm'));
             $('#newModal').find('#eventEndDate').val(moment(end).format('DD-MM-YYYY H:mm'));
 
-            //removing the action below to test a new modal,
-//                $("#modal-footer").hide();
-//                /*$("#datetimepickerDone").hide();*/
-//                $("#activityCategory").change(function () {
-//                    showModalInputFields();
-//                });
-//
-
-//                event = {type: "Event", id: null, start: start, end: end,};
-//                fillModal(event);
             },
 
             // This function is executed when an already planned event is clicked
             eventClick: function(event, element) {
                 $('#newModal').modal('show');
+
+                if (event.activity.type === "LeisureActivity"){
+                    optionLeisureActivity();
+                    preFillLeisureActivityFields(event);
+                    } else {
+                    optionsMedicationActivity();
+                    preFillMedicationActivityFields(event);
+                    }
+
                 preFillSharedFields(event);
                 preFillDateFields(event);
-//                $("#modal-footer").hide();
-//                $("#activityCategory").change(function () {
-//                    showModalInputFields();
-//                });
-
-//                if (event.activity.type === "MedicationActivity") {
-//                    $('#formDiv').find('#activityCategory').val("Medisch")
-//                } else if (event.activity.type === "LeisureActivity") {
-//                    $('#formDiv').find('#activityCategory').val("Vrije tijd")
-//                }
 
                 document.getElementById('delete-event').setAttribute( "onClick", "deleteEvent('"+ event.id +"','" +  ctx + "/event/delete/" + "')" );
                 document.getElementById('save-change-event').setAttribute( "onClick", "saveEvent('"+ event.id + "','" + event.activity.id + "')" );
-                //document.getElementById('subscribe-event').setAttribute( "onClick", "subscribeEvent('"+ event.id + "')" );
-//                document.getElementById('subscribe-event').setAttribute( "onClick", "window.location='" + ctx + "/event/" + event.id + "/subscriptionlist'" );
-
-//                fillModal(event);
             },
 
             // This function is executed when an event is dragged to another date
