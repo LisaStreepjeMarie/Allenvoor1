@@ -16,6 +16,8 @@ $("#datetimepickerEnd").on("change.datetimepicker", function (e) {
 });
 $('#datetimepickerDone').datetimepicker();
 
+
+
 function optionLeisureActivity(){
         document.getElementById("save-change-event").innerHTML = "Nieuwe afpraak";
         document.getElementById('save-change-event').setAttribute( "onClick", "saveEvent('"+ null + "','" + null + "', 'LeisureActivity')" );

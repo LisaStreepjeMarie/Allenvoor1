@@ -31,7 +31,7 @@ $(document).ready(function() {
             // This function is executed when an empty date/time is clicked
             select: function(start, end) {
             $('#newModal').modal('show');
-            optionLeisureActivity();
+            document.getElementById("startTab").click();
             $('#newModal').find('#eventStartDate').val(moment(start).format('DD-MM-YYYY H:mm'));
             $('#newModal').find('#eventEndDate').val(moment(end).format('DD-MM-YYYY H:mm'));
 

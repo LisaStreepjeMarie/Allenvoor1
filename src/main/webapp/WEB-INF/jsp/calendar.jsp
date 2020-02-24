@@ -106,6 +106,16 @@
 border: 0;
 }
 
+.tabcontent {
+  animation: fadeEffect 1s; /* Fading effect takes 1 second */
+}
+
+/* Go from zero to full opacity */
+@keyframes fadeEffect {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
 </style>
 </head>
 
@@ -117,10 +127,10 @@ border: 0;
         <div class="modal-content " id="backgroundModal">
             <!-- tab options on top -->
             <div class="modal-header">
-                <div class="tabbable">
+                <div class="tabbable" id="alleTabs">
                     <ul class="nav nav-tabs" role="tablist">
                         <li >
-                            <a class="nav-link" onclick="optionLeisureActivity()" data-toggle="tab">
+                            <a class="nav-link" id="startTab" onclick="optionLeisureActivity()" data-toggle="tab">
                                 Vrije tijd
                             </a>
                         </li>
