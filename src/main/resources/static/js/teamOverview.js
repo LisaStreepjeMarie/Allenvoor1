@@ -87,12 +87,11 @@ function quitTeam(teamMembershipId, memberName, teamId, isQuitTeamConfirmed, del
                         if (deleteTeamIfEmpty) {
                             $('#card-' + teamId).remove();
                         } else {
-                            var deleteTeamIfEmpty = true;
                             setTimeout(function(){$('#errorModal').modal('show')}, 350);
                             $('#errorModalHeader').append('<h4 class="modal-title">Je bent het laatste groepslid:<br>Groep verwijderen ?</h4><button type="button" class="close" data-dismiss="modal">&times;</button>');
                             $('#errorModalBody').append('<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuleer</button>   ');
                             $('#errorModalBody').append('<button type="button" class="btn btn-danger" data-dismiss="modal" onclick="quitTeam(' +
-                                teamMembershipId + ', \'' + memberName + '\', ' + teamId + ', ' + isQuitTeamConfirmed + ', ' + deleteTeamIfEmpty + ')">Verwijder groep</button>');
+                                teamMembershipId + ', \'' + memberName + '\', ' + teamId + ', ' + isQuitTeamConfirmed + ', ' + true + ')">Verwijder groep</button>');
                         }
                     },
                     error: function(e) {
