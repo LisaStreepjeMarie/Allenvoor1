@@ -16,6 +16,7 @@ setInterval(checkNewMessages,1000);
         xhr.setRequestHeader('X-CSRF-TOKEN', $('#csrfToken').attr('data-csrfToken'));
     }
     });
+
 });
 
 // function which gets called when you click the new message submit button

@@ -111,6 +111,7 @@ border: 0;
 
 <body>
 <!-- Modal -->
+<form role="form" id="formID" >
 <div class="modal fade newModal" id="newModal" style="widh: 200px;" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content " id="backgroundModal">
@@ -147,10 +148,9 @@ border: 0;
                         </div>
 
                         <!-- leisureActivity options start here -->
-                            <!-- TODO needs to be more then 1 line, maybe a text box -->
                             <div class="modal-body" id="eventCommentDiv">
                                 <div class="row col-4">
-                                    <textarea type="text"  placeholder="Beschrijving" name="eventComment" id="eventComment"></textarea>
+                                    <textarea placeholder="Beschrijving" name="eventComment" id="eventComment"></textarea>
                                 </div>
                             </div>
 

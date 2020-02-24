@@ -3,7 +3,7 @@ $(document).ready(function() {
         // Hide model fields by default
         hideAllModalInputFields();
 
-        $('#formDiv').on("hide.bs.modal", function() {
+        $('.modal').on("hide.bs.modal", function() {
             $('#formID').trigger("reset");
             hideAllModalInputFields();
         });
@@ -32,8 +32,8 @@ $(document).ready(function() {
             select: function(start, end) {
             $('#newModal').modal('show');
             optionLeisureActivity();
-            $('#formDiv').find('#eventStartDate').val(moment(start).format('DD-MM-YYYY H:mm'));
-            $('#formDiv').find('#eventEndDate').val(moment(end).format('DD-MM-YYYY H:mm'));
+            $('#newModal').find('#eventStartDate').val(moment(start).format('DD-MM-YYYY H:mm'));
+            $('#newModal').find('#eventEndDate').val(moment(end).format('DD-MM-YYYY H:mm'));
 
             //removing the action below to test a new modal,
 //                $("#modal-footer").hide();
@@ -51,6 +51,7 @@ $(document).ready(function() {
             eventClick: function(event, element) {
                 $('#newModal').modal('show');
                 preFillSharedFields(event);
+                preFillDateFields(event);
 //                $("#modal-footer").hide();
 //                $("#activityCategory").change(function () {
 //                    showModalInputFields();

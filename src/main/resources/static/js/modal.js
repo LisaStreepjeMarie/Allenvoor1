@@ -21,6 +21,16 @@ function optionLeisureActivity(){
         hideAllModalInputFields();
         $("#eventNameDiv, #eventCommentDiv, #eventDatesDiv").show();
         $("#delete-event").hide();
+        $("#eventPeriodic").change(function () {
+            if(document.getElementById("eventPeriodic").checked == true) {
+                    $("#intervalDiv").show();
+                    $("#maxNumberDiv").show();
+            } else {
+                    document.getElementById("eventPeriodic").removeAttribute("required");
+                    $("#intervalDiv").hide();
+                    $("#maxNumberDiv").hide()
+            }
+        });
 }
 
 function optionsMedicationActivity(){
@@ -29,6 +39,16 @@ function optionsMedicationActivity(){
         $("#eventNameDiv, #medicationChoiceDiv, #takenMedicationDiv, #eventDatesDiv").show();
         event = {type: "Event", id: null, };
         getMedication(event);
+        $("#eventPeriodic").change(function () {
+            if(document.getElementById("eventPeriodic").checked == true) {
+                    $("#intervalDiv").show();
+                    $("#maxNumberDiv").show();
+            } else {
+                    document.getElementById("eventPeriodic").removeAttribute("required");
+                    $("#intervalDiv").hide();
+                    $("#maxNumberDiv").hide()
+            }
+        });
 }
 
 function optionsMemberTab(){
@@ -36,6 +56,7 @@ function optionsMemberTab(){
         $("#doneByMemberDiv, #datetimepickerDone").show();
         $("#delete-event").hide();
 }
+
 function preFillDateFields(event){
     if(event.maxNumber != null) {
         document.getElementById("eventPeriodic").checked;
@@ -44,18 +65,6 @@ function preFillDateFields(event){
         $("#intervalDiv").hide();
         $("#maxNumberDiv").hide();
         }
-
-    // this shows/hides the eventPeriodic input field when the checkbox is toggled
-    $("#eventPeriodic").change(function () {
-        if(document.getElementById("eventPeriodic").checked == true) {
-                $("#intervalDiv").show();
-                $("#maxNumberDiv").show();
-        } else {
-                document.getElementById("eventPeriodic").removeAttribute("required");
-                $("#intervalDiv").hide();
-                $("#maxNumberDiv").hide()
-        }
-    });
 }
 
 function preFillSharedFields(event){
@@ -75,6 +84,13 @@ function preFillSharedFields(event){
             filldoneByMembers(event.doneByMember.name)
             }
 
+        if (event.activity.type === "LeisureActivity"){
+            optionLeisureActivity();
+            preFillLeisureActivityFields(event);
+            } else {
+            optionsMedicationActivity();
+            preFillMedicationActivityFields(event);
+            }
         }
 
 function preFillLeisureActivityFields(event){
