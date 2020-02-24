@@ -245,6 +245,22 @@ background-image: url('/allenvooreen/images/background.jpg');
     margin: 0px;
  }
 
+.disabled.btn-primary {
+    background-color:purple;
+}
 
+.active.btn-primary.btn.fc-month-button {
+    background-color:purple;
+}
 
+.active.btn-primary.btn.fc-agendaWeek-button {
+    background-color:purple;
+}
 
+.active.btn-primary.btn.fc-agendaDay-button {
+    background-color:purple;
+}
+
+.active.btn-primary.btn.fc-list-button {
+    background-color:purple;
+}

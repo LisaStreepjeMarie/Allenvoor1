@@ -46,10 +46,11 @@
             <div class="ml-3 mt-3">
                 <div class="w-50 p-3" id="accordion">
                     <c:forEach items="${adminTeamList}" var="team">
-                        <div id="card-${team.teamId}"  class="card">
-                            <div class="card-header"  aria-expanded="false" data-toggle="collapse" data-target="#collapse-${team.teamId}">
-                                ${team.teamName}
-                                &emsp;&emsp;<span class="badge badge-secondary">Groepsbeheerder</span>
+                        <div id="card-${team.teamId}" class="card list-group-item-action">
+                            <div class="card-header" onclick="$('#collapsed-chevron').toggleClass('fa-rotate-90')" aria-expanded="false" data-toggle="collapse" data-target="#collapse-${team.teamId}">
+                                <i class="icon-action fa fa-chevron-right" id="collapsed-chevron"></i>
+                                <span class="title">&emsp;${team.teamName}&emsp;</span>
+                                <span class="badge badge-secondary">Groepsbeheerder</span>
                             </div>
                             <div id="collapse-${team.teamId}" class="collapse" data-parent="#accordion">
                                 <div class="card-body">
@@ -79,9 +80,10 @@
                 </c:forEach>
                 <div id="accordion">
                     <c:forEach items="${memberTeamList}" var="team">
-                        <div class="card">
-                            <div class="card-header" data-toggle="collapse" data-target="#collapse-${team.teamId}">
-                                ${team.teamName}
+                        <div class="card list-group-item-action">
+                            <div class="card-header" onclick="$('#collapsed-chevron').toggleClass('fa-rotate-90')" data-toggle="collapse" data-target="#collapse-${team.teamId}">
+                                <i class="icon-action fa fa-chevron-right" id="collapsed-chevron"></i>
+                                <span class="title">&emsp;${team.teamName}&emsp;</span>
                             </div>
                             <div id="collapse-${team.teamId}" class="collapse" data-parent="#accordion">
                             <div class="card-body">

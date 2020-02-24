@@ -27,14 +27,19 @@
             <div class="ml-3 mt-3">
         <c:forEach items="${teamList}" var="team">
             <br>
-            <button type="button" class="btn btn-lg btn-primary btn-block" data-toggle="collapse" data-target=#${team.teamName} >${team.teamName}</button>
+            <div id="card-${team.teamId}" onclick="$('#collapsed-chevron').toggleClass('fa-rotate-90')" class="card list-group-item-action">
+                <div id="card-header" class="card-header" aria-expanded="false" data-toggle="collapse" data-target="#${team.teamName}">
+                    <i class="icon-action fa fa-chevron-right" id="collapsed-chevron"></i>
+                    <span class="title">&emsp;${team.teamName}</span>
+                </div>
+            </div>
             <div id=${team.teamName} class="collapse">
                 <div class="card card-body">
                     <tr>
                         <a class="dropdown-item" href='${pageContext.request.contextPath}/calendar/${team.teamId}'> <i class="fa fa-calendar" ></i>&emsp;Kalender  </a>
                     </tr>
                     <tr>
-                        <a class="dropdown-item" href='${pageContext.request.contextPath}/medication/${team.teamId}'><i class=" fa fa-medkit"></i>&emsp;Medicatie  </a>
+                        <a class="dropdown-item" href='${pageContext.request.contextPath}/medication/${team.teamId}'><i class=" fa fa-medkit"></i>`&emsp;`Medicatie  </a>
                     </tr>
                     <tr>
                         <a class="dropdown-item" href='${pageContext.request.contextPath}/grocerylist/${team.teamId}'><i class="fa fa-shopping-basket"></i>&emsp;Boodschappenlijst  </a>
