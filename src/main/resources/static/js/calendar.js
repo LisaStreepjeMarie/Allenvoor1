@@ -4,6 +4,7 @@ $(document).ready(function() {
         hideAllModalInputFields();
 
         $('.modal').on("hide.bs.modal", function() {
+            $('#formID').trigger("reset");
             hideAllModalInputFields();
         });
 
