@@ -24,11 +24,12 @@
     </head>
 
     <body class="text-center">
-        <img class="mb-3" src="${pageContext.request.contextPath}/images/LogoAllenVoorEen.png" alt="" width="300" height="228"></a>
+        <a href="${pageContext.request.contextPath}/home">
+            <img class="mb-3" src="${pageContext.request.contextPath}/images/LogoAllenVoorEen.png" alt="" width="300" height="228">
+        </a>
         <div class="container">
             <form class="form-signin" method="post" action="${pageContext.request.contextPath}/member/new">
-            <a href="${pageContext.request.contextPath}/home">
-                <h1 class="h3 mb-3 font-weight-light">Maak een account:</h1>
+            <h1 class="h3 mb-3 font-weight-light">Maak een account:</h1>
 
         <form:form action="${pageContext.request.contextPath}/member/new" modelAttribute="member">
             <spring:bind path="memberName">
