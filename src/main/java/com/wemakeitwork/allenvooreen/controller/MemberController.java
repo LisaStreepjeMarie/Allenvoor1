@@ -212,7 +212,7 @@ public class MemberController {
 
     @PostMapping("/member/changePassword")
     public String savePassword(@Valid PasswordDto passwordDto) {
-        Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        @Valid Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         memberService.changeMemberPassword(member, passwordDto.getNewPassword());
         return "PasswordResetSuccess";
     }
@@ -220,9 +220,8 @@ public class MemberController {
     private SimpleMailMessage constructResetTokenEmail(
             String contextPath, Locale locale, String token, Member member) {
         String url = contextPath + "/member/changePassword?id=" + member.getMemberId() + "&token=" + token;
-        String message = messages.getMessage("message.resetPassword",
-                null, locale);
-        return constructEmail("Reset Password", message + " \r\n" + url, member);
+        String message ="Hallo, hierbij ontvang je de link waarmee je je wachtwoord kunt resetten. Klik op de link om verder te gaan:";
+        return constructEmail("Wachtwoord Reset", message + " \r\n" + url, member);
     }
 
 

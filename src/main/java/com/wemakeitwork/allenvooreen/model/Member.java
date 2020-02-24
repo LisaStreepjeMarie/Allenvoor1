@@ -59,7 +59,7 @@ public class Member implements UserDetails {
     public Member(){
         super();
         //TODO: set to false during last presentation demo)
-        this.enabled = true;
+        this.enabled = false;
     }
 
     @JsonIgnore
