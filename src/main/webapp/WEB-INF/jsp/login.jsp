@@ -22,11 +22,9 @@
     </head>
 
     <body class="text-center">
+    <img class="mb-4" src="${pageContext.request.contextPath}/images/LogoAllenVoorEen.png" alt="" width="300" height="228">
     <div class="container">
         <form class="form-signin" method="post" action="${pageContext.request.contextPath}/login">
-            <img class="mb-4" src="${pageContext.request.contextPath}/images/LogoAllenVoorEen.png" alt="" width="300" height="228">
-
-
             <c:if test="${param.error}">
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <strong>Foute inloggegevens</strong>
@@ -41,10 +39,8 @@
             <br>
             <label for="password" class="sr-only">Wachtwoord</label>
             <input type="password" id="password" name="password" class="form-control" placeholder="Wachtwoord" required>
-            <div class="checkbox mb-3">
-                <label>
-                    <input type="checkbox" value="remember-me">Onthoud mij
-                </label>
+            <div class="ml-3 mt-3">
+                <br>
             </div>
             <input name="_csrf" type="hidden" value="${_csrf.token}" />
             <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
