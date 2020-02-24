@@ -105,6 +105,7 @@
 .modal-dialog {
 border: 0;
 }
+
 </style>
 </head>
 
@@ -112,7 +113,7 @@ border: 0;
 <!-- Modal -->
 <div class="modal fade newModal" id="newModal" style="widh: 200px;" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
+        <div class="modal-content " id="backgroundModal">
             <!-- tab options on top -->
             <div class="modal-header">
                 <div class="tabbable">

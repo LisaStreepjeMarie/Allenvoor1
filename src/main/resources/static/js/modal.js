@@ -21,9 +21,6 @@ function optionLeisureActivity(){
         hideAllModalInputFields();
         $("#eventNameDiv, #eventCommentDiv, #eventDatesDiv").show();
         $("#delete-event").hide();
-        if (event.id != null) {
-        //TODO make a function that fills the correct old leisureActivity + member stuff
-        };
 }
 
 function optionsMedicationActivity(){
@@ -32,9 +29,6 @@ function optionsMedicationActivity(){
         $("#eventNameDiv, #medicationChoiceDiv, #takenMedicationDiv, #eventDatesDiv").show();
         event = {type: "Event", id: null, };
         getMedication(event);
-        if (event.id != null) {
-        //TODO make a function that fills the correct old MedicationActivity + member stuff
-        }
 }
 
 function optionsMemberTab(){
