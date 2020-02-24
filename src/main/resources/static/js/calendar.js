@@ -31,7 +31,7 @@ $(document).ready(function() {
             // This function is executed when an empty date/time is clicked
             select: function(start, end) {
             $('#newModal').modal('show');
-            document.getElementById("startTab").click();
+            document.getElementById("LeisureTab").click();
             $('#newModal').find('#eventStartDate').val(moment(start).format('DD-MM-YYYY H:mm'));
             $('#newModal').find('#eventEndDate').val(moment(end).format('DD-MM-YYYY H:mm'));
 
@@ -42,10 +42,10 @@ $(document).ready(function() {
                 $('#newModal').modal('show');
 
                 if (event.activity.type === "LeisureActivity"){
-                    optionLeisureActivity();
+                    document.getElementById("LeisureTab").click();
                     preFillLeisureActivityFields(event);
                     } else {
-                    optionsMedicationActivity();
+                    document.getElementById("MedicationTab").click();
                     preFillMedicationActivityFields(event);
                     }
 

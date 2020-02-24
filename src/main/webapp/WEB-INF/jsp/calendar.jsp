@@ -130,12 +130,12 @@ border: 0;
                 <div class="tabbable" id="alleTabs">
                     <ul class="nav nav-tabs" role="tablist">
                         <li >
-                            <a class="nav-link" id="startTab" onclick="optionLeisureActivity()" data-toggle="tab">
+                            <a class="nav-link" id="LeisureTab" onclick="optionLeisureActivity()" data-toggle="tab">
                                 Vrije tijd
                             </a>
                         </li>
                         <li>
-                            <a class="nav-link"  onclick="optionsMedicationActivity()" data-toggle="tab">
+                            <a class="nav-link"  id="MedicationTab" onclick="optionsMedicationActivity()" data-toggle="tab">
                                 Medisch
                             </a>
                         </li>

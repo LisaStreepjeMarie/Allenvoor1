@@ -96,7 +96,10 @@ function preFillLeisureActivityFields(event){
 
 function preFillMedicationActivityFields(event){
         getMedication(event);
+        document.getElementById("medicationChoice").value = event.activity.medication.id;
+        $('#newModal').find('#takenMedication').val(event.activity.takenmedication);
 }
+
 // This function hides all modal options
 function hideAllModalInputFields() {
     $("#eventNameDiv, #eventCommentDiv, #medicationChoiceDiv, #takenMedicationDiv, #subscribe-event").css("display", "none");
