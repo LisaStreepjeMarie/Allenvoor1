@@ -41,7 +41,8 @@ public class MemberService implements MemberServiceInterface {
         return memberRepository.findByMemberName(memberName);
     }
 
-    public Member findMemberByEmail(final String email) {
+    @Override
+    public Member findMemberByEmail(String email) {
         return memberRepository.findByEmail(email);
     }
 

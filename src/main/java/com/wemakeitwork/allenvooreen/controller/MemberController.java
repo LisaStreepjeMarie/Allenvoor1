@@ -190,7 +190,6 @@ public class MemberController {
 
     @PostMapping("/member/resetPassword")
     public String resetPassword(HttpServletRequest request, @ModelAttribute("email") String email) {
-        System.out.println("dag");
         Member member = memberRepository.findByEmail(email);
         if (member == null) {
             throw new UserNotFoundException();

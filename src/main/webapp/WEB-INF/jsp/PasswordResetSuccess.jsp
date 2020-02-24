@@ -15,13 +15,13 @@
 	<div class="text-center p-5">
 	<br>
 	   <h1>Je wachtwoord is succesvol gewijzigd!</h1>
-	   <p class="lead">Log in met je nieuwe wachtwoord.</p>
+	   <p class="lead">Je bent nu ingelogd met je nieuwe wachtwoord.</p>
 	</div>
 
     <div class="container">
-	<form action="${pageContext.request.contextPath}/logout" method="post" class="form-signin">
+	<form action="${pageContext.request.contextPath}/home" class="form-signin">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Terug naar inloggen</button>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Ga naar home</button>
     </form>
     </div>
 

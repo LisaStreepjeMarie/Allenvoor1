@@ -1,8 +1,10 @@
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <head>
     <link href="${pageContext.request.contextPath}/webjars/font-awesome/5.12.0/css/all.min.css" rel='stylesheet'>
 </head>
 
 <!-- Navigation -->
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow sticky-top">
     <a class="navbar-brand"</a>
     <br>
@@ -16,12 +18,22 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
+            <a class="nav-link" href='${pageContext.request.contextPath}/member/current'><i class="fas fa-user"></i> Ingelogde gebruiker:
+                <security:authorize access="isAuthenticated()">
+                    <c:set var="principalUsername">
+                        <security:authentication property="principal.username" />
+                    </c:set>
+                    <link id="principalUsername" data-principalUsername="${principalUsername}"/>
+                </security:authorize>
+            </a>
+        </li>
+        <li class="nav-item">
            <a class="nav-link" href='${pageContext.request.contextPath}/home'><i class="fas fa-home"></i> Home</a>
                 <span class="sr-only">(current)</span>
               </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href='${pageContext.request.contextPath}/member/current'><i class="fas fa-user"></i> Mijn profiel</a>
+          <a class="nav-link" href='${pageContext.request.contextPath}/member/current'><i class="fas fa-user-cog"></i> Mijn profiel</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href='${pageContext.request.contextPath}/team/all'><i class="fas fa-users"></i> Mijn groepen</a>
