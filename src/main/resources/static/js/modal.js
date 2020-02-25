@@ -56,7 +56,6 @@ function optionsMedicationActivity(){
 function optionsMemberTab(){
         hideAllModalInputFields();
         $("#doneByMemberDiv, #datetimepickerDone").show();
-        $("#delete-event").hide();
         filldoneByMembers(null)
 }
 
