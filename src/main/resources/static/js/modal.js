@@ -33,7 +33,6 @@ function optionLeisureActivity(){
                     $("#maxNumberDiv").hide()
             }
         });
-        event = {type: "Event", id: null, };
 }
 
 function optionsMedicationActivity(){

@@ -13,6 +13,10 @@ function saveEvent(activityType) {
     eventId = document.getElementById("eventId").value;
     activityId = document.getElementById("activityId").value;
 
+    if (activityType === "LeisureActivity"){
+
+    } else {
+    }
     console.log(eventId);
     console.log(activityId);
     eventToSave = {
