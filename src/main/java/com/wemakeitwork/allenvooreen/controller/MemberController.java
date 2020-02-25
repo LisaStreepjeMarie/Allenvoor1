@@ -13,6 +13,7 @@ import com.wemakeitwork.allenvooreen.service.MemberService;
 import com.wemakeitwork.allenvooreen.service.MemberServiceInterface;
 import com.wemakeitwork.allenvooreen.service.SecurityServiceInterface;
 import com.wemakeitwork.allenvooreen.util.GenericResponse;
+import com.wemakeitwork.allenvooreen.validator.EmailValidator;
 import com.wemakeitwork.allenvooreen.validator.MemberValidator;
 import com.wemakeitwork.allenvooreen.web.error.InvalidOldPasswordException;
 import com.wemakeitwork.allenvooreen.web.error.UserNotFoundException;
@@ -73,6 +74,9 @@ public class MemberController {
 
     @Autowired
     private MemberValidator memberValidator;
+
+    @Autowired
+    private EmailValidator emailValidator;
 
     @Autowired
     private JavaMailSender mailSender;
@@ -189,10 +193,13 @@ public class MemberController {
     }
 
     @PostMapping("/member/resetPassword")
-    public String resetPassword(HttpServletRequest request, @ModelAttribute("email") String email) {
-        Member member = memberRepository.findByEmail(email);
-        if (member == null) {
-            throw new UserNotFoundException();
+    public String resetPassword(HttpServletRequest request, @ModelAttribute("member") Member member, String email, BindingResult result) {
+        member = memberRepository.findByEmail(email);
+        emailValidator.validate(member, result);
+        //if (member == null) {
+            //throw new UserNotFoundException();
+            if (result.hasErrors()) {
+                return "forgotPassword";
         }
             String token = UUID.randomUUID().toString();
             memberService.createPasswordResetTokenForMember(member, token);

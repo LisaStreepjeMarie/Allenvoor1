@@ -26,16 +26,16 @@
     <body class="text-center">
         <div class="text-center p-5">
             <h1 class="h3 mb-3 font-weight-light"><strong>Wachtwoord vergeten?</strong><br> Voer hier je emailadres in:</h1>
-            <form class="form-signin" method="post" action="${pageContext.request.contextPath}/member/resetPassword">
+            <form:form class="form-signin" method="post" action="${pageContext.request.contextPath}/member/resetPassword" modelAttribute="member">
+            <form:errors path = "*" cssClass = "alert alert-danger alert-dismissible fade show" role="alert" element = "div" />
 
-
-                <form:form action="${pageContext.request.contextPath}/member/resetPassword" modelAttribute="member">
+            <table>
+            <tr>
+             <spring:bind path="email">
                 <div class="form-group ${status.error ? 'has-error' : ''}">
                    <form:input type="email" name= "email" class="form-control" path= "email" placeholder="Email"></form:input>
-                   <form:errors path="email"></form:errors>
                </div>
-
-
+               </spring:bind>
 
             <button class="btn btn-lg btn-primary btn-block" type="submit">Stuur email</button>
             </form:form>

@@ -32,6 +32,11 @@ public class EmailValidator implements ConstraintValidator<ValidEmail, String> {
         matcher = pattern.matcher(email);
         return matcher.matches();
     }
+
+    public void validate(Object o, Errors errors) {
+        Member member = (Member) o;
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "NotEmpty");
+    }
 }
 
 
