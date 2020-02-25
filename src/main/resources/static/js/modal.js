@@ -16,8 +16,6 @@ $("#datetimepickerEnd").on("change.datetimepicker", function (e) {
 });
 $('#datetimepickerDone').datetimepicker();
 
-
-
 function optionLeisureActivity(){
         document.getElementById('save-change-event').setAttribute( "onClick", "saveEvent('LeisureActivity')" );
         hideAllModalInputFields();
@@ -91,7 +89,9 @@ function preFillLeisureActivityFields(event){
 }
 
 function preFillMedicationActivityFields(event){
-        $('#newModal').find('#medicationChoice').val(event.activity.medication.id);
+        console.log(event.activity.medication.id);
+        $('#newModal').find("medicationChoice").val("#event.activity.medication.id");
+//        $('#newModal').find('#medicationChoice').val(event.activity.medication.id);
         $('#newModal').find('#takenMedication').val(event.activity.takenmedication);
 }
 
