@@ -26,9 +26,9 @@
                 <div class="ml-3 mt-3">
                     <c:forEach items="${teamList}" var="team">
                         <br />
-                        <div id="card-${team.teamId}" onclick="$('#collapsed-chevron').toggleClass('fa-rotate-90')" class="card list-group-item-action">
+                        <div id="card-${team.teamId}" onclick="$('#collapsed-chevron-${team.teamId}').toggleClass('fa-rotate-90')" class="card list-group-item-action">
                             <div id="card-header" class="card-header" aria-expanded="false" data-toggle="collapse" data-target="#${team.teamName}">
-                                <i class="icon-action fa fa-chevron-right" id="collapsed-chevron"></i>
+                                <i class="icon-action fa fa-chevron-right" id="collapsed-chevron-${team.teamId}"></i>
                                 <span class="title">&emsp;${team.teamName}</span>
                             </div>
                         </div>

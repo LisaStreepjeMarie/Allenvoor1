@@ -38,24 +38,22 @@
                 </div>
             </div>
             <div id=${team.teamName} class="collapse">
-                    <div class="card card-body">
-                        <tr>
-                           <a class="dropdown-item" href='${pageContext.request.contextPath}/calendar/${team.teamId}'> <i class="fa fa-calendar" ></i>&emsp;Kalender</a>
-                        </tr>
-                        <tr>
-                            <a class="dropdown-item" href='${pageContext.request.contextPath}/medication/${team.teamId}'><i class=" fa fa-medkit"></i>&emsp;Medicatie</a>
-                        </tr>
-                        <tr>
-                            <a class="dropdown-item" href='${pageContext.request.contextPath}/grocerylist/${team.teamId}'><i class="fa fa-shopping-basket"></i>&emsp;Boodschappenlijst</a>
-                        </tr>
-                        <tr>
-                            <a class="dropdown-item" href='${pageContext.request.contextPath}/chat/${team.teamId}'><i class="fas fa-comments"></i>&emsp;Chat</a>
-                        </tr>
-                    </div>
+                <div class="card card-body">
+                    <tr>
+                       <a class="dropdown-item" href='${pageContext.request.contextPath}/calendar/${team.teamId}'> <i class="fa fa-calendar" ></i>&emsp;Kalender</a>
+                    </tr>
+                    <tr>
+                        <a class="dropdown-item" href='${pageContext.request.contextPath}/medication/${team.teamId}'><i class=" fa fa-medkit"></i>&emsp;Medicatie</a>
+                    </tr>
+                    <tr>
+                        <a class="dropdown-item" href='${pageContext.request.contextPath}/grocerylist/${team.teamId}'><i class="fa fa-shopping-basket"></i>&emsp;Boodschappenlijst</a>
+                    </tr>
+                    <tr>
+                        <a class="dropdown-item" href='${pageContext.request.contextPath}/chat/${team.teamId}'><i class="fas fa-comments"></i>&emsp;Chat</a>
+                    </tr>
                 </div>
             </div>
         </c:forEach>
-            </div>
         </div>
 
 </div>
