@@ -43,6 +43,14 @@ public class EmailValidator implements ConstraintValidator<ValidEmail, String> {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "NotEmpty");
     }
 
+    public void validatePassword(Object o, Errors errors){
+        Member member = (Member) o;
+        if (!member.getPasswordConfirm().equals(member.getPassword())) {
+            errors.rejectValue("passwordConfirm", "Diff.userForm.passwordConfirm");
+        }
+
+    }
+
     private boolean validateEmail(String email) {
         pattern = Pattern.compile(EMAIL_PATTERN);
         matcher = pattern.matcher(email);

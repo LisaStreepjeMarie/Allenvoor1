@@ -39,11 +39,9 @@
             <br>
             <label for="password" class="sr-only">Wachtwoord</label>
             <input type="password" id="password" name="password" class="form-control" placeholder="Wachtwoord" required>
-            <div class="ml-3 mt-3">
-                <br>
-            <br/><br/>
+
             <a class="btn btn-default" href="${pageContext.request.contextPath}/member/resetPassword">Wachtwoord vergeten?</a>
-            </div>
+            <div class="ml-3 mt-3"></div>
             <input name="_csrf" type="hidden" value="${_csrf.token}" />
             <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
         </form>

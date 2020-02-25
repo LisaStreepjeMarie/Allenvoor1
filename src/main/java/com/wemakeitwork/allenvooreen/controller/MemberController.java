@@ -215,8 +215,12 @@ public class MemberController {
     }
 
     @PostMapping("/member/changePassword")
-    public String savePassword(@Valid PasswordDto passwordDto) {
+    public String savePassword(@Valid PasswordDto passwordDto, BindingResult result) {
         @Valid Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        emailValidator.validatePassword(member, result);
+        if (result.hasErrors()) {
+            return "updatePassword";
+        }
         memberService.changeMemberPassword(member, passwordDto.getNewPassword());
         return "PasswordResetSuccess";
     }
