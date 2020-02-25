@@ -47,8 +47,8 @@
                 <div class="w-50 p-3" id="accordion">
                     <c:forEach items="${adminTeamList}" var="team">
                         <div id="card-${team.teamId}" class="card list-group-item-action">
-                            <div class="card-header" onclick="$('#collapsed-chevron').toggleClass('fa-rotate-90')" aria-expanded="false" data-toggle="collapse" data-target="#collapse-${team.teamId}">
-                                <i class="icon-action fa fa-chevron-right" id="collapsed-chevron"></i>
+                            <div class="card-header" onclick="$('#collapsed-chevron-${team.teamId}').toggleClass('fa-rotate-90')" aria-expanded="false" data-toggle="collapse" data-target="#collapse-${team.teamId}">
+                                <i class="icon-action fa fa-chevron-right" id="collapsed-chevron-${team.teamId}"></i>
                                 <span class="title">&emsp;${team.teamName}&emsp;</span>
                                 <span class="badge badge-secondary">Groepsbeheerder</span>
                             </div>
@@ -81,8 +81,8 @@
                 <div id="accordion">
                     <c:forEach items="${memberTeamList}" var="team">
                         <div class="card list-group-item-action">
-                            <div class="card-header" onclick="$('#collapsed-chevron').toggleClass('fa-rotate-90')" data-toggle="collapse" data-target="#collapse-${team.teamId}">
-                                <i class="icon-action fa fa-chevron-right" id="collapsed-chevron"></i>
+                            <div class="card-header" onclick="$('#collapsed-chevron-${team.teamId}').toggleClass('fa-rotate-90')" data-toggle="collapse" data-target="#collapse-${team.teamId}">
+                                <i class="icon-action fa fa-chevron-right" id="collapsed-chevron-${team.teamId}"></i>
                                 <span class="title">&emsp;${team.teamName}&emsp;</span>
                             </div>
                             <div id="collapse-${team.teamId}" class="collapse" data-parent="#accordion">
