@@ -196,11 +196,9 @@ public class MemberController {
     public String resetPassword(HttpServletRequest request, @ModelAttribute("member") Member member, String email, BindingResult result) {
         member = memberRepository.findByEmail(email);
         emailValidator.validate(member, result);
-        //if (member == null) {
-            //throw new UserNotFoundException();
             if (result.hasErrors()) {
                 return "forgotPassword";
-        }
+            }
             String token = UUID.randomUUID().toString();
             memberService.createPasswordResetTokenForMember(member, token);
             mailSender.send(constructResetTokenEmail(getAppUrl(request), request.getLocale(), token, member));
