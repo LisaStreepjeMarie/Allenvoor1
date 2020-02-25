@@ -1,5 +1,7 @@
 package com.wemakeitwork.allenvooreen.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wemakeitwork.allenvooreen.dto.TeamMemberDTO;
 import com.wemakeitwork.allenvooreen.model.Member;
 import com.wemakeitwork.allenvooreen.model.Team;
@@ -7,16 +9,16 @@ import com.wemakeitwork.allenvooreen.model.TeamMembership;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamMembershipRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
+import com.wemakeitwork.allenvooreen.service.ServiceResponse;
 import org.springframework.beans.InvalidPropertyException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -27,6 +29,10 @@ import java.util.stream.Collectors;
 
 @Controller
 public class TeamController {
+    final int MINIMUM_MEMBERS_IN_TEAM = 1;
+    final int MINIMUM_ADMINS_IN_TEAM = 1;
+
+    ObjectMapper mapper = new ObjectMapper();
 
     @Autowired
     TeamRepository teamRepository;
@@ -92,22 +98,34 @@ public class TeamController {
         teamMemberDTO.setTeamId(teamId);
 
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (teamMembershipRepository.findByTeamAndMember(team, member).isAdmin()) {
-            model.addAttribute("teamName", team.getTeamName());
-            model.addAttribute("teamMemberList", teamMemberList);
-            model.addAttribute("teamAdminList", teamAdminList);
-            model.addAttribute("teamMemberDTO", teamMemberDTO);
-            return "changeTeam";
-        } else {
-            model.addAttribute("statuscode", "Geen toegang: je bent geen groepsbeheerder");
-            return "error";
+
+        // Check if principal(member) has a teammembership (tms) in team and is admin that team.
+        Optional<TeamMembership> tms = teamMembershipRepository.findByTeamAndMember(team, member);
+        if (tms.isPresent()) {
+            if (tms.get().isAdmin()) {
+                model.addAttribute("teamName", team.getTeamName());
+                model.addAttribute("teamMemberList", teamMemberList);
+                model.addAttribute("teamAdminList", teamAdminList);
+                model.addAttribute("teamMemberDTO", teamMemberDTO);
+                return "changeTeam";
+            } else {
+                model.addAttribute("statuscode", "Geen toegang: je bent geen groepsbeheerder");
+                return "error";
+            }
         }
+        model.addAttribute("statuscode", "Error: Missing teammembership");
+        return "error";
     }
 
-    @GetMapping("/team/delete/{teamId}")
-    public String deleteTeam(@PathVariable("teamId") final Integer teamId) {
-        teamRepository.deleteById(teamId);
-        return "redirect:/team/all";
+    @PostMapping("/team/delete")
+    public ResponseEntity<Object> deleteTeam(@RequestBody String deleteTeamJson) throws JsonProcessingException {
+        Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Team team = mapper.readValue(deleteTeamJson, Team.class);
+
+        // TODO: check if principal is allowed to delete team
+        teamRepository.deleteById(team.getTeamId());
+        ServiceResponse<String> response = new ServiceResponse<String>("succes", "Team is verwijderd");
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/team/{teamId}/delete/membership/{membershipId}")
@@ -158,55 +176,87 @@ public class TeamController {
         }
     }
 
-    @GetMapping("/team/quitadmin/{teamId}")
-    public String quitAdmin(@PathVariable("teamId") final Integer teamId, Model model) {
+    @PostMapping("/team/quitadmin")
+    public ResponseEntity<Object> quitAdmin(@RequestBody String quitAdminJson) throws JsonProcessingException {
+        // TODO: Implement guard to check if principal is part of team
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
+        // Get complete TeamMembership info from database (json only carries partial info like teamId and memberName)
+        TeamMembership tms = mapper.readValue(quitAdminJson, TeamMembership.class);
+        tms.setMember(memberRepository
+                .findByMemberName(tms.getMember().getMemberName())
+                .orElseThrow(() -> new InvalidPropertyException(this.getClass(), "member", "Dit teamlid bestaat niet")));
+        tms.setTeam(teamRepository
+                .findById(tms.getTeam().getTeamId())
+                .orElseThrow(() -> new InvalidPropertyException(this.getClass(), "team", "Dit team bestaat niet")));
+
         // Check if there are more than one teamadmins (otherwise quiting the admin role is not allowed)
-        if (teamMembershipRepository.findAll().stream()
-                .filter(x -> x.getTeam().equals(teamRepository.getOne(teamId)))
-                .filter(TeamMembership::isAdmin).count() > 1) {
+        if (tms.getTeam().getTeamMemberships().stream().filter(TeamMembership::isAdmin).count() > MINIMUM_ADMINS_IN_TEAM) {
             // If there are more than one teamadmins, relinquish admin role.
-            teamMembershipRepository.findAll().stream()
-                    // Find all memberships of logged in member
-                    .filter(x -> x.getMember().getMemberId().equals(member.getMemberId()))
-                    // filter the team that is passed with the pathvariable (ignore other teams from member)
-                    .filter(x -> x.getTeam().getTeamId().equals(teamId))
-                    // set admin role to false and save it to the database
-                    .peek(x -> x.setAdmin(false)).forEach(teamMembershipRepository::save);
-            return "redirect:/team/all";
+            teamMembershipRepository.findByTeamAndMember(tms.getTeam(), tms.getMember()).stream()
+                    .peek(x -> x.setAdmin(false))
+                    .forEach(teamMembershipRepository::save);
+            ServiceResponse<String> response = new ServiceResponse<String>("succes", "Je bent geen groepsbeheerder meer");
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
             // Otherwise, tell user that relinquishing teamadmin role is not possible
-            model.addAttribute("statuscode", "Kan rol als groepsbeheerder niet opgeven omdat je de enige groepsbeheerder bent.");
-            return "error";
+            ServiceResponse<String> response = new ServiceResponse<String>("failure",
+                    "Je kunt je niet uitschrijven als groepsbeheerder, omdat je de enige groepsbeheerder bent.");
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }
     }
 
     @GetMapping("/team/grantadmin/{teamId}/{memberId}")
     public String grantAdmin(@PathVariable("teamId") final Integer teamId,
-                              @PathVariable("memberId") final Integer memberId) {
-        TeamMembership tms = teamMembershipRepository.findByTeamTeamIdAndMemberMemberId(teamId, memberId);
-        tms.setAdmin(true);
-        teamMembershipRepository.save(tms);
-        return "redirect:/team/select/" + teamId;
+                              @PathVariable("memberId") final Integer memberId, Model model) {
+
+        Optional<TeamMembership> tms = teamMembershipRepository.findByTeamTeamIdAndMemberMemberId(teamId, memberId);
+        if (tms.isPresent()) {
+            tms.get().setAdmin(true);
+            teamMembershipRepository.save(tms.get());
+            return "redirect:/team/select/" + teamId;
+        }
+        // No teammembership was found.
+        model.addAttribute("statuscode", "Error: Missing teammembership");
+        return "error";
     }
 
-    @GetMapping("/team/quit/{teamId}")
-    public String quitTeam(@PathVariable("teamId") final Integer teamId) {
+    @PostMapping("/team/quit/{deleteTeamIfEmpty}")
+    public ResponseEntity<Object> quitTeam(@RequestBody String quitTeamJson, @PathVariable final boolean deleteTeamIfEmpty) throws JsonProcessingException, InterruptedException {
+        // TODO: Implement guard to check if principal is part of team
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Team team = teamRepository.findById(teamId).orElseThrow(() -> new InvalidPropertyException(this.getClass(), "team", "Dit team bestaat niet"));
 
-        if (teamRepository.getOne(teamId).getTeamMemberships().size() <= 1) {
-            teamRepository.deleteById(teamId);
+        TeamMembership tms = mapper.readValue(quitTeamJson, TeamMembership.class);
+        tms.setMember(memberRepository
+                .findByMemberName(tms.getMember().getMemberName())
+                .orElseThrow(() -> new InvalidPropertyException(this.getClass(), "member", "Dit teamlid bestaat niet")));
+        tms.setTeam(teamRepository
+                .findById(tms.getTeam().getTeamId())
+                .orElseThrow(() -> new InvalidPropertyException(this.getClass(), "team", "Dit team bestaat niet")));
+
+        if ((long) tms.getTeam().getTeamMemberships().size() <= MINIMUM_MEMBERS_IN_TEAM) {
+            // If logged in user is only member of team, delete team.
+            if (deleteTeamIfEmpty) {
+                // Delete team because it is empty
+                teamRepository.delete(tms.getTeam());
+                ServiceResponse<String> response = new ServiceResponse<String>("success",
+                        "Het team is verwijderd omdat je het enige groepslid was.");
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            } else {
+                // Before deleting, ask for confirmation first
+                ServiceResponse<TeamMembership> response = new ServiceResponse<TeamMembership>("pleaseConfirm", tms);
+                return new ResponseEntity<>(response, HttpStatus.OK);
+            }
+        } else if (tms.getTeam().getTeamMemberships().stream().filter(TeamMembership::isAdmin).count() <= MINIMUM_ADMINS_IN_TEAM) {
+            // Tell user that quiting team is not possible, because (s)he is the only teamadmin
+            ServiceResponse<String> response = new ServiceResponse<String>("failure",
+                    "Je kunt je niet uitschrijven, omdat je de enige groepsbeheerder bent.");
+            return new ResponseEntity<>(response, HttpStatus.NOT_ACCEPTABLE);
         } else {
-            teamMembershipRepository.findAll().stream()
-                    // Find all memberships of member
-                    .filter(x -> x.getMember().getMemberId().equals(member.getMemberId()))
-                    // filter the team that is passed with the pathvariable (ignore other teams from member)
-                    .filter(x -> x.getTeam().getTeamId().equals(teamId))
-                    // delete membership to team
-                    .forEach(teamMembershipRepository::delete);
+            teamMembershipRepository.delete(tms);
+            ServiceResponse<String> response = new ServiceResponse<String>("success",
+                    "Je bent geen lid meer van het team");
+            return new ResponseEntity<>(response, HttpStatus.OK);
         }
-        return "redirect:/team/all";
     }
 }

@@ -6,10 +6,11 @@ import com.wemakeitwork.allenvooreen.model.TeamMembership;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
+import java.util.Set;
 
 public interface TeamMembershipRepository extends JpaRepository<TeamMembership, Integer> {
     Optional<TeamMembership> findByTeam(Team team);
-    Optional<TeamMembership> findByMember(Member member);
-    TeamMembership findByTeamAndMember(Team team, Member member);
-    TeamMembership findByTeamTeamIdAndMemberMemberId(Integer teamId, Integer memberId);
+    Set<TeamMembership> findByMember(Member member);
+    Optional<TeamMembership> findByTeamAndMember(Team team, Member member);
+    Optional<TeamMembership> findByTeamTeamIdAndMemberMemberId(Integer teamId, Integer memberId);
 }

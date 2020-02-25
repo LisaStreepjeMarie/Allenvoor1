@@ -18,7 +18,12 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-            <a class="nav-link" href='${pageContext.request.contextPath}/member/current'><i class="fas fa-user"></i> Ingelogde gebruiker:
+           <a class="nav-link" href='${pageContext.request.contextPath}/home'><i class="fas fa-home"></i> Home</a>
+                <span class="sr-only">(current)</span>
+              </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href='${pageContext.request.contextPath}/member/current'><i class="fas fa-user"></i> Profiel van
                 <security:authorize access="isAuthenticated()">
                     <c:set var="principalUsername">
                         <security:authentication property="principal.username" />
@@ -26,14 +31,6 @@
                     <link id="principalUsername" data-principalUsername="${principalUsername}"/>
                 </security:authorize>
             </a>
-        </li>
-        <li class="nav-item">
-           <a class="nav-link" href='${pageContext.request.contextPath}/home'><i class="fas fa-home"></i> Home</a>
-                <span class="sr-only">(current)</span>
-              </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href='${pageContext.request.contextPath}/member/current'><i class="fas fa-user-cog"></i> Mijn profiel</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href='${pageContext.request.contextPath}/team/all'><i class="fas fa-users"></i> Mijn groepen</a>

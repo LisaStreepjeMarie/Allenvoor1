@@ -31,12 +31,11 @@ $(document).ready(function() {
             // This function is executed when an empty date/time is clicked
             select: function(start, end) {
                 $("#modal-footer").hide();
-                /*$("#datetimepickerDone").hide();*/
                 $("#activityCategory").change(function () {
                     showModalInputFields();
                 });
 
-                document.getElementById('save-change-event').setAttribute( "onClick", "saveEvent('"+ null + "','" + null + "')" );
+                document.getElementById('save-change-event').setAttribute( "onclick", "saveEvent('"+ null + "','" + null + "')" );
                 event = {type: "Event", id: null, start: start, end: end,};
                 fillModal(event);
             },
@@ -54,10 +53,9 @@ $(document).ready(function() {
                     $('.modal').find('#activityCategory').val("Vrije tijd")
                 }
 
-                document.getElementById('delete-event').setAttribute( "onClick", "deleteEvent('"+ event.id +"','" +  ctx + "/event/delete/" + "')" );
-                document.getElementById('save-change-event').setAttribute( "onClick", "saveEvent('"+ event.id + "','" + event.activity.id + "')" );
-                //document.getElementById('subscribe-event').setAttribute( "onClick", "subscribeEvent('"+ event.id + "')" );
-                document.getElementById('subscribe-event').setAttribute( "onClick", "window.location='" + ctx + "/event/" + event.id + "/subscriptionlist'" );
+                document.getElementById('delete-event').setAttribute( "onclick", "deleteEvent('"+ event.id +"','" +  ctx + "/event/delete/" + "')" );
+                document.getElementById('save-change-event').setAttribute( "onclick", "saveEvent('"+ event.id + "','" + event.activity.id + "')" );
+                document.getElementById('subscribe-event').setAttribute( "onclick", "window.location='" + ctx + "/event/" + event.id + "/subscriptionlist'" );
 
                 fillModal(event);
             },

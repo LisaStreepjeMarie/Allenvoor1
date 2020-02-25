@@ -92,7 +92,7 @@ return (today - day) + " dagen geleden"
 function checkNewMessages(){
 
 // getting the list size
-var allMessages = document.getElementsByClassName("list-group-item");
+var allMessages = document.getElementsByClassName("chatitem");
 
 $.ajax({
          type:'GET',
@@ -101,7 +101,7 @@ $.ajax({
                 if (result.status == "newMessages") {
                 newMessageList = result.data;
                      for (i in newMessageList ) {
-                     appendNewMessage(newMessageList[i]);
+                        appendNewMessage(newMessageList[i]);
                      }
                      $('#overViewMessages').animate({scrollTop: $('#overViewMessages').prop("scrollHeight")}, 500);
                  }
@@ -122,11 +122,11 @@ var memberName = document.getElementById("givenMemberName").value;
 
 // changing the way the message looks if it is yours
 if (message.member.name === memberName){
-      $('#overViewMessages').append('<a class="list-group-item"><div class="d-flex w-100 justify-content-between"><small class="text-muted"><nobr>'
+      $('#overViewMessages').append('<a class="list-group-item chatitem"><div class="d-flex w-100 justify-content-between"><small class="text-muted"><nobr>'
       + testData(message.datePosted) + '</nobr></small><div class="d-flex w-100 justify-content-end"><h5 class="mb-1" style="color:#0077b3;">'
       + message.member.name + '</h5></div></div><div class="d-flex w-100 justify-content-end"><p class="mb-1" >' + message.message + '</p>');
     } else {
-    $('#overViewMessages').append('<a class="list-group-item"><div class="d-flex w-100 justify-content-between"><h5 class="mb-1" style="color:#993399;">'
+    $('#overViewMessages').append('<a class="list-group-item chatitem"><div class="d-flex w-100 justify-content-between"><h5 class="mb-1" style="color:#993399;">'
     + message.member.name + '</h5><small class="text-muted">' + testData(message.datePosted) + '</small></div><p class="mb-1" >'
     + message.message + '</p>');
     }

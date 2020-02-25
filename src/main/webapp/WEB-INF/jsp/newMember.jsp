@@ -24,12 +24,12 @@
     </head>
 
     <body class="text-center">
+        <a href="${pageContext.request.contextPath}/home">
+            <img class="mb-3" src="${pageContext.request.contextPath}/images/LogoAllenVoorEen.png" alt="" width="300" height="228">
+        </a>
         <div class="container">
             <form class="form-signin" method="post" action="${pageContext.request.contextPath}/member/new">
-            <a href="${pageContext.request.contextPath}/home">
-            <img class="mb-4" src="${pageContext.request.contextPath}/images/LogoAllenVoorEen.png" alt="" width="300" height="228"></a>
-                <h1 class="h3 mb-3 font-weight-light"><strong>Nieuw?</strong><br> Maak een account:</h1>
-
+            <h1 class="h3 mb-3 font-weight-light">Maak een account:</h1>
 
         <form:form action="${pageContext.request.contextPath}/member/new" modelAttribute="member">
             <spring:bind path="memberName">
@@ -64,12 +64,10 @@
             </spring:bind>
 
             <button class="btn btn-lg btn-primary btn-block" type="submit">Registreer</button>
+            <input type="button" class="btn btn-lg btn-primary btn-block" onclick="window.location='${pageContext.request.contextPath}';" value="Inloggen">
             </form:form>
-            <form action="${pageContext.request.contextPath}/logout" method="post" class="form-signin" >
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Inloggen</button>
-                <p class="mt-5 mb-3 text-muted">&copy; 2020 Allenvooreen</p>
-            </form>
+
+            <p class="mt-5 mb-3 text-muted">&copy; 2020 Allenvooreen</p>
     </body>
 </html>
 
