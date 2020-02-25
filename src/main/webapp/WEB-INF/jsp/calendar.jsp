@@ -241,7 +241,6 @@ border: 0;
                             </div>
                         </div>
                         <div class="tab-pane fade" id="memberOptions" role="tabpanel" aria-labelledby="list-settings-list">
-
                         </div>
                     </div>
             </div>

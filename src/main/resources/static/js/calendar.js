@@ -39,6 +39,12 @@ $(document).ready(function() {
 
             // This function is executed when an already planned event is clicked
             eventClick: function(event, element) {
+            console.log(event.id);
+            console.log(event.activity.activityId);
+            console.log(event);
+            $('#newModal').find('#eventId').val(event.id);
+            $('#newModal').find('#activityId').val(event.activity.activityId);
+
                 $('#newModal').modal('show');
 
                 if (event.activity.type === "LeisureActivity"){
@@ -53,7 +59,6 @@ $(document).ready(function() {
                 preFillDateFields(event);
 
                 document.getElementById('delete-event').setAttribute( "onClick", "deleteEvent('"+ event.id +"','" +  ctx + "/event/delete/" + "')" );
-                document.getElementById('save-change-event').setAttribute( "onClick", "saveEvent('"+ event.id + "','" + event.activity.id + "')" );
             },
 
             // This function is executed when an event is dragged to another date

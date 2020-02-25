@@ -8,10 +8,13 @@ $.ajaxSetup({
     }
 });
 
-function saveEvent(eventId, activityId, activityType) {
+function saveEvent(activityType) {
     // Fill the object currentEvent with values from input fields in the modal
+    eventId = document.getElementById("eventId").value;
+    activityId = document.getElementById("activityId").value;
+
     console.log(eventId);
-    console.log("hallo");
+    console.log(activityId);
     eventToSave = {
             id: eventId,
             type: "Event",

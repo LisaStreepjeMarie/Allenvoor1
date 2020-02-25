@@ -20,7 +20,7 @@ $('#datetimepickerDone').datetimepicker();
 
 function optionLeisureActivity(){
         document.getElementById("save-change-event").innerHTML = "Nieuwe afpraak";
-        document.getElementById('save-change-event').setAttribute( "onClick", "saveEvent('"+ null + "','" + null + "', 'LeisureActivity')" );
+        document.getElementById('save-change-event').setAttribute( "onClick", "saveEvent('LeisureActivity')" );
         hideAllModalInputFields();
         $("#eventNameDiv, #eventCommentDiv, #eventDatesDiv").show();
         $("#delete-event").hide();
@@ -38,7 +38,7 @@ function optionLeisureActivity(){
 }
 
 function optionsMedicationActivity(){
-        document.getElementById('save-change-event').setAttribute( "onClick", "saveEvent('"+ null + "','" + null + "', 'MedicationActivity')" );
+        document.getElementById('save-change-event').setAttribute( "onClick", "saveEvent('MedicationActivity')" );
         hideAllModalInputFields();
         $("#eventNameDiv, #medicationChoiceDiv, #takenMedicationDiv, #eventDatesDiv").show();
         getMedication(null);
