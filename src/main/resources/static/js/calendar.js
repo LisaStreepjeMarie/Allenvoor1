@@ -32,6 +32,7 @@ $(document).ready(function() {
             select: function(start, end) {
             $('#newModal').modal('show');
             document.getElementById("LeisureTab").click();
+            document.getElementById("save-change-event").innerHTML = "Nieuwe afpraak";
             $('#newModal').find('#eventStartDate').val(moment(start).format('DD-MM-YYYY H:mm'));
             $('#newModal').find('#eventEndDate').val(moment(end).format('DD-MM-YYYY H:mm'));
 
@@ -39,6 +40,8 @@ $(document).ready(function() {
 
             // This function is executed when an already planned event is clicked
             eventClick: function(event, element) {
+            document.getElementById("save-change-event").innerHTML = "Wijzig afspraak";
+            $("#delete-event").show();
             console.log(event.id);
             console.log(event.activity.activityId);
             console.log(event);

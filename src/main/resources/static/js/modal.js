@@ -19,7 +19,6 @@ $('#datetimepickerDone').datetimepicker();
 
 
 function optionLeisureActivity(){
-        document.getElementById("save-change-event").innerHTML = "Nieuwe afpraak";
         document.getElementById('save-change-event').setAttribute( "onClick", "saveEvent('LeisureActivity')" );
         hideAllModalInputFields();
         $("#eventNameDiv, #eventCommentDiv, #eventDatesDiv").show();
@@ -62,8 +61,10 @@ function optionsMemberTab(){
 }
 
 function preFillDateFields(event){
+
     $('#newModal').find('#eventStartDate').val(moment(event.start).format('DD-MM-YYYY H:mm'));
     $('#newModal').find('#eventEndDate').val(moment(event.end).format('DD-MM-YYYY H:mm'));
+
     if(event.maxNumber != null) {
         document.getElementById("eventPeriodic").checked;
         $("#eventIsPeriodicDiv").show();
@@ -74,8 +75,6 @@ function preFillDateFields(event){
 }
 
 function preFillSharedFields(event){
-        document.getElementById("save-change-event").innerHTML = "Wijzig afspraak";
-        $("#delete-event").show();
         $('#newModal').find('#eventName').val(event.title);
         $('#newModal').find('#eventInterval').val(event.interval);
         $('#newModal').find('#eventMaxNumber').val(event.maxNumber);
@@ -94,7 +93,7 @@ function preFillLeisureActivityFields(event){
 }
 
 function preFillMedicationActivityFields(event){
-        document.getElementById("medicationChoice").value = event.activity.medication.id;
+        $('#newModal').find('#medicationChoice').val(event.activity.medication.id);
         $('#newModal').find('#takenMedication').val(event.activity.takenmedication);
 }
 
