@@ -38,6 +38,7 @@
     border: 0;
     }
     .tabs {
+    border: 0;
     position: fixed;
     width: 65px;
     height: 65px;
@@ -54,13 +55,13 @@
 .modal-header {
     background: #98639C;
     padding: 0p;
-    height: 57px;
+    height: 56px;
     border: 0;
 }
 
 .tabs-top {
-    margin-bottom: 1px;
-    margin-top: 1px;
+    margin-bottom: 0px;
+    margin-top: 0px;
 }
 
 .nav-tabs {
@@ -75,6 +76,7 @@
 }
 
 .nav-tabs > li > a {
+    border: 0;
     width: 230px;
     background: #98639C;
     color: #fff;
@@ -104,16 +106,6 @@
 
 .modal-dialog {
 border: 0;
-}
-
-.tabcontent {
-  animation: fadeEffect 1s; /* Fading effect takes 1 second */
-}
-
-/* Go from zero to full opacity */
-@keyframes fadeEffect {
-  from {opacity: 0;}
-  to {opacity: 1;}
 }
 
 </style>

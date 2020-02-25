@@ -144,12 +144,7 @@ th, td {
 	line-height:135%;
 }
 
-.nav-link[data-toggle].collapsed:after {
-    content: "▾";
-}
-.nav-link[data-toggle]:not(.collapsed):after {
-    content: "▴";
-}
+
 a:visited {
 	color: #0e4171;
 	text-decoration: none
@@ -203,10 +198,6 @@ h2 {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-}
-
-.nav {
-background-image: url('/allenvooreen/images/background.jpg');
 }
 
 .navbar-brand {
