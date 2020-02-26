@@ -167,7 +167,20 @@
                         <!-- memberOptions start here -->
                         <div class="tab-pane fade" id="memberOptions" role="tabpanel" aria-labelledby="list-settings-list">
                             <div class="modal-body">
-                                <div class="row col-4" id ="doneByMemberDiv">
+
+                                <div class="row col-4" id="doneByMemberDiv">
+                                    <div class="w-25 p-3">
+
+                                        <ul class="list-group" >
+                                            <li class="list-group-item list-group-item-dark">Ingeschreven gebruikers:</li>
+                                            <div id="subscriptionList">
+                                                <!-- this list is filled by getEventSubscriptions() in the events.js -->
+                                            </div>
+                                        </ul>
+                                    </div>
+                                    <div class="w-25 p-3" id="subscribe">
+                                        <!-- placeholder for subscribe-button; is filled by getEventSubscriptions() in the events.js -->
+                                    </div>
                                     <select name="event.doneByMember" id="doneByMember" style="width:13.2em;" >
                                         <option disabled selected="doneByMember">Gedaan door</option>
                                     </select>
@@ -189,5 +202,11 @@
     <a class="list-group-item  list-group-item-action nav-link" style="background-color:#ccb3ff;" id="Memberlist" data-toggle="tab" href=#memberOptions role="tab" aria-controls="settings"><i class="fas fa-user float-center"></i></a>
     </div>
 </div>
+<script>
+    $(document).ready(function(){
+        eventId = document.getElementById("eventId").value;
+        getEventSubscriptions(eventId);
+    })
+</script>
 </body>
 </html>
