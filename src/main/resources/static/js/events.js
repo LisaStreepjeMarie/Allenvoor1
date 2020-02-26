@@ -149,7 +149,7 @@ function getEventSubscriptions(){
                 if ($('#principalUsername').attr('data-principalUsername') === subscriptionList[i].member.name) {
                     $('#subscriptionList').append('<li class="list-group-item" id="subscription-id-'+ subscriptionList[i].id + '" value="' +
                         subscriptionList[i].member.id + '">' + subscriptionList[i].member.name + '<input class="btn btn-primary float-right"' +
-                        'style="width: auto;padding:0px;" type="button" value="   Schrijf uit   "' +
+                        'style="width: auto;padding:0px;" type="button" value="   Schrijf je uit   "' +
                         'onClick="unsubscribeFromEvent(' + subscriptionList[i].id + ')"></li>');
                     alreadySubscribed = true;
                 } else {
@@ -192,7 +192,7 @@ function addEventSubscription(eventId){
         $('#subscriptionList').append('<li class="list-group-item" id="subscription-id-'+
             result.data.id + '" value="' + result.data.member.id + '">' + result.data.member.name +
             '<input class="btn btn-primary float-right" style="width: auto;padding:0px;" type="button"' +
-            'value="   Schrijf uit   " onClick="unsubscribeFromEvent(' + result.data.id + ')"></li>');
+            'value="   Schrijf je uit   " onClick="unsubscribeFromEvent(' + result.data.id + ')"></li>');
         $('#doneByMember').append('<option value="' + result.data.member.id + '">' + result.data.member.name + '</option>');
         $('#subscribeDiv').hide();
     },
