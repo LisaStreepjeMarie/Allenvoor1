@@ -1,9 +1,10 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 
-<html xmlns:jsp="http://www.w3.org/1999/XSL/Transform">
+<html xmlns:jsp="http://www.w3.org/1999/XSL/Transform" xmlns:security="">
 <head>
     <meta charset='utf-8' />
     <title>Kalender</title>
@@ -28,6 +29,12 @@
     <link id="contextPathHolder" data-contextPath="${pageContext.request.contextPath}"/>
     <link id="teamId" data-teamId="${team.teamId}"/>
     <link id="csrfToken" data-csrfToken="${_csrf.token}"/>
+    <security:authorize access="isAuthenticated()">
+        <c:set var="principalUsername">
+            <security:authentication property="principal.username" />
+        </c:set>
+        <link id="principalUsername" data-principalUsername="${principalUsername}"/>
+    </security:authorize>
 
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/modal.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/js/events.js"></script>
@@ -244,12 +251,9 @@ padding-bottom: 20px;
                             </div>
                         </div>
                     </div>
-
-
                         <div class="modal-body">
-                            <div class= "row col-4" id="subscriptionListDiv" >
-                                <div class="w-25 p-3">
-
+                            <div class="row" id="subscriptionListDiv" >
+                                <div class="w-100 p-3">
                                     <ul class="list-group" >
                                         <li class="list-group-item list-group-item-dark">Ingeschreven gebruikers:</li>
                                         <div id="subscriptionList">

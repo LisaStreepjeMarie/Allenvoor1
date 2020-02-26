@@ -134,7 +134,6 @@ function dropResizeOrDeleteEvent(event, targetUrl) {
 
 function getEventSubscriptions(){
     var eventId = document.getElementById("eventId").value;
-    console.log(eventId);
     $.ajax({
          type:'GET',
          url: ctx + "/event/" + eventId + "/getsubscriptionlist",
@@ -145,7 +144,7 @@ function getEventSubscriptions(){
                 if ($('#principalUsername').attr('data-principalUsername') === subscriptionList[i].member.name) {
                     $('#subscriptionList').append('<li class="list-group-item" id="subscription-id-'+ subscriptionList[i].id + '" value="' +
                         subscriptionList[i].member.id + '">' + subscriptionList[i].member.name + '<input class="btn btn-primary float-right"' +
-                        'style="width: auto;padding:0px;" type="submit" value="   Schrijf uit   "' +
+                        'style="width: auto;padding:0px;" type="button" value="   Schrijf uit   "' +
                         'onClick="unsubscribeFromEvent(' + subscriptionList[i].id + ')"></li>');
                     alreadySubscribed = true;
                 } else {
@@ -154,7 +153,7 @@ function getEventSubscriptions(){
                 }
             }
             if (alreadySubscribed === false) {
-                $('#subscribe').append('<input class="btn btn-primary" id="subscribe-button" type="submit" value="Schrijf je in" onclick="addEventSubscription('+ eventId + ')">');
+                $('#subscribe').append('<input class="btn btn-primary" id="subscribe-button" type="button" value="Schrijf je in" onclick="addEventSubscription('+ eventId + ')">');
             }
          },
          error : function(e) {
@@ -183,7 +182,7 @@ function addEventSubscription(eventId){
     success: function(result) {
         $('#subscriptionList').append('<li class="list-group-item" id="subscription-id-'+
             result.data.id + '" value="' + result.data.member.id + '">' + result.data.member.name +
-            '<input class="btn btn-primary float-right" style="width: auto;padding:0px;" type="submit"' +
+            '<input class="btn btn-primary float-right" style="width: auto;padding:0px;" type="button"' +
             'value="   Schrijf uit   " onClick="unsubscribeFromEvent(' + result.data.id + ')"></li>');
         $('#subscribe-button').remove();
     },
@@ -214,7 +213,7 @@ function unsubscribeFromEvent(eventSubscriptionId, eventId) {
          async: true,
          success: function(result) {
             $('#subscription-id-' + eventSubscriptionId).remove();
-            $('#subscribe').append('<input class="btn btn-primary" id="subscribe-button" type="submit" value="Schrijf je in" onclick="addEventSubscription('+ result.data.event.id + ')">');
+            $('#subscribe').append('<input class="btn btn-primary" id="subscribe-button" type="button" value="Schrijf je in" onclick="addEventSubscription('+ result.data.event.id + ')">');
          },
          error: function(e) {
              alert("unsubscribeFromEvent() error")
