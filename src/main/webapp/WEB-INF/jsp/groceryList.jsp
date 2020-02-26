@@ -35,8 +35,8 @@
         </ul>
 
         <div class="footer">
-            <span onclick="removeAllCheckedFromList()" id="checkDBtn" class="checkDBtn">verwijder gekochte items</span>&nbsp;
-            <span onclick="removeAllFromList()" id="removeBtn" class="removeBtn">verwijder alle items</span>
+            <span onclick="removeAllCheckedFromList()" id="checkDBtn" class="checkDBtn">Verwijder gekochte items</span>&nbsp;
+            <span onclick="removeAllFromList()" id="removeBtn" class="removeBtn">Verwijder alle items</span>
             <br>
         </div>
     </div>
