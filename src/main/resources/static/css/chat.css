@@ -11,3 +11,19 @@
   padding-top: 40px;
    width: 600px;
 }
+
+.list-group-item{
+  background: -webkit-gradient(linear, left bottom, left top, from(#f7bb97), to(#98639C));
+  background: -webkit-linear-gradient(bottom, #f7bb97 0%, #98639C 100%);
+  background: -moz-linear-gradient(bottom, #f7bb97 0%, #98639C 100%);
+  background: -o-linear-gradient(bottom, #f7bb97 0%, #98639C 100%);
+  background: linear-gradient(to top, #f7bb97 0%, #98639C 100%);
+}
+
+.chatitem{
+background: #fff;
+}
+
+.mb-4{
+color: #fff;
+}
