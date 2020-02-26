@@ -21,6 +21,7 @@ function optionLeisureActivity(){
         hideAllModalInputFields();
         $("#eventNameDiv, #eventCommentDiv, #eventDatesDiv").show();
         $("#delete-event").hide();
+        $("#eventPeriodic").show();
         $("#eventPeriodic").change(function () {
             if (document.getElementById("eventPeriodic").checked == true) {
                     $("#intervalDiv").show();
@@ -38,6 +39,7 @@ function optionsMedicationActivity(){
         hideAllModalInputFields();
         $("#eventNameDiv, #medicationChoiceDiv, #takenMedicationDiv, #eventDatesDiv").show();
         getMedication(null);
+        $("#eventPeriodic").show();
         $("#eventPeriodic").change(function () {
             if(document.getElementById("eventPeriodic").checked == true) {
                     $("#intervalDiv").show();
@@ -62,12 +64,15 @@ function preFillDateFields(event){
     $('#newModal').find('#eventEndDate').val(moment(event.end).format('DD-MM-YYYY H:mm'));
 
     if(event.maxNumber != null) {
-        document.getElementById("eventPeriodic").checked;
-        $("#eventIsPeriodicDiv").show();
+        $("#save-change-event").hide();
+        $("#eventIsPeriodicDiv").hide();
         $("#eventPeriodicCheckDiv").hide();
         $("#intervalDiv").hide();
         $("#maxNumberDiv").hide();
         }
+    else {
+        $("#save-change-event").show();
+    }
 }
 
 function preFillSharedFields(event){
