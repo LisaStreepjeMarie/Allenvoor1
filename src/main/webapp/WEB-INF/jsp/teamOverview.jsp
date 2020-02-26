@@ -37,14 +37,12 @@
 <div class= "masthead">
     <div id="container">
         <br>
-        <div class="ml-3 mt-3">
-            <br>
             <div class="ml-3 mt-3">
-                <h3 class="font-weight-light">Jouw groepen:</h3>
+                <h4 class="font-weight-light">Jouw groepen:</h4>
             </div>
 
             <div class="ml-3 mt-3">
-                <div class="w-50 p-3" id="accordion">
+                <div class="w-50" id="accordion">
                     <c:forEach items="${adminTeamList}" var="team">
                         <div id="card-${team.teamId}" class="card list-group-item-action">
                             <div class="card-header" onclick="$('#collapsed-chevron-${team.teamId}').toggleClass('fa-rotate-90')" aria-expanded="false" data-toggle="collapse" data-target="#collapse-${team.teamId}">
@@ -122,7 +120,7 @@
 
             <br><br>
         </div>
-        <h3 class="font-weight-light">Word beheerder van nieuwe groep:</h3>
+        <h4 class="font-weight-light">Word beheerder van nieuwe groep:</h4>
         <p><input class="btn btn-primary" type="submit" value="Creëer nieuwe groep" onclick="window.location='${pageContext.request.contextPath}/team/new';" /></p>
         <br>
         </div>

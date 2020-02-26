@@ -47,8 +47,6 @@
                    </div>
             </form:form>
 
-
-
             <form action="${pageContext.request.contextPath}/logout" method="post" class="form-signin" >
                 <div class="container">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
