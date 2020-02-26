@@ -261,8 +261,8 @@ padding-bottom: 20px;
                                         </div>
                                     </ul>
                                 </div>
-                                <div class="w-25 p-3" id="subscribe">
-                                    <!-- placeholder for subscribe-button; is filled by getEventSubscriptions() in the events.js -->
+                                <div class="w-25 p-3" id="subscribeDiv">
+                                    <input class="btn btn-primary" id="subscribe-button" type="button" value="Schrijf je in" onclick="">
                                 </div>
                             </div>
 

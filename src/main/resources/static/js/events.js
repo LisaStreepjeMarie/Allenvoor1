@@ -140,6 +140,8 @@ function getEventSubscriptions(){
          success : function(result) {
             subscriptionList = result.data;
             var alreadySubscribed = false;
+            $('#subscriptionList').empty();
+
             for (i in subscriptionList){
                 if ($('#principalUsername').attr('data-principalUsername') === subscriptionList[i].member.name) {
                     $('#subscriptionList').append('<li class="list-group-item" id="subscription-id-'+ subscriptionList[i].id + '" value="' +
@@ -153,7 +155,9 @@ function getEventSubscriptions(){
                 }
             }
             if (alreadySubscribed === false) {
-                $('#subscribe').append('<input class="btn btn-primary" id="subscribe-button" type="button" value="Schrijf je in" onclick="addEventSubscription('+ eventId + ')">');
+                document.getElementById('subscribe-button').setAttribute( "onClick", "addEventSubscription(" + eventId + ")" );
+            } else {
+                $('#subscribeDiv').hide();
             }
          },
          error : function(e) {
@@ -184,7 +188,7 @@ function addEventSubscription(eventId){
             result.data.id + '" value="' + result.data.member.id + '">' + result.data.member.name +
             '<input class="btn btn-primary float-right" style="width: auto;padding:0px;" type="button"' +
             'value="   Schrijf uit   " onClick="unsubscribeFromEvent(' + result.data.id + ')"></li>');
-        $('#subscribe-button').remove();
+        $('#subscribeDiv').hide();
     },
     error: function(e) {
         alert("addEventSubscription() error")
@@ -214,6 +218,7 @@ function unsubscribeFromEvent(eventSubscriptionId, eventId) {
          success: function(result) {
             $('#subscription-id-' + eventSubscriptionId).remove();
             $('#subscribe').append('<input class="btn btn-primary" id="subscribe-button" type="button" value="Schrijf je in" onclick="addEventSubscription('+ result.data.event.id + ')">');
+            $('#subscribeDiv').show();
          },
          error: function(e) {
              alert("unsubscribeFromEvent() error")
