@@ -172,6 +172,10 @@ public class TeamController {
             tms.setTeam(team);
 
             if (memberOpt.isPresent()) {
+                if (team.getTeamMemberships().stream().anyMatch(x -> x.getMember().getMemberName().matches(memberOpt.get().getMemberName()))) {
+                    model.addAttribute("statuscode", "Deze gebruiker zit al in het team");
+                    return "error";
+                }
                 tms.setMember(memberOpt.get());
             } else {
                 model.addAttribute("statuscode", "Deze gebruiker bestaat niet");
