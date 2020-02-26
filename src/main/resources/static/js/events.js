@@ -13,12 +13,6 @@ function saveEvent(activityType) {
     eventId = document.getElementById("eventId").value;
     activityId = document.getElementById("activityId").value;
 
-    if (activityType === "LeisureActivity"){
-
-    } else {
-    }
-    console.log(eventId);
-    console.log(activityId);
     eventToSave = {
             id: eventId,
             type: "Event",
@@ -138,7 +132,9 @@ function dropResizeOrDeleteEvent(event, targetUrl) {
     });
 }
 
-function getEventSubscriptions(eventId){
+function getEventSubscriptions(){
+    var eventId = document.getElementById("eventId").value;
+    console.log(eventId);
     $.ajax({
          type:'GET',
          url: ctx + "/event/" + eventId + "/getsubscriptionlist",
