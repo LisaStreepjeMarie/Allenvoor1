@@ -126,7 +126,8 @@ padding-top: 20px;
 }
 
 .bottomWhite {
-p
+padding-bottom: 20px;
+}
 
 </style>
 </head>
@@ -189,7 +190,6 @@ p
                                 <div class="col">
                                     <input type="number" style="width: 150px;" class="form-control" placeholder="aantal" name="takenMedication" id="takenMedication" />
                                  </div>
-                            <br><br><br>
                         </div>
                         <!-- date options start here, leisureActivity and medicationActivity have the same options -->
                     <div class="modal-body" id="eventDatesDiv">

@@ -20,7 +20,6 @@ function optionLeisureActivity(){
         document.getElementById('save-change-event').setAttribute( "onClick", "saveEvent('LeisureActivity')" );
         hideAllModalInputFields();
         $("#eventNameDiv, #eventCommentDiv, #eventDatesDiv").show();
-        $("#delete-event").hide();
         $("#eventPeriodic").show();
         $("#eventPeriodic").change(function () {
             if (document.getElementById("eventPeriodic").checked == true) {
@@ -79,7 +78,6 @@ function preFillSharedFields(event){
         $('#newModal').find('#eventName').val(event.title);
         $('#newModal').find('#eventInterval').val(event.interval);
         $('#newModal').find('#eventMaxNumber').val(event.maxNumber);
-        $("#delete-event").show();
 
         if(event.doneByMember){
             $('#doneByMember').empty()
