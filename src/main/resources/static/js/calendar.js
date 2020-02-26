@@ -6,6 +6,8 @@ $(document).ready(function() {
         $('.modal').on("hide.bs.modal", function() {
             $('#formID').trigger("reset");
             hideAllModalInputFields();
+            $('#newModal').find('#eventId').val(null);
+            $('#newModal').find('#activityId').val(null);
         });
 
         // Loads fullcalendar
