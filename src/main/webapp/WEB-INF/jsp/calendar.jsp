@@ -112,6 +112,19 @@ border: 0;
     margin: auto;
 }
 
+.center-block {
+  margin: auto;
+  display: block;
+}
+
+.leftWhite {
+padding-left: 40px;
+}
+
+.upWhite {
+padding-top: 20px;
+}
+
 </style>
 </head>
 
@@ -140,30 +153,31 @@ border: 0;
             </div>
             <!-- model content divs -->
             <span>
-
-
+                <div class="upWhite"></div>
                         <!-- event titel starts here, same for leisureActivity and medicationActivity -->
                         <div class="modal-body" id="eventNameDiv">
-                            <div class="row">
+
+                            <div class="row leftWhite">
                                 <div class="form-group">
-                                    <input class="form-control col-15"  type="text" placeholder="Titel"name="eventName" id="eventName" />
+                                    <input class="form-control col-15 "  type="text" placeholder="Titel"name="eventName" id="eventName" />
                                     <input type="hidden" name="eventId" id="eventId" />
                                     <input type="hidden" name="activityId" id="activityId" />
                                     <input type="hidden" name="teamId" id="team.teamId"/>
                                     <input type="hidden" name="teamName" value="${team.teamName}" id="teamName"/>
                                 </div>
                             </div>
+
                         </div>
 
                         <!-- leisureActivity options start here -->
                             <div class="modal-body" id="eventCommentDiv">
-                                <div class="row ">
+                                <div class="row leftWhite">
                                     <textarea class="col-30" style="width: 400px;" placeholder="Beschrijving" name="eventComment" id="eventComment"></textarea>
                                 </div>
                             </div>
 
                         <!-- medicationActivity options start here -->
-                        <div class="row" id="medicationChoiceDiv">
+                        <div class="row leftWhite" id="medicationChoiceDiv">
                                 <div class="col">
                                     <select class="browser-default custom-select " style="width: 200px;" name="medication.medicationId" id="medicationChoice" >
                                         <option disabled selected="selected">Medicijn</option>
@@ -172,13 +186,14 @@ border: 0;
                                 <div class="col">
                                     <input type="number" style="width: 150px;" class="form-control" placeholder="aantal" name="takenMedication" id="takenMedication" />
                                  </div>
+                            <br><br><br>
                         </div>
                         <!-- date options start here, leisureActivity and medicationActivity have the same options -->
                     <div class="modal-body" id="eventDatesDiv">
-                        <div class="form-group">
+                        <div class="form-group ">
                             <!-- start date -->
                             <div class="input-group date" id="datetimepickerStart" data-target-input="nearest">
-                                <label for="eventStartDate">Starttijd </label>
+                                <label for="eventStartDate">&emsp;&ensp;van&emsp;</label>
                                 <input id="eventStartDate" name="eventStartDate" type="text" class="form-control  datetimepicker-input" data-target="#datetimepickerStart"/>
                                 <div class="input-group-append" style="width:8.3vw;" data-target="#datetimepickerStart" data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -186,10 +201,10 @@ border: 0;
                             </div>
 
                         </div>
-                        <div class="form-group">
+                        <div class="form-group ">
                             <!-- end date -->
                             <div class="input-group date" id="datetimepickerEnd" data-target-input="nearest">
-                                <label class="col-15" for="eventEndDate">Eindtijd </label>
+                                <label for="eventEndDate">&emsp;&ensp;tot&emsp;&thinsp;</label>
                                 <input id="eventEndDate" name="eventEndDate" type="text" class="form-control datetimepicker-input" data-target="#datetimepickerEnd"/>
                                 <div class="input-group-append" style="width:8.3vw;"  data-target="#datetimepickerEnd" data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -208,7 +223,7 @@ border: 0;
                                 </div>
                             </div>
                             <!-- interval options day/month/week -->
-                            <div class="row" id="intervalDiv">
+                            <div class="row " id="intervalDiv">
                                 <label class="col-4" for="eventInterval" control-label>Frequentie</label>
                                 <select name="event.eventInterval" id="eventInterval" >
                                     <option disabled selected="selected" value="">Elke</option>
@@ -246,7 +261,6 @@ border: 0;
                         </div>
                         <div class="tab-pane fade" id="memberOptions" role="tabpanel" aria-labelledby="list-settings-list">
                         </div>
-
                 </span>
                 <div class="modal-footer" id="modal-footer">
                     <button type="button" id="delete-event" class="btn btn-danger" data-dismiss="modal">Verwijder Afspraak</button>
