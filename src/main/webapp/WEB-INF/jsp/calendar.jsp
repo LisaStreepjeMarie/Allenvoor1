@@ -125,6 +125,9 @@ padding-left: 40px;
 padding-top: 20px;
 }
 
+.bottomWhite {
+p
+
 </style>
 </head>
 
@@ -225,7 +228,7 @@ padding-top: 20px;
                             <!-- interval options day/month/week -->
                             <div class="row " id="intervalDiv">
                                 <label class="col-4" for="eventInterval" control-label>Frequentie</label>
-                                <select name="event.eventInterval" id="eventInterval" >
+                                <select class=" browser-default custom-select" style="width: 200px;" name="event.eventInterval" id="eventInterval" >
                                     <option disabled selected="selected" value="">Elke</option>
                                     <option value="day">dag</option>
                                     <option value="week">week</option>
