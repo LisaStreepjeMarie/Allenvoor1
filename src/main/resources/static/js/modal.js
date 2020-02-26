@@ -53,7 +53,8 @@ function optionsMedicationActivity(){
 
 function optionsMemberTab(){
         hideAllModalInputFields();
-        $("#doneByMemberDiv, #datetimepickerDone").show();
+        $("#subscriptionListDiv, #doneByMemberDiv, #datetimepickerDone").show();
+        getEventSubscriptions();
         filldoneByMembers(null)
 }
 
@@ -100,8 +101,8 @@ function preFillMedicationActivityFields(event){
 
 // This function hides all modal options
 function hideAllModalInputFields() {
-    $("#eventNameDiv, #eventCommentDiv, #medicationChoiceDiv, #takenMedicationDiv, #subscribe-event").css("display", "none");
-    $("#eventDatesDiv, #doneByMemberDiv, #datetimepickerDone, #eventIsPeriodicDiv, #intervalDiv, #maxNumberDiv").css("display", "none");
+    $("#eventNameDiv, #eventCommentDiv, #medicationChoiceDiv, #takenMedicationDiv, #subscribe-event, #subscriptionListDiv").css("display", "none");
+    $("#eventDatesDiv, #doneByMemberDiv, #datetimepickerDone, #eventIsPeriodicDiv, #intervalDiv, #maxNumberDiv, #subscriptionListDiv").css("display", "none");
 }
 
 // Cleans the modal upon closing
