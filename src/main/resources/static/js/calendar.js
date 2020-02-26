@@ -31,6 +31,7 @@ $(document).ready(function() {
             // This function is executed when an empty date/time is clicked
             select: function(start, end) {
             $('#newModal').modal('show');
+            $("#save-change-event").show();
             $("#delete-event").hide();
             document.getElementById("LeisureTab").click();
             document.getElementById("save-change-event").innerHTML = "Nieuwe afpraak";
@@ -41,6 +42,7 @@ $(document).ready(function() {
 
             // This function is executed when an already planned event is clicked
             eventClick: function(event, element) {
+            $("#save-change-event").show()
             document.getElementById("save-change-event").innerHTML = "Wijzig afspraak";
             $("#delete-event").show();
             $('#newModal').find('#eventId').val(event.id);
