@@ -152,7 +152,7 @@ public class TeamController {
 
             TeamMembership tms = new TeamMembership();
             tms.setTeam(team);
-            tms.setMember(memberOpt.get());
+            tms.setMember(memberOpt.orElseThrow(() -> new InvalidPropertyException(this.getClass(), "member", "Deze gebruiker bestaat niet")));
             teamMembershipRepository.save(tms);
             return "redirect:/team/select/" + teamMemberDTO.getTeamId();
         }

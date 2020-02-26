@@ -275,8 +275,9 @@ padding-bottom: 20px;
                                 </div>
                                 <br>
                                 <div class="form-group" >
-                                    <label class="list-group" for="doneByMember" control-label><h5>Op datum:</h5></label>
+                                    <label class="list-group" id="doneByMemberLabel" for="doneByMember" control-label><h5>Op datum:</h5></label>
                                     <div class="input-group date" id="datetimepickerDone" data-target-input="nearest">
+
                                         <input id="eventDoneDate" name="eventDoneDate" type="text" class="form-control datetimepicker-input" data-target="#datetimepickerDone"/>
                                         <div class="input-group-append" style="width:8.3vw;" data-target="#datetimepickerDone" data-toggle="datetimepicker">
                                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>

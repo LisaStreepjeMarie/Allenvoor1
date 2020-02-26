@@ -53,7 +53,7 @@ function optionsMedicationActivity(){
 
 function optionsMemberTab(){
         hideAllModalInputFields();
-        $("#subscriptionListDiv, #doneByMemberDiv, #datetimepickerDone").show();
+        $("#subscriptionListDiv, #doneByMemberDiv, #datetimepickerDone, #doneByMemberLabel").show();
         getEventSubscriptions();
 }
 
@@ -96,6 +96,6 @@ function preFillMedicationActivityFields(event){
 
 // This function hides all modal options
 function hideAllModalInputFields() {
-    $("#eventNameDiv, #eventCommentDiv, #medicationChoiceDiv, #takenMedicationDiv, #subscribe-event, #subscriptionListDiv").css("display", "none");
+    $("#eventNameDiv, #eventCommentDiv, #medicationChoiceDiv, #takenMedicationDiv, #subscribe-event, #subscriptionListDiv, #doneByMemberLabel").css("display", "none");
     $("#eventDatesDiv, #doneByMemberDiv, #datetimepickerDone, #eventIsPeriodicDiv, #intervalDiv, #maxNumberDiv, #doneByMemberDiv").css("display", "none");
 }
