@@ -80,8 +80,7 @@ function preFillSharedFields(event){
         $('#newModal').find('#eventMaxNumber').val(event.maxNumber);
 
         if(event.doneByMember){
-            $('#doneByMember').empty()
-            $("#datetimepickerDone, #doneByMemberDiv").show()
+            $('#doneByMember').empty();
             $('#newModal').find('#eventDoneDate').val(moment(event.donedate).format('DD-MM-YYYY H:mm'));
             }
         }
@@ -98,5 +97,5 @@ function preFillMedicationActivityFields(event){
 // This function hides all modal options
 function hideAllModalInputFields() {
     $("#eventNameDiv, #eventCommentDiv, #medicationChoiceDiv, #takenMedicationDiv, #subscribe-event, #subscriptionListDiv").css("display", "none");
-    $("#eventDatesDiv, #doneByMemberDiv, #datetimepickerDone, #eventIsPeriodicDiv, #intervalDiv, #maxNumberDiv, #subscriptionListDiv").css("display", "none");
+    $("#eventDatesDiv, #doneByMemberDiv, #datetimepickerDone, #eventIsPeriodicDiv, #intervalDiv, #maxNumberDiv, #doneByMemberDiv").css("display", "none");
 }
