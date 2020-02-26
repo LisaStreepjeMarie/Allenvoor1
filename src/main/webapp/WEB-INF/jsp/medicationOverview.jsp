@@ -57,14 +57,13 @@
                 <br />
                 <div class="mt-3 col-12">
                     <h3 class="font-weight-light"> Overzicht medicatie ${team.teamName}</h3>
-                    <table>
-                            <tr><td><h5 class="font-weight-light">Naam</h5></td>
+                    <table><tr>
+                                <td><h5 class="font-weight-light">Naam</h5></td>
                                 <td><h5 class="font-weight-light">Hoeveelheid</h5></td>
-                                <td colspan="3"><h5 class="font-weight-light">Beschrijving</h5></td>
+                                <td><h5 class="font-weight-light">Beschrijving</h5></td>
+                                <table><td><div id="allMedications"></td>
                             </tr>
                     </table>
-                    <div id="allMedications">
-                    </div>
                     <p>
                     <br />
                     <tr>
