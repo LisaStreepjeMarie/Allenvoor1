@@ -296,7 +296,7 @@ padding-bottom: 20px;
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 </form>
-<jsp:include page="newHomeWithoutCalendarBreakingStuff.jsp" />
+<jsp:include page="calendarWebpage.jsp" />
 
 
 <script>
