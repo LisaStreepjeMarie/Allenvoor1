@@ -55,7 +55,6 @@ function optionsMemberTab(){
         hideAllModalInputFields();
         $("#subscriptionListDiv, #doneByMemberDiv, #datetimepickerDone").show();
         getEventSubscriptions();
-        filldoneByMembers(null)
 }
 
 function preFillDateFields(event){
@@ -84,7 +83,6 @@ function preFillSharedFields(event){
             $('#doneByMember').empty()
             $("#datetimepickerDone, #doneByMemberDiv").show()
             $('#newModal').find('#eventDoneDate').val(moment(event.donedate).format('DD-MM-YYYY H:mm'));
-            filldoneByMembers(event.doneByMember.name)
             }
         }
 
@@ -93,9 +91,7 @@ function preFillLeisureActivityFields(event){
 }
 
 function preFillMedicationActivityFields(event){
-        console.log(event.activity.medication.id);
         $('#newModal').find("medicationChoice").val("#event.activity.medication.id");
-//        $('#newModal').find('#medicationChoice').val(event.activity.medication.id);
         $('#newModal').find('#takenMedication').val(event.activity.takenmedication);
 }
 
@@ -104,34 +100,3 @@ function hideAllModalInputFields() {
     $("#eventNameDiv, #eventCommentDiv, #medicationChoiceDiv, #takenMedicationDiv, #subscribe-event, #subscriptionListDiv").css("display", "none");
     $("#eventDatesDiv, #doneByMemberDiv, #datetimepickerDone, #eventIsPeriodicDiv, #intervalDiv, #maxNumberDiv, #subscriptionListDiv").css("display", "none");
 }
-
-// Cleans the modal upon closing
-function filldoneByMembers(givenName){
-
-    if(givenName != null){
-    var first = '<option value="">'+ givenName + '</option>';
-    }else {
-    var first = '<option value="">Kies een teamlid</option>';
-    }
-
-
-    $.ajax({
-         type:'GET',
-         url: ctx + "/calendar/" + $('#teamId').attr('data-teamId') + '/teamMembers',
-         dataType: 'json',
-         success : function(result) {
-                 List = result.data
-                 $('#doneByMember').empty()
-                 $('#doneByMember').append(first);
-                 for (i in List ) {
-                    $('#doneByMember').append('<option value="' + List[i].member.id + '">' + List[i].member.name + '</option>');
-                 }
-             },
-             error : function(e) {
-             alert("getMedication() error")
-             console.log("ERROR: ", e);
-         }
-    });
-
-}
-

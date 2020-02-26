@@ -141,6 +141,9 @@ function getEventSubscriptions(){
             subscriptionList = result.data;
             var alreadySubscribed = false;
             $('#subscriptionList').empty();
+            $('#doneByMember').empty()
+            $('#doneByMember').append(first);
+            var first = '<option value="">Kies een teamlid</option>';
 
             for (i in subscriptionList){
                 if ($('#principalUsername').attr('data-principalUsername') === subscriptionList[i].member.name) {
@@ -153,6 +156,8 @@ function getEventSubscriptions(){
                     $('#subscriptionList').append('<li class="list-group-item" value="' +
                         subscriptionList[i].member.id + '">' + subscriptionList[i].member.name + '</li>');
                 }
+
+                $('#doneByMember').append('<option value="' + subscriptionList[i].member.id + '">' + subscriptionList[i].member.name + '</option>');
             }
             if (alreadySubscribed === false) {
                 document.getElementById('subscribe-button').setAttribute( "onClick", "addEventSubscription(" + eventId + ")" );
@@ -188,6 +193,7 @@ function addEventSubscription(eventId){
             result.data.id + '" value="' + result.data.member.id + '">' + result.data.member.name +
             '<input class="btn btn-primary float-right" style="width: auto;padding:0px;" type="button"' +
             'value="   Schrijf uit   " onClick="unsubscribeFromEvent(' + result.data.id + ')"></li>');
+        $('#doneByMember').append('<option value="' + result.data.member.id + '">' + result.data.member.name + '</option>');
         $('#subscribeDiv').hide();
     },
     error: function(e) {
@@ -217,7 +223,8 @@ function unsubscribeFromEvent(eventSubscriptionId, eventId) {
          async: true,
          success: function(result) {
             $('#subscription-id-' + eventSubscriptionId).remove();
-            $('#subscribe').append('<input class="btn btn-primary" id="subscribe-button" type="button" value="Schrijf je in" onclick="addEventSubscription('+ result.data.event.id + ')">');
+            document.getElementById('subscribe-button').setAttribute( "onClick", "addEventSubscription(" + result.data.event.id + ")" );
+            $("#doneByMember option[value='" + result.data.member.id + "']").remove();
             $('#subscribeDiv').show();
          },
          error: function(e) {
