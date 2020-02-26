@@ -61,7 +61,7 @@
                                 <td><h5 class="font-weight-light">Naam</h5></td>
                                 <td><h5 class="font-weight-light">Hoeveelheid</h5></td>
                                 <td><h5 class="font-weight-light">Beschrijving</h5></td>
-                                <table><td><div id="allMedications"></td>
+                                <table><tr><td><div id="allMedications"></td></tr></table>
                             </tr>
                     </table>
                     <p>
