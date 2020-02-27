@@ -301,7 +301,7 @@ padding-bottom: 20px;
         </div>
 
         <!-- memberOption side tab -->
-        <div class="tabs" role="tablist">
+        <div id="optionsMemberTab" class="tabs" role="tablist">
             <a class="list-group-item  list-group-item-action nav-link" style="background-color:#98639C;" id="Memberlist" data-toggle="tab" onclick="optionsMemberTab()" role="tab" aria-controls="settings"><i class="fas fa-user float-center"></i></a>
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->

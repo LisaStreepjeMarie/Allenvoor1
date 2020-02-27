@@ -20,7 +20,7 @@ function optionLeisureActivity(){
         document.getElementById('save-change-event').setAttribute( "onClick", "saveEvent('LeisureActivity')" );
         hideAllModalInputFields();
         $("#eventNameDiv, #eventCommentDiv, #eventDatesDiv").show();
-        $("#eventPeriodic").show();
+        $("#eventPeriodicCheckDiv").show();
         $("#eventPeriodic").change(function () {
             if (document.getElementById("eventPeriodic").checked == true) {
                     $("#intervalDiv").show();
@@ -38,7 +38,7 @@ function optionsMedicationActivity(){
         hideAllModalInputFields();
         $("#eventNameDiv, #medicationChoiceDiv, #takenMedicationDiv, #eventDatesDiv").show();
         getMedication(null);
-        $("#eventPeriodic").show();
+        $("#eventPeriodicCheckDiv").show();
         $("#eventPeriodic").change(function () {
             if(document.getElementById("eventPeriodic").checked == true) {
                     $("#intervalDiv").show();
@@ -58,7 +58,6 @@ function optionsMemberTab(){
 }
 
 function preFillDateFields(event){
-
     $('#newModal').find('#eventStartDate').val(moment(event.start).format('DD-MM-YYYY H:mm'));
     $('#newModal').find('#eventEndDate').val(moment(event.end).format('DD-MM-YYYY H:mm'));
 
@@ -69,12 +68,10 @@ function preFillDateFields(event){
         $("#intervalDiv").hide();
         $("#maxNumberDiv").hide();
         }
-    else {
-        $("#save-change-event").show();
-    }
 }
 
 function preFillSharedFields(event){
+        $("#save-change-event").show();
         $('#newModal').find('#eventName').val(event.title);
         $('#newModal').find('#eventInterval').val(event.interval);
         $('#newModal').find('#eventMaxNumber').val(event.maxNumber);
