@@ -264,3 +264,7 @@ background-image: url('/allenvooreen/images/background.jpg');
 .active.btn-primary.btn.fc-list-button {
     background-color:purple;
 }
+
+.card-header {
+    cursor: pointer;
+}
