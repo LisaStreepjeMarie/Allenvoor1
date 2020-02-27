@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.Set;
 
 public interface TeamMembershipRepository extends JpaRepository<TeamMembership, Integer> {
-    Optional<TeamMembership> findByTeam(Team team);
+    Set<TeamMembership> findByTeam(Team team);
     Set<TeamMembership> findByMember(Member member);
     Optional<TeamMembership> findByTeamAndMember(Team team, Member member);
     Optional<TeamMembership> findByTeamTeamIdAndMemberMemberId(Integer teamId, Integer memberId);

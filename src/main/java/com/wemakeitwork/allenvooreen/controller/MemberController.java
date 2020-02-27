@@ -2,53 +2,38 @@ package com.wemakeitwork.allenvooreen.controller;
 
 import com.wemakeitwork.allenvooreen.dto.PasswordDto;
 import com.wemakeitwork.allenvooreen.model.Member;
-import com.wemakeitwork.allenvooreen.model.PasswordResetToken;
-import com.wemakeitwork.allenvooreen.model.Privilege;
 import com.wemakeitwork.allenvooreen.model.VerificationToken;
 import com.wemakeitwork.allenvooreen.repository.MemberRepository;
 import com.wemakeitwork.allenvooreen.repository.TeamRepository;
 import com.wemakeitwork.allenvooreen.repository.event.OnRegistrationSuccessEvent;
-import com.wemakeitwork.allenvooreen.repository.event.RegistrationEmailListener;
 import com.wemakeitwork.allenvooreen.service.MemberService;
 import com.wemakeitwork.allenvooreen.service.MemberServiceInterface;
 import com.wemakeitwork.allenvooreen.service.SecurityServiceInterface;
-import com.wemakeitwork.allenvooreen.util.GenericResponse;
 import com.wemakeitwork.allenvooreen.validator.EmailValidator;
 import com.wemakeitwork.allenvooreen.validator.MemberValidator;
-import com.wemakeitwork.allenvooreen.web.error.InvalidOldPasswordException;
-import com.wemakeitwork.allenvooreen.web.error.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
 import org.springframework.core.env.Environment;
-import org.springframework.mail.MailAuthenticationException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.security.access.prepost.PostAuthorize;
-import org.springframework.security.authentication.DisabledException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.UnsatisfiedServletRequestParameterException;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.io.UnsupportedEncodingException;
-import java.security.Principal;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 
 @Controller

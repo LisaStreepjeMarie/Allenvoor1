@@ -161,7 +161,7 @@ public class TeamController {
     }
 
     @PostMapping("team/addMember")
-    protected String addMember(@ModelAttribute("teamMemberDTO") TeamMemberDTO teamMemberDTO, BindingResult result) {
+    protected String addMember(@ModelAttribute("teamMemberDTO") TeamMemberDTO teamMemberDTO, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "changeTeam";
         } else {
@@ -170,7 +170,18 @@ public class TeamController {
 
             TeamMembership tms = new TeamMembership();
             tms.setTeam(team);
-            tms.setMember(memberOpt.get());
+
+            if (memberOpt.isPresent()) {
+                if (team.getTeamMemberships().stream().anyMatch(x -> x.getMember().getMemberName().matches(memberOpt.get().getMemberName()))) {
+                    model.addAttribute("statuscode", "Deze gebruiker zit al in het team");
+                    return "error";
+                }
+                tms.setMember(memberOpt.get());
+            } else {
+                model.addAttribute("statuscode", "Deze gebruiker bestaat niet");
+                return "error";
+            }
+
             teamMembershipRepository.save(tms);
             return "redirect:/team/select/" + teamMemberDTO.getTeamId();
         }
