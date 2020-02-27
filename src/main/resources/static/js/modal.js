@@ -58,23 +58,21 @@ function optionsMemberTab(){
 }
 
 function preFillDateFields(event){
+    $("#eventIsPeriodicDiv").hide();
+    $("#eventPeriodicCheckDiv").hide();
+    $("#intervalDiv").hide();
+    $("#maxNumberDiv").hide();
     $('#newModal').find('#eventStartDate').val(moment(event.start).format('DD-MM-YYYY H:mm'));
     $('#newModal').find('#eventEndDate').val(moment(event.end).format('DD-MM-YYYY H:mm'));
 
     if(event.maxNumber != null) {
         $("#save-change-event").hide();
-        $("#eventIsPeriodicDiv").hide();
-        $("#eventPeriodicCheckDiv").hide();
-        $("#intervalDiv").hide();
-        $("#maxNumberDiv").hide();
         }
 }
 
 function preFillSharedFields(event){
         $("#save-change-event").show();
         $('#newModal').find('#eventName').val(event.title);
-        $('#newModal').find('#eventInterval').val(event.interval);
-        $('#newModal').find('#eventMaxNumber').val(event.maxNumber);
 
         if(event.doneByMember){
             $('#doneByMember').empty();
