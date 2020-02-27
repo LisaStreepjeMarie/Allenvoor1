@@ -66,5 +66,10 @@
 
     </div>
 </div>
+<script>
+
+    $('#id-${team.teamId}').collapse("show");
+
+</script>
 </body>
 </html>
