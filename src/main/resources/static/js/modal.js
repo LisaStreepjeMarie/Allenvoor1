@@ -53,7 +53,7 @@ function optionsMedicationActivity(){
 
 function optionsMemberTab(){
         hideAllModalInputFields();
-        $("#subscriptionListDiv, #doneByMemberDiv, #datetimepickerDone, #doneByMemberLabel").show();
+        $("#subscriptionListDiv, #subscribeDiv, #doneByMemberDiv, #datetimepickerDone, #doneByMemberLabel").show();
         getEventSubscriptions();
 }
 
