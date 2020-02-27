@@ -13,7 +13,7 @@
 <body>
 <div class="wholeChat">
     <div id="overViewMessages" class="list-group messagesOverView">
-        <a class="list-group-item"><div class="d-flex w-100 justify-content-center"><h5 class="mb-4">Start hier je chat met groep: ${team.teamName}</h5></div></a>
+        <a class="list-group-item"><div class="d-flex w-100 justify-content-center"><h5 class="mb-4">Chat met groep ${team.teamName}</h5></div></a>
     </div>
     <input type="hidden" name="memberName" value="${member.memberName}" id="givenMemberName"/>
     <form id="formNewMessage">
