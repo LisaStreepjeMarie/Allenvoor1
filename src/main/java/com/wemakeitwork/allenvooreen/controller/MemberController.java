@@ -186,7 +186,7 @@ public class MemberController {
             }
             String token = UUID.randomUUID().toString();
             memberService.createPasswordResetTokenForMember(member, token);
-            mailSender.send(constructResetTokenEmail(getAppUrl(request), request.getLocale(), token, member));
+            //mailSender.send(constructResetTokenEmail(getAppUrl(request), request.getLocale(), token, member));
         return "resetLinkSend";
     }
 

@@ -36,17 +36,17 @@ public class Event {
     @JsonProperty("start")
     private java.util.Date eventStartDate;
 
+    @Basic
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonProperty("end")
+    private java.util.Date eventEndDate;
+
     @Nullable
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "memberId", referencedColumnName = "memberId")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonProperty("doneByMember")
     private Member doneByMember;
-
-    @Basic
-    @Temporal(TemporalType.TIMESTAMP)
-    @JsonProperty("end")
-    private java.util.Date eventEndDate;
 
     @JsonProperty("comment")
     private String eventComment;
