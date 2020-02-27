@@ -114,7 +114,7 @@ input {
   border-radius: 0;
   width: 75%;
   padding: 10px;
-  float: left;
+  float: center;
   font-size: 16px;
 }
 
@@ -166,4 +166,40 @@ input {
 
 table, th, td {
   text: center;
+  text-align: left;
+
+}
+
+table {
+  width: 100%;
+}
+
+th {
+  height: 80px;
+  padding: 5px;
+  text-align: left;
+}
+
+tr {
+    display: table-row;
+    center-align;
+    text-align: left;
+    width: 100%
+}
+
+.deleteButton{
+width: 100%;
+}
+
+.grocerylistButton{
+width: 100%;}
+
+.allMedications{
+text-align:left;
+}
+
+.thead {
+  display: table-header-group;
+  vertical-align: left;
+  border-color: inherit;
 }
