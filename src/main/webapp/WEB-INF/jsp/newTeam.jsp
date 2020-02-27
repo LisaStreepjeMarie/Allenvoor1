@@ -30,15 +30,11 @@
                                     <form:input path="teamName" value="" /></form>
                                 </td>
                             </tr>
-                            <tr>
-                                <td><h6 class="font-weight-light">Groepslid:</h6></td>
-                                <td>
-                                    <form:input path="teamMemberships" value="${members.membername}" /></form>
-                                </td>
-                            </tr>
+
                             <tr><td colspan="2"><input class="btn btn-primary" type="submit" value="Bewaar" /></td></tr>
                         </table>
                     </form:form>
+                    <input class="btn btn-primary" type="button" value="Terug" onclick="window.location='${pageContext.request.contextPath}/team/all';">
                 </div>
             </div>
         </div>

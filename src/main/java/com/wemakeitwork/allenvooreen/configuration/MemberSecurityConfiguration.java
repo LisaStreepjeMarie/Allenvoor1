@@ -9,6 +9,8 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,10 +23,12 @@ public class MemberSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     MemberDetailsService memberDetailsService;
 
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authProvider());
     }
+
 
     @Override
     @Bean
@@ -51,7 +55,9 @@ public class MemberSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/member/new/**", "/images/**", "/css/**",
-                        "/webjars/bootstrap/**", "/webjars/jquery/**", "/confirmRegistration/**").permitAll()
+                        "/webjars/bootstrap/**", "/webjars/jquery/**", "/confirmRegistration/**", "/forgotPassword/**","/member/resetPassword/**","/member/changePassword/**",
+                        "/emailError/**", "/member/updatePassword/**","/member/savePassword/**","/updatePassword/**", "/resetLinkSend/**")
+                .permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -59,7 +65,10 @@ public class MemberSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .successHandler(authenticationSuccessHandler())
                 .failureUrl("/login?error=true")
                 .permitAll();
+
+
     }
+
 
     @Bean
     public AuthenticationSuccessHandler authenticationSuccessHandler() {

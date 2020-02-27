@@ -19,14 +19,21 @@
         <%@ taglib prefix="mytags" tagdir="/WEB-INF/tags" %>
     </head>
 
-    <body class= "webpage">
+    <body class="webpage">
         <mytags:navbar/>
-        <div class= "masthead row">
+      <div id= "container">
+        <div class= "masthead">
+         <div class= "row">
             <div class= "col-2">
                 <div class="ml-3 mt-3">
                     <c:forEach items="${teamList}" var="team">
                         <br />
-                        <button type="button" class="btn btn-lg btn-primary btn-block" data-toggle="collapse" data-target=#${team.teamName} >${team.teamName}</button>
+                        <div id="card-${team.teamId}" onclick="$('#collapsed-chevron-${team.teamId}').toggleClass('fa-rotate-90')" class="card list-group-item-action">
+                            <div id="card-header" class="card-header" aria-expanded="false" data-toggle="collapse" data-target="#${team.teamName}">
+                                <i class="icon-action fa fa-chevron-right" id="collapsed-chevron-${team.teamId}"></i>
+                                <span class="title">&emsp;${team.teamName}</span>
+                            </div>
+                        </div>
                         <div id=${team.teamName} class="collapse">
                             <div class="card card-body">
                                 <tr>
@@ -45,21 +52,19 @@
                         </div>
                     </c:forEach>
                 </div>
-
             </div>
 
             <div id="container">
                 <br />
                 <div class="mt-3 col-12">
                     <h3 class="font-weight-light"> Overzicht medicatie ${team.teamName}</h3>
-                    <table>
-                            <tr><td><h5 class="font-weight-light">Naam</h5></td>
+                    <table><tr>
+                                <td><h5 class="font-weight-light">Naam</h5></td>
                                 <td><h5 class="font-weight-light">Hoeveelheid</h5></td>
-                                <td colspan="3"><h5 class="font-weight-light">Beschrijving</h5></td>
+                                <td><h5 class="font-weight-light">Beschrijving</h5></td>
+                                <table><tr><td><div id="allMedications"></td></tr></table>
                             </tr>
                     </table>
-                    <div id="allMedications">
-                    </div>
                     <p>
                     <br />
                     <tr>

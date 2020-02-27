@@ -16,10 +16,9 @@ setInterval(checkNewMessages,1000);
         xhr.setRequestHeader('X-CSRF-TOKEN', $('#csrfToken').attr('data-csrfToken'));
     }
     });
-
 });
 
-// function which gets called when you click the new message submit button
+// function which gets called when you click the new message submit buttonn
 function newMessageForAjax(){
 
    // creating a new message to save
@@ -88,11 +87,12 @@ return (today - day) + " dagen geleden"
 
 }
 
+
 // function compares the list size every so often with ajax. If the list in database is bigger it will get the new messages and append these
 function checkNewMessages(){
 
 // getting the list size
-var allMessages = document.getElementsByClassName("list-group-item");
+var allMessages = document.getElementsByClassName("chatitem");
 
 $.ajax({
          type:'GET',
@@ -101,10 +101,8 @@ $.ajax({
                 if (result.status == "newMessages") {
                 newMessageList = result.data;
                      for (i in newMessageList ) {
-                     // each message needs to be appended to the list, this is done with the function below
-                     appendNewMessage(newMessageList[i]);
+                        appendNewMessage(newMessageList[i]);
                      }
-                     // after the messages are loaded, scroll to the bottem for the latest message
                      $('#overViewMessages').animate({scrollTop: $('#overViewMessages').prop("scrollHeight")}, 500);
                  }
 
@@ -124,11 +122,11 @@ var memberName = document.getElementById("givenMemberName").value;
 
 // changing the way the message looks if it is yours
 if (message.member.name === memberName){
-      $('#overViewMessages').append('<a class="list-group-item"><div class="d-flex w-100 justify-content-between"><small class="text-muted"><nobr>'
+      $('#overViewMessages').append('<a class="list-group-item chatitem"><div class="d-flex w-100 justify-content-between"><small class="text-muted"><nobr>'
       + testData(message.datePosted) + '</nobr></small><div class="d-flex w-100 justify-content-end"><h5 class="mb-1" style="color:#0077b3;">'
       + message.member.name + '</h5></div></div><div class="d-flex w-100 justify-content-end"><p class="mb-1" >' + message.message + '</p>');
     } else {
-    $('#overViewMessages').append('<a class="list-group-item"><div class="d-flex w-100 justify-content-between"><h5 class="mb-1" style="color:#993399;">'
+    $('#overViewMessages').append('<a class="list-group-item chatitem"><div class="d-flex w-100 justify-content-between"><h5 class="mb-1" style="color:#993399;">'
     + message.member.name + '</h5><small class="text-muted">' + testData(message.datePosted) + '</small></div><p class="mb-1" >'
     + message.message + '</p>');
     }

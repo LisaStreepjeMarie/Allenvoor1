@@ -24,6 +24,7 @@ function saveEvent(activityType) {
             maxNumber: document.getElementById("eventMaxNumber").value,
             donedate: moment(document.getElementById("eventDoneDate").value, "DD-MM-YYYY H:mm").toDate(),
             doneByMember: {
+                type: "Member",
                 id: document.getElementById("doneByMember").value,
             },
             activity: {
@@ -38,6 +39,7 @@ function saveEvent(activityType) {
                 },
             },
             team: {
+                type: "Team",
                 id: parseInt($('#teamId').attr('data-teamId'), 10),
             }
         }
@@ -89,7 +91,9 @@ function getEvents(start, end, callback) {
         type:'GET',
         url: ctx + '/calendar/get/' + $('#teamId').attr('data-teamId') + '/' + start + '/' + end + '/',
         dataType: 'json',
-        error: function (xhr, type, exception) { alert("Error fetching calendar data: " + exception); },
+        error: function (xhr, type) {
+                alert(type + ": " + xhr.responseJSON.data);
+        },
         success : function(result) {
                 if (result.status == "success") {
                    var events = result.data;

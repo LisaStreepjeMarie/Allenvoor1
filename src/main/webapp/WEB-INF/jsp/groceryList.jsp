@@ -3,7 +3,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <html>
-<html>
 <head>
     <meta charset='utf-8' />
     <title>Boodschappenlijst</title>
@@ -35,12 +34,11 @@
         </ul>
 
         <div class="footer">
-            <span onclick="removeAllCheckedFromList()" id="checkDBtn" class="checkDBtn">verwijder gekochte items</span>&nbsp;
-            <span onclick="removeAllFromList()" id="removeBtn" class="removeBtn">verwijder alle items</span>
+            <span onclick="removeAllCheckedFromList()" id="checkDBtn" class="checkDBtn">Verwijder gekochte items</span>&nbsp;
+            <span onclick="removeAllFromList()" id="removeBtn" class="removeBtn">Verwijder alle items</span>
             <br>
         </div>
     </div>
  <script type="text/javascript" src="${pageContext.request.contextPath}/js/groceryList.js"></script>
-
 </body>
 </html>

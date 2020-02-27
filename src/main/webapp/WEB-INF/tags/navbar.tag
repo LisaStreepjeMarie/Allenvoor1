@@ -1,8 +1,10 @@
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <head>
     <link href="${pageContext.request.contextPath}/webjars/font-awesome/5.12.0/css/all.min.css" rel='stylesheet'>
 </head>
 
 <!-- Navigation -->
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light shadow sticky-top">
     <a class="navbar-brand"</a>
     <br>
@@ -21,7 +23,14 @@
               </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href='${pageContext.request.contextPath}/member/current'><i class="fas fa-user"></i> Mijn profiel</a>
+            <a class="nav-link" href='${pageContext.request.contextPath}/member/current'><i class="fas fa-user"></i> Profiel van
+                <security:authorize access="isAuthenticated()">
+                    <c:set var="principalUsername">
+                        <security:authentication property="principal.username" />
+                    </c:set>
+                    <link id="principalUsername" data-principalUsername="${principalUsername}"/>
+                </security:authorize>
+            </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href='${pageContext.request.contextPath}/team/all'><i class="fas fa-users"></i> Mijn groepen</a>

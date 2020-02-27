@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.wemakeitwork.allenvooreen.model.*;
 import com.wemakeitwork.allenvooreen.repository.*;
+import com.wemakeitwork.allenvooreen.model.*;
+import com.wemakeitwork.allenvooreen.repository.*;
 import com.wemakeitwork.allenvooreen.service.ServiceResponse;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.InvalidPropertyException;
@@ -49,6 +51,9 @@ public class CalendarController {
     @Autowired
     EventSubscriptionRepository eventSubscriptionRepository;
 
+    @Autowired
+    TeamMembershipRepository teamMembershipRepository;
+
     @GetMapping("/calendar/{teamid}/medications")
     public ResponseEntity<Object> getMedications(@PathVariable("teamid") final Integer teamId) {
         ServiceResponse<List<Medication>> response = new ServiceResponse<>("success", teamRepository.getOne(teamId).getMedicationList());
@@ -65,38 +70,26 @@ public class CalendarController {
     }
 
     @GetMapping("/calendar/{teamId}")
-    public String showCalender(@PathVariable("teamId") final Integer teamId, Model model)
-            throws JsonProcessingException {
-        Team team = teamRepository.getOne(teamId);
-        httpSession.setAttribute("team", team);
-        model.addAttribute("team", team);
-
+    public String showCalender(@PathVariable("teamId") final Integer teamId, Model model) {
         Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Set<TeamMembership> teamMembershipList = memberRepository
-                .findByMemberName(member.getMemberName())
-                .orElseThrow(() -> new InvalidPropertyException(this.getClass(), "member", "Deze gebruiker bestaat niet"))
-                .getTeamMemberships();
 
-        ArrayList<Team> teamList = new ArrayList<>();
-        for (TeamMembership tms: teamMembershipList) {
-            teamList.add(tms.getTeam());
+        // Check if principal is member of team (and authorized to view calendar)
+        if (teamMembershipRepository.findByTeamTeamIdAndMemberMemberId(teamId, member.getMemberId()).isPresent()) {
+            Team team = teamRepository.getOne(teamId);
+            httpSession.setAttribute("team", team);
+
+            // Get and sort all teams of member.
+            ArrayList<Team> sortedTeamList = teamMembershipRepository.findByMember(member)
+                    .stream().map(TeamMembership::getTeam)
+                    .sorted(Comparator.comparing(Team::getTeamName))
+                    .collect(Collectors.toCollection(ArrayList::new));
+            model.addAttribute("teamList", sortedTeamList);
+            model.addAttribute("team", team);
+            return "calendar";
+        } else {
+            model.addAttribute("statuscode", "Je hebt geen autorisatie om deze calender te bekijken omdat je geen lid bent van het team");
+            return "error";
         }
-
-        ArrayList<Team> sortedList = (ArrayList<Team>) teamList.stream()
-                .sorted(Comparator.comparing(Team::getTeamName))
-                .collect(Collectors.toList());
-
-        model.addAttribute("teamList", sortedList);
-
-        List<Event> sourceCalendarData = team.getEventList();
-
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.enable(SerializationFeature.INDENT_OUTPUT);
-        String calendarData = mapper.writeValueAsString(sourceCalendarData);
-        System.out.println(calendarData);
-
-        model.addAttribute("calendarData", calendarData);
-        return "calendar";
     }
 
     @PostMapping("/calendar/new/event")
@@ -106,11 +99,10 @@ public class CalendarController {
         Date startDateTime = event.getEventStartDate();
         Date endDateTime = event.getEventEndDate();
 
-        int i = 0;
         Integer maxNumber = event.getEventMaxNumber();
         // case of periodic event
         if ((maxNumber != null) && (event.getEventId() == null)) {
-            for (i = 0; i < maxNumber; i++) {
+            for (int i = 0; i < maxNumber; i++) {
                 Date startDateTimeExtraEvent = null;
                 Date endDateTimeExtraEvent = null;
                 switch (event.getEventInterval()) {
@@ -200,10 +192,5 @@ public class CalendarController {
                 .filter(x -> x.getActivity() instanceof MedicationActivity)
                 .forEach(x -> ((MedicationActivity) x.getActivity()).getMedication().upTheMedicationAmount
                         (((MedicationActivity) x.getActivity()).getTakenMedication()));
-    }
-
-    @GetMapping("/newModal")
-    public String testNewModal(){
-        return "newModal";
     }
 }

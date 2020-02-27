@@ -49,6 +49,23 @@
     </div>
 </div>
 
+<div class="modal fade" id="errorModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header" id="errorModalHeader">
+                <!-- Error header message is filled by the error clause in getEventSubscriptions() in the events.js -->
+            </div>
+            <div class="modal-body" id="errorModalBody">
+                <!-- Error body message is filled by the error clause in getEventSubscriptions() in the events.js -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Sluiten</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 <script>
     $(document).ready(function(){

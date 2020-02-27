@@ -3,7 +3,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
 
-<html lang="en" xmlns:c="http://www.w3.org/1999/XSL/Transform">
+<html lang="en" xmlns:c="http://www.w3.org/1999/XSL/Transform" xmlns:fmt="" xmlns:spring="" xmlns:beans="">
     <head>
         <title>Allenvooréén - Login pagina</title>
         <meta charset="utf-8">
@@ -22,11 +22,9 @@
     </head>
 
     <body class="text-center">
+    <img class="mb-4" src="${pageContext.request.contextPath}/images/LogoAllenVoorEen.png" alt="" width="300" height="228">
     <div class="container">
         <form class="form-signin" method="post" action="${pageContext.request.contextPath}/login">
-            <img class="mb-4" src="${pageContext.request.contextPath}/images/LogoAllenVoorEen.png" alt="" width="300" height="228">
-
-
             <c:if test="${param.error}">
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <strong>Foute inloggegevens</strong>
@@ -41,11 +39,9 @@
             <br>
             <label for="password" class="sr-only">Wachtwoord</label>
             <input type="password" id="password" name="password" class="form-control" placeholder="Wachtwoord" required>
-            <div class="checkbox mb-3">
-                <label>
-                    <input type="checkbox" value="remember-me">Onthoud mij
-                </label>
-            </div>
+
+            <a class="btn btn-default" href="${pageContext.request.contextPath}/member/resetPassword">Wachtwoord vergeten?</a>
+            <div class="ml-3 mt-3"></div>
             <input name="_csrf" type="hidden" value="${_csrf.token}" />
             <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
         </form>
