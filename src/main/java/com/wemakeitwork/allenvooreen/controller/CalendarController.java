@@ -3,14 +3,10 @@ package com.wemakeitwork.allenvooreen.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.wemakeitwork.allenvooreen.model.*;
-import com.wemakeitwork.allenvooreen.repository.*;
 import com.wemakeitwork.allenvooreen.model.*;
 import com.wemakeitwork.allenvooreen.repository.*;
 import com.wemakeitwork.allenvooreen.service.ServiceResponse;
 import org.apache.commons.lang3.time.DateUtils;
-import org.springframework.beans.InvalidPropertyException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -99,10 +95,11 @@ public class CalendarController {
         Date startDateTime = event.getEventStartDate();
         Date endDateTime = event.getEventEndDate();
 
+        int i = 0;
         Integer maxNumber = event.getEventMaxNumber();
         // case of periodic event
         if ((maxNumber != null) && (event.getEventId() == null)) {
-            for (int i = 0; i < maxNumber; i++) {
+            for (i = 0; i < maxNumber; i++) {
                 Date startDateTimeExtraEvent = null;
                 Date endDateTimeExtraEvent = null;
                 switch (event.getEventInterval()) {
