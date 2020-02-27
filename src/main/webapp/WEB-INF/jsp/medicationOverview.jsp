@@ -101,7 +101,7 @@
                             <br />
                             <input type="hidden" name="medicationID" id="medicationID" />
                             <label class="col-4" for="refillAmount" control-label>Hoeveelheid</label>
-                            <input type="number" name="refillAmount" id="refillAmount" />
+                            <input type="number" min="1" name="refillAmount" id="refillAmount" />
                         </div>
                     </div>
                     <div class="modal-footer">
