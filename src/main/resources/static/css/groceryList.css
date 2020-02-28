@@ -71,7 +71,7 @@ ul {
 
 /* Style the header */
 .header {
-  width: 700px;
+  width: 600px;
   background: -webkit-gradient(linear, left bottom, left top, from(#FFA69E), to(#98639C));
   background: -webkit-linear-gradient(bottom, #FFA69E 0%, #98639C 100%);
   background: -moz-linear-gradient(bottom, #FFA69E 0%, #98639C 100%);
@@ -85,7 +85,7 @@ ul {
 
 /* Style the footer */
 .footer {
-  width: 700px;
+  width: 600px;
   background-color: #FFA69E;
   border-radius: 0px 0px 15px 15px;
   padding: 20px 30px;

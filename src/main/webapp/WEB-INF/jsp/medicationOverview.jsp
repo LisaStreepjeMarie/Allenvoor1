@@ -64,7 +64,7 @@
                    <div id="GroceryList" class="header">
                     <h3 class="font-weight-light"> Overzicht medicatie ${team.teamName}</h3>
                     <table><thead><tr>
-                                <td><h5 class="font-weight-light">Naam hoeveelheid beschrijving</h5></td>
+                                <td><h5 class="font-weight-light">Naam&ensp;aantal&ensp;beschrijving</h5></td>
                                 <table></thead><tr><td><div id="allMedications"></td></tr></table>
                             </tr>
                     </table>
