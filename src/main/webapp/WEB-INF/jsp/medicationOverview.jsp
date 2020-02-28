@@ -98,11 +98,14 @@
                         <br />
                         <br />
                         <div class="row">
-                            <br />
-                            <input type="hidden" name="medicationID" id="medicationID" />
-                            <label class="col-4" for="refillAmount" control-label>Hoeveelheid</label>
-                            <input type="number" name="refillAmount" id="refillAmount" />
-                        </div>
+                            <div class="col">
+                                <input type="hidden" name="medicationID" id="medicationID" />
+
+                                <input type="number" style="width: 150px;" class="form-control" placeholder="aantal" name="refillAmount" id="refillAmount" />
+                                <br />
+                            </div>
+
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Sluiten</button>
