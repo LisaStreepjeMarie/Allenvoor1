@@ -124,7 +124,7 @@ var memberName = document.getElementById("givenMemberName").value;
 if (message.member.name === memberName){
       $('#overViewMessages').append('<a class="list-group-item chatitem"><div class="d-flex w-100 justify-content-between"><small class="text-muted"><nobr>'
       + testData(message.datePosted) + '</nobr></small><div class="d-flex w-100 justify-content-end"><h5 class="mb-1" style="color:#0077b3;">'
-      + message.member.name + '</h5></div></div><div class="d-flex w-100 justify-content-end"><p class="mb-1" >' + message.message + '</p>');
+      + message.member.name + '</h5></div></div><div class="d-flex w-100 justify-content-end"><p class="mb-1" >' + message.message.replace(/</g, '&lt;') + '</p>');
     } else {
     $('#overViewMessages').append('<a class="list-group-item chatitem"><div class="d-flex w-100 justify-content-between"><h5 class="mb-1" style="color:#993399;">'
     + message.member.name + '</h5><small class="text-muted">' + testData(message.datePosted) + '</small></div><p class="mb-1" >'

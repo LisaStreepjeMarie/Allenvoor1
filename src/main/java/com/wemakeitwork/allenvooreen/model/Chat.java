@@ -9,7 +9,6 @@ import java.util.List;
 @Entity
 public class Chat {
 
-
     @Id
     @JsonProperty("id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
