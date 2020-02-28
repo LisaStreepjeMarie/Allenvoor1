@@ -45,6 +45,9 @@ public class CalendarController {
     ActivityRepository activityRepository;
 
     @Autowired
+    EventSubscriptionRepository eventSubscriptionRepository;
+
+    @Autowired
     TeamMembershipRepository teamMembershipRepository;
 
     @GetMapping("/calendar/{teamid}/medications")
@@ -92,10 +95,11 @@ public class CalendarController {
         Date startDateTime = event.getEventStartDate();
         Date endDateTime = event.getEventEndDate();
 
+        int i = 0;
         Integer maxNumber = event.getEventMaxNumber();
         // case of periodic event
         if ((maxNumber != null) && (event.getEventId() == null)) {
-            for (int i = 0; i < maxNumber; i++) {
+            for (i = 0; i < maxNumber; i++) {
                 Date startDateTimeExtraEvent = null;
                 Date endDateTimeExtraEvent = null;
                 switch (event.getEventInterval()) {
@@ -130,6 +134,8 @@ public class CalendarController {
             }
             eventRepository.save(event);
         }
+
+        event = eventRepository.getOne(event.getEventId());
 
         // this sets the activity to the medication from the activity
         if (event.getActivity() instanceof MedicationActivity){

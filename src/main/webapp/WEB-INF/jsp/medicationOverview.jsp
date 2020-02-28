@@ -16,6 +16,9 @@
         <link href="${pageContext.request.contextPath}/webjars/bootstrap/4.4.1/css/bootstrap.min.css" rel='stylesheet'>
         <link href="${pageContext.request.contextPath}/css/style.css" rel="stylesheet" type="text/css"/>
 
+        <link id="contextPathHolder" data-contextPath="${pageContext.request.contextPath}"/>
+        <link href="${pageContext.request.contextPath}/css/medication.css" rel="stylesheet" type="text/css"/>
+
         <%@ taglib prefix="mytags" tagdir="/WEB-INF/tags" %>
     </head>
 
@@ -29,12 +32,12 @@
                     <c:forEach items="${teamList}" var="team">
                         <br />
                         <div id="card-${team.teamId}" onclick="$('#collapsed-chevron-${team.teamId}').toggleClass('fa-rotate-90')" class="card list-group-item-action">
-                            <div id="card-header" class="card-header" aria-expanded="false" data-toggle="collapse" data-target="#${team.teamName}">
+                            <div id="card-header" class="card-header" aria-expanded="false" data-toggle="collapse" data-target="#id-${team.teamId}">
                                 <i class="icon-action fa fa-chevron-right" id="collapsed-chevron-${team.teamId}"></i>
                                 <span class="title">&emsp;${team.teamName}</span>
                             </div>
                         </div>
-                        <div id=${team.teamName} class="collapse">
+                        <div id="id-${team.teamId}" class="collapse">
                             <div class="card card-body">
                                 <tr>
                                     <a class="dropdown-item" href='${pageContext.request.contextPath}/calendar/${team.teamId}'> <i class="fa fa-calendar" ></i>&emsp;Kalender  </a>
@@ -57,24 +60,25 @@
             <div id="container">
                 <br />
                 <div class="mt-3 col-12">
+                   <div id="WholeGroceryList">
+                   <div id="GroceryList" class="header">
                     <h3 class="font-weight-light"> Overzicht medicatie ${team.teamName}</h3>
-                    <table><tr>
-                                <td><h5 class="font-weight-light">Naam</h5></td>
-                                <td><h5 class="font-weight-light">Hoeveelheid</h5></td>
-                                <td><h5 class="font-weight-light">Beschrijving</h5></td>
-                                <table><tr><td><div id="allMedications"></td></tr></table>
+                    <table><thead><tr>
+                                <td><h5 class="font-weight-light">Naam&ensp;aantal&ensp;beschrijving</h5></td>
+                                <table></thead><tr><td><div id="allMedications"></td></tr></table>
                             </tr>
                     </table>
                     <p>
                     <br />
                     <tr>
-                        <td colspan="5"><input class="btn btn-primary" type="button" value="Voer medicatie in"
+                        <td colspan="5"><input class="btn btn-primary"  id="checkDBtn" class="checkDBtn" type="button" value="Voer medicatie in"
                             onclick="window.location='${pageContext.request.contextPath}/medication/new';" />
                         </td>
                     </tr>
                     </p>
                 </div>
             </div>
+            <div class="footer">
         </div>
 
         </div>
@@ -168,7 +172,7 @@
                  '</td><td><input class="btn btn-primary deleteButton" onclick="deleteMedication(' + medication.id
                  + ')"  type="button" value="Verwijder medicatie" /><input type="hidden" name="medicationID" value="'
                  + medication.id + ' id="medicationNumber" /></td><td><input onclick="addToGroceryListButton(' + medication.id
-                 + ',' + medication.name + '.innerHTML)" class="btn btn-primary" type="button" value="Zet op boodschappenlijst"  data-toggle="modal" /></td></tr>');
+                 + ',' + medication.name + '.innerHTML)" class="btn btn-primary grocerylistButton" type="button" value="Zet op boodschappenlijst"  data-toggle="modal" /></td></tr>');
         }
         </script>
     </body>

@@ -40,6 +40,10 @@ public class IndexController {
                 .collect(Collectors.toList());
 
         model.addAttribute("teamList", sortedList);
+
+        if (sortedList.size() >= 1){
+            return "redirect:/calendar/" + sortedList.get(0).getTeamId();
+        }
         return "newHome";
     }
 
@@ -53,21 +57,4 @@ public class IndexController {
         return "/logout";
     }
 
-    @GetMapping("/testtest")
-    public String testPage(Model model){
-        Member member = (Member) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Set<TeamMembership> teamMembershipList = memberRepository.findByMemberName(member.getMemberName()).get().getTeamMemberships();
-        ArrayList<Team> teamList = new ArrayList<>();
-        for (TeamMembership tms: teamMembershipList) {
-            teamList.add(tms.getTeam());
-            System.out.println(tms.getTeam().getTeamName());
-        }
-
-        ArrayList<Team> sortedList = (ArrayList<Team>) teamList.stream()
-                .sorted(Comparator.comparing(Team::getTeamName))
-                .collect(Collectors.toList());
-
-        model.addAttribute("teamList2", sortedList);
-        return "newHome";
-    }
 }

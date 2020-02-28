@@ -38,7 +38,6 @@ public class MedicationValidator implements Validator {
         Optional<Team> team = teamRepository.findById(teamId);
 
         if (team.isPresent()) {
-
             team.get().getMedicationList().stream()
                     .filter(x -> x.getMedicationName().equals(((Medication) o).getMedicationName()))
                     .forEach(x -> errors.rejectValue("medicationName", "Duplicate.userForm.medicationName"));

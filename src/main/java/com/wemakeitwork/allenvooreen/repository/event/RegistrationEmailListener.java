@@ -50,7 +50,6 @@ public class RegistrationEmailListener implements ApplicationListener<OnRegistra
         email.setTo(recipient);
         email.setSubject("Welkom bij Allen voor Een");
         email.setText( message + "\nhttp://localhost:8080" + url);
-        System.out.println(url);
         //TODO: uncomment during last presentation demo)
         mailSender.send(email);
     }

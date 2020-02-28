@@ -32,12 +32,12 @@
             <br>
 
             <div id="card-${team.teamId}" onclick="$('#collapsed-chevron-${team.teamId}').toggleClass('fa-rotate-90')" class="card list-group-item-action">
-                <div id="card-header" class="card-header" aria-expanded="false" data-toggle="collapse" data-target="#${team.teamName}">
+                <div id="card-header" class="card-header" aria-expanded="false" data-toggle="collapse" data-target="#id-${team.teamId}">
                     <i class="icon-action fa fa-chevron-right" id="collapsed-chevron-${team.teamId}"></i>
                     <span class="title">&emsp;${team.teamName}</span>
                 </div>
             </div>
-            <div id=${team.teamName} class="collapse">
+            <div id="id-${team.teamId}" class="collapse">
                 <div class="card card-body">
                     <tr>
                        <a class="dropdown-item" href='${pageContext.request.contextPath}/calendar/${team.teamId}'> <i class="fa fa-calendar" ></i>&emsp;Kalender</a>

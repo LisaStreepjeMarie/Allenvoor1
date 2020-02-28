@@ -13,7 +13,6 @@
     <link id="contextPathHolder" data-contextPath="${pageContext.request.contextPath}"/>
     <link href="${pageContext.request.contextPath}/css/groceryList.css" rel="stylesheet" type="text/css"/>
 
-    <link id="teamId" data-teamId="${team.teamId}"/>
     <link id="csrfToken" data-csrfToken="${_csrf.token}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>

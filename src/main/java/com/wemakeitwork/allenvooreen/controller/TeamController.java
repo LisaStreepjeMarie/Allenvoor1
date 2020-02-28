@@ -219,7 +219,7 @@ public class TeamController {
 
     @GetMapping("/team/grantadmin/{teamId}/{memberId}")
     public String grantAdmin(@PathVariable("teamId") final Integer teamId,
-                              @PathVariable("memberId") final Integer memberId, Model model) {
+                             @PathVariable("memberId") final Integer memberId, Model model) {
 
         Optional<TeamMembership> tms = teamMembershipRepository.findByTeamTeamIdAndMemberMemberId(teamId, memberId);
         if (tms.isPresent()) {

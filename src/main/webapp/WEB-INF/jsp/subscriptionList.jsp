@@ -33,6 +33,7 @@
 </head>
 <body class= "webpage">
 <mytags:navbar/>
+<input type="hidden" name="eventId" id="eventId" value="4" />
 <div class= "masthead">
     <div class="w-25 p-3">
 
@@ -68,7 +69,7 @@
 </body>
 <script>
     $(document).ready(function(){
-        getEventSubscriptions(${eventId});
+        getEventSubscriptions();
     })
 </script>
 </html>

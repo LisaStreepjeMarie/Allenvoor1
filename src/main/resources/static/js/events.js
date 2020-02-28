@@ -8,13 +8,10 @@ $.ajaxSetup({
     }
 });
 
-function saveEvent(eventId, activityId) {
+function saveEvent(activityType) {
     // Fill the object currentEvent with values from input fields in the modal
-    if ($("#activityCategory").val() === "Medisch") {
-        activityType = "MedicationActivity"
-    } else if ($("#activityCategory").val() === "Vrije tijd") {
-        activityType = "LeisureActivity"
-    }
+    eventId = document.getElementById("eventId").value;
+    activityId = document.getElementById("activityId").value;
 
     eventToSave = {
             id: eventId,
@@ -67,7 +64,7 @@ function saveEvent(eventId, activityId) {
 }
 
 // This function gets a medicationlist.
-function getMedication(event){
+function getMedication(){
     $.ajax({
          type:'GET',
          url: ctx + "/calendar/" + $('#teamId').attr('data-teamId') + '/medications',
@@ -79,8 +76,7 @@ function getMedication(event){
                  for (i in List) {
                     $('#medicationChoice').append('<option value="' + List[i].id + '">' + List[i].name + '</option>');
                  }
-                 document.getElementById("medicationChoice").value = event.activity.medication.id;
-                 $('.modal').find('#takenMedication').val(event.activity.takenmedication);
+
              },
              error : function(e) {
              alert("getMedication() error")
@@ -140,45 +136,47 @@ function dropResizeOrDeleteEvent(event, targetUrl) {
     });
 }
 
-function getEventSubscriptions(eventId){
+function getEventSubscriptions(){
+    var eventId = document.getElementById("eventId").value;
     $.ajax({
          type:'GET',
          url: ctx + "/event/" + eventId + "/getsubscriptionlist",
          success : function(result) {
             subscriptionList = result.data;
             var alreadySubscribed = false;
+            $('#subscriptionList').empty();
+            $('#doneByMember').empty()
+            $('#doneByMember').append(first);
+            var first = '<option value="">Kies een teamlid</option>';
+
             for (i in subscriptionList){
                 if ($('#principalUsername').attr('data-principalUsername') === subscriptionList[i].member.name) {
                     $('#subscriptionList').append('<li class="list-group-item" id="subscription-id-'+ subscriptionList[i].id + '" value="' +
                         subscriptionList[i].member.id + '">' + subscriptionList[i].member.name + '<input class="btn btn-primary float-right"' +
-                        'style="width: auto;padding:0px;" type="submit" value="   Schrijf uit   "' +
-                        'onclick="unsubscribeFromEvent(' + subscriptionList[i].id + ')"></li>');
+                        'style="width: auto;padding:0px;" type="button" value="   Schrijf je uit   "' +
+                        'onClick="unsubscribeFromEvent(' + subscriptionList[i].id + ')"></li>');
                     alreadySubscribed = true;
                 } else {
                     $('#subscriptionList').append('<li class="list-group-item" value="' +
                         subscriptionList[i].member.id + '">' + subscriptionList[i].member.name + '</li>');
                 }
+
+                $('#doneByMember').append('<option value="' + subscriptionList[i].member.id + '">' + subscriptionList[i].member.name + '</option>');
             }
             if (alreadySubscribed === false) {
-                var actionConfirmed = false;
-                $('#subscribe').append('<input class="btn btn-primary" id="subscribe-button" type="submit" value="Schrijf je in" onclick="addEventSubscription('+ eventId + ', ' + actionConfirmed + ')">');
+                document.getElementById('subscribe-button').setAttribute( "onClick", "addEventSubscription(" + eventId + ")" );
+            } else {
+                $('#subscribeDiv').hide();
             }
          },
          error : function(e) {
-            console.log("ERROR: ", e);
-            $('#errorModalHeader').append('<h4 class="modal-title">Foutmelding</h4><button type="button" class="close" data-dismiss="modal">&times;</button>');
-            if (e.status != 500) {
-                $('#errorModalBody').append('<p>' + e.responseJSON.data + '</p>');
-            } else {
-                $('#errorModalBody').append('<p>' + e.statusText + ": " + e.status + '</p>');
-            }
-            $('#errorModal').modal('show');
+         console.log("ERROR: ", e);
          }
     });
 }
 
 // Adds members' subscription to event
-function addEventSubscription(eventId, isSubscriptionConfirmed){
+function addEventSubscription(eventId){
     subscribeEvent = {
         type: "EventSubscription",
         event: {
@@ -187,41 +185,30 @@ function addEventSubscription(eventId, isSubscriptionConfirmed){
         },
     }
 
-    // Clear errorModal
-    $('#errorModalHeader').empty();
-    $('#errorModalBody').empty();
-    $('#errorModal').modal('hide');
-
-    if (isSubscriptionConfirmed) { // Write eventSubscription to database
-        $.ajax({
-        url: ctx + "/event/subscribe",
-        method: "POST",
-        contentType: "application/json; charset=UTF-8",
-        data: JSON.stringify(subscribeEvent),
-        dataType: 'json',
-        async: true,
-        success: function(result) {
-            $('#subscriptionList').append('<li class="list-group-item" id="subscription-id-'+
+    $.ajax({
+    url: ctx + "/event/subscribe",
+    method: "POST",
+    contentType: "application/json; charset=UTF-8",
+    data: JSON.stringify(subscribeEvent),
+    dataType: 'json',
+    async: true,
+    success: function(result) {
+        $('#subscriptionList').append('<li class="list-group-item" id="subscription-id-'+
             result.data.id + '" value="' + result.data.member.id + '">' + result.data.member.name +
-                '<input class="btn btn-primary float-right" style="width: auto;padding:0px;" type="submit"' +
-                'value="   Schrijf uit   " onclick="unsubscribeFromEvent(' + result.data.id + ')"></li>');
-            $('#subscribe-button').remove();
-        },
-        error: function(e) {
-        }
-        });
-    } else { // Or ask for confirmation first (by showing the errorModal)
-        var isSubscriptionConfirmed = true;
-        $('#errorModalHeader').append('<h4 class="modal-title">Bevestig keuze</h4><button type="button" class="close" data-dismiss="modal">&times;</button>');
-        $('#errorModalBody').append('<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuleer inschrijving</button>   ');
-        $('#errorModalBody').append('<button type="button" class="btn btn-success" data-dismiss="modal" onclick="addEventSubscription(' +
-            eventId + ', ' + isSubscriptionConfirmed + ')">Schrijf je in</button>');
-        $('#errorModal').modal('show');
+            '<input class="btn btn-primary float-right" style="width: auto;padding:0px;" type="button"' +
+            'value="   Schrijf je uit   " onClick="unsubscribeFromEvent(' + result.data.id + ')"></li>');
+        $('#doneByMember').append('<option value="' + result.data.member.id + '">' + result.data.member.name + '</option>');
+        $('#subscribeDiv').hide();
+    },
+    error: function(e) {
+        alert("addEventSubscription() error")
+        console.log("ERROR: ",  e);
     }
+    });
 }
 
 // Removes members' event subscription
-function unsubscribeFromEvent(eventSubscriptionId, eventId, isUnsubscriptionConfirmed) {
+function unsubscribeFromEvent(eventSubscriptionId, eventId) {
     unsubscribeEvent = {
         type: "EventSubscription",
         id: eventSubscriptionId,
@@ -229,37 +216,24 @@ function unsubscribeFromEvent(eventSubscriptionId, eventId, isUnsubscriptionConf
             type: "Event",
             id: eventId,
         }
-    }
+    },
 
-    // Clear errorModal
-    $('#errorModalHeader').empty();
-    $('#errorModalBody').empty();
-    $('#errorModal').modal('hide');
-
-    if (isUnsubscriptionConfirmed) { // Delete eventSubscription from database
-        $.ajax({
-             url: ctx + "/event/unsubscribe",
-             method: "POST",
-             contentType: "application/json; charset=UTF-8",
-             data: JSON.stringify(unsubscribeEvent),
-             dataType: 'json',
-             async: true,
-             success: function(result) {
-                $('#subscription-id-' + eventSubscriptionId).remove();
-                var actionConfirmed = false;
-                $('#subscribe').append('<input class="btn btn-primary" id="subscribe-button" type="submit" value="Schrijf je in" onclick="addEventSubscription('+ result.data.event.id + ', ' + actionConfirmed + ')">');
-             },
-             error: function(e) {
-                 alert("unsubscribeFromEvent() error")
-                 console.log("ERROR: ",  e);
-             }
-        });
-    } else { // Or ask for confirmation first (by showing the errorModal)
-        var isUnsubscriptionConfirmed = true;
-        $('#errorModalHeader').append('<h4 class="modal-title">Bevestig keuze</h4><button type="button" class="close" data-dismiss="modal">&times;</button>');
-        $('#errorModalBody').append('<button type="button" class="btn btn-secondary" data-dismiss="modal">Annuleer uitschrijving</button>   ');
-        $('#errorModalBody').append('<button type="button" class="btn btn-success" data-dismiss="modal" onclick="unsubscribeFromEvent(' +
-            eventSubscriptionId + ', ' + eventId + ', ' + isUnsubscriptionConfirmed + ')">Schrijf je uit</button>');
-        $('#errorModal').modal('show');
-    }
+    $.ajax({
+         url: ctx + "/event/unsubscribe",
+         method: "POST",
+         contentType: "application/json; charset=UTF-8",
+         data: JSON.stringify(unsubscribeEvent),
+         dataType: 'json',
+         async: true,
+         success: function(result) {
+            $('#subscription-id-' + eventSubscriptionId).remove();
+            document.getElementById('subscribe-button').setAttribute( "onClick", "addEventSubscription(" + result.data.event.id + ")" );
+            $("#doneByMember option[value='" + result.data.member.id + "']").remove();
+            $('#subscribeDiv').show();
+         },
+         error: function(e) {
+             alert("unsubscribeFromEvent() error")
+             console.log("ERROR: ",  e);
+         }
+    });
 }

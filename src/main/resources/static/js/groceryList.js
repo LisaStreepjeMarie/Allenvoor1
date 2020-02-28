@@ -14,9 +14,6 @@ $.ajaxSetup({
 // setting the context url
 var ctx = $('#contextPathHolder').attr('data-contextPath');
 
-// since we use an interval below function isn't needed right now
-<!--getAllItemsFromDataBase();-->
-
 // create a new list item when clicking on the "Add" button
 function newElement() {
 
@@ -54,50 +51,12 @@ function addGroceryItem(newGroceryItem){
         dataType: 'json',
         async: true,
         success: function(result) {
-            $('#groceryItem').append('<li class="listItem" value="' + result.data.id + '">' + result.data.title + '</li>');
-            // giving it an X and a listener boolean function
-            addCloseAndListener();
         },
         error: function(e) {
             alert("boodschappenerror")
             console.log("ERROR: ",  e);
         }
     });
-}
-
-// adding a an X to all items and giving both the x and the item a click function
-function closeButtonOnAll(){
-var allGroceriesInList = document.getElementsByClassName("listItem");
-var i;
-for (i = 0; i < allGroceriesInList.length; i++) {
-      allGroceriesInList[i].addEventListener('click', function(ev) {
-      // adding the clicked action to each item in the list
-      if (ev.target.tagName === 'LI') {
-      var type = ev.target.parentNode.id
-      boughtBoolean(type, ev.target.value);
-      ev.target.classList.toggle('checked');
-        }
-      }, false);
-// every item on the list gets the delete button with the correct className for later function use
-      var span = document.createElement("SPAN");
-      var txt = document.createTextNode("\u00D7");
-      span.className = "close";
-      span.appendChild(txt);
-      allGroceriesInList[i].appendChild(span);
-}
-
-// this part makes sure the item gets deleted when clicked and also the X dissapears
-var close = document.getElementsByClassName("close");
-var i;
-for (i = 0; i < close.length; i++) {
-      close[i].onclick = function()   {
-            var div = this.parentElement;
-            var type = div.parentElement.id;
-            var groceryItemId = div.value;
-            div.style.display = "none";
-            removeGroceryItem(type, groceryItemId);
-      }
-   }
 }
 
 // sets the item to bought in the database
@@ -113,6 +72,7 @@ function boughtBoolean(type, itemId){
     });
 }
 
+// makes a list of all the checked items and deletes them
 function removeAllCheckedFromList(){
 var allChecked = document.querySelectorAll('li.checked');
 var i;
@@ -124,7 +84,7 @@ for (i = 0; i < allChecked.length; i++) {
     }
 }
 
-
+// deletes all items in list
 function removeAllFromList(){
 var allGroceriesInList = document.getElementsByClassName("listItem");
 var i;
@@ -169,9 +129,11 @@ function getAllItemsFromDataBase(){
     });
 }
 
-function addCloseAndListener(){
+// adding a an X to all items and giving both the x and the item a click function
+function closeButtonOnAll(){
 var allGroceriesInList = document.getElementsByClassName("listItem");
-var i = allGroceriesInList.length - 1;
+var i;
+for (i = 0; i < allGroceriesInList.length; i++) {
       allGroceriesInList[i].addEventListener('click', function(ev) {
       // adding the clicked action to each item in the list
       if (ev.target.tagName === 'LI') {
@@ -180,14 +142,15 @@ var i = allGroceriesInList.length - 1;
       ev.target.classList.toggle('checked');
         }
       }, false);
-
+// every item on the list gets the delete button with the correct className for later function use
       var span = document.createElement("SPAN");
       var txt = document.createTextNode("\u00D7");
       span.className = "close";
       span.appendChild(txt);
       allGroceriesInList[i].appendChild(span);
+}
 
-// this part makes sure the item gets deleted when clicked and also the X disappears
+// this part makes sure the item gets deleted when clicked and also the X dissapears
 var close = document.getElementsByClassName("close");
 var i;
 for (i = 0; i < close.length; i++) {
@@ -198,13 +161,11 @@ for (i = 0; i < close.length; i++) {
             div.style.display = "none";
             removeGroceryItem(type, groceryItemId);
       }
-
-  }
-
+   }
 }
 
 // deletes the chosen  item, isn't expecting anything back (besides success)
-// can be used for both medical and normal item (hence the type and Id)
+// can be used for both a medical and grocery item (hence the type and Id)
 function removeGroceryItem(type, itemId){
     $.ajax({
          type:'GET',

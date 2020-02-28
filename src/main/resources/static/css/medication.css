@@ -71,7 +71,7 @@ ul {
 
 /* Style the header */
 .header {
-  width: 600px;
+  width: 650px;
   background: -webkit-gradient(linear, left bottom, left top, from(#FFA69E), to(#98639C));
   background: -webkit-linear-gradient(bottom, #FFA69E 0%, #98639C 100%);
   background: -moz-linear-gradient(bottom, #FFA69E 0%, #98639C 100%);
@@ -85,7 +85,7 @@ ul {
 
 /* Style the footer */
 .footer {
-  width: 600px;
+  width: 650px;
   background-color: #FFA69E;
   border-radius: 0px 0px 15px 15px;
   padding: 20px 30px;
@@ -114,7 +114,7 @@ input {
   border-radius: 0;
   width: 75%;
   padding: 10px;
-  float: left;
+  float: center;
   font-size: 16px;
 }
 
@@ -166,4 +166,40 @@ input {
 
 table, th, td {
   text: center;
+  text-align: left;
+
+}
+
+table {
+  width: 100%;
+}
+
+th {
+  height: 80px;
+  padding: 5px;
+  text-align: left;
+}
+
+tr {
+    display: table-row;
+    center-align;
+    text-align: left;
+    width: 100%
+}
+
+.deleteButton{
+width: 100%;
+}
+
+.grocerylistButton{
+width: 100%;}
+
+.allMedications{
+text-align:left;
+}
+
+.thead {
+  display: table-header-group;
+  vertical-align: left;
+  border-color: inherit;
 }

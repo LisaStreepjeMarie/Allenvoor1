@@ -6,6 +6,8 @@ $(document).ready(function() {
         $('.modal').on("hide.bs.modal", function() {
             $('#formID').trigger("reset");
             hideAllModalInputFields();
+            $('#newModal').find('#eventId').val(null);
+            $('#newModal').find('#activityId').val(null);
         });
 
         // Loads fullcalendar
@@ -30,34 +32,40 @@ $(document).ready(function() {
 
             // This function is executed when an empty date/time is clicked
             select: function(start, end) {
-                $("#modal-footer").hide();
-                $("#activityCategory").change(function () {
-                    showModalInputFields();
-                });
+            $("#optionsMemberTab").hide();
+            $('#newModal').modal('show');
+            $("#save-change-event").show();
+            $("#delete-event").hide();
+            document.getElementById("LeisureTab").click();
+            document.getElementById("save-change-event").innerHTML = "Nieuwe afpraak";
+            $('#newModal').find('#eventStartDate').val(moment(start).format('DD-MM-YYYY H:mm'));
+            $('#newModal').find('#eventEndDate').val(moment(end).format('DD-MM-YYYY H:mm'));
 
-                document.getElementById('save-change-event').setAttribute( "onclick", "saveEvent('"+ null + "','" + null + "')" );
-                event = {type: "Event", id: null, start: start, end: end,};
-                fillModal(event);
             },
 
             // This function is executed when an already planned event is clicked
             eventClick: function(event, element) {
-                $("#modal-footer").hide();
-                $("#activityCategory").change(function () {
-                    showModalInputFields();
-                });
+            $("#optionsMemberTab").show();
+            $("#save-change-event").show()
+            document.getElementById("save-change-event").innerHTML = "Wijzig afspraak";
+            $("#delete-event").show();
+            $('#newModal').find('#eventId').val(event.id);
+            $('#newModal').find('#activityId').val(event.activity.activityId);
 
-                if (event.activity.type === "MedicationActivity") {
-                    $('.modal').find('#activityCategory').val("Medisch")
-                } else if (event.activity.type === "LeisureActivity") {
-                    $('.modal').find('#activityCategory').val("Vrije tijd")
-                }
+                $('#newModal').modal('show');
 
-                document.getElementById('delete-event').setAttribute( "onclick", "deleteEvent('"+ event.id +"','" +  ctx + "/event/delete/" + "')" );
-                document.getElementById('save-change-event').setAttribute( "onclick", "saveEvent('"+ event.id + "','" + event.activity.id + "')" );
-                document.getElementById('subscribe-event').setAttribute( "onclick", "window.location='" + ctx + "/event/" + event.id + "/subscriptionlist'" );
+                if (event.activity.type === "LeisureActivity"){
+                    document.getElementById("LeisureTab").click();
+                    preFillLeisureActivityFields(event);
+                    } else {
+                    document.getElementById("MedicationTab").click();
+                    preFillMedicationActivityFields(event);
+                    }
 
-                fillModal(event);
+                preFillSharedFields(event);
+                preFillDateFields(event);
+
+                document.getElementById('delete-event').setAttribute( "onClick", "deleteEvent('"+ event.id +"','" +  ctx + "/event/delete/" + "')" );
             },
 
             // This function is executed when an event is dragged to another date
