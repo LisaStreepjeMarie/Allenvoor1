@@ -143,6 +143,7 @@ public class MemberController {
             newNameMember.setPassword(originalMember.getPassword());
             newNameMember.setMemberId(originalMember.getMemberId());
             newNameMember.setRol(originalMember.getRol());
+            newNameMember.setEmail(originalMember.getEmail());
             memberRepository.save(newNameMember);
             return "redirect:/logout";
         }
