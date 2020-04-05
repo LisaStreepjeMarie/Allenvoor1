@@ -77,44 +77,25 @@ public class Event {
 
     public Event() {
     }
-    public Event(Integer eventId, @NotBlank(message = "veld mag niet blank zijn") String eventName, Date eventStartDate,
-                 Date eventEndDate, String eventComment, String eventInterval, Integer eventMaxNumber,
-                 Date eventDoneDate, Activity activity,
-                 Team team) {
-        this.eventId = eventId;
-        this.eventName = eventName;
-        this.eventStartDate = eventStartDate;
-        this.eventEndDate = eventEndDate;
-        this.eventComment = eventComment;
-        this.eventInterval = eventInterval;
-        this.eventMaxNumber = eventMaxNumber;
-        this.eventDoneDate = eventDoneDate;
-        this.activity = activity;
-        this.team = team;
+    public Event(eventBuilder builder) {
+        this.eventId = builder.eventId;
+        this.eventName = builder.eventName;
+        this.eventStartDate = builder.eventStartDate;
+        this.eventEndDate = builder.eventEndDate;
+        this.activity = builder.activity;
+        this.team = builder.team;
     }
 
     public Integer getEventMaxNumber() {
         return eventMaxNumber;
     }
 
-    public void setEventMaxNumber(Integer eventMaxNumber) {
-        this.eventMaxNumber = eventMaxNumber;
-    }
-
     public String getEventInterval() {
         return eventInterval;
     }
 
-    public void setEventInterval(String eventInterval) {
-        this.eventInterval = eventInterval;
-    }
-
     public Date getEventDoneDate() {
         return eventDoneDate;
-    }
-
-    public void setEventDoneDate(Date eventDoneDate) {
-        this.eventDoneDate = eventDoneDate;
     }
 
     @JsonGetter
@@ -167,10 +148,6 @@ public class Event {
         return eventComment;
     }
 
-    public void setEventComment(String eventComment) {
-        this.eventComment = eventComment;
-    }
-
     public Team getTeam() {
         return team;
     }
@@ -180,11 +157,60 @@ public class Event {
         return doneByMember;
     }
 
-    public void setDoneByMember(@Nullable Member doneByMember) {
-        this.doneByMember = doneByMember;
-    }
-
     public void setTeam(Team team) {
         this.team = team;
+    }
+
+    public static class eventBuilder {
+        private Integer eventId;
+        private String eventName;
+        private java.util.Date eventStartDate;
+        private java.util.Date eventEndDate;
+        private Member doneByMember;
+        private String eventComment;
+        private String eventInterval;
+        private Integer eventMaxNumber;
+        private java.util.Date eventDoneDate;
+        private Activity activity;
+        private Team team;
+
+        public eventBuilder(Integer eventId, String eventName, Date eventStartDate, Date eventEndDate, Activity activity, Team team) {
+            this.eventId = eventId;
+            this.eventName = eventName;
+            this.eventStartDate = eventStartDate;
+            this.eventEndDate = eventEndDate;
+            this.activity = activity;
+            this.team = team;
+        }
+
+        public eventBuilder setDoneByMember(@Nullable Member doneByMember) {
+            this.doneByMember = doneByMember;
+            return this;
+        }
+
+        public eventBuilder setEventComment(String eventComment) {
+            this.eventComment = eventComment;
+            return this;
+        }
+
+        public eventBuilder setEventInterval(String eventInterval) {
+            this.eventInterval = eventInterval;
+            return this;
+        }
+
+        public eventBuilder setEventMaxNumber(Integer eventMaxNumber) {
+            this.eventMaxNumber = eventMaxNumber;
+            return this;
+        }
+
+        public eventBuilder setEventDoneDate(Date eventDoneDate) {
+            this.eventDoneDate = eventDoneDate;
+            return this;
+        }
+
+        public Event build(){
+            return new Event(this);
+        }
+
     }
 }

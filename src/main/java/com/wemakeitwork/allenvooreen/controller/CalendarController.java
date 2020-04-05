@@ -42,12 +42,6 @@ public class CalendarController {
     EventRepository eventRepository;
 
     @Autowired
-    ActivityRepository activityRepository;
-
-    @Autowired
-    EventSubscriptionRepository eventSubscriptionRepository;
-
-    @Autowired
     TeamMembershipRepository teamMembershipRepository;
 
     @GetMapping("/calendar/{teamid}/medications")
@@ -95,6 +89,15 @@ public class CalendarController {
         Date startDateTime = event.getEventStartDate();
         Date endDateTime = event.getEventEndDate();
 
+        Event event1 = new Event.eventBuilder(event.getEventId(),event.getEventName(),event.getEventStartDate(), event.getEventEndDate(),
+                event.getActivity(), event.getTeam())
+                .setDoneByMember(event.getDoneByMember())
+                .setEventDoneDate(event.getEventDoneDate())
+                .setEventInterval(event.getEventInterval())
+                .setEventMaxNumber(event.getEventMaxNumber())
+                .setEventComment(event.getEventComment())
+                .build();
+
         int i = 0;
         Integer maxNumber = event.getEventMaxNumber();
         // case of periodic event
@@ -121,17 +124,11 @@ public class CalendarController {
                     }
                 }
                 event = mapper.readValue(newEventJson, Event.class);
-                if(event.getDoneByMember().getMemberId() == null){
-                    event.setDoneByMember(null);
-                }
                 event.setEventStartDate(startDateTimeExtraEvent);
                 event.setEventEndDate(endDateTimeExtraEvent);
                 eventRepository.save(event);
             }
         } else {
-            if(event.getDoneByMember().getMemberId() == null){
-                event.setDoneByMember(null);
-            }
             eventRepository.save(event);
         }
 
